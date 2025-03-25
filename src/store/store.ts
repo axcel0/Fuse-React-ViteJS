@@ -3,11 +3,18 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import apiService from 'src/store/apiService';
 import rootReducer from './rootReducer';
 import { dynamicMiddleware } from './middleware';
+import { productApi } from './api/productApi';
 
 // Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>;
 
-const middlewares: Middleware[] = [apiService.middleware, dynamicMiddleware];
+const middlewares: Middleware[] = [
+	apiService.middleware, 
+	productApi.middleware,  // 👈 Thêm middleware của productApi vào đây
+	dynamicMiddleware
+  ];
+
+// const middlewares: Middleware[] = [apiService.middleware, dynamicMiddleware];
 
 export const makeStore = (preloadedState?: Partial<RootState>) => {
 	const store = configureStore({
