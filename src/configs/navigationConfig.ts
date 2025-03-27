@@ -19,6 +19,14 @@ const navigationConfig: FuseNavItemType[] = [
 		type: 'item',
 		icon: 'heroicons-outline:star',
 		url: 'example'
+	},
+	{
+		id: 'customer-component',
+		title: 'Customer',
+		translate: 'Customer',
+		type: 'item',
+		icon: 'heroicons-outline:star',
+		url: 'customer'
 	}
 ];
 
