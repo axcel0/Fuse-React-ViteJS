@@ -1,0 +1,272 @@
+{
+    "data": {
+        "content": [
+            {
+                "_id": "67dd13e8899a87620623be01",
+                "required": false,
+                "status": "ACTIVE",
+                "name": "[RATE] Evaluation of Akemi Homura",
+                "description": "Job: joltgap\n stage: PHONESCREEN_3",
+                "type": "EVALUATION",
+                "meta": {
+                    "applicationId": "67dd139a899a87620623b93a",
+                    "applicationProgressId": "67dd13e7899a87620623bdf9"
+                },
+                "startDate": 1742541799950,
+                "endDate": 1742540419950,
+                "hasCompleted": false,
+                "priority": 0,
+                "owner": "67c12fb6d72f2c6ae41e2380",
+                "members": [
+                    "67c12fb6d72f2c6ae41e2380"
+                ],
+                "reminders": [],
+                "createdDate": 1742541800027,
+                "updatedDate": 1742541800027
+            },
+            {
+                "_id": "67dd139a899a87620623b945",
+                "required": true,
+                "status": "ACTIVE",
+                "name": "[RATE] Evaluation of Akemi Homura",
+                "description": "Job: joltgap\n stage: APPLIED",
+                "type": "EVALUATION",
+                "meta": {
+                    "applicationId": "67dd139a899a87620623b93a",
+                    "applicationProgressId": "67dd139a899a87620623b93e"
+                },
+                "startDate": 1742541722137,
+                "endDate": 1742540402137,
+                "hasCompleted": false,
+                "priority": 0,
+                "owner": "67c12fb6d72f2c6ae41e2380",
+                "members": [
+                    "67c12fb6d72f2c6ae41e2380"
+                ],
+                "reminders": [],
+                "createdDate": 1742541722244,
+                "updatedDate": 1742541722244
+            },
+            {
+                "_id": "67dd1330899a87620623b531",
+                "required": true,
+                "status": "ACTIVE",
+                "name": "tasst 1",
+                "description": "Xin chao",
+                "type": "TODO",
+                "meta": {
+                    "applicationId": null,
+                    "candidate": null
+                },
+                "startDate": 1742544000000,
+                "endDate": 1742547600000,
+                "hasCompleted": false,
+                "priority": 0,
+                "owner": "67c12fb6d72f2c6ae41e2380",
+                "members": [
+                    "67c13aebd72f2c6ae41e2bda",
+                    "67d154c0ef959dd85530b925",
+                    "67d15596ef959dd85530bbf4",
+                    "67d15857ef959dd85530c14a",
+                    "67d926dc0b6d1eb2934475a2",
+                    "67da33c1957735bb39749166",
+                    "67da35d8957735bb39749a5c",
+                    "67c13bf1d72f2c6ae41e2dfc",
+                    "67dbc185899a87620622ae84",
+                    "67da38f3957735bb3974a593",
+                    "67da85e1899a87620621aeda",
+                    "67da991c899a87620621e76d"
+                ],
+                "reminders": [
+                    "67dd1330899a87620623b52f"
+                ],
+                "createdDate": 1742541616077,
+                "updatedDate": 1742541616077
+            },
+            {
+                "_id": "67dbda0c899a87620622fac0",
+                "required": false,
+                "status": "ACTIVE",
+                "name": "[RATE] Evaluation of Akemi Homura",
+                "description": "Job: Manager-copy\n stage: TEST",
+                "type": "EVALUATION",
+                "meta": {
+                    "applicationId": "67dbcc60899a87620622cef4",
+                    "applicationProgressId": "67dbd748899a87620622f2e8"
+                },
+                "startDate": 1742460744976,
+                "endDate": 1742457624976,
+                "hasCompleted": false,
+                "priority": 0,
+                "owner": "67c12fb6d72f2c6ae41e2380",
+                "members": [
+                    "67c12fb6d72f2c6ae41e2380"
+                ],
+                "reminders": [],
+                "createdDate": 1742461452817,
+                "updatedDate": 1742461452817
+            },
+            {
+                "_id": "67dbda01899a87620622fa8e",
+                "required": true,
+                "status": "ACTIVE",
+                "name": "[RATE] Evaluation of Akemi Homura",
+                "description": "Job: Manager-copy\n stage: APPLIED",
+                "type": "EVALUATION",
+                "meta": {
+                    "applicationId": "67dbcc60899a87620622cef4",
+                    "applicationProgressId": "67dbcc60899a87620622cefc"
+                },
+                "startDate": 1742457952810,
+                "endDate": 1742457652810,
+                "hasCompleted": false,
+                "priority": 0,
+                "owner": "67c12fb6d72f2c6ae41e2380",
+                "members": [
+                    "67c12fb6d72f2c6ae41e2380"
+                ],
+                "reminders": [],
+                "createdDate": 1742461441533,
+                "updatedDate": 1742461441533
+            },
+            {
+                "_id": "67dbd749899a87620622f2f0",
+                "required": false,
+                "status": "ACTIVE",
+                "name": "[RATE] Evaluation of Akemi Homura",
+                "description": "Job: Manager-copy\n stage: TEST",
+                "type": "EVALUATION",
+                "meta": {
+                    "applicationId": "67dbcc60899a87620622cef4",
+                    "applicationProgressId": "67dbd748899a87620622f2e8"
+                },
+                "startDate": 1742460744976,
+                "endDate": 1742457624976,
+                "hasCompleted": false,
+                "priority": 0,
+                "owner": "67c12fb6d72f2c6ae41e2380",
+                "members": [
+                    "67c12fb6d72f2c6ae41e2380"
+                ],
+                "reminders": [],
+                "createdDate": 1742460745088,
+                "updatedDate": 1742460745088
+            },
+            {
+                "_id": "67dbd494899a87620622ebf4",
+                "required": true,
+                "status": "ACTIVE",
+                "name": "[RATE] Evaluation of Minh Duy",
+                "description": "Job: Manager-copy\n stage: APPLIED",
+                "type": "EVALUATION",
+                "meta": {
+                    "applicationId": "67dbd494899a87620622ebeb",
+                    "applicationProgressId": "67dbd494899a87620622ebef"
+                },
+                "startDate": 1742460052528,
+                "endDate": 1742457652528,
+                "hasCompleted": false,
+                "priority": 0,
+                "owner": "67c12fb6d72f2c6ae41e2380",
+                "members": [
+                    "67c12fb6d72f2c6ae41e2380"
+                ],
+                "reminders": [],
+                "createdDate": 1742460052562,
+                "updatedDate": 1742460052562
+            },
+            {
+                "_id": "67dbcc60899a87620622cf03",
+                "required": true,
+                "status": "ACTIVE",
+                "name": "[RATE] Evaluation of Akemi Homura",
+                "description": "Job: Manager-copy\n stage: APPLIED",
+                "type": "EVALUATION",
+                "meta": {
+                    "applicationId": "67dbcc60899a87620622cef4",
+                    "applicationProgressId": "67dbcc60899a87620622cefc"
+                },
+                "startDate": 1742457952810,
+                "endDate": 1742457652810,
+                "hasCompleted": false,
+                "priority": 0,
+                "owner": "67c12fb6d72f2c6ae41e2380",
+                "members": [
+                    "67c12fb6d72f2c6ae41e2380"
+                ],
+                "reminders": [],
+                "createdDate": 1742457952924,
+                "updatedDate": 1742457952924
+            },
+            {
+                "_id": "67db875a899a876206224e9e",
+                "required": false,
+                "status": "ACTIVE",
+                "name": "#",
+                "description": "   ",
+                "type": "TODO",
+                "meta": {
+                    "applicationId": null,
+                    "candidate": null
+                },
+                "startDate": 1742443813084,
+                "endDate": 1742490000000,
+                "hasCompleted": false,
+                "priority": 0,
+                "owner": "67c12fb6d72f2c6ae41e2380",
+                "members": [
+                    "67d154c0ef959dd85530b925",
+                    "67c58bb161d8b149253a3779"
+                ],
+                "reminders": [
+                    "67db875a899a876206224e9c"
+                ],
+                "createdDate": 1742440282475,
+                "updatedDate": 1742440282475
+            },
+            {
+                "_id": "67d251caef959dd855311a95",
+                "required": false,
+                "status": "ACTIVE",
+                "name": "Test have bug in task",
+                "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+                "type": "TODO",
+                "meta": {},
+                "startDate": 1741840320651,
+                "endDate": 1742617920651,
+                "hasCompleted": false,
+                "priority": 0,
+                "owner": "67c12fb6d72f2c6ae41e2380",
+                "members": [
+                    "67c13aebd72f2c6ae41e2bda"
+                ],
+                "reminders": [
+                    "67d251caef959dd855311a93"
+                ],
+                "createdDate": 1741836746994,
+                "updatedDate": 1741836746994
+            }
+        ],
+        "pageable": {
+            "sort": {
+                "unsorted": false,
+                "sort": true,
+                "empty": false
+            },
+            "pageSize": 10,
+            "pageNumber": 0,
+            "paged": true,
+            "unpaged": false
+        },
+        "last": true,
+        "totalPages": 1,
+        "totalElements": 10,
+        "first": false,
+        "numberOfElements": 10,
+        "size": 10,
+        "number": 0,
+        "empty": true
+    },
+    "code": 200,
+    "message": "Success"
+}
