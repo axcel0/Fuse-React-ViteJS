@@ -34,6 +34,10 @@ const routes: FuseRoutesType = [
 			},
 			...mainRoutes,
 			{
+				path: '/customer',
+				element: <Navigate to="/customer" />
+			},
+			{
 				path: 'loading',
 				element: <FuseLoading />,
 				settings: { layout: layoutConfigOnlyMain }
