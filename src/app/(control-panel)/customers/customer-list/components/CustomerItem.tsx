@@ -23,7 +23,7 @@ const CustomerItem: React.FC<CustomerItemProps> = ({
   const nav = useNavigate();
 
   const handleNavDetail = () => {
-    nav("/customer-detail");
+    nav("/customer-detail/1");
   };
 
   return (

@@ -26,7 +26,7 @@ const LeftSidebar = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <div className="lg:px-2 px-2 lg:w-full w-full">
+    <div className="lg:px-2 px-4 lg:w-full w-full">
       <div className="lg:w-full flex flex-col gap-2">
         <div className="px-2 py-4 flex justify-between items-center">
           <div className="text-gray-500 flex items-center gap-2">

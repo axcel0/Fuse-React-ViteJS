@@ -22,6 +22,12 @@ const customerSlice = createSlice({
     closeLeftSidebar: (state) => {
       state.leftSidebarOpen = false;
     },
+    openRightSideBar: (state) => {
+      state.rightSidebarOpen = true;
+    },
+    closeRightSidebar: (state) => {
+      state.rightSidebarOpen = false;
+    },
     isSidebarOpen: (state, action) => {
       state.leftSidebarOpen = action.payload;
       state.rightSidebarOpen = action.payload;
@@ -30,7 +36,7 @@ const customerSlice = createSlice({
   extraReducers: (builder) => {},
 });
 
-export const { openLeftSideBar, closeLeftSidebar, isSidebarOpen } =
+export const { openLeftSideBar, closeLeftSidebar, openRightSideBar, closeRightSidebar, isSidebarOpen } =
   customerSlice.actions;
 
 export const selectOpenLeftSidebar = ({ customer }) =>

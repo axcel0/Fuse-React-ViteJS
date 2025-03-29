@@ -4,7 +4,7 @@ import { lazy } from 'react';
 const CustomerDetail = lazy(() => import('./CustomerDetail'))
 
 const CustomerDetailRoute: FuseRouteItemType = {
-    path: 'customer-detail',
+    path: 'customer-detail/:id',
     element: <CustomerDetail />
 }
 

@@ -25,7 +25,7 @@ const withReducer =
 			useEffect(() => {
 				setTimeout(() => {
 					setAwaitRender(false);
-				}, 30000);
+				}, 100);
 			}, []);
 			return awaitRender ? null : <WrappedComponent {...props} />;
 		};

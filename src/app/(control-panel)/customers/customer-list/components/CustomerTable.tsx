@@ -1,6 +1,7 @@
 import { Checkbox, Typography } from "@mui/material";
 import React from "react";
 import CustomerItem from "./CustomerItem";
+import { Link } from "react-router";
 
 interface Customer {
   id: number;
