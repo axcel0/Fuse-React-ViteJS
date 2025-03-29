@@ -1,0 +1,18 @@
+{
+  "data": {
+    "companies": [
+      {
+        "name": "Zetaha Studios",
+        "website": "Zetaha.io",
+        "email": "Zetaha@gmail.com",
+        "phone": "034623252"
+      },
+      {
+        "name": "Zetaha",
+        "website": "Zetaha.io",
+        "email": "Zetaha@gmail.com",
+        "phone": "034623252"
+      }
+    ]
+  }
+}

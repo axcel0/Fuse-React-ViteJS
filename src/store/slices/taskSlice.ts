@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
 import taskService from '@/services/task/taskService';
 

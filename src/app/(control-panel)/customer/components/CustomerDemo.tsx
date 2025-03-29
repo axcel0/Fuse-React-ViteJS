@@ -17,13 +17,19 @@ import {
   Grid,
   InputBase,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/store/store';
+import { useSelector } from 'react-redux';
+import { getCustomers } from '@/store/slices/customerSlice';
+import FuseLoading from '@fuse/core/FuseLoading';
 
 interface Customer {
   name: string;
@@ -34,80 +40,80 @@ interface Customer {
   amountSpent: string;
 }
 
-const customers: Customer[] = [
-  {
-    name: 'Esther Howard',
-    img: 'https://via.placeholder.com/40',
-    emailSubscription: 'Subscribed',
-    location: 'Great Falls, Maryland',
-    orders: '2 Orders',
-    amountSpent: '$250.00',
-  },
-  {
-    name: 'Leslie Alexander',
-    img: 'https://via.placeholder.com/40',
-    emailSubscription: 'Not Subscribed',
-    location: 'Pasadena, Oklahoma',
-    orders: '3 Orders',
-    amountSpent: '$350.00',
-  },
-  {
-    name: 'Guy Hawkins',
-    img: 'https://via.placeholder.com/40',
-    emailSubscription: 'Pending',
-    location: 'Corona, Michigan',
-    orders: 'N/A',
-    amountSpent: '$0.00',
-  },
-  {
-    name: 'Savannah Nguyen',
-    img: 'https://via.placeholder.com/40',
-    emailSubscription: 'Subscribed',
-    location: 'Syracuse, Connecticut',
-    orders: 'N/A',
-    amountSpent: '$0.00',
-  },
-  {
-    name: 'Bessie Cooper',
-    img: 'https://via.placeholder.com/40',
-    emailSubscription: 'Not Subscribed',
-    location: 'Lansing, Illinois',
-    orders: '1 Orders',
-    amountSpent: '$470.00',
-  },
-  {
-    name: 'Ronald Richards',
-    img: 'https://via.placeholder.com/40',
-    emailSubscription: 'Pending',
-    location: 'Great Falls, Maryland',
-    orders: '2 Orders',
-    amountSpent: '$250.00',
-  },
-  {
-    name: 'Marvin McKinney',
-    img: 'https://via.placeholder.com/40',
-    emailSubscription: 'Subscribed',
-    location: 'Coppell, Virginia',
-    orders: '2 Orders',
-    amountSpent: '$150.00',
-  },
-  {
-    name: 'Kathryn Murphy',
-    img: 'https://via.placeholder.com/40',
-    emailSubscription: 'Not Subscribed',
-    location: 'Lafayette, California',
-    orders: '3 Orders',
-    amountSpent: '$250.00',
-  },
-  {
-    name: 'Eleanor Pena',
-    img: 'https://via.placeholder.com/40',
-    emailSubscription: 'Pending',
-    location: 'Corona, Michigan',
-    orders: '1 Orders',
-    amountSpent: '$250.00',
-  },
-];
+// const customers: Customer[] = [
+//   {
+//     name: 'Esther Howard',
+//     img: 'https://via.placeholder.com/40',
+//     emailSubscription: 'Subscribed',
+//     location: 'Great Falls, Maryland',
+//     orders: '2 Orders',
+//     amountSpent: '$250.00',
+//   },
+//   {
+//     name: 'Leslie Alexander',
+//     img: 'https://via.placeholder.com/40',
+//     emailSubscription: 'Not Subscribed',
+//     location: 'Pasadena, Oklahoma',
+//     orders: '3 Orders',
+//     amountSpent: '$350.00',
+//   },
+//   {
+//     name: 'Guy Hawkins',
+//     img: 'https://via.placeholder.com/40',
+//     emailSubscription: 'Pending',
+//     location: 'Corona, Michigan',
+//     orders: 'N/A',
+//     amountSpent: '$0.00',
+//   },
+//   {
+//     name: 'Savannah Nguyen',
+//     img: 'https://via.placeholder.com/40',
+//     emailSubscription: 'Subscribed',
+//     location: 'Syracuse, Connecticut',
+//     orders: 'N/A',
+//     amountSpent: '$0.00',
+//   },
+//   {
+//     name: 'Bessie Cooper',
+//     img: 'https://via.placeholder.com/40',
+//     emailSubscription: 'Not Subscribed',
+//     location: 'Lansing, Illinois',
+//     orders: '1 Orders',
+//     amountSpent: '$470.00',
+//   },
+//   {
+//     name: 'Ronald Richards',
+//     img: 'https://via.placeholder.com/40',
+//     emailSubscription: 'Pending',
+//     location: 'Great Falls, Maryland',
+//     orders: '2 Orders',
+//     amountSpent: '$250.00',
+//   },
+//   {
+//     name: 'Marvin McKinney',
+//     img: 'https://via.placeholder.com/40',
+//     emailSubscription: 'Subscribed',
+//     location: 'Coppell, Virginia',
+//     orders: '2 Orders',
+//     amountSpent: '$150.00',
+//   },
+//   {
+//     name: 'Kathryn Murphy',
+//     img: 'https://via.placeholder.com/40',
+//     emailSubscription: 'Not Subscribed',
+//     location: 'Lafayette, California',
+//     orders: '3 Orders',
+//     amountSpent: '$250.00',
+//   },
+//   {
+//     name: 'Eleanor Pena',
+//     img: 'https://via.placeholder.com/40',
+//     emailSubscription: 'Pending',
+//     location: 'Corona, Michigan',
+//     orders: '1 Orders',
+//     amountSpent: '$250.00',
+//   },
+// ];
 
 const getChipColor = (status: string) => {
   switch (status) {
@@ -123,7 +129,22 @@ const getChipColor = (status: string) => {
 };
 
 export const CustomerDemo = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const customerStore = useSelector(
+    (state: any) => state?.customers?.customers
+  );
+  const customers = customerStore?.data || [];
+  const loading = customerStore?.loading;
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(getCustomers());
+  }, []);
+
+  if (!customers || loading) {
+    return <FuseLoading></FuseLoading>;
+  }
 
   const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -147,37 +168,56 @@ export const CustomerDemo = () => {
       <Grid
         container
         borderRadius={2}
-        sx={{ backgroundColor: '#F4F4F4', marginBottom: '5px' }}
+        sx={{
+          backgroundColor: '#F4F4F4',
+          marginBottom: '5px',
+          flexDirection: { xs: 'column', sm: 'row' },
+        }}
       >
         <Grid
           item
-          display={'flex'}
-          alignItems={'center'}
-          justifyContent={'center'}
-          sx={{ padding: '10px', backgroundColor: 'white' }}
-          xs={1.5}
-          borderRadius={2}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          sx={{
+            padding: '10px',
+            backgroundColor: 'white',
+            borderRadius: { xs: '8px', sm: '2px' },
+            marginBottom: { xs: '5px', sm: '0' },
+          }}
+          xs={12}
+          sm={1.5}
         >
           1 customer
         </Grid>
         <Grid
           item
-          display={'flex'}
-          justifyContent={'space-between'}
-          alignItems={'center'}
-          xs={10.5}
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          xs={12}
+          sm={10.5}
           p={1}
         >
-          <Typography fontWeight="bold">100% of your customer base</Typography>
-          <Button sx={{ padding: '10px', backgroundColor: 'white' }}>
+          <Typography fontWeight="bold" fontSize={{ xs: '14px', sm: '16px' }}>
+            100% of your customer base
+          </Typography>
+          <Button
+            sx={{
+              padding: '8px',
+              backgroundColor: 'white',
+              fontSize: { xs: '12px', sm: '14px' },
+            }}
+          >
             Add filter <KeyboardArrowDownIcon />
           </Button>
         </Grid>
       </Grid>
+
       <Box
         display={'flex'}
         justifyContent={'space-between'}
-		alignItems={'center'}
+        alignItems={'center'}
         borderRadius={2}
         sx={{ marginBottom: '5px' }}
       >
@@ -224,7 +264,7 @@ export const CustomerDemo = () => {
               height: '40px', // Equal width and height to make it square
               minWidth: '40px', // Ensures it doesn't shrink
               borderRadius: '8px', // Slight rounding for a clean look
-			  marginRight: "5px",
+              marginRight: '5px',
               boxShadow: 1,
             }}
           >
@@ -270,13 +310,18 @@ export const CustomerDemo = () => {
           <TableBody>
             {customers.map((customer, index) => (
               <TableRow key={index}>
-                <TableCell>
+                <TableCell sx={{ cursor: 'pointer' }}>
                   <Checkbox
                     checked={selectedRows.includes(index)}
                     onChange={() => handleCheckboxChange(index)}
                   />
                 </TableCell>
-                <TableCell>
+                <TableCell
+                  sx={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    navigate(`/customer-detail/${customer.id}`);
+                  }}
+                >
                   <div
                     style={{
                       display: 'flex',
@@ -284,7 +329,7 @@ export const CustomerDemo = () => {
                       gap: '10px',
                     }}
                   >
-                    <Avatar src={customer.img} alt={customer.name} />
+                    <Avatar alt={customer.name} />
                     {customer.name}
                   </div>
                 </TableCell>
@@ -301,9 +346,30 @@ export const CustomerDemo = () => {
                     sx={{ borderRadius: '10px' }}
                   />
                 </TableCell>
-                <TableCell>{customer.location}</TableCell>
-                <TableCell>{customer.orders}</TableCell>
-                <TableCell>{customer.amountSpent}</TableCell>
+                <TableCell
+                  sx={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    navigate(`/customer-detail/${customer.id}`);
+                  }}
+                >
+                  {customer.location}
+                </TableCell>
+                <TableCell
+                  sx={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    navigate(`/customer-detail/${customer.id}`);
+                  }}
+                >
+                  {customer.orders}
+                </TableCell>
+                <TableCell
+                  sx={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    navigate(`/customer-detail/${customer.id}`);
+                  }}
+                >
+                  {customer.amountSpent}
+                </TableCell>
                 <TableCell>
                   <IconButton>
                     <MoreVertIcon />

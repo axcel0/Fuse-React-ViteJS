@@ -1,7 +1,10 @@
-import { CustomerDemo } from '@/components/CustomerDemo';
+
 import { CustomerHeader } from '@/components/CustomerHeader';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { styled } from '@mui/material/styles';
+import { CustomerDemo } from './components/CustomerDemo';
+import reducer from './store';
+import withReducer from '@/store/withReducer';
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
 	'& .FusePageSimple-header': {
@@ -30,4 +33,5 @@ function Customer() {
 	);
 }
 
-export default Customer;
+export default withReducer('customers', reducer)(Customer);
+
