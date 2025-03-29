@@ -16,6 +16,11 @@ import {
   Typography,
 } from "@mui/material";
 import CustomerTable from "./components/CustomerTable";
+import withReducer from "@/store/withReducer";
+import reducer from "../store";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { selectOpenLeftSidebar } from "@/store/slices/customerSlice";
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   "& .FusePageSimple-header": {
@@ -29,6 +34,11 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 }));
 
 const CustomerList = () => {
+  const dipatch = useDispatch();
+  const selectOpenLeftSideBar = useSelector(selectOpenLeftSidebar);
+
+  console.log("selectOpenLeftSideBar: ", selectOpenLeftSideBar);
+
   return (
     <Root
       header={<Header />}
@@ -115,4 +125,4 @@ const CustomerList = () => {
   );
 };
 
-export default CustomerList;
+export default withReducer("customer", reducer)(CustomerList);

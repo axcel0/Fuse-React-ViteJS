@@ -28,6 +28,14 @@ const navigationConfig: FuseNavItemType[] = [
     icon: "heroicons-outline:star",
     url: "customers",
   },
+  {
+    id: "customerDDetail",
+    title: "Customer Detail",
+    translate: "CustomerDetail",
+    type: "item",
+    icon: "heroicons-outline:star",
+    url: "customer-detail",
+  },
 ];
 
 export default navigationConfig;

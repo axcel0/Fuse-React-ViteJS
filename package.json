@@ -57,6 +57,7 @@
     "styled-components": "6.1.13",
     "stylis": "4.3.4",
     "stylis-plugin-rtl": "2.1.1",
+    "tailwind-scrollbar-hide": "^2.0.0",
     "type-fest": "4.30.0",
     "uuid": "11.0.3",
     "zod": "3.23.8"
@@ -77,8 +78,8 @@
     "@eslint/js": "9.16.0",
     "@hookform/devtools": "4.3.1",
     "@tailwindcss/aspect-ratio": "0.4.2",
-    "@tailwindcss/vite": "4.0.0",
     "@tailwindcss/typography": "0.5.15",
+    "@tailwindcss/vite": "4.0.0",
     "@types/autosuggest-highlight": "3.2.3",
     "@types/crypto-js": "4.2.2",
     "@types/draft-js": "0.11.18",
