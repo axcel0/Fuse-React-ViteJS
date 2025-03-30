@@ -5,8 +5,6 @@ import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import axios from 'axios';
-import { borderRadius } from '@mui/system';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/store/store';
 import { useSelector } from 'react-redux';
@@ -14,19 +12,25 @@ import { addNewCustomer } from '@/store/slices/customerSlice';
 
 const schema = yup.object().shape({
 	name: yup.string().required('Name is required'),
-	img: yup.string().url('Invalid URL').required('Image URL is required'),
+	img: yup.string().url('Invalid URL'),
 	emailSubscription: yup.string().required('Email subscription is required'),
 	location: yup.string().required('Location is required'),
-	orders: yup.string().required('Orders are required'),
-	amountSpent: yup.string().required('Amount spent is required'),
+	orders: yup.string().matches(/^\d+$/, 'Orders must be a valid number').required('Order is required'),
+	amountSpent: yup
+		.string()
+		.matches(/^\d+(\.\d+)?$/, 'Amount spent must be a valid number')
+		.required('Amount spent is required'),
 	email: yup.string().email('Invalid email').required('Email is required'),
-	phone: yup.string().required('Phone number is required'),
+	phone: yup
+		.string()
+		.matches(/^\d{9,15}$/, 'Phone number must be between 9 and 15 digits')
+		.required('Phone number is required'),
 	jobTitle: yup.string().required('Job title is required'),
-	contactOwner: yup.string().required('Contact owner is required'),
+	contactOwner: yup.string(),
 	companyName: yup.string().required('Company name is required'),
-	natureOfRelationship: yup.string().required('Nature of relationship is required'),
-	instagramAccount: yup.string().url('Invalid URL').required('Instagram account is required'),
-	tiktokAccount: yup.string().url('Invalid URL').required('TikTok account is required')
+	natureOfRelationship: yup.string(),
+	instagramAccount: yup.string().url('Invalid URL'),
+	tiktokAccount: yup.string().url('Invalid URL')
 });
 
 const style = {
@@ -36,7 +40,6 @@ const style = {
 	transform: 'translate(-50%, -50%)',
 	width: 400,
 	bgcolor: 'background.paper',
-	border: '2px solid #000',
 	boxShadow: 24,
 	p: 4,
 	borderRadius: 2
@@ -56,17 +59,17 @@ export const CustomerHeader = () => {
 		handleSubmit,
 		control,
 		reset,
-		formState: { errors }
+		formState: { errors, isValid }
 	} = useForm({
-		mode: 'onBlur',
+		mode: 'all',
 		resolver: yupResolver(schema)
 	});
 
 	const onSubmit = async (data) => {
 		try {
-			dispatch(addNewCustomer(data))
+			dispatch(addNewCustomer(data));
 			alert('Customer added successfully!');
-			handleClose()
+			handleClose();
 		} catch (error) {
 			alert('Error adding customer!');
 			console.error(error);
@@ -83,6 +86,11 @@ export const CustomerHeader = () => {
 		return fieldName
 			.replace(/([A-Z])/g, ' $1') // Add space before capital letters
 			.replace(/^./, (str) => str.toUpperCase()); // Capitalize the first letter
+	};
+
+	const isFieldRequired = (fieldName: string) => {
+		const fieldSchema = schema.fields[fieldName];
+		return fieldSchema?.describe()?.tests.some((test: any) => test.name === 'required');
 	};
 
 	return (
@@ -167,13 +175,20 @@ export const CustomerHeader = () => {
 													render={({ field }) => (
 														<TextField
 															{...field}
+															label={
+																<>
+																	<span>{formatLabel(field.name)}</span>{' '}
+																	{isFieldRequired(field.name) && (
+																		<span style={{ color: 'red' }}>*</span>
+																	)}
+																</>
+															}
 															fullWidth
-															label={formatLabel(field.name)}
 															variant="outlined"
 															error={!!errors[field.name]}
 															helperText={errors[field.name]?.message}
 															onBlur={(e) => {
-																field.onBlur(); // Trigger blur event for validation
+																field.onBlur();
 															}}
 														/>
 													)}
@@ -189,6 +204,7 @@ export const CustomerHeader = () => {
 												variant="contained"
 												color="primary"
 												fullWidth
+												disabled={!isValid}
 											>
 												Add Customer
 											</Button>

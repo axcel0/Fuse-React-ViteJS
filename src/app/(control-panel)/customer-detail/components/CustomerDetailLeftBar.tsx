@@ -123,11 +123,11 @@ export const CustomerDetailLeftBar = () => {
             </Box>
             <Box sx={{ marginBottom: 1 }}>
                 <Typography variant="body2" color="textSecondary">Contact Owner</Typography>
-                <Typography variant="body1" fontWeight="bold">{customerDetail?.contactOwner}</Typography>
+                <Typography variant="body1" fontWeight="bold">{customerDetail.contactOwner ? customerDetail.contactOwner : '-'}</Typography>
             </Box>
             <Box sx={{ marginBottom: 1 }}>
                 <Typography variant="body2" color="textSecondary">Last contacted</Typography>
-                <Typography variant="body1">-</Typography>
+                <Typography variant="body1">{customerDetail.lastContacted ? customerDetail.lastContacted : '-'}</Typography>
             </Box>
             <Box sx={{ marginBottom: 1 }}>
                 <Typography variant="body2" color="textSecondary">Company name</Typography>
@@ -135,15 +135,15 @@ export const CustomerDetailLeftBar = () => {
             </Box>
             <Box sx={{ marginBottom: 1 }}>
                 <Typography variant="body2" color="textSecondary">Nature of relationship</Typography>
-                <Typography variant="body1" fontWeight="bold">{customerDetail?.natureOfRelationship}</Typography>
+                <Typography variant="body1" fontWeight="bold">{customerDetail.natureOfRelationship ? customerDetail.natureOfRelationship : '-'}</Typography>
             </Box>
             <Box sx={{ marginBottom: 1 }}>
                 <Typography variant="body2" color="textSecondary">Instagram account</Typography>
-                <Typography variant="body1" fontWeight="bold">{customerDetail?.instagramAccount}</Typography>
+                <Typography variant="body1" fontWeight="bold">{customerDetail.instagramAccount ? customerDetail.instagramAccount : '-'}</Typography>
             </Box>
             <Box>
                 <Typography variant="body2" color="textSecondary">Tiktok account</Typography>
-                <Typography variant="body1" fontWeight="bold">{customerDetail?.tiktokAccount}</Typography>
+                <Typography variant="body1" fontWeight="bold">{customerDetail.tiktokAccount ? customerDetail.tiktokAccount : '-'}</Typography>
             </Box>
           </Box>
         )}

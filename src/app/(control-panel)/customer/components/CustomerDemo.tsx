@@ -85,25 +85,24 @@ export const CustomerDemo = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchTimeout, setSearchTimeout] = useState<number | null>(null);
 
+  useEffect(() => {
+    dispatch(getCustomers());
+  }, []);
 
-useEffect(() => {
-  dispatch(getCustomers());
-}, []);
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setSearchQuery(value);
 
-const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  const value = event.target.value;
-  setSearchQuery(value);
-  
-  if (searchTimeout) {
-    clearTimeout(searchTimeout);
-  }
+    if (searchTimeout) {
+      clearTimeout(searchTimeout);
+    }
 
-  const timeout = setTimeout(() => {
-    dispatch(searchCustomerByName(value)); 
-  }, 300); 
+    const timeout = setTimeout(() => {
+      dispatch(searchCustomerByName(value));
+    }, 300);
 
-  setSearchTimeout(timeout as unknown as number);
-};
+    setSearchTimeout(timeout as unknown as number);
+  };
 
   const getSelectedCustomer = (id: string) => {
     const customer = customers.find((cust) => cust.id === id);
@@ -127,11 +126,16 @@ const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   };
 
   const handleOpenDialog = () => setOpenDialog(true);
-  const handleCloseDialog = () => {setOpenDialog(false); handleClose()};
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    handleClose();
+  };
 
   const handleDeleteConfirm = (id) => {
-    handleDelete(id); // Call the delete function
-    setOpenDialog(false); // Close the dialog
+    console.log(id);
+    handleDelete(id); 
+    setOpenDialog(false);
+    handleClose();
   };
 
   const handleClose = () => {
@@ -149,7 +153,6 @@ const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
   const handleDelete = (id) => {
     dispatch(deleteCustomer(id));
-    handleClose();
   };
 
   if (!customers || loading) {
@@ -375,7 +378,7 @@ const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
                     navigate(`/customer-detail/${customer.id}`);
                   }}
                 >
-                  {customer.orders}
+                  {customer.orders} orders
                 </TableCell>
                 <TableCell
                   sx={{ cursor: 'pointer' }}
@@ -383,7 +386,7 @@ const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
                     navigate(`/customer-detail/${customer.id}`);
                   }}
                 >
-                  {customer.amountSpent}
+                  $ {customer.amountSpent}
                 </TableCell>
                 <TableCell>
                   <IconButton
@@ -403,6 +406,13 @@ const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
                     }}
                     MenuListProps={{
                       'aria-labelledby': 'basic-button',
+                    }}
+                    elevation={0} 
+                    sx={{
+                      '& .MuiPaper-root': {
+                        boxShadow: 'none',
+                      },
+                      
                     }}
                   >
                     <MenuItem
@@ -449,7 +459,7 @@ const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
                       </Button>
                       <Button
                         onClick={() => {
-                          handleDeleteConfirm(customer.id);
+                          handleDeleteConfirm(selectedCustomer.id)
                         }}
                         color="error"
                       >

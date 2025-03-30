@@ -46,7 +46,7 @@ function CustomerDetail() {
 			leftSidebarContent={<CustomerDetailLeftBar />}
 			leftSidebarOpen={isLgUp || leftSidebarOpen}
 			rightSidebarContent={<CustomerDetailRightBar />}
-			leftSidebarWidth={300}
+			leftSidebarWidth={320}
 			rightSidebarWidth={300}
 			rightSidebarVariant={isLgUp ? 'permanent' : 'temporary'}
 			leftSidebarVariant={isLgUp ? 'permanent' : 'temporary'}
