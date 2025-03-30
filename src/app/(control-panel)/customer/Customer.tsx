@@ -13,7 +13,9 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 		borderStyle: 'solid',
 		borderColor: theme.palette.divider
 	},
-	'& .FusePageSimple-content': {},
+	'& .FusePageSimple-content': {
+		backgroundColor: 'white'
+	},
 	'& .FusePageSimple-sidebarHeader': {},
 	'& .FusePageSimple-sidebarContent': {}
 }));

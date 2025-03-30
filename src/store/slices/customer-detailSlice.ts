@@ -24,9 +24,9 @@ export const getCustomerById = createAsyncThunk(
         size: 10,
       });
 
-      const data = await response.data;
+      // const data = await response.data;
   
-      return data;
+      return response;
     }
   );
 

@@ -1,19 +1,19 @@
 import FuseUtils from '@fuse/utils/FuseUtils';
-import customerResponseJson from '../customer/customer.json';
 import companyResponseJson from './company.json';
+import axios from 'axios';
+const MOCK_URL = import.meta.env.VITE_MOCKAPI_BASE_URL;
+
 
 class CustomerDetailService extends FuseUtils.EventEmitter {
 	// get task by id
-	getCustomerById = (params: any): Promise<any> => {
-		return new Promise((resolve, reject) => {
-			const customer = customerResponseJson.data.content.find((data) => data.id === Number(params.customerId));
-
-			if (customer) {
-				resolve({ data: customer });
-			} else {
-				reject(new Error(`Customer with ID ${params.customerId} not found`));
-			}
-		});
+	getCustomerById = async (params: any) => {
+		try {
+			const customer = await axios.get(`${MOCK_URL}/${params.customerId}`);
+			return customer.data; // Return only the data part of the response
+		} catch (error) {
+			console.error('Error fetching customer:', error);
+			throw error; // Rethrow the error to be handled by the caller
+		}
 	};
 
 	// get company

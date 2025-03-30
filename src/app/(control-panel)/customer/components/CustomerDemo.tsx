@@ -16,6 +16,13 @@ import {
   Button,
   Grid,
   InputBase,
+  Menu,
+  MenuItem,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -28,8 +35,14 @@ import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/store/store';
 import { useSelector } from 'react-redux';
-import { getCustomers } from '@/store/slices/customerSlice';
+import {
+  deleteCustomer,
+  getCustomers,
+  searchCustomerByName,
+  updateCustomer,
+} from '@/store/slices/customerSlice';
 import FuseLoading from '@fuse/core/FuseLoading';
+import EditCustomer from './EditCustomer';
 
 interface Customer {
   name: string;
@@ -39,81 +52,6 @@ interface Customer {
   orders: string;
   amountSpent: string;
 }
-
-// const customers: Customer[] = [
-//   {
-//     name: 'Esther Howard',
-//     img: 'https://via.placeholder.com/40',
-//     emailSubscription: 'Subscribed',
-//     location: 'Great Falls, Maryland',
-//     orders: '2 Orders',
-//     amountSpent: '$250.00',
-//   },
-//   {
-//     name: 'Leslie Alexander',
-//     img: 'https://via.placeholder.com/40',
-//     emailSubscription: 'Not Subscribed',
-//     location: 'Pasadena, Oklahoma',
-//     orders: '3 Orders',
-//     amountSpent: '$350.00',
-//   },
-//   {
-//     name: 'Guy Hawkins',
-//     img: 'https://via.placeholder.com/40',
-//     emailSubscription: 'Pending',
-//     location: 'Corona, Michigan',
-//     orders: 'N/A',
-//     amountSpent: '$0.00',
-//   },
-//   {
-//     name: 'Savannah Nguyen',
-//     img: 'https://via.placeholder.com/40',
-//     emailSubscription: 'Subscribed',
-//     location: 'Syracuse, Connecticut',
-//     orders: 'N/A',
-//     amountSpent: '$0.00',
-//   },
-//   {
-//     name: 'Bessie Cooper',
-//     img: 'https://via.placeholder.com/40',
-//     emailSubscription: 'Not Subscribed',
-//     location: 'Lansing, Illinois',
-//     orders: '1 Orders',
-//     amountSpent: '$470.00',
-//   },
-//   {
-//     name: 'Ronald Richards',
-//     img: 'https://via.placeholder.com/40',
-//     emailSubscription: 'Pending',
-//     location: 'Great Falls, Maryland',
-//     orders: '2 Orders',
-//     amountSpent: '$250.00',
-//   },
-//   {
-//     name: 'Marvin McKinney',
-//     img: 'https://via.placeholder.com/40',
-//     emailSubscription: 'Subscribed',
-//     location: 'Coppell, Virginia',
-//     orders: '2 Orders',
-//     amountSpent: '$150.00',
-//   },
-//   {
-//     name: 'Kathryn Murphy',
-//     img: 'https://via.placeholder.com/40',
-//     emailSubscription: 'Not Subscribed',
-//     location: 'Lafayette, California',
-//     orders: '3 Orders',
-//     amountSpent: '$250.00',
-//   },
-//   {
-//     name: 'Eleanor Pena',
-//     img: 'https://via.placeholder.com/40',
-//     emailSubscription: 'Pending',
-//     location: 'Corona, Michigan',
-//     orders: '1 Orders',
-//     amountSpent: '$250.00',
-//   },
-// ];
 
 const getChipColor = (status: string) => {
   switch (status) {
@@ -137,10 +75,82 @@ export const CustomerDemo = () => {
   const loading = customerStore?.loading;
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(
+    null
+  );
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchTimeout, setSearchTimeout] = useState<number | null>(null);
 
-  useEffect(() => {
-    dispatch(getCustomers());
-  }, []);
+
+useEffect(() => {
+  dispatch(getCustomers());
+}, []);
+
+const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const value = event.target.value;
+  setSearchQuery(value);
+  
+  if (searchTimeout) {
+    clearTimeout(searchTimeout);
+  }
+
+  const timeout = setTimeout(() => {
+    dispatch(searchCustomerByName(value)); 
+  }, 300); 
+
+  setSearchTimeout(timeout as unknown as number);
+};
+
+  const getSelectedCustomer = (id: string) => {
+    const customer = customers.find((cust) => cust.id === id);
+    setSelectedCustomer(customer);
+  };
+
+  const handleClick = (event, id) => {
+    setAnchorEl(event.currentTarget);
+    getSelectedCustomer(id);
+  };
+
+  const handleOpenEditModal = (customer) => {
+    setSelectedCustomer(customer);
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    handleClose();
+    // setSelectedCustomer(null)
+  };
+
+  const handleOpenDialog = () => setOpenDialog(true);
+  const handleCloseDialog = () => {setOpenDialog(false); handleClose()};
+
+  const handleDeleteConfirm = (id) => {
+    handleDelete(id); // Call the delete function
+    setOpenDialog(false); // Close the dialog
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleUpdateCustomer = async (updatedData: any) => {
+    handleCloseEditModal();
+    try {
+      await dispatch(updateCustomer(updatedData)); // Replace with your Redux action or API call
+    } catch (error) {
+      console.error('Failed to update customer:', error);
+    }
+  };
+
+  const handleDelete = (id) => {
+    dispatch(deleteCustomer(id));
+    handleClose();
+  };
 
   if (!customers || loading) {
     return <FuseLoading></FuseLoading>;
@@ -164,14 +174,15 @@ export const CustomerDemo = () => {
   };
 
   return (
-    <Box>
+    <Box bgcolor={'white'}>
       <Grid
         container
         borderRadius={2}
         sx={{
-          backgroundColor: '#F4F4F4',
           marginBottom: '5px',
           flexDirection: { xs: 'column', sm: 'row' },
+          border: 0.5,
+          borderRadius: 2,
         }}
       >
         <Grid
@@ -180,9 +191,9 @@ export const CustomerDemo = () => {
           alignItems="center"
           justifyContent="center"
           sx={{
-            padding: '10px',
-            backgroundColor: 'white',
-            borderRadius: { xs: '8px', sm: '2px' },
+            padding: 1,
+            backgroundColor: '#F9F9F9',
+            borderRadius: 2,
             marginBottom: { xs: '5px', sm: '0' },
           }}
           xs={12}
@@ -198,6 +209,7 @@ export const CustomerDemo = () => {
           xs={12}
           sm={10.5}
           p={1}
+          sx={{ backgroundColor: 'white', borderRadius: 2 }}
         >
           <Typography fontWeight="bold" fontSize={{ xs: '14px', sm: '16px' }}>
             100% of your customer base
@@ -205,7 +217,7 @@ export const CustomerDemo = () => {
           <Button
             sx={{
               padding: '8px',
-              backgroundColor: 'white',
+              backgroundColor: '#F9F9F9',
               fontSize: { xs: '12px', sm: '14px' },
             }}
           >
@@ -237,6 +249,7 @@ export const CustomerDemo = () => {
               display: 'flex',
               alignItems: 'center',
               width: 200,
+              bgcolor: 'white',
             }}
           >
             <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
@@ -245,6 +258,8 @@ export const CustomerDemo = () => {
             <InputBase
               sx={{ ml: 1, flex: 1 }}
               placeholder="Search Customer"
+              value={searchQuery}
+              onChange={handleSearchChange}
               inputProps={{ 'aria-label': 'search customer' }}
             />
           </Paper>
@@ -286,7 +301,7 @@ export const CustomerDemo = () => {
       </Box>
 
       <TableContainer component={Paper}>
-        <Table>
+        <Table sx={{ bgcolor: 'white' }}>
           <TableHead>
             <TableRow>
               <TableCell>
@@ -371,9 +386,77 @@ export const CustomerDemo = () => {
                   {customer.amountSpent}
                 </TableCell>
                 <TableCell>
-                  <IconButton>
+                  <IconButton
+                    onClick={(e) => {
+                      handleClick(e, customer.id);
+                    }}
+                  >
                     <MoreVertIcon />
                   </IconButton>
+                  <Menu
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                    MenuListProps={{
+                      'aria-labelledby': 'basic-button',
+                    }}
+                  >
+                    <MenuItem
+                      sx={{ boxShadow: 'none' }}
+                      onClick={() => handleOpenEditModal(customer)}
+                    >
+                      Edit
+                    </MenuItem>
+                    <EditCustomer
+                      open={isEditModalOpen}
+                      onClose={handleCloseEditModal}
+                      customer={selectedCustomer || {}}
+                      onSubmit={handleUpdateCustomer}
+                    />
+                    <MenuItem
+                      onClick={handleOpenDialog}
+                      sx={{ color: 'red', boxShadow: 'none' }}
+                    >
+                      Delete
+                    </MenuItem>
+                  </Menu>
+                  <Dialog
+                    open={openDialog}
+                    onClose={handleCloseDialog}
+                    aria-labelledby="delete-confirmation-dialog"
+                    BackdropProps={{
+                      style: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.2)', // Semi-transparent black
+                      },
+                    }}
+                  >
+                    <DialogTitle id="delete-confirmation-dialog">
+                      Delete Customer
+                    </DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>
+                        Are you sure you want to delete this customer? This
+                        action cannot be undone.
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleCloseDialog} color="primary">
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          handleDeleteConfirm(customer.id);
+                        }}
+                        color="error"
+                      >
+                        Delete
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
                 </TableCell>
               </TableRow>
             ))}
