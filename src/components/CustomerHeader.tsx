@@ -83,9 +83,7 @@ export const CustomerHeader = () => {
 	};
 
 	const formatLabel = (fieldName: string) => {
-		return fieldName
-			.replace(/([A-Z])/g, ' $1') // Add space before capital letters
-			.replace(/^./, (str) => str.toUpperCase()); // Capitalize the first letter
+		return fieldName.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase());
 	};
 
 	const isFieldRequired = (fieldName: string) => {

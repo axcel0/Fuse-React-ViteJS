@@ -90,9 +90,9 @@ const customerSlice = createSlice({
         state.loading = false;
 
         if (state.data) {
-          state.data.push(action.payload); // Add the new customer to the existing list
+          state.data.push(action.payload); 
         } else {
-          state.data = [action.payload]; // If the list is empty, initialize with the new customer
+          state.data = [action.payload];
         }
       })
       .addCase(addNewCustomer.rejected, (state) => {
@@ -123,13 +123,11 @@ const customerSlice = createSlice({
         state.loading = false;
 
         if (state.data) {
-          // Find the index of the customer to be updated
           const index = state.data.findIndex(
             (customer) => customer.id === action.payload.id
           );
 
           if (index !== -1) {
-            // Update the existing customer with the new data
             state.data[index] = action.payload;
           }
         }

@@ -9,10 +9,10 @@ class CustomerDetailService extends FuseUtils.EventEmitter {
 	getCustomerById = async (params: any) => {
 		try {
 			const customer = await axios.get(`${MOCK_URL}/${params.customerId}`);
-			return customer.data; // Return only the data part of the response
+			return customer.data; 
 		} catch (error) {
 			console.error('Error fetching customer:', error);
-			throw error; // Rethrow the error to be handled by the caller
+			throw error; 
 		}
 	};
 

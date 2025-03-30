@@ -50,7 +50,7 @@ function CustomerDetail() {
 			rightSidebarWidth={300}
 			rightSidebarVariant={isLgUp ? 'permanent' : 'temporary'}
 			leftSidebarVariant={isLgUp ? 'permanent' : 'temporary'}
-			rightSidebarOpen={isLgUp || rightSidebarOpen} // Open only on large screens or when manually opened
+			rightSidebarOpen={isLgUp || rightSidebarOpen} 
 			rightSidebarOnClose={() => setRightSidebarOpen(false)}
 			leftSidebarOnClose={() => setLeftSidebarOpen(false)}
 			header={
@@ -58,7 +58,7 @@ function CustomerDetail() {
 					display={'flex'}
 					justifyContent={'space-between'}
 				>
-					{!isLgUp && ( // Show the toggle button only when the screen size is smaller than large
+					{!isLgUp && (
 						<IconButton
 							onClick={toggleLeftSidebar}
 							color="primary"
@@ -66,7 +66,7 @@ function CustomerDetail() {
 							{leftSidebarOpen ? <CloseIcon /> : <FormatAlignLeftIcon />}
 						</IconButton>
 					)}
-					{!isLgUp && ( // Show the toggle button only when the screen size is smaller than large
+					{!isLgUp && ( 
 						<IconButton
 							onClick={toggleRightSidebar}
 							color="primary"
