@@ -17,6 +17,16 @@ Tailwind utilities styles
 */
 @import "tailwindcss/utilities.css" layer(utilities);
 
+/**
+Print styles
+*/
+@import './print.css';
+
+/**
+Tables styles
+*/
+@import './tables.css';
+
 
 @layer utilities {
     [dir="rtl"] [class*="space-x-"] > :not([hidden]) ~ :not([hidden]) {
@@ -120,12 +130,4 @@ Theme variables
     font-size: var(--text-base);
     line-height: var(--text-base-line-height);
 }
-/**
-Print styles
-*/
-@import './print.css';
 
-/**
-Tables styles
-*/
-@import './tables.css';
