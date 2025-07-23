@@ -12,9 +12,14 @@ import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
 import { format } from 'date-fns/format';
 import { useState } from 'react';
-import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+// import { useAppDispatch, useAppSelector } from 'src/store/hooks'; // Removed: using props instead
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { selectQuickPanelData, selectQuickPanelOpen, toggleQuickPanel } from './quickPanelSlice';
+// import { selectQuickPanelData, selectQuickPanelOpen, toggleQuickPanel } from './quickPanelSlice'; // Removed: using props
+
+interface QuickPanelProps {
+	open?: boolean;
+	onClose?: () => void;
+}
 
 const StyledSwipeableDrawer = styled(SwipeableDrawer)(() => ({
 	'& .MuiDrawer-paper': {
@@ -25,10 +30,13 @@ const StyledSwipeableDrawer = styled(SwipeableDrawer)(() => ({
 /**
  * The quick panel.
  */
-function QuickPanel() {
-	const dispatch = useAppDispatch();
-	const data = useAppSelector(selectQuickPanelData);
-	const open = useAppSelector(selectQuickPanelOpen);
+function QuickPanel({ open = false, onClose }: QuickPanelProps) {
+	// TODO: Replace with proper data fetching using TanStack Query
+	const data = {
+		notes: [],
+		events: [],
+		tasks: []
+	};
 
 	const [checked, setChecked] = useState<string[]>(['notifications']);
 
@@ -50,7 +58,7 @@ function QuickPanel() {
 			open={open}
 			anchor="right"
 			onOpen={() => {}}
-			onClose={() => dispatch(toggleQuickPanel())}
+			onClose={() => onClose?.()}
 			disableSwipeToOpen
 		>
 			<FuseScrollbars>

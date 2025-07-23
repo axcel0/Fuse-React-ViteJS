@@ -16,12 +16,12 @@ import { FirebaseSignUpPayload } from '../FirebaseAuthProvider';
  */
 const schema = z
 	.object({
-		email: z.string().email('You must enter a valid email').nonempty('You must enter an email'),
+		email: z.string().email('You must enter a valid email').min(1, 'You must enter an email'),
 		password: z
 			.string()
-			.nonempty('Please enter your password.')
+			.min(1, 'Please enter your password.')
 			.min(8, 'Password is too short - should be 8 chars minimum.'),
-		passwordConfirm: z.string().nonempty('Password confirmation is required'),
+		passwordConfirm: z.string().min(1, 'Password confirmation is required'),
 		acceptTermsConditions: z.boolean().refine((val) => val === true, 'The terms and conditions must be accepted.')
 	})
 	.refine((data) => data.password === data.passwordConfirm, {

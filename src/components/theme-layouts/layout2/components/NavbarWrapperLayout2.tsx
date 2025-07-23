@@ -1,15 +1,8 @@
 import { styled, ThemeProvider } from '@mui/material/styles';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import { memo, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+import { memo, useEffect, useState } from 'react';
 import NavbarToggleFabLayout2 from 'src/components/theme-layouts/layout2/components/NavbarToggleFabLayout2';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
-import {
-	navbarCloseMobile,
-	navbarSlice,
-	selectFuseNavbar
-} from 'src/components/theme-layouts/components/navbar/navbarSlice';
-import withSlices from 'src/store/withSlices';
 import usePathname from '@fuse/hooks/usePathname';
 import { useNavbarTheme } from '@fuse/core/FuseSettings/hooks/fuseThemeHooks';
 import useFuseLayoutSettings from '@fuse/core/FuseLayout/useFuseLayoutSettings';
@@ -39,20 +32,31 @@ type NavbarWrapperLayout2Props = {
  */
 function NavbarWrapperLayout2(props: NavbarWrapperLayout2Props) {
 	const { className = '' } = props;
-	const dispatch = useAppDispatch();
+	const [mobileOpen, setMobileOpen] = useState(false);
 
 	const { config } = useFuseLayoutSettings();
 
 	const navbarTheme = useNavbarTheme();
-	const navbar = useAppSelector(selectFuseNavbar);
 	const pathname = usePathname();
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
 	useEffect(() => {
 		if (isMobile) {
-			dispatch(navbarCloseMobile());
+			setMobileOpen(false);
 		}
-	}, [pathname, isMobile, dispatch]);
+	}, [pathname, isMobile]);
+
+	const handleMobileClose = () => {
+		setMobileOpen(false);
+	};
+
+	const handleMobileToggle = () => {
+		setMobileOpen(!mobileOpen);
+	};
+
+	const handleToggle = () => {
+		// Desktop navbar toggle logic if needed
+	};
 
 	return (
 		<>
@@ -63,8 +67,8 @@ function NavbarWrapperLayout2(props: NavbarWrapperLayout2Props) {
 					<StyledSwipeableDrawer
 						anchor="left"
 						variant="temporary"
-						open={navbar.mobileOpen}
-						onClose={() => dispatch(navbarCloseMobile())}
+						open={mobileOpen}
+						onClose={handleMobileClose}
 						onOpen={() => {}}
 						disableSwipeToOpen
 						className={className}
@@ -76,11 +80,14 @@ function NavbarWrapperLayout2(props: NavbarWrapperLayout2Props) {
 					</StyledSwipeableDrawer>
 				)}
 			</ThemeProvider>
-			{config.navbar.display && !config.toolbar.display && isMobile && <NavbarToggleFabLayout2 />}
+			{config.navbar.display && !config.toolbar.display && isMobile && (
+				<NavbarToggleFabLayout2 
+					onToggle={handleToggle}
+					onToggleMobile={handleMobileToggle}
+				/>
+			)}
 		</>
 	);
 }
 
-const NavbarWithSlices = withSlices<NavbarWrapperLayout2Props>([navbarSlice])(memo(NavbarWrapperLayout2));
-
-export default NavbarWithSlices;
+export default memo(NavbarWrapperLayout2);

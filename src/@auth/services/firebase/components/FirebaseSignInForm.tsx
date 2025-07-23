@@ -5,8 +5,8 @@ import { Controller, useForm } from 'react-hook-form';
 import _ from 'lodash';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useAppDispatch } from 'src/store/hooks';
-import { showMessage } from '@fuse/core/FuseMessage/fuseMessageSlice';
+// import { useAppDispatch } from 'src/store/hooks'; // Removed: migrated to TanStack Query
+// import { showMessage } from '@fuse/core/FuseMessage/fuseMessageSlice'; // Removed: use useFuseMessage hook
 import firebase from 'firebase/compat/app';
 import useFirebaseAuth from '../useFirebaseAuth';
 import { FirebaseSignInPayload } from '../FirebaseAuthProvider';
@@ -15,11 +15,11 @@ import { FirebaseSignInPayload } from '../FirebaseAuthProvider';
  * Form Validation Schema
  */
 const schema = z.object({
-	email: z.string().email('You must enter a valid email').nonempty('You must enter an email'),
+	email: z.string().email('You must enter a valid email').min(1, 'You must enter an email'),
 	password: z
 		.string()
 		.min(4, 'Password is too short - must be at least 4 chars.')
-		.nonempty('Please enter your password.')
+		.min(1, 'Please enter your password.')
 });
 
 type FormType = FirebaseSignInPayload;

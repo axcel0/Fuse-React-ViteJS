@@ -3,13 +3,13 @@ import { styled } from '@mui/material/styles';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import clsx from 'clsx';
 import { memo, useEffect, useState } from 'react';
-import { useAppDispatch } from 'src/store/hooks';
+// import { useAppDispatch } from 'src/store/hooks'; // Removed: using props instead
 import FuseNavigation from '@fuse/core/FuseNavigation';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import isUrlInChildren from '@fuse/core/FuseNavigation/isUrlInChildren';
 import { Theme } from '@mui/system';
 import { FuseNavItemType } from '@fuse/core/FuseNavigation/types/FuseNavItemType';
-import { navbarCloseMobile } from 'src/components/theme-layouts/components/navbar/navbarSlice';
+// import { navbarCloseMobile } from 'src/components/theme-layouts/components/navbar/navbarSlice'; // Removed: using props
 import UserMenu from 'src/components/theme-layouts/components/UserMenu';
 import usePathname from '@fuse/hooks/usePathname';
 import useNavigation from '@/components/theme-layouts/components/navigation/hooks/useNavigation';
@@ -52,18 +52,22 @@ function needsToBeOpened(pathname: string, item: FuseNavItemType) {
 	return pathname && isUrlInChildren(item, pathname);
 }
 
-type NavbarStyle3ContentProps = { className?: string; dense?: number };
+type NavbarStyle3ContentProps = { 
+	className?: string; 
+	dense?: number;
+	onMobileNavClose?: () => void; // Added for navbar close functionality
+};
 
 /**
  * The navbar style 3 content.
  */
 function NavbarStyle3Content(props: NavbarStyle3ContentProps) {
-	const { className = '', dense = false } = props;
+	const { className = '', dense = false, onMobileNavClose } = props;
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 	const { navigation } = useNavigation();
 	const [selectedNavigation, setSelectedNavigation] = useState<FuseNavItemType[]>([]);
 	const [panelOpen, setPanelOpen] = useState(false);
-	const dispatch = useAppDispatch();
+	// const dispatch = useAppDispatch(); // Removed: using props instead
 	const pathname = usePathname();
 
 	useEffect(() => {
@@ -100,8 +104,8 @@ function NavbarStyle3Content(props: NavbarStyle3ContentProps) {
 	function handleChildItemClick() {
 		setPanelOpen(false);
 
-		if (isMobile) {
-			dispatch(navbarCloseMobile());
+		if (isMobile && onMobileNavClose) {
+			onMobileNavClose();
 		}
 	}
 

@@ -2,7 +2,7 @@ import FuseUtils from '@fuse/utils';
 import Base64 from 'crypto-js/enc-base64';
 import HmacSHA256 from 'crypto-js/hmac-sha256';
 import Utf8 from 'crypto-js/enc-utf8';
-import jwtDecode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { PartialDeep } from 'type-fest';
 import UserModel from '@auth/user/models/UserModel';
 import { User } from '@auth/user';

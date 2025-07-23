@@ -17,11 +17,11 @@ import { JwtSignInPayload } from '../JwtAuthProvider';
  * Form Validation Schema
  */
 const schema = z.object({
-	email: z.string().email('You must enter a valid email').nonempty('You must enter an email'),
+	email: z.string().email('You must enter a valid email').min(1, 'You must enter an email'),
 	password: z
 		.string()
 		.min(4, 'Password is too short - must be at least 4 chars.')
-		.nonempty('Please enter your password.')
+		.min(1, 'Please enter your password.')
 });
 
 type FormType = JwtSignInPayload & {

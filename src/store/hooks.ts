@@ -1,27 +1,21 @@
-// DEPRECATED: These hooks are deprecated and should be replaced with TanStack Query
-// This file exists only for compatibility during migration
-// See MIGRATION_GUIDE.md for migration instructions
+// Migration: Redux removed, this file provides compatibility exports
+// Components should migrate to TanStack Query for server state
+// and React Context/useState for local component state
 
 export const useAppDispatch = () => {
-	console.warn('useAppDispatch is deprecated. Please migrate to TanStack Query hooks.');
-	return (action: any) => {
-		console.warn('Dispatch action ignored:', action);
-	};
+  console.warn('useAppDispatch is deprecated. Please migrate to React Context or TanStack Query.');
+  return () => console.warn('Redux dispatch is deprecated');
 };
 
 export const useAppSelector = (selector: any) => {
-	console.warn('useAppSelector is deprecated. Please migrate to TanStack Query hooks.');
-	// Return some default values for compatibility
-	if (selector.toString().includes('selectQuickPanelOpen')) {
-		return false;
-	}
-	if (selector.toString().includes('selectQuickPanelData')) {
-		return { notes: [], events: [] };
-	}
-	return null;
+  console.warn('useAppSelector is deprecated. Please migrate to React Context or TanStack Query.');
+  // Return empty object or default values to prevent crashes
+  if (typeof selector === 'function') {
+    return selector({});
+  }
+  return {};
 };
 
-export const useAppStore = () => {
-	console.warn('useAppStore is deprecated. Please migrate to TanStack Query hooks.');
-	return null;
-};
+// Legacy compatibility exports
+export type AppDispatch = () => void;
+export type RootState = {};
