@@ -1,11 +1,6 @@
 import { styled } from '@mui/material/styles';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import {
-	navbarCloseMobile,
-	resetNavbar,
-	selectFuseNavbar
-} from 'src/components/theme-layouts/components/navbar/navbarSlice';
+import { useNavbar } from 'src/components/theme-layouts/components/navbar/NavbarContext';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { Theme } from '@mui/system/createTheme';
 import clsx from 'clsx';
@@ -200,7 +195,7 @@ type NavbarStyle3Props = {
  */
 function NavbarStyle3(props: NavbarStyle3Props) {
 	const { className = '', dense = false } = props;
-	const dispatch = useAppDispatch();
+	const { navbar, navbarCloseMobile, resetNavbar } = useNavbar();
 
 	const settings = useFuseLayoutSettings();
 	const config = settings.config as Layout1ConfigDefaultsType;
@@ -208,13 +203,11 @@ function NavbarStyle3(props: NavbarStyle3Props) {
 
 	const { folded } = config.navbar;
 
-	const navbar = useAppSelector(selectFuseNavbar);
-
 	useEffect(() => {
 		return () => {
-			dispatch(resetNavbar());
+			resetNavbar();
 		};
-	}, [dispatch]);
+	}, [resetNavbar]);
 
 	return (
 		<>
@@ -258,7 +251,7 @@ function NavbarStyle3(props: NavbarStyle3Props) {
 					anchor={config.navbar.position as 'left' | 'right'}
 					variant="temporary"
 					open={navbar.mobileOpen}
-					onClose={() => dispatch(navbarCloseMobile())}
+					onClose={() => navbarCloseMobile()}
 					onOpen={() => {}}
 					disableSwipeToOpen
 					ModalProps={{

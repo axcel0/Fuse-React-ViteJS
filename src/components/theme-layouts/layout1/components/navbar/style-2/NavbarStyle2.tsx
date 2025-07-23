@@ -1,13 +1,6 @@
 import { styled } from '@mui/material/styles';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import {
-	navbarCloseFolded,
-	navbarCloseMobile,
-	navbarOpenFolded,
-	resetNavbar,
-	selectFuseNavbar
-} from 'src/components/theme-layouts/components/navbar/navbarSlice';
-import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+import { useNavbar } from 'src/components/theme-layouts/components/navbar/NavbarContext';
 
 import { Theme } from '@mui/system/createTheme';
 import { useEffect } from 'react';
@@ -172,13 +165,11 @@ const StyledNavbarMobile = styled(SwipeableDrawer)<StyledNavBarProps>(({ theme }
  * The navbar style 2.
  */
 function NavbarStyle2() {
-	const dispatch = useAppDispatch();
+	const { navbar, navbarOpenFolded, navbarCloseFolded, navbarCloseMobile, resetNavbar } = useNavbar();
 
 	const settings = useFuseLayoutSettings();
 	const config = settings.config as Layout1ConfigDefaultsType;
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
-
-	const navbar = useAppSelector(selectFuseNavbar);
 
 	const folded = config.navbar?.folded;
 	const foldedandclosed = folded && !navbar.foldedOpen;
@@ -186,9 +177,9 @@ function NavbarStyle2() {
 
 	useEffect(() => {
 		return () => {
-			dispatch(resetNavbar());
+			resetNavbar();
 		};
-	}, [dispatch]);
+	}, [resetNavbar]);
 
 	return (
 		<Root
@@ -204,8 +195,8 @@ function NavbarStyle2() {
 					folded={folded ? 1 : 0}
 					foldedandopened={foldedandopened ? 1 : 0}
 					foldedandclosed={foldedandclosed ? 1 : 0}
-					onMouseEnter={() => foldedandclosed && dispatch(navbarOpenFolded())}
-					onMouseLeave={() => foldedandopened && dispatch(navbarCloseFolded())}
+					onMouseEnter={() => foldedandclosed && navbarOpenFolded()}
+					onMouseLeave={() => foldedandopened && navbarCloseFolded()}
 				>
 					<NavbarStyle2Content className="NavbarStyle2-content" />
 				</StyledNavbar>
@@ -223,7 +214,7 @@ function NavbarStyle2() {
 					anchor={config?.navbar?.position as 'left' | 'top' | 'right' | 'bottom'}
 					variant="temporary"
 					open={navbar.mobileOpen}
-					onClose={() => dispatch(navbarCloseMobile())}
+					onClose={() => navbarCloseMobile()}
 					onOpen={() => {}}
 					disableSwipeToOpen
 					ModalProps={{

@@ -1,4 +1,4 @@
-import { matchRoutes, RouteMatch } from 'react-router';
+import { matchRoutes, RouteMatch } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
 import _ from 'lodash';
 import { FuseRouteObjectType } from '@fuse/core/FuseLayout/FuseLayout';

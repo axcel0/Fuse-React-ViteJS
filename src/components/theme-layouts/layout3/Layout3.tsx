@@ -6,7 +6,7 @@ import { memo, ReactNode, Suspense } from 'react';
 import Configurator from 'src/components/theme-layouts/components/configurator/Configurator';
 import useFuseLayoutSettings from '@fuse/core/FuseLayout/useFuseLayoutSettings';
 import FuseSuspense from '@fuse/core/FuseSuspense';
-import { Outlet } from 'react-router';
+import { Outlet } from 'react-router-dom';
 import FooterLayout3 from './components/FooterLayout3';
 import LeftSideLayout3 from './components/LeftSideLayout3';
 import NavbarWrapperLayout3 from './components/NavbarWrapperLayout3';

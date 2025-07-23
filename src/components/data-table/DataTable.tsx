@@ -2,7 +2,7 @@ import { MaterialReactTable, useMaterialReactTable, MaterialReactTableProps, MRT
 import _ from 'lodash';
 import { useMemo } from 'react';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { Theme } from '@mui/material/styles/createTheme';
+import type { Theme } from '@mui/material/styles';
 import DataTableTopToolbar from './DataTableTopToolbar';
 
 const tableIcons: Partial<MRT_Icons> = {

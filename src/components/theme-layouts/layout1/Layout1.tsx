@@ -1,14 +1,14 @@
 import { styled } from '@mui/material/styles';
 import FuseMessage from '@fuse/core/FuseMessage';
 import { memo, ReactNode, Suspense } from 'react';
-import { Outlet } from 'react-router';
+import { Outlet } from 'react-router-dom';
 import { Layout1ConfigDefaultsType } from 'src/components/theme-layouts/layout1/Layout1Config';
 import Configurator from 'src/components/theme-layouts/components/configurator/Configurator';
 import useFuseLayoutSettings from '@fuse/core/FuseLayout/useFuseLayoutSettings';
 import FuseSuspense from '@fuse/core/FuseSuspense';
 import FooterLayout1 from './components/FooterLayout1';
 import LeftSideLayout1 from './components/LeftSideLayout1';
-import NavbarWrapperLayout1 from './components/NavbarWrapperLayout1';
+import MaterialNavbar from '../components/navbar/MaterialNavbar';
 import RightSideLayout1 from './components/RightSideLayout1';
 import ToolbarLayout1 from './components/ToolbarLayout1';
 import FuseDialog from '@fuse/core/FuseDialog';
@@ -50,7 +50,7 @@ function Layout1(props: Layout1Props) {
 			{config.leftSidePanel.display && <LeftSideLayout1 />}
 
 			<div className="flex min-w-0 flex-auto">
-				{config.navbar.display && config.navbar.position === 'left' && <NavbarWrapperLayout1 />}
+				{config.navbar.display && config.navbar.position === 'left' && <MaterialNavbar />}
 
 				<main
 					id="fuse-main"
@@ -79,7 +79,7 @@ function Layout1(props: Layout1Props) {
 					)}
 				</main>
 
-				{config.navbar.display && config.navbar.position === 'right' && <NavbarWrapperLayout1 />}
+				{config.navbar.display && config.navbar.position === 'right' && <MaterialNavbar />}
 			</div>
 
 			{config.rightSidePanel.display && <RightSideLayout1 />}

@@ -1,6 +1,6 @@
 // Dynamically import all *ConfigConfig.tsx files from the app folder
 import { FuseRouteConfigType, FuseRoutesType } from '@fuse/utils/FuseUtils';
-import { Navigate } from 'react-router';
+import { Navigate } from 'react-router-dom';
 import FuseLoading from '@fuse/core/FuseLoading';
 import ErrorBoundary from '@fuse/utils/ErrorBoundary';
 import { layoutConfigOnlyMain } from './layoutConfigTemplates';

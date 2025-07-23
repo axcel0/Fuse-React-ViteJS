@@ -32,7 +32,8 @@ const defaultValues = {
 
 function FirebaseSignInForm() {
 	const { signIn } = useFirebaseAuth();
-	const dispatch = useAppDispatch();
+	// TODO: Replace with TanStack Query mutation for better error handling
+	// const dispatch = useAppDispatch();
 
 	const { control, formState, handleSubmit, setValue, setError } = useForm<FormType>({
 		mode: 'onChange',
@@ -85,7 +86,8 @@ function FirebaseSignInForm() {
 			}
 
 			if (!emailErrorCodes.includes(error.code)) {
-				dispatch(showMessage({ message: error.message }));
+				// TODO: Replace with proper error handling using TanStack Query
+				console.error('Firebase Auth Error:', error.message);
 			}
 
 			errors.forEach((err) => {

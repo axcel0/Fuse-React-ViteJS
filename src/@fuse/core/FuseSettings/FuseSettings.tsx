@@ -4,7 +4,7 @@ import themeLayoutConfigs, { themeLayoutDefaultsProps } from 'src/components/the
 import _ from 'lodash';
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Switch, Typography } from '@mui/material';
 import { memo, useEffect, useMemo } from 'react';
-import { Palette } from '@mui/material/styles/createPalette';
+import type { Palette } from '@mui/material/styles';
 import { PartialDeep } from 'type-fest';
 import FuseLayoutConfigs from '@fuse/core/FuseSettings/FuseLayoutConfigs';
 import usePrevious from '@fuse/hooks/usePrevious';

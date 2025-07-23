@@ -1,101 +1,56 @@
-import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk, RootState } from 'src/store/store';
-import { PartialDeep } from 'type-fest';
+// Migration: Redux slice replaced with simplified compatibility layer
+// This file provides compatibility exports during migration
+
 import { FuseFlatNavItemType, FuseNavItemType } from '@fuse/core/FuseNavigation/types/FuseNavItemType';
 import FuseNavigationHelper from '@fuse/utils/FuseNavigationHelper';
 import FuseNavItemModel from '@fuse/core/FuseNavigation/models/FuseNavItemModel';
 import navigationConfig from 'src/configs/navigationConfig';
 
-const navigationAdapter = createEntityAdapter<FuseFlatNavItemType>();
+// Initialize navigation data
+const initialNavigation = FuseNavigationHelper.flattenNavigation(navigationConfig);
 
-const emptyInitialState = navigationAdapter.getInitialState([]);
+// Legacy action creators (now simplified)
+export const appendNavigationItem = (item: FuseNavItemType, parentId?: string | null) => {
+  console.warn('appendNavigationItem action is deprecated. Navigation should be managed via context');
+  return { type: 'DEPRECATED', payload: { item, parentId } };
+};
 
-const initialState = navigationAdapter.upsertMany(
-	emptyInitialState,
-	FuseNavigationHelper.flattenNavigation(navigationConfig)
-);
+export const prependNavigationItem = (item: FuseNavItemType, parentId?: string | null) => {
+  console.warn('prependNavigationItem action is deprecated. Navigation should be managed via context');
+  return { type: 'DEPRECATED', payload: { item, parentId } };
+};
 
-/**
- * Redux Thunk actions related to the navigation store state
- */
-/**
- * Appends a navigation item to the navigation store state.
- */
-export const appendNavigationItem =
-	(item: FuseNavItemType, parentId?: string | null): AppThunk =>
-	async (dispatch, getState) => {
-		const AppState = getState();
-		const navigation = FuseNavigationHelper.unflattenNavigation(selectNavigationAll(AppState));
+export const updateNavigationItem = (id: string, item: any) => {
+  console.warn('updateNavigationItem action is deprecated. Navigation should be managed via context');
+  return { type: 'DEPRECATED', payload: { id, item } };
+};
 
-		dispatch(setNavigation(FuseNavigationHelper.appendNavItem(navigation, FuseNavItemModel(item), parentId)));
+export const removeNavigationItem = (id: string) => {
+  console.warn('removeNavigationItem action is deprecated. Navigation should be managed via context');
+  return { type: 'DEPRECATED', payload: { id } };
+};
 
-		return Promise.resolve();
-	};
+export const setNavigation = (navigation: FuseNavItemType[]) => {
+  console.warn('setNavigation action is deprecated. Navigation should be managed via context');
+  return { type: 'DEPRECATED', payload: navigation };
+};
 
-/**
- * Prepends a navigation item to the navigation store state.
- */
-export const prependNavigationItem =
-	(item: FuseNavItemType, parentId?: string | null): AppThunk =>
-	async (dispatch, getState) => {
-		const AppState = getState();
-		const navigation = FuseNavigationHelper.unflattenNavigation(selectNavigationAll(AppState));
+export const resetNavigation = () => {
+  console.warn('resetNavigation action is deprecated. Navigation should be managed via context');
+  return { type: 'DEPRECATED' };
+};
 
-		dispatch(setNavigation(FuseNavigationHelper.prependNavItem(navigation, FuseNavItemModel(item), parentId)));
+// Legacy selectors (now return static data for compatibility)
+export const selectNavigationAll = (state?: any) => initialNavigation;
+export const selectNavigationIds = (state?: any) => initialNavigation.map((item: FuseFlatNavItemType) => item.id);
+export const selectNavigationItemById = (state?: any, id?: string) => 
+  initialNavigation.find((item: FuseFlatNavItemType) => item.id === id);
 
-		return Promise.resolve();
-	};
-
-/**
- * Adds a navigation item to the navigation store state at the specified index.
- */
-export const updateNavigationItem =
-	(id: string, item: PartialDeep<FuseNavItemType>): AppThunk =>
-	async (dispatch, getState) => {
-		const AppState = getState();
-		const navigation = FuseNavigationHelper.unflattenNavigation(selectNavigationAll(AppState));
-
-		dispatch(setNavigation(FuseNavigationHelper.updateNavItem(navigation, id, item)));
-
-		return Promise.resolve();
-	};
-
-/**
- * Removes a navigation item from the navigation store state.
- */
-export const removeNavigationItem =
-	(id: string): AppThunk =>
-	async (dispatch, getState) => {
-		const AppState = getState();
-		const navigation = FuseNavigationHelper.unflattenNavigation(selectNavigationAll(AppState));
-
-		dispatch(setNavigation(FuseNavigationHelper.removeNavItem(navigation, id)));
-
-		return Promise.resolve();
-	};
-
-export const {
-	selectAll: selectNavigationAll,
-	selectIds: selectNavigationIds,
-	selectById: selectNavigationItemById
-} = navigationAdapter.getSelectors<RootState>((state) => state.navigation);
-
-/**
- * The navigation slice
- */
-export const navigationSlice = createSlice({
-	name: 'navigation',
-	initialState,
-	reducers: {
-		setNavigation(state, action: PayloadAction<FuseNavItemType[]>) {
-			return navigationAdapter.setAll(state, FuseNavigationHelper.flattenNavigation(action.payload));
-		},
-		resetNavigation: () => initialState
-	}
-});
-
-export const { setNavigation, resetNavigation } = navigationSlice.actions;
+// Compatibility exports
+export const navigationSlice = {
+  actions: { setNavigation, resetNavigation },
+  name: 'navigation'
+};
 
 export type navigationSliceType = typeof navigationSlice;
-
-export default navigationSlice.reducer;
+export default {}; // Empty reducer for compatibility

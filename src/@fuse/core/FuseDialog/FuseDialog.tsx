@@ -1,25 +1,25 @@
 import Dialog from '@mui/material/Dialog';
-import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import { closeDialog, selectFuseDialogProps } from '@fuse/core/FuseDialog/fuseDialogSlice';
+import { useFuseDialog } from '@fuse/core/FuseDialog/FuseDialogContext';
 
 /**
  * FuseDialog component
- * This component renders a material UI ```Dialog``` component
- * with properties pulled from the redux store
+ * This component renders a material UI Dialog component
+ * with properties pulled from the FuseDialogContext
  */
 function FuseDialog() {
-	const dispatch = useAppDispatch();
-	const options = useAppSelector(selectFuseDialogProps);
+	const { dialogState, closeDialog } = useFuseDialog();
 
 	return (
 		<Dialog
-			onClose={() => dispatch(closeDialog())}
+			onClose={() => closeDialog()}
 			aria-labelledby="fuse-dialog-title"
 			classes={{
 				paper: 'rounded-lg'
 			}}
-			{...options}
-		/>
+			open={dialogState.open}
+		>
+			{dialogState.children}
+		</Dialog>
 	);
 }
 

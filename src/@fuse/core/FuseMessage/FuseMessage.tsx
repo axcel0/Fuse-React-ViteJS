@@ -5,8 +5,7 @@ import Snackbar from '@mui/material/Snackbar';
 import SnackbarContent from '@mui/material/SnackbarContent';
 import Typography from '@mui/material/Typography';
 import { memo } from 'react';
-import { hideMessage, selectFuseMessageOptions, selectFuseMessageState } from '@fuse/core/FuseMessage/fuseMessageSlice';
-import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+import { useFuseMessage } from '@fuse/core/FuseMessage/FuseMessageContext';
 import FuseSvgIcon from '../FuseSvgIcon';
 
 export type FuseMessageVariantType = 'success' | 'error' | 'warning' | 'info';
@@ -77,24 +76,24 @@ const variantIcon = {
  * The FuseMessage component holds a snackbar that is capable of displaying message with 4 different variant. It uses the @mui/material React packages to create the components.
  */
 function FuseMessage() {
-	const dispatch = useAppDispatch();
-	const state = useAppSelector(selectFuseMessageState);
-	const options = useAppSelector(selectFuseMessageOptions);
+	const { messageState, hideMessage } = useFuseMessage();
 
 	return (
 		<StyledSnackbar
-			{...options}
-			open={state}
-			onClose={() => dispatch(hideMessage())}
+			variant={messageState.options.variant}
+			anchorOrigin={messageState.options.anchorOrigin}
+			open={messageState.state}
+			onClose={() => hideMessage()}
+			autoHideDuration={messageState.options.autoHideDuration}
 		>
 			<SnackbarContent
 				className="FuseMessage-content"
 				message={
 					<div className="flex items-center">
-						{variantIcon[options.variant] && (
-							<FuseSvgIcon color="inherit">{variantIcon[options.variant]}</FuseSvgIcon>
+						{variantIcon[messageState.options.variant] && (
+							<FuseSvgIcon color="inherit">{variantIcon[messageState.options.variant]}</FuseSvgIcon>
 						)}
-						<Typography className="mx-2">{options.message}</Typography>
+						<Typography className="mx-2">{messageState.options.message}</Typography>
 					</div>
 				}
 				action={[
@@ -102,7 +101,7 @@ function FuseMessage() {
 						key="close"
 						aria-label="Close"
 						color="inherit"
-						onClick={() => dispatch(hideMessage())}
+						onClick={() => hideMessage()}
 						size="large"
 					>
 						<FuseSvgIcon>heroicons-outline:x-mark</FuseSvgIcon>

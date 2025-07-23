@@ -1,17 +1,20 @@
-import { createDynamicMiddleware } from '@reduxjs/toolkit/react';
-import type { AppDispatch, RootState } from './store';
+// Migration: Redux middleware removed, this file provides compatibility exports
+// This file provides compatibility exports during migration
 
-const dynamicInstance = createDynamicMiddleware();
-
-export const { middleware: dynamicMiddleware } = dynamicInstance;
-
-type Config = {
-	state: RootState;
-	dispatch: AppDispatch;
+export const dynamicMiddleware = {
+  // Empty compatibility object
 };
 
-export const addAppMiddleware = dynamicInstance.addMiddleware.withTypes<Config>();
+export const addAppMiddleware = () => {
+  console.warn('addAppMiddleware is deprecated in v16.0.0');
+};
 
-export const withAppMiddleware = dynamicInstance.withMiddleware.withTypes<Config>();
+export const withAppMiddleware = () => {
+  console.warn('withAppMiddleware is deprecated in v16.0.0');
+};
 
-export const createAppDispatchWithMiddlewareHook = dynamicInstance.createDispatchWithMiddlewareHook.withTypes<Config>();
+export const createAppDispatchWithMiddlewareHook = () => {
+  console.warn('createAppDispatchWithMiddlewareHook is deprecated in v16.0.0');
+};
+
+export default dynamicMiddleware;

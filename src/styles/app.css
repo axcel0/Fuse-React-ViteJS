@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+/* Enhanced Dark Mode Support with System Theme */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+  }
+}
+
+/* Light Mode Override */
+:root.light {
+  color-scheme: light;
+}
+
+/* Dark Mode Override */
+:root.dark {
+  color-scheme: dark;
+}
+
+/* Custom CSS Variables for Better Theme Integration */
+:root {
+  --fuse-primary: rgb(37 99 235);
+  --fuse-secondary: rgb(245 158 11);
+  --fuse-surface: rgb(255 255 255);
+  --fuse-background: rgb(249 250 251);
+  --fuse-text-primary: rgb(17 24 39);
+  --fuse-text-secondary: rgb(75 85 99);
+  --fuse-border: rgb(229 231 235);
+}
+
+:root.dark {
+  --fuse-primary: rgb(96 165 250);
+  --fuse-secondary: rgb(251 191 36);
+  --fuse-surface: rgb(31 41 55);
+  --fuse-background: rgb(17 24 39);
+  --fuse-text-primary: rgb(243 244 246);
+  --fuse-text-secondary: rgb(156 163 175);
+  --fuse-border: rgb(55 65 81);
+}
+
+/* Material-UI Integration for Dark Mode */
+.MuiCssBaseline-root {
+  color-scheme: light dark;
+}
+
+/* Smooth transitions for theme changes */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, fill, stroke, opacity;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark mode specific styles */
+.dark {
+  /* Scrollbar styling for dark mode */
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+/* Light mode scrollbar */
+.light {
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}
+
+/* High contrast support */
+@media (prefers-contrast: high) {
+  :root {
+    --fuse-border: rgb(31 41 55);
+  }
+  
+  :root.dark {
+    --fuse-border: rgb(229 231 235);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0ms;
+  }
+}

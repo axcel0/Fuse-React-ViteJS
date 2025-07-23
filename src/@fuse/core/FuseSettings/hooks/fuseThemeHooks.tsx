@@ -2,7 +2,7 @@ import { FuseThemeType } from '@fuse/core/FuseSettings/FuseSettings';
 import { createTheme, getContrastRatio, Theme } from '@mui/material/styles';
 import _ from 'lodash';
 import { defaultThemeOptions, extendThemeWithMixins, mustHaveThemeOptions } from '@fuse/default-settings';
-import { ThemeOptions } from '@mui/material/styles/createTheme';
+import type { ThemeOptions } from '@mui/material/styles';
 import { darkPaletteText, lightPaletteText } from '@/configs/themesConfig';
 import useFuseSettings from './useFuseSettings';
 

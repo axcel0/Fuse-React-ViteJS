@@ -1,23 +1,14 @@
-import { combineSlices } from '@reduxjs/toolkit';
-import apiService from './apiService';
-import { navigationSlice } from '@/components/theme-layouts/components/navigation/store/navigationSlice';
+// Migration: Redux removed, this file provides compatibility exports
+// This file provides compatibility exports during migration
 
-// @ts-ignore-next-line
+export const rootReducer = () => {
+  console.warn('rootReducer is deprecated in v16.0.0');
+  return {};
+};
+
+// Mock slice injection for compatibility
+rootReducer.inject = () => console.warn('Slice injection is deprecated');
+
 export interface LazyLoadedSlices {}
-
-// `combineSlices` automatically combines the reducers using
-// their `reducerPath`s, therefore we no longer need to call `combineReducers`.
-export const rootReducer = combineSlices(
-	/**
-	 * Static slices
-	 */
-	navigationSlice,
-	/**
-	 * Lazy loaded slices
-	 */
-	{
-		[apiService.reducerPath]: apiService.reducer
-	}
-).withLazyLoadedSlices<LazyLoadedSlices>();
 
 export default rootReducer;

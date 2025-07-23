@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
-import { Theme } from '@mui/system/createTheme/createTheme';
+import type { Theme } from '@mui/material/styles';
 
 /**
  * The useThemeMediaQuery function is a custom hook that returns a boolean indicating whether the current screen matches the specified media query.

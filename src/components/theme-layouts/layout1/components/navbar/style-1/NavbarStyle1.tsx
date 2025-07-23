@@ -1,12 +1,7 @@
 import { Theme } from '@mui/system/createTheme';
 import { styled } from '@mui/material/styles';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import {
-	navbarCloseMobile,
-	resetNavbar,
-	selectFuseNavbar
-} from 'src/components/theme-layouts/components/navbar/navbarSlice';
+import { useNavbar } from 'src/components/theme-layouts/components/navbar/NavbarContext';
 import { useEffect } from 'react';
 import useFuseLayoutSettings from '@fuse/core/FuseLayout/useFuseLayoutSettings';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
@@ -83,19 +78,17 @@ const StyledNavBarMobile = styled(SwipeableDrawer)(() => ({
  * The navbar style 1.
  */
 function NavbarStyle1() {
-	const dispatch = useAppDispatch();
+	const { navbar, navbarCloseMobile, resetNavbar } = useNavbar();
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
 	const settings = useFuseLayoutSettings();
 	const config = settings.config as Layout1ConfigDefaultsType;
 
-	const navbar = useAppSelector(selectFuseNavbar);
-
 	useEffect(() => {
 		return () => {
-			dispatch(resetNavbar());
+			resetNavbar();
 		};
-	}, [dispatch]);
+	}, [resetNavbar]);
 
 	return (
 		<>
@@ -117,7 +110,7 @@ function NavbarStyle1() {
 					anchor={config.navbar.position as 'left' | 'top' | 'right' | 'bottom'}
 					variant="temporary"
 					open={navbar.mobileOpen}
-					onClose={() => dispatch(navbarCloseMobile())}
+					onClose={() => navbarCloseMobile()}
 					onOpen={() => {}}
 					disableSwipeToOpen
 					ModalProps={{

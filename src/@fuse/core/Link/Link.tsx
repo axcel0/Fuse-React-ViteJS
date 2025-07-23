@@ -1,4 +1,4 @@
-import { Link as ILink, LinkProps as ILinkProps } from 'react-router';
+import { Link as ILink, LinkProps as ILinkProps } from 'react-router-dom';
 
 import { ReactNode } from 'react';
 

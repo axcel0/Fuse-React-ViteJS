@@ -1,12 +1,13 @@
 import { styled } from '@mui/material/styles';
 import Tabs from '@mui/material/Tabs';
-import { TabsProps } from '@mui/material/Tabs/Tabs';
+import type { TabsProps } from '@mui/material/Tabs';
 import Box from '@mui/material/Box';
 import clsx from 'clsx';
+import type { ComponentType } from 'react';
 
 type StyledTabsProps = TabsProps;
 
-const FuseTabs = styled((props: StyledTabsProps) => (
+const FuseTabs: ComponentType<TabsProps> = styled((props: StyledTabsProps) => (
 	<Tabs
 		indicatorColor="secondary"
 		textColor="inherit"
@@ -16,13 +17,15 @@ const FuseTabs = styled((props: StyledTabsProps) => (
 		classes={{
 			indicator: 'flex justify-center bg-transparent w-full h-full'
 		}}
-		TabIndicatorProps={{
-			children: (
-				<Box
-					sx={{ bgcolor: 'text.disabled' }}
-					className="w-full h-full rounded-lg opacity-20"
-				/>
-			)
+		slotProps={{
+			indicator: {
+				children: (
+					<Box
+						sx={{ bgcolor: 'text.disabled' }}
+						className="w-full h-full rounded-lg opacity-20"
+					/>
+				)
+			}
 		}}
 		{...props}
 	/>

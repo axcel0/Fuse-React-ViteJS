@@ -1,8 +1,8 @@
 import Drawer from '@mui/material/Drawer';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import type { SwipeableDrawerProps } from '@mui/material/SwipeableDrawer';
 import clsx from 'clsx';
 import { ReactNode, useCallback, useEffect, useImperativeHandle, useState } from 'react';
-import { SwipeableDrawerProps } from '@mui/material/SwipeableDrawer/SwipeableDrawer';
 import FusePageSimpleSidebarContent from './FusePageSimpleSidebarContent';
 import useThemeMediaQuery from '../../hooks/useThemeMediaQuery';
 

@@ -1,10 +1,11 @@
 import { styled } from '@mui/material/styles';
 import Tab from '@mui/material/Tab';
-import { TabProps } from '@mui/material/Tab/Tab';
+import type { TabProps } from '@mui/material/Tab';
+import type { ComponentType } from 'react';
 
 type StyledTabProps = TabProps;
 
-const FuseTab = styled((props: StyledTabProps) => (
+const FuseTab: ComponentType<TabProps> = styled((props: StyledTabProps) => (
 	<Tab
 		disableRipple
 		{...props}

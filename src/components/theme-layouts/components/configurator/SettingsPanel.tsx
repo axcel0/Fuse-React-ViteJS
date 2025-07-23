@@ -10,9 +10,7 @@ import Slide from '@mui/material/Slide';
 import { SwipeableHandlers } from 'react-swipeable';
 import useUser from '@auth/useUser';
 import useFuseSettings from '@fuse/core/FuseSettings/hooks/useFuseSettings';
-
-import { showMessage } from '@fuse/core/FuseMessage/fuseMessageSlice';
-import { useAppDispatch } from '@/store/hooks';
+import { useFuseMessage } from '@fuse/core/FuseMessage/FuseMessageContext';
 
 const StyledDialog = styled(Dialog)(({ theme }) => ({
 	'& .MuiDialog-paper': {
@@ -65,7 +63,7 @@ type SettingsPanelProps = {
 function SettingsPanel(props: SettingsPanelProps) {
 	const { settingsHandlers, onClose, open } = props;
 	const { isGuest, updateUserSettings } = useUser();
-	const dispatch = useAppDispatch();
+	const { showMessage } = useFuseMessage();
 
 	const { data: settings, setSettings } = useFuseSettings();
 
@@ -76,7 +74,7 @@ function SettingsPanel(props: SettingsPanelProps) {
 			const updatedUserData = await updateUserSettings(_newSettings);
 
 			if (updatedUserData) {
-				dispatch(showMessage({ message: 'User settings saved.' }));
+				showMessage({ message: 'User settings saved.', variant: 'success' });
 			}
 		}
 	};

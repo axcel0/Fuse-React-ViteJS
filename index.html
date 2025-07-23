@@ -17,6 +17,30 @@
         <link rel='manifest' href='/manifest.json'>
         <link rel='shortcut icon' href='/favicon.ico'>
 
+        <!-- FOUC Prevention Script for Tailwind CSS v4 Dark Mode -->
+        <script>
+            (function() {
+                const theme = localStorage.getItem('theme');
+                const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const isDark = theme === 'dark' || (theme === 'system' && systemDark) || (!theme && systemDark);
+                
+                document.documentElement.classList.toggle('dark', isDark);
+                document.documentElement.classList.toggle('light', !isDark);
+                document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+            })();
+        </script>
+        <script>
+        (function() {
+          const theme = localStorage.getItem('theme');
+          const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const isDark = theme === 'dark' || (!theme && systemDark);
+          
+          document.documentElement.classList.toggle('dark', isDark);
+          document.documentElement.classList.toggle('light', !isDark);
+          document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+        })();
+        </script>
+
         <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
 
         <!--        You can choose main icon from variety of the material ui icon fonts-->

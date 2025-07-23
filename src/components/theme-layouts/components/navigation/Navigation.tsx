@@ -1,10 +1,9 @@
 import FuseNavigation from '@fuse/core/FuseNavigation';
 import clsx from 'clsx';
 import { useMemo } from 'react';
-import { useAppDispatch } from 'src/store/hooks';
+import { useNavbar } from '../navbar/NavbarContext';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import { FuseNavigationProps } from '@fuse/core/FuseNavigation/FuseNavigation';
-import { navbarCloseMobile } from '../navbar/navbarSlice';
 import useNavigation from './hooks/useNavigation';
 
 /**
@@ -19,12 +18,12 @@ function Navigation(props: NavigationProps) {
 
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
-	const dispatch = useAppDispatch();
+	const { navbarCloseMobile } = useNavbar();
 
 	return useMemo(() => {
 		function handleItemClick() {
 			if (isMobile) {
-				dispatch(navbarCloseMobile());
+				navbarCloseMobile();
 			}
 		}
 
@@ -39,7 +38,7 @@ function Navigation(props: NavigationProps) {
 				checkPermission
 			/>
 		);
-	}, [dispatch, isMobile, navigation, active, className, dense, layout]);
+	}, [navbarCloseMobile, isMobile, navigation, active, className, dense, layout]);
 }
 
 export default Navigation;

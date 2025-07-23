@@ -1,6 +1,6 @@
 import { alpha, ThemeProvider } from '@mui/material/styles';
 import { memo, ReactNode, useEffect, useLayoutEffect } from 'react';
-import { Theme } from '@mui/material/styles/createTheme';
+import type { Theme } from '@mui/material/styles';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -90,7 +90,8 @@ const inputGlobalStyles = (
 
 /**
  * The FuseTheme component is responsible for rendering the MUI ThemeProvider component with the specified theme and direction.
- * It also sets the direction of the document body and adds a class to the body based on the current theme mode.
+ * It also sets the direction of the document body and adds a class to the documentElement based on the current theme mode.
+ * Enhanced with Tailwind CSS v4 dark mode support and system theme detection.
  * The component is memoized to prevent unnecessary re-renders.
  */
 function FuseTheme(props: FuseThemeProps) {
@@ -106,8 +107,16 @@ function FuseTheme(props: FuseThemeProps) {
 
 	useEffect(() => {
 		if (root) {
+			// Apply theme mode to documentElement for better Tailwind CSS v4 integration
+			document.documentElement.classList.add(mode === 'light' ? 'light' : 'dark');
+			document.documentElement.classList.remove(mode === 'light' ? 'dark' : 'light');
+			
+			// Maintain backward compatibility with body classes
 			document.body.classList.add(mode === 'light' ? 'light' : 'dark');
 			document.body.classList.remove(mode === 'light' ? 'dark' : 'light');
+			
+			// Set color-scheme for better browser integration
+			document.documentElement.style.colorScheme = mode;
 		}
 	}, [mode, root]);
 

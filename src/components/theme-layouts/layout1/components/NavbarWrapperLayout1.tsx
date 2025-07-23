@@ -1,8 +1,7 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { useEffect } from 'react';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
-import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import { navbarCloseMobile, selectFuseNavbar } from 'src/components/theme-layouts/components/navbar/navbarSlice';
+import { useNavbar } from 'src/components/theme-layouts/components/navbar/NavbarContext';
 import usePathname from '@fuse/hooks/usePathname';
 import useFuseLayoutSettings from '@fuse/core/FuseLayout/useFuseLayoutSettings';
 import { useNavbarTheme } from '@fuse/core/FuseSettings/hooks/fuseThemeHooks';
@@ -17,17 +16,16 @@ import NavbarStyle3 from './navbar/style-3/NavbarStyle3';
 function NavbarWrapperLayout1() {
 	const { config } = useFuseLayoutSettings();
 
-	const navbar = useAppSelector(selectFuseNavbar);
+	const { navbar, navbarCloseMobile } = useNavbar();
 	const pathname = usePathname();
 
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
-	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		if (isMobile) {
-			dispatch(navbarCloseMobile());
+			navbarCloseMobile();
 		}
-	}, [dispatch, pathname, isMobile]);
+	}, [navbarCloseMobile, pathname, isMobile]);
 
 	const navbarTheme = useNavbarTheme();
 
@@ -41,7 +39,7 @@ function NavbarWrapperLayout1() {
 					{config.navbar.style === 'style-3-dense' && <NavbarStyle3 dense />}
 				</>
 			</ThemeProvider>
-			{config.navbar.display && !config.toolbar.display && !navbar.open && <NavbarToggleFabLayout1 />}
+			{config.navbar.display && !config.toolbar.display && !isMobile && <NavbarToggleFabLayout1 />}
 		</>
 	);
 }

@@ -4,8 +4,7 @@ import Toolbar from '@mui/material/Toolbar';
 import clsx from 'clsx';
 import { memo } from 'react';
 import NavbarToggleButton from 'src/components/theme-layouts/components/navbar/NavbarToggleButton';
-import { selectFuseNavbar } from 'src/components/theme-layouts/components/navbar/navbarSlice';
-import { useAppSelector } from 'src/store/hooks';
+import { useNavbar } from 'src/components/theme-layouts/components/navbar/NavbarContext';
 import themeOptions from 'src/configs/themeOptions';
 import _ from 'lodash';
 import LightDarkModeToggle from 'src/components/LightDarkModeToggle';
@@ -34,7 +33,7 @@ function ToolbarLayout1(props: ToolbarLayout1Props) {
 	const config = settings.config as Layout1ConfigDefaultsType;
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
-	const navbar = useAppSelector(selectFuseNavbar);
+	const { navbar } = useNavbar();
 	const toolbarTheme = useToolbarTheme();
 
 	return (

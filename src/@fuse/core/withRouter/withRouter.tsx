@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ComponentType, memo } from 'react';
 
 export type WithRouterProps = {

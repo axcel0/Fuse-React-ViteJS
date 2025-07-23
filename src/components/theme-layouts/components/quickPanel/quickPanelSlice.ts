@@ -1,6 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { WithSlice } from '@reduxjs/toolkit';
-import rootReducer from '@/store/rootReducer';
+// Migration: Redux slice replaced with simplified compatibility layer
+// This file provides compatibility exports during migration
 
 const exampleData = {
 	notes: [
@@ -23,7 +22,6 @@ const exampleData = {
 		},
 		{
 			id: 2,
-
 			title: 'Public Beta Release',
 			detail: '11:00 PM'
 		},
@@ -39,45 +37,37 @@ const exampleData = {
 		}
 	]
 };
-/**
- * Quick Panel data slice.
- */
-export const quickPanelSlice = createSlice({
-	name: 'quickPanel',
-	initialState: { data: exampleData, open: false },
-	reducers: {
-		removeEvents: (state) => {
-			state.data.events = [];
-		},
-		toggleQuickPanel: (state) => {
-			state.open = !state.open;
-		},
-		openQuickPanel: (state) => {
-			state.open = true;
-		},
-		closeQuickPanel: (state) => {
-			state.open = false;
-		}
-	},
-	selectors: {
-		selectQuickPanelData: (state) => state.data,
-		selectQuickPanelOpen: (state) => state.open
-	}
-});
 
-/**
- * Lazy loading
- */
-rootReducer.inject(quickPanelSlice);
-const injectedSlice = quickPanelSlice.injectInto(rootReducer);
-declare module '@/store/rootReducer' {
-	export interface LazyLoadedSlices extends WithSlice<typeof quickPanelSlice> {}
-}
+// Legacy action creators
+export const removeEvents = () => {
+  console.warn('removeEvents action is deprecated. Use QuickPanel context instead');
+  return { type: 'DEPRECATED' };
+};
 
-export const { selectQuickPanelData, selectQuickPanelOpen } = injectedSlice.selectors;
+export const toggleQuickPanel = () => {
+  console.warn('toggleQuickPanel action is deprecated. Use QuickPanel context instead');
+  return { type: 'DEPRECATED' };
+};
 
-export const { removeEvents, toggleQuickPanel, openQuickPanel, closeQuickPanel } = quickPanelSlice.actions;
+export const openQuickPanel = () => {
+  console.warn('openQuickPanel action is deprecated. Use QuickPanel context instead');
+  return { type: 'DEPRECATED' };
+};
+
+export const closeQuickPanel = () => {
+  console.warn('closeQuickPanel action is deprecated. Use QuickPanel context instead');
+  return { type: 'DEPRECATED' };
+};
+
+// Legacy selectors (return static data)
+export const selectQuickPanelData = () => exampleData;
+export const selectQuickPanelOpen = () => false;
+
+// Compatibility exports
+export const quickPanelSlice = {
+  actions: { removeEvents, toggleQuickPanel, openQuickPanel, closeQuickPanel },
+  name: 'quickPanel'
+};
 
 export type dataSliceType = typeof quickPanelSlice;
-
-export default quickPanelSlice.reducer;
+export default {}; // Empty reducer for compatibility

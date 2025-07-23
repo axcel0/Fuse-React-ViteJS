@@ -1,8 +1,7 @@
 import IconButton from '@mui/material/IconButton';
-import { useAppDispatch } from 'src/store/hooks';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import clsx from 'clsx';
-import { toggleQuickPanel } from './quickPanelSlice';
+import { useQuickPanel } from './QuickPanelContext';
 
 type QuickPanelToggleButtonProps = {
 	className?: string;
@@ -14,11 +13,11 @@ type QuickPanelToggleButtonProps = {
  */
 function QuickPanelToggleButton(props: QuickPanelToggleButtonProps) {
 	const { className = '', children = <FuseSvgIcon size={20}>heroicons-outline:bookmark</FuseSvgIcon> } = props;
-	const dispatch = useAppDispatch();
+	const { togglePanel } = useQuickPanel();
 
 	return (
 		<IconButton
-			onClick={() => dispatch(toggleQuickPanel())}
+			onClick={() => togglePanel()}
 			className={clsx('border border-divider', className)}
 		>
 			{children}

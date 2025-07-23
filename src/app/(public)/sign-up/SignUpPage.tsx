@@ -73,13 +73,15 @@ function SignUpPage() {
 						classes={{
 							indicator: 'flex justify-center bg-transparent w-full h-full'
 						}}
-						TabIndicatorProps={{
-							children: (
-								<Box
-									sx={{ borderColor: (theme) => theme.palette.secondary.main }}
-									className="border-1 border-solid w-full h-full rounded-lg"
-								/>
-							)
+						slotProps={{
+							indicator: {
+								children: (
+									<Box
+										sx={{ borderColor: (theme) => theme.palette.secondary.main }}
+										className="border-1 border-solid w-full h-full rounded-lg"
+									/>
+								)
+							}
 						}}
 					>
 						{tabs.map((item) => (

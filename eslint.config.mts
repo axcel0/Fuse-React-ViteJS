@@ -12,60 +12,65 @@ import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
 const compat = new FlatCompat({
     baseDirectory: __dirname
 });
 
-export default tseslint.config({
-    files: ['**/*.ts', '**/*.tsx'],
-    ignores: [
-        '**/app/(public)/documentation/material-ui-components/components/**',
-        '**/app/(public)/documentation/material-ui-components/doc/**',
-        '**/utils/node-scripts/fuse-react-message.js'
-    ],
-    languageOptions: {
-        parser: tseslint.parser,
-        parserOptions: {
-            project: true,
+const config = tseslint.config(
+    {
+        files: ['**/*.ts', '**/*.tsx'],
+        ignores: [
+            '**/app/(public)/documentation/material-ui-components/components/**',
+            '**/app/(public)/documentation/material-ui-components/doc/**',
+            '**/utils/node-scripts/fuse-react-message.js'
+        ],
+    },
+    {
+        languageOptions: {
+            parser: tseslint.parser,
+            parserOptions: {
+                project: true,
+            },
+        },
+        plugins: {
+            "@typescript-eslint": tseslint.plugin,
+            "unused-imports": eslintPluginUnusedImports,
+            "react": eslintPluginReact as any,
+            "react-hooks": eslintPluginReactHooks,
+            "react-refresh": eslintPluginReactRefresh,
+            "prettier": eslintPluginPrettier,
         },
     },
-    plugins: {
-        "@typescript-eslint": tseslint.plugin,
-        "unused-imports": eslintPluginUnusedImports,
-        "react": eslintPluginReact,
-        "react-hooks": eslintPluginReactHooks,
-        "react-refresh": eslintPluginReactRefresh,
-        "prettier": eslintPluginPrettier,
-    },
-    extends: [
-        // Eslint
-        eslint.configs.recommended,
-        // TypeScript
-        ...tseslint.configs.recommended,
-        ...tseslint.configs.stylistic,
-        // React
-        eslintPluginReact.configs.flat.recommended,
-        eslintPluginReact.configs.flat['jsx-runtime'],
-        ...compat.extends('plugin:react-hooks/recommended'),
-        // Prettier
-        eslintPluginPrettierRecommended
-    ],
-    settings: {
-        "import/resolver": {
-            "node": {
-                "extensions": [
-                    ".js",
-                    ".jsx",
-                    ".ts",
-                    ".tsx"
-                ]
+    // Base configs
+    eslint.configs.recommended,
+    // TypeScript configs
+    ...tseslint.configs.recommended,
+    ...tseslint.configs.stylistic,
+    // React configs
+    eslintPluginReact.configs.flat?.recommended as any,
+    eslintPluginReact.configs.flat?.['jsx-runtime'] as any,
+    // React hooks config
+    ...compat.extends('plugin:react-hooks/recommended') as any,
+    // Prettier config
+    eslintPluginPrettierRecommended as any,
+    {
+        settings: {
+            "import/resolver": {
+                "node": {
+                    "extensions": [
+                        ".js",
+                        ".jsx",
+                        ".ts",
+                        ".tsx"
+                    ]
+                }
+            },
+            "react": {
+                "version": "detect"
             }
         },
-        "react": {
-            "version": "detect"
-        }
-    },
-    rules: {
+        rules: {
         "prettier/prettier": [
             "warn",
             {
@@ -165,5 +170,8 @@ export default tseslint.config({
         "import/no-import-module-exports": "off",
         "import/no-extraneous-dependencies": "off",
         "camelcase": "off",
-    },
-});
+        }
+    }
+);
+
+export default config;

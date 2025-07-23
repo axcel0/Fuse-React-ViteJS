@@ -1,4 +1,3 @@
-import { useAppSelector } from 'src/store/hooks';
 import { useMemo } from 'react';
 import i18n from '@i18n';
 import useUser from '@auth/useUser';
@@ -6,14 +5,17 @@ import useI18n from '@i18n/useI18n';
 import FuseUtils from '@fuse/utils';
 import FuseNavigationHelper from '@fuse/utils/FuseNavigationHelper';
 import { FuseNavItemType } from '@fuse/core/FuseNavigation/types/FuseNavItemType';
-import { selectNavigationAll } from '../store/navigationSlice';
+import navigationConfig from 'src/configs/navigationConfig';
 
 function useNavigation() {
 	const { data: user } = useUser();
 	const userRole = user?.role;
 	const { languageId } = useI18n();
 
-	const navigationData = useAppSelector(selectNavigationAll);
+	// Use navigationConfig directly instead of Redux selector
+	const navigationData = useMemo(() => {
+		return FuseNavigationHelper.flattenNavigation(navigationConfig);
+	}, []);
 
 	const navigation = useMemo(() => {
 		const _navigation = FuseNavigationHelper.unflattenNavigation(navigationData);

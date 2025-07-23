@@ -11,7 +11,8 @@ import { darken } from '@mui/material/styles';
 import { alpha } from '@mui/system/colorManipulator';
 import Tooltip from '@mui/material/Tooltip';
 import clsx from 'clsx';
-import Popover, { PopoverProps } from '@mui/material/Popover/Popover';
+import Popover from '@mui/material/Popover';
+import type { PopoverProps } from '@mui/material/Popover';
 import useUser from '@auth/useUser';
 
 type UserMenuProps = {

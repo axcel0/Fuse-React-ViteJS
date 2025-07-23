@@ -2,7 +2,7 @@ import { fuseDark } from '@fuse/colors';
 import { lightBlue, red } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 import qs from 'qs';
-import { ThemeOptions } from '@mui/material/styles/createTheme';
+import type { ThemeOptions } from '@mui/material/styles';
 import { FuseSettingsConfigType } from '@fuse/core/FuseSettings/FuseSettings';
 
 /**
@@ -90,7 +90,7 @@ export function getParsedQuerySettings(): FuseSettingsConfigType | object {
  */
 export const defaultThemeOptions = {
 	typography: {
-		fontFamily: ['Inter var', 'Roboto', '"Helvetica"', 'Arial', 'sans-serif'].join(','),
+		fontFamily: ['Geist', 'Inter var', 'Roboto', '"Helvetica"', 'Arial', 'sans-serif'].join(','),
 		fontWeightLight: 300,
 		fontWeightRegular: 400,
 		fontWeightMedium: 500
