@@ -1,50 +1,25 @@
-import AppBar from '@mui/material/AppBar';
-import { ThemeProvider } from '@mui/material/styles';
-import Toolbar from '@mui/material/Toolbar';
-import clsx from 'clsx';
 import { memo } from 'react';
-import { useFooterTheme } from '@fuse/core/FuseSettings/hooks/fuseThemeHooks';
-import { useTheme } from '../../../../theme/useTheme';
+import MaterialUIFooter from 'src/components/MaterialUIFooter';
 
 type FooterLayout3Props = {
 	className?: string;
+	variant?: 'bottom-navigation' | 'full' | 'minimal';
 };
 
 /**
- * The footer layout 3.
+ * The footer layout 3 with modern Material-UI BottomNavigation
  */
 function FooterLayout3(props: FooterLayout3Props) {
-	const { className = '' } = props;
-	const footerTheme = useFooterTheme();
-	const { resolvedTheme } = useTheme();
+	const { className, variant = 'bottom-navigation' } = props;
 
 	return (
-		<ThemeProvider theme={footerTheme}>
-			<AppBar
-				id="fuse-footer"
-				className={clsx(
-					'relative z-20 shadow-md',
-					// Add Tailwind classes based on resolved theme
-					resolvedTheme === 'dark' 
-						? 'bg-gray-900 text-white' 
-						: 'bg-white text-gray-900',
-					className
-				)}
-				color="default"
-				style={{ 
-					backgroundColor: resolvedTheme === 'dark' 
-						? '#111827' // gray-900
-						: '#ffffff', // white
-					color: resolvedTheme === 'dark' 
-						? '#ffffff' 
-						: '#111827'
-				}}
-			>
-				<Toolbar className="container flex min-h-12 items-center overflow-x-auto px-2 py-0 sm:px-3 md:min-h-16 lg:px-5">
-					Footer
-				</Toolbar>
-			</AppBar>
-		</ThemeProvider>
+		<MaterialUIFooter
+			variant={variant}
+			className={className}
+			showSocial={true}
+			showLinks={variant === 'full'}
+			showBottomNav={true}
+		/>
 	);
 }
 

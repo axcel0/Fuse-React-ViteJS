@@ -1,5 +1,6 @@
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { Box } from '@mui/material';
 import MainProjectSelection from '@/components/MainProjectSelection';
 
 const Root = styled('div')(({ theme }) => ({
@@ -17,30 +18,38 @@ const Root = styled('div')(({ theme }) => ({
 	}
 }));
 
+// Modern P logo with circle background like F logo
+const PLogoIcon = styled(Box)(({ theme }) => ({
+	width: '32px',
+	height: '32px',
+	borderRadius: '50%',
+	backgroundColor: theme.palette.mode === 'dark' ? '#f44336' : '#d32f2f', // Red background
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+	color: '#ffffff',
+	fontWeight: 700,
+	fontSize: '18px',
+	fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+	transition: theme.transitions.create(['background-color'], {
+		duration: theme.transitions.duration.shortest,
+		easing: theme.transitions.easing.easeInOut
+	}),
+	'&:hover': {
+		backgroundColor: theme.palette.mode === 'dark' ? '#f57c00' : '#e64a19', // Slightly different red on hover
+	}
+}));
+
 /**
- * The logo component.
+ * The modern P logo component.
  */
 function Logo() {
 	return (
 		<Root className="flex flex-1 items-center space-x-3">
 			<div className="flex flex-1 items-center space-x-2 px-2.5">
-				<img
-					className="logo-icon h-8 w-8"
-					src="/assets/images/logo/logo.svg"
-					alt="logo"
-				/>
-				<div className="logo-text flex flex-col flex-auto gap-0.5">
-					<Typography className="text-2xl tracking-light font-semibold leading-none">FUSE</Typography>
-					<Typography
-						className="text-[13.6px] tracking-light font-semibold leading-none"
-						color="primary"
-						sx={{
-							color: '#82d7f7'
-						}}
-					>
-						REACT
-					</Typography>
-				</div>
+				<PLogoIcon className="logo-icon">
+					P
+				</PLogoIcon>
 			</div>
 			<MainProjectSelection />
 		</Root>
