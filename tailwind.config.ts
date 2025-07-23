@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss';
 import iconSizePlugin from './src/@fuse/tailwind/plugins/icon-size';
+import { tailwindTokens } from './src/design-system/utils';
 
 const config: Config = {
   content: [
@@ -8,7 +9,9 @@ const config: Config = {
   ],
   darkMode: ['selector', '.dark'],
   theme: {
+    ...tailwindTokens,
     extend: {
+      ...tailwindTokens.extend,
       screens: {
         'xs': '0px',
         'sm': '600px',
@@ -54,6 +57,94 @@ const config: Config = {
       fontFamily: {
         'geist': ['Geist', 'system-ui', 'sans-serif'],
         'inter': ['Inter', 'system-ui', 'sans-serif'],
+        ...tailwindTokens.extend.fontFamily,
+      },
+      colors: {
+        // Design system colors from tokens
+        ...tailwindTokens.extend.colors,
+        // Theme-aware color tokens using CSS variables
+        'theme': {
+          'primary': 'var(--color-primary)',
+          'secondary': 'var(--color-secondary)',
+          'accent': 'var(--color-accent)',
+          'background': 'var(--color-background)',
+          'surface': 'var(--color-surface)',
+          'text': 'var(--color-text)',
+          'text-secondary': 'var(--color-text-secondary)',
+          'border': 'var(--color-border)',
+          'error': 'var(--color-error)',
+          'warning': 'var(--color-warning)',
+          'success': 'var(--color-success)',
+          'info': 'var(--color-info)',
+        },
+        // Fuse-specific colors (legacy support)
+        'fuse': {
+          'primary': 'var(--fuse-primary)',
+          'secondary': 'var(--fuse-secondary)',
+          'surface': 'var(--fuse-surface)',
+          'background': 'var(--fuse-background)',
+          'text-primary': 'var(--fuse-text-primary)',
+          'text-secondary': 'var(--fuse-text-secondary)',
+          'border': 'var(--fuse-border)',
+        }
+      },
+      // Enhanced animation system
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in-out',
+        'slide-up': 'slideUp 0.3s ease-out',
+        'scale-in': 'scaleIn 0.2s ease-out',
+        'bounce-in': 'bounceIn 0.6s ease-out',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        scaleIn: {
+          '0%': { transform: 'scale(0.9)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+        bounceIn: {
+          '0%': { transform: 'scale(0.3)', opacity: '0' },
+          '50%': { transform: 'scale(1.05)' },
+          '70%': { transform: 'scale(0.9)' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+      },
+      spacing: {
+        // Theme-aware spacing tokens
+        'theme-xs': 'var(--spacing-xs)',
+        'theme-sm': 'var(--spacing-sm)',
+        'theme-md': 'var(--spacing-md)',
+        'theme-lg': 'var(--spacing-lg)',
+        'theme-xl': 'var(--spacing-xl)',
+        'theme-2xl': 'var(--spacing-2xl)',
+        'theme-3xl': 'var(--spacing-3xl)',
+      },
+      borderRadius: {
+        // Theme-aware radius tokens
+        'theme-xs': 'var(--radius-xs)',
+        'theme-sm': 'var(--radius-sm)',
+        'theme-md': 'var(--radius-md)',
+        'theme-lg': 'var(--radius-lg)',
+        'theme-xl': 'var(--radius-xl)',
+        'theme-2xl': 'var(--radius-2xl)',
+      },
+      boxShadow: {
+        // Theme-aware shadow tokens
+        'theme-xs': 'var(--shadow-xs)',
+        'theme-sm': 'var(--shadow-sm)',
+        'theme-md': 'var(--shadow-md)',
+        'theme-lg': 'var(--shadow-lg)',
+        'theme-xl': 'var(--shadow-xl)',
+      },
+      // Enhanced utilities
+      backdropBlur: {
+        xs: '2px',
       },
     },
   },

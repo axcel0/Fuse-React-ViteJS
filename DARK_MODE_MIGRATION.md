@@ -113,7 +113,9 @@ themeManager.addListener((theme) => {
 
 ## ⚙️ Konfigurasi
 
-### Tailwind Config (`src/styles/tailwind.config.js`)
+### Tailwind Config (`tailwind.config.ts`)
+
+The root Tailwind configuration file has been consolidated to integrate both design system tokens and theme-aware CSS variables.
 ```js
 export default {
   darkMode: ['selector', '.dark'], // Tailwind v4 syntax

@@ -17,8 +17,9 @@
 /**
  * Tailwind v4 Theme Variables
  * These create both utility classes and CSS variables
+ * Using CSS custom properties approach for better linter compatibility
  */
-@theme {
+:root {
   /* Dynamic color tokens - will be overridden by JavaScript */
   --color-primary: oklch(0.56 0.20 240);
   --color-secondary: oklch(0.48 0.18 300);
