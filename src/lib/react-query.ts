@@ -11,11 +11,15 @@ export const queryClient = new QueryClient({
 			// Time in milliseconds that the cache should remain in memory before being garbage collected
 			gcTime: 10 * 60 * 1000, // 10 minutes (was cacheTime in v4)
 			// Retry failed requests
-			retry: (failureCount, error: any) => {
+			retry: (failureCount, error: { status?: number } | unknown) => {
 				// Don't retry on 4xx errors (client errors)
-				if (error?.status >= 400 && error?.status < 500) {
-					return false;
+				if (error && typeof error === 'object' && 'status' in error) {
+					const errorWithStatus = error as { status: number };
+					if (errorWithStatus.status >= 400 && errorWithStatus.status < 500) {
+						return false;
+					}
 				}
+
 				// Retry up to 3 times for other errors
 				return failureCount < 3;
 			},

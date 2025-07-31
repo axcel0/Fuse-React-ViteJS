@@ -26,8 +26,7 @@ function SchemePreview(props: SchemePreviewProps) {
 	const secondaryColor: string = theme.palette.secondary[500]
 		? theme.palette.secondary[500]
 		: theme.palette.secondary.main;
-	const secondaryColorContrast =
-		theme.palette.secondary.contrastText || _theme.palette.getContrastText(secondaryColor);
+	const secondaryColorContrast = theme.palette.secondary.contrastText || _theme.palette.getContrastText(secondaryColor);
 	const backgroundColor = theme.palette.background.default;
 	const backgroundColorContrast = _theme.palette.getContrastText(theme.palette.background.default);
 	const paperColor = theme.palette.background.paper;
@@ -37,11 +36,11 @@ function SchemePreview(props: SchemePreviewProps) {
 		<div className={clsx(className, 'mb-2')}>
 			<button
 				className={clsx(
-					'relative w-full cursor-pointer overflow-hidden rounded-md text-left font-medium shadow-sm transition-shadow hover:shadow-md'
+					'relative w-full cursor-pointer overflow-hidden rounded-md text-left font-medium shadow-sm transition-shadow hover:shadow-md',
 				)}
 				style={{
 					backgroundColor,
-					color: backgroundColorContrast
+					color: backgroundColorContrast,
 				}}
 				onClick={() => onSelect(theme)}
 				type="button"
@@ -50,7 +49,7 @@ function SchemePreview(props: SchemePreviewProps) {
 					className="relative h-14 w-full px-2 pt-2"
 					style={{
 						backgroundColor: primaryColor,
-						color: primaryColorContrast
+						color: primaryColorContrast,
 					}}
 				>
 					<span className="text-md opacity-75">Header (Primary)</span>
@@ -59,7 +58,7 @@ function SchemePreview(props: SchemePreviewProps) {
 						className="absolute bottom-0 right-0 -mb-2.5 mr-1 flex h-5 w-5 items-center justify-center rounded-full text-xs shadow-sm"
 						style={{
 							backgroundColor: secondaryColor,
-							color: secondaryColorContrast
+							color: secondaryColorContrast,
 						}}
 					>
 						<span className="opacity-75">S</span>
@@ -70,7 +69,7 @@ function SchemePreview(props: SchemePreviewProps) {
 						className="relative h-24 w-full rounded-sm p-2 shadow-sm"
 						style={{
 							backgroundColor: paperColor,
-							color: paperColorContrast
+							color: paperColorContrast,
 						}}
 					>
 						<span className="text-md opacity-75">Paper</span>

@@ -26,4 +26,7 @@ export type FuseNavItemType = {
 	hasPermission?: boolean;
 };
 
-export type FuseFlatNavItemType = Omit<FuseNavItemType, 'children' | 'sx'> & { children?: string[]; order: string };
+export type FuseFlatNavItemType = Omit<FuseNavItemType, 'children' | 'sx'> & {
+	children?: string[];
+	order: string;
+};

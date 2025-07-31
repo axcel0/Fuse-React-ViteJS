@@ -28,7 +28,7 @@ function FirebaseAuthProvider(props: FuseAuthProviderComponentProps) {
 	const [authState, setAuthState] = useState<FuseAuthProviderState<User>>({
 		authStatus: 'configuring',
 		isAuthenticated: false,
-		user: null
+		user: null,
 	});
 
 	/**
@@ -51,7 +51,7 @@ function FirebaseAuthProvider(props: FuseAuthProviderComponentProps) {
 			setAuthState({
 				authStatus: 'unauthenticated',
 				isAuthenticated: false,
-				user: null
+				user: null,
 			});
 			return undefined;
 		}
@@ -80,7 +80,7 @@ function FirebaseAuthProvider(props: FuseAuthProviderComponentProps) {
 							email: userAttributes.email,
 							role: ['admin'],
 							displayName: userAttributes.displayName,
-							photoURL: userAttributes.photoURL
+							photoURL: userAttributes.photoURL,
 						});
 						userDbData = (await newUserResponse.json()) as User;
 					}
@@ -88,7 +88,7 @@ function FirebaseAuthProvider(props: FuseAuthProviderComponentProps) {
 					setAuthState({
 						user: userDbData,
 						isAuthenticated: true,
-						authStatus: 'authenticated'
+						authStatus: 'authenticated',
 					});
 				} else {
 					/**
@@ -97,7 +97,7 @@ function FirebaseAuthProvider(props: FuseAuthProviderComponentProps) {
 					setAuthState({
 						authStatus: 'unauthenticated',
 						isAuthenticated: false,
-						user: null
+						user: null,
 					});
 				}
 			},
@@ -106,9 +106,9 @@ function FirebaseAuthProvider(props: FuseAuthProviderComponentProps) {
 				setAuthState({
 					authStatus: 'unauthenticated',
 					user: null,
-					isAuthenticated: false
+					isAuthenticated: false,
 				});
-			}
+			},
 		);
 
 		/**
@@ -118,7 +118,7 @@ function FirebaseAuthProvider(props: FuseAuthProviderComponentProps) {
 			setAuthState({
 				authStatus: 'configuring',
 				isAuthenticated: false,
-				user: null
+				user: null,
 			});
 			unsubscribe?.();
 		};
@@ -179,7 +179,7 @@ function FirebaseAuthProvider(props: FuseAuthProviderComponentProps) {
 	 */
 	useImperativeHandle(ref, () => ({
 		signOut: handleSignOut,
-		updateUser
+		updateUser,
 	}));
 
 	const authContextValue = useMemo(
@@ -188,9 +188,9 @@ function FirebaseAuthProvider(props: FuseAuthProviderComponentProps) {
 			signIn,
 			signUp,
 			signOut: handleSignOut,
-			updateUser
+			updateUser,
 		}),
-		[authState, signIn, signUp, handleSignOut, updateUser]
+		[authState, signIn, signUp, handleSignOut, updateUser],
 	);
 
 	return <FirebaseAuthContext value={authContextValue}>{children}</FirebaseAuthContext>;

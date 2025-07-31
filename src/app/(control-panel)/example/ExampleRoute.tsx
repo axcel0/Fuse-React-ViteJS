@@ -16,7 +16,7 @@ const Example = lazy(() => import('./Example'));
  */
 const ExampleRoute: FuseRouteItemType = {
 	path: 'example',
-	element: <Example />
+	element: <Example />,
 };
 
 export default ExampleRoute;

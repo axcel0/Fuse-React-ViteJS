@@ -8,7 +8,7 @@ import useFuseSettings from '@fuse/core/FuseSettings/hooks/useFuseSettings';
 
 const Root = styled('div')(() => ({
 	overscrollBehavior: 'contain',
-	minHeight: '100%'
+	minHeight: '100%',
 }));
 
 const md = typeof window !== 'undefined' ? new MobileDetect(window.navigator.userAgent) : null;
@@ -24,7 +24,7 @@ const handlerNameByEvent = Object.freeze({
 	'ps-y-reach-start': 'onYReachStart',
 	'ps-y-reach-end': 'onYReachEnd',
 	'ps-x-reach-start': 'onXReachStart',
-	'ps-x-reach-end': 'onXReachEnd'
+	'ps-x-reach-end': 'onXReachEnd',
 });
 
 export type FuseScrollbarsProps = {
@@ -50,9 +50,9 @@ function FuseScrollbars(props: FuseScrollbarsProps) {
 		scrollToTopOnRouteChange = false,
 		enable = true,
 		option = {
-			wheelPropagation: true
+			wheelPropagation: true,
 		},
-		ref
+		ref,
 	} = props;
 
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -125,7 +125,7 @@ function FuseScrollbars(props: FuseScrollbarsProps) {
 		if (customScrollbars && enable && !isMobile) {
 			setStyle({
 				position: 'relative',
-				overflow: 'hidden!important'
+				overflow: 'hidden!important',
 			});
 		} else {
 			setStyle({});

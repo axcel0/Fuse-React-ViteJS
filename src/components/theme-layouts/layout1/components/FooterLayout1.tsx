@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import MaterialUIFooter from 'src/components/MaterialUIFooter';
 
-type FooterLayout1Props = { 
+type FooterLayout1Props = {
 	className?: string;
 	variant?: 'bottom-navigation' | 'full' | 'minimal';
 };

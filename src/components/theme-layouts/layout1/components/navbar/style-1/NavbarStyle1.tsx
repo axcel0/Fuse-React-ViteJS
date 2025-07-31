@@ -26,52 +26,52 @@ const StyledNavBar = styled('div')<StyledNavBarProps>(({ theme }) => ({
 			style: {
 				transition: theme.transitions.create('margin', {
 					easing: theme.transitions.easing.easeOut,
-					duration: theme.transitions.duration.leavingScreen
-				})
-			}
+					duration: theme.transitions.duration.leavingScreen,
+				}),
+			},
 		},
 		{
 			props: ({ open, position }) => !open && position === 'left',
 			style: {
-				marginLeft: `-${navbarWidth}px`
-			}
+				marginLeft: `-${navbarWidth}px`,
+			},
 		},
 		{
 			props: ({ open, position }) => !open && position === 'right',
 			style: {
-				marginRight: `-${navbarWidth}px`
-			}
+				marginRight: `-${navbarWidth}px`,
+			},
 		},
 		{
 			props: ({ open }) => open,
 			style: {
 				transition: theme.transitions.create('margin', {
 					easing: theme.transitions.easing.easeOut,
-					duration: theme.transitions.duration.enteringScreen
-				})
-			}
+					duration: theme.transitions.duration.enteringScreen,
+				}),
+			},
 		},
 		{
 			props: ({ open, position }) => open && position === 'left',
 			style: {
-				borderRight: `1px solid ${theme.palette.divider}`
-			}
+				borderRight: `1px solid ${theme.palette.divider}`,
+			},
 		},
 		{
 			props: ({ open, position }) => open && position === 'right',
 			style: {
-				borderLeft: `1px solid ${theme.palette.divider}`
-			}
-		}
-	]
+				borderLeft: `1px solid ${theme.palette.divider}`,
+			},
+		},
+	],
 }));
 
 const StyledNavBarMobile = styled(SwipeableDrawer)(() => ({
 	'& .MuiDrawer-paper': {
 		minWidth: navbarWidth,
 		width: navbarWidth,
-		maxWidth: navbarWidth
-	}
+		maxWidth: navbarWidth,
+	},
 }));
 
 /**
@@ -105,7 +105,7 @@ function NavbarStyle1() {
 			{isMobile && (
 				<StyledNavBarMobile
 					classes={{
-						paper: 'flex-col flex-auto h-full'
+						paper: 'flex-col flex-auto h-full',
 					}}
 					anchor={config.navbar.position as 'left' | 'top' | 'right' | 'bottom'}
 					variant="temporary"
@@ -114,7 +114,7 @@ function NavbarStyle1() {
 					onOpen={() => {}}
 					disableSwipeToOpen
 					ModalProps={{
-						keepMounted: true // Better open performance on mobile.
+						keepMounted: true, // Better open performance on mobile.
 					}}
 				>
 					<NavbarStyle1Content />

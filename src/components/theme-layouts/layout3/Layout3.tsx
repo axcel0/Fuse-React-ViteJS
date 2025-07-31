@@ -19,15 +19,15 @@ const Root = styled('div')(({ config }: { config: Layout3ConfigDefaultsType }) =
 		clipPath: 'inset(0)',
 		maxWidth: `${config.containerWidth}px`,
 		margin: '0 auto',
-		boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+		boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
 	}),
 	...(config.mode === 'container' && {
 		'& .container': {
 			maxWidth: `${config.containerWidth}px`,
 			width: '100%',
-			margin: '0 auto'
-		}
-	})
+			margin: '0 auto',
+		},
+	}),
 }));
 
 type Layout3Props = {
@@ -44,29 +44,20 @@ function Layout3(props: Layout3Props) {
 	const config = settings.config as Layout3ConfigDefaultsType;
 
 	return (
-		<Root
-			id="fuse-layout"
-			className="flex flex-auto w-full"
-			config={config}
-		>
+		<Root id="fuse-layout" className="flex flex-auto w-full" config={config}>
 			{config.leftSidePanel.display && <LeftSideLayout3 />}
 
 			<div className="flex min-w-0 flex-auto flex-col">
-				<main
-					id="fuse-main"
-					className="relative flex min-h-full min-w-0 flex-auto flex-col"
-				>
+				<main id="fuse-main" className="relative flex min-h-full min-w-0 flex-auto flex-col">
 					{config.navbar.display && (
-						<NavbarWrapperLayout3
-							className={clsx(config?.navbar?.style === 'fixed' ? 'sticky top-0 z-50' : '')}
-						/>
+						<NavbarWrapperLayout3 className={clsx(config?.navbar?.style === 'fixed' ? 'sticky top-0 z-50' : '')} />
 					)}
 
 					{config.toolbar.display && (
 						<ToolbarLayout3
 							className={clsx(
 								config.toolbar.style === 'fixed' && 'sticky top-0',
-								config.toolbar.position === 'above' && 'z-40 order-first'
+								config.toolbar.position === 'above' && 'z-40 order-first',
 							)}
 						/>
 					)}

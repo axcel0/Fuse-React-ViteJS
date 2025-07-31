@@ -24,17 +24,14 @@ import { QuickPanelProvider } from 'src/components/theme-layouts/components/quic
  */
 function App() {
 	const AppContextValue = {
-		routes
+		routes,
 	};
 
 	return (
 		<ErrorBoundary>
 			<AppContext value={AppContextValue}>
 				{/* Date Picker Localization Provider */}
-				<LocalizationProvider
-					dateAdapter={AdapterDateFns}
-					adapterLocale={enUS}
-				>
+				<LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enUS}>
 					{/* TanStack Query Provider */}
 					<QueryClientProvider client={queryClient}>
 						<Authentication>
@@ -47,10 +44,10 @@ function App() {
 											maxSnack={5}
 											anchorOrigin={{
 												vertical: 'bottom',
-												horizontal: 'right'
+												horizontal: 'right',
 											}}
 											classes={{
-												containerRoot: 'bottom-0 right-0 mb-13 md:mb-17 mr-2 lg:mr-20 z-99'
+												containerRoot: 'bottom-0 right-0 mb-13 md:mb-17 mr-2 lg:mr-20 z-99',
 											}}
 										>
 											<FuseMessageProvider>

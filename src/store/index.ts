@@ -6,10 +6,10 @@ export { default as withSlices } from './withSlices';
 
 // Legacy store compatibility
 export const store = {
-  dispatch: () => console.warn('Redux store is deprecated in v16.0.0'),
-  getState: () => ({}),
-  subscribe: () => () => {},
-  replaceReducer: () => console.warn('Redux store is deprecated in v16.0.0'),
+	dispatch: () => console.warn('Redux store is deprecated in v16.0.0'),
+	getState: () => ({}),
+	subscribe: () => () => {},
+	replaceReducer: () => console.warn('Redux store is deprecated in v16.0.0'),
 };
 
 export type RootState = {};

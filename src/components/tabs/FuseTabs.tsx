@@ -15,28 +15,23 @@ const FuseTabs: ComponentType<TabsProps> = styled((props: StyledTabsProps) => (
 		scrollButtons={false}
 		className={clsx('w-full min-h-0', props.className)}
 		classes={{
-			indicator: 'flex justify-center bg-transparent w-full h-full'
+			indicator: 'flex justify-center bg-transparent w-full h-full',
 		}}
 		slotProps={{
 			indicator: {
-				children: (
-					<Box
-						sx={{ bgcolor: 'text.disabled' }}
-						className="w-full h-full rounded-lg opacity-20"
-					/>
-				)
-			}
+				children: <Box sx={{ bgcolor: 'text.disabled' }} className="w-full h-full rounded-lg opacity-20" />,
+			},
 		}}
 		{...props}
 	/>
 ))(() => ({
 	minHeight: 36,
 	'& .MuiTabs-flexContainer': {
-		height: 36
+		height: 36,
 	},
 	'& .MuiTab-root:not(:last-of-type)': {
-		marginRight: 4
-	}
+		marginRight: 4,
+	},
 }));
 
 export default FuseTabs;

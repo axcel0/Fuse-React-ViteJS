@@ -40,11 +40,15 @@ export function useUser() {
 			return response.json();
 		},
 		staleTime: 5 * 60 * 1000, // 5 minutes
-		retry: (failureCount, error: any) => {
+		retry: (failureCount, error: unknown) => {
 			// Don't retry if unauthorized
-			if (error?.response?.status === 401) {
-				return false;
+			if (error && typeof error === 'object' && 'response' in error) {
+				const errorWithResponse = error as { response: { status: number } };
+				if (errorWithResponse.response?.status === 401) {
+					return false;
+				}
 			}
+
 			return failureCount < 3;
 		},
 	});
@@ -62,7 +66,7 @@ export function useUpdateUser() {
 		onSuccess: (updatedUser) => {
 			// Update the user cache
 			queryClient.setQueryData(userKeys.me(), updatedUser);
-			
+
 			// Optionally invalidate related queries
 			queryClient.invalidateQueries({ queryKey: userKeys.details() });
 		},
@@ -78,7 +82,9 @@ export function useUpdateUserSettings() {
 
 	return useMutation({
 		mutationFn: async (settings: Record<string, any>): Promise<User> => {
-			const response = await httpClient.put('auth/me/settings', { json: { settings } });
+			const response = await httpClient.put('auth/me/settings', {
+				json: { settings },
+			});
 			return response.json();
 		},
 		onSuccess: (updatedUser) => {

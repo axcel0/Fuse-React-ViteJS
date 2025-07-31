@@ -32,8 +32,8 @@ const Root = styled(Box)<FuseSvgIconProps>(({ theme, size = 20, color = 'inherit
 		action: theme.palette.action.active,
 		error: theme.palette.error.main,
 		disabled: theme.palette.action.disabled,
-		inherit: 'currentColor'
-	}[color] as string
+		inherit: 'currentColor',
+	}[color] as string,
 }));
 
 /**
@@ -49,13 +49,7 @@ function FuseSvgIcon(props: FuseSvgIconProps) {
 	}
 
 	if (!children.includes(':')) {
-		return (
-			<Box
-				component={Icon}
-				ref={ref}
-				{...props}
-			/>
-		);
+		return <Box component={Icon} ref={ref} {...props} />;
 	}
 
 	const iconPath = children.replace(':', '.svg#');

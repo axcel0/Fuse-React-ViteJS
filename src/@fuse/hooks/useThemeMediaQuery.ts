@@ -43,7 +43,7 @@ function useThemeMediaQuery(themeCallbackFunc: (theme: Theme) => string) {
 			// Remove the event listener on cleanup
 			return () => mediaQuery.removeEventListener('change', handler);
 		},
-		[query] // Empty array ensures effect is only run on mount and unmount
+		[query], // Empty array ensures effect is only run on mount and unmount
 	);
 
 	return matches;

@@ -34,19 +34,11 @@ function PageTitle(props: PageTitleProps) {
 			<div className="flex items-center space-x-1">
 				{title && <Typography className="text-xl font-bold truncate">{title}</Typography>}
 				{badgeTitle && badgeTitle !== '' && (
-					<Chip
-						className="rounded-md truncate"
-						label={badgeTitle}
-						color="secondary"
-						size="small"
-					/>
+					<Chip className="rounded-md truncate" label={badgeTitle} color="secondary" size="small" />
 				)}
 			</div>
 			{subtitle && (
-				<Typography
-					className="truncate"
-					color="text.secondary"
-				>
+				<Typography className="truncate" color="text.secondary">
 					{subtitle}
 				</Typography>
 			)}

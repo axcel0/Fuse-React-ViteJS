@@ -18,15 +18,15 @@ const Root = styled('div')(({ config }: { config: Layout1ConfigDefaultsType }) =
 		clipPath: 'inset(0)',
 		maxWidth: `${config.containerWidth}px`,
 		margin: '0 auto',
-		boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+		boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
 	}),
 	...(config.mode === 'container' && {
 		'& .container': {
 			maxWidth: `${config.containerWidth}px`,
 			width: '100%',
-			margin: '0 auto'
-		}
-	})
+			margin: '0 auto',
+		},
+	}),
 }));
 
 type Layout1Props = {
@@ -42,20 +42,13 @@ function Layout1(props: Layout1Props) {
 	const config = settings.config as Layout1ConfigDefaultsType;
 
 	return (
-		<Root
-			id="fuse-layout"
-			config={config}
-			className="flex flex-auto w-full"
-		>
+		<Root id="fuse-layout" config={config} className="flex flex-auto w-full">
 			{config.leftSidePanel.display && <LeftSideLayout1 />}
 
 			<div className="flex min-w-0 flex-auto">
 				{config.navbar.display && config.navbar.position === 'left' && <MaterialNavbar />}
 
-				<main
-					id="fuse-main"
-					className="relative z-10 flex min-h-full min-w-0 flex-auto flex-col"
-				>
+				<main id="fuse-main" className="relative z-10 flex min-h-full min-w-0 flex-auto flex-col">
 					{config.toolbar.display && (
 						<ToolbarLayout1 className={config.toolbar.style === 'fixed' ? 'sticky top-0' : ''} />
 					)}

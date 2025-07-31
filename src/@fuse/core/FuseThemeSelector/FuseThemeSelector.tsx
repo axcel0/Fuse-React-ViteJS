@@ -18,12 +18,7 @@ function FuseThemeSelector(props: FuseThemeSchemesProps) {
 		<div>
 			<div className="w-full grid grid-cols-2 gap-3">
 				{options.map((item) => (
-					<ThemePreview
-						key={item.id}
-						className=""
-						theme={item}
-						onSelect={onSelect}
-					/>
+					<ThemePreview key={item.id} className="" theme={item} onSelect={onSelect} />
 				))}
 			</div>
 		</div>

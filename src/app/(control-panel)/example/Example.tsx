@@ -8,11 +8,11 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 		backgroundColor: theme.palette.background.paper,
 		borderBottomWidth: 1,
 		borderStyle: 'solid',
-		borderColor: theme.palette.divider
+		borderColor: theme.palette.divider,
 	},
 	'& .FusePageSimple-content': {},
 	'& .FusePageSimple-sidebarHeader': {},
-	'& .FusePageSimple-sidebarContent': {}
+	'& .FusePageSimple-sidebarContent': {},
 }));
 
 function Example() {

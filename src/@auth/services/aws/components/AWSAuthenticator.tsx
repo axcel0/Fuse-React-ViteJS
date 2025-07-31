@@ -11,7 +11,7 @@ import { AuthenticatorProps } from '@aws-amplify/ui-react/dist/types/components/
 
 const Root = styled('div')(({ theme }) => ({
 	'& [data-amplify-authenticator] [data-amplify-router]': {
-		boxShadow: 'none'
+		boxShadow: 'none',
 	},
 	'& [data-amplify-theme]': {
 		fontSize: '0.8125rem',
@@ -81,27 +81,27 @@ const Root = styled('div')(({ theme }) => ({
 		'--amplify-components-alert-padding-inline': `0.75rem`,
 		'--amplify-components-fieldcontrol-border-radius': `0.25rem`,
 		'& .amplify-tabs__list': {
-			display: 'none'
+			display: 'none',
 		},
 		'& .amplify-alert': {
-			borderRadius: 6
+			borderRadius: 6,
 		},
 		'& .amplify-alert__body': {
-			fontSize: '0.75rem'
+			fontSize: '0.75rem',
 		},
 		'& .amplify-field-group .amplify-field-group__outer-end .amplify-field-group__control': {
-			borderRadius: '0 4px 4px 0'
+			borderRadius: '0 4px 4px 0',
 		},
 		'& .amplify-field-group .amplify-field-group__outer-start .amplify-field-group__control': {
-			borderRadius: '4px 0 0 4px'
+			borderRadius: '4px 0 0 4px',
 		},
 		'& .amplify-divider--horizontal': {
-			margin: '1rem 0'
+			margin: '1rem 0',
 		},
 		'& .amplify-divider::after': {
-			backgroundColor: theme.palette.background.paper
-		}
-	}
+			backgroundColor: theme.palette.background.paper,
+		},
+	},
 }));
 
 function AwsAuthenticator(props: AuthenticatorProps) {

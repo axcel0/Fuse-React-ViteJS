@@ -24,22 +24,22 @@ const Root = styled(ListItemButton)<ListItemButtonProps>(({ theme }) => ({
 		backgroundColor: `${theme.palette.secondary.main}!important`,
 		color: `${theme.palette.secondary.contrastText}!important`,
 		'& .fuse-list-item-text-primary': {
-			color: 'inherit'
+			color: 'inherit',
 		},
 		'& .fuse-list-item-icon': {
-			color: 'inherit'
-		}
+			color: 'inherit',
+		},
 	},
 	'& .fuse-list-item-text': {
-		padding: '0 0 0 16px'
+		padding: '0 0 0 16px',
 	},
 	'&.level-0': {
 		minHeight: 36,
 		borderRadius: 8,
 		'&:hover': {
-			background: 'transparent'
-		}
-	}
+			background: 'transparent',
+		},
+	},
 }));
 
 type FuseNavHorizontalGroupProps = FuseNavItemComponentProps & WithRouterProps;
@@ -63,10 +63,10 @@ function FuseNavHorizontalGroup(props: FuseNavHorizontalGroupProps) {
 				to: item.url,
 				end: item.end,
 				role: 'button',
-				exact: item?.exact
-			})
+				exact: item?.exact,
+			}),
 		}),
-		[item, component]
+		[item, component],
 	);
 	const handleToggle = useDebounce((open: boolean) => {
 		setOpened(open);
@@ -92,7 +92,7 @@ function FuseNavHorizontalGroup(props: FuseNavHorizontalGroupProps) {
 									'fuse-list-item',
 									'relative',
 									`level-${nestedLevel}`,
-									isUrlInChildren(item, pathname) && 'active'
+									isUrlInChildren(item, pathname) && 'active',
 								)}
 								onMouseEnter={() => handleToggle(true)}
 								onMouseLeave={() => handleToggle(false)}
@@ -102,10 +102,7 @@ function FuseNavHorizontalGroup(props: FuseNavHorizontalGroupProps) {
 								{...itemProps}
 							>
 								{item.icon && (
-									<FuseSvgIcon
-										color="action"
-										className={clsx('fuse-list-item-icon shrink-0', item.iconClass)}
-									>
+									<FuseSvgIcon color="action" className={clsx('fuse-list-item-icon shrink-0', item.iconClass)}>
 										{item.icon}
 									</FuseSvgIcon>
 								)}
@@ -117,18 +114,9 @@ function FuseNavHorizontalGroup(props: FuseNavHorizontalGroupProps) {
 								/>
 
 								{nestedLevel > 0 && (
-									<IconButton
-										disableRipple
-										className="h-4 w-4 p-0 ltr:ml-1 rtl:mr-1"
-										color="inherit"
-									>
-										<FuseSvgIcon
-											size={16}
-											className="arrow-icon"
-										>
-											{theme.direction === 'ltr'
-												? 'heroicons-outline:chevron-right'
-												: 'heroicons-outline:chevron-left'}
+									<IconButton disableRipple className="h-4 w-4 p-0 ltr:ml-1 rtl:mr-1" color="inherit">
+										<FuseSvgIcon size={16} className="arrow-icon">
+											{theme.direction === 'ltr' ? 'heroicons-outline:chevron-right' : 'heroicons-outline:chevron-left'}
 										</FuseSvgIcon>
 									</IconButton>
 								)}
@@ -144,25 +132,19 @@ function FuseNavHorizontalGroup(props: FuseNavHorizontalGroupProps) {
 									ref={ref}
 									style={{
 										...style,
-										zIndex: 999 + nestedLevel
+										zIndex: 999 + nestedLevel,
 									}}
 									data-placement={placement}
 									className={clsx('z-999', !opened && 'pointer-events-none')}
 								>
-									<Grow
-										in={opened}
-										id="menu-fuse-list-grow"
-										style={{ transformOrigin: '0 0 0' }}
-									>
+									<Grow in={opened} id="menu-fuse-list-grow" style={{ transformOrigin: '0 0 0' }}>
 										<Paper
 											className="rounded-sm"
 											onMouseEnter={() => handleToggle(true)}
 											onMouseLeave={() => handleToggle(false)}
 										>
 											{item.children && (
-												<ul
-													className={clsx('popper-navigation-list', dense && 'dense', 'px-0')}
-												>
+												<ul className={clsx('popper-navigation-list', dense && 'dense', 'px-0')}>
 													{item.children.map((_item) => (
 														<FuseNavItem
 															key={_item.id}
@@ -180,7 +162,7 @@ function FuseNavHorizontalGroup(props: FuseNavHorizontalGroupProps) {
 							)
 						}
 					</Popper>,
-					document.querySelector('#root')
+					document.querySelector('#root'),
 				)}
 			</Manager>
 		);

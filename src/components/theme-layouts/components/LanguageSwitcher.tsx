@@ -33,23 +33,16 @@ function LanguageSwitcher() {
 
 	return (
 		<>
-			<Button
-				className="border border-divider"
-				onClick={langMenuClick}
-			>
-				<img
-					className="mx-1 min-w-5"
-					src={`/assets/images/flags/${language.flag}.svg`}
-					alt={language.title}
-				/>
+			<Button className="border border-divider" onClick={langMenuClick}>
+				<img className="mx-1 min-w-5" src={`/assets/images/flags/${language.flag}.svg`} alt={language.title} />
 
 				<Typography
 					className="mx-1 font-semibold text-md uppercase"
 					sx={(theme) => ({
 						color: theme.palette.text.secondary,
 						...theme.applyStyles('dark', {
-							color: theme.palette.text.primary
-						})
+							color: theme.palette.text.primary,
+						}),
 					})}
 				>
 					{language.id}
@@ -61,27 +54,20 @@ function LanguageSwitcher() {
 				onClose={langMenuClose}
 				anchorOrigin={{
 					vertical: 'bottom',
-					horizontal: 'center'
+					horizontal: 'center',
 				}}
 				transformOrigin={{
 					vertical: 'top',
-					horizontal: 'center'
+					horizontal: 'center',
 				}}
 				classes={{
-					paper: 'py-2'
+					paper: 'py-2',
 				}}
 			>
 				{languages.map((lng) => (
-					<MenuItem
-						key={lng.id}
-						onClick={() => handleLanguageChange(lng)}
-					>
+					<MenuItem key={lng.id} onClick={() => handleLanguageChange(lng)}>
 						<ListItemIcon className="min-w-9">
-							<img
-								className="min-w-5"
-								src={`/assets/images/flags/${lng.flag}.svg`}
-								alt={lng.title}
-							/>
+							<img className="min-w-5" src={`/assets/images/flags/${lng.flag}.svg`} alt={lng.title} />
 						</ListItemIcon>
 						<ListItemText primary={lng.title} />
 					</MenuItem>

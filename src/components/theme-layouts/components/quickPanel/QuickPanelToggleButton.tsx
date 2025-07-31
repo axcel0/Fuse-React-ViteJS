@@ -16,10 +16,7 @@ function QuickPanelToggleButton(props: QuickPanelToggleButtonProps) {
 	const { togglePanel } = useQuickPanel();
 
 	return (
-		<IconButton
-			onClick={() => togglePanel()}
-			className={clsx('border border-divider', className)}
-		>
+		<IconButton onClick={() => togglePanel()} className={clsx('border border-divider', className)}>
 			{children}
 		</IconButton>
 	);

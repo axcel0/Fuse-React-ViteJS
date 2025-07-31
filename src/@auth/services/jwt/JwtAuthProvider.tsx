@@ -25,7 +25,7 @@ function JwtAuthProvider(props: FuseAuthProviderComponentProps) {
 	const {
 		value: tokenStorageValue,
 		setValue: setTokenStorageValue,
-		removeValue: removeTokenStorageValue
+		removeValue: removeTokenStorageValue,
 	} = useLocalStorage<string>('jwt_access_token');
 
 	/**
@@ -34,7 +34,7 @@ function JwtAuthProvider(props: FuseAuthProviderComponentProps) {
 	const [authState, setAuthState] = useState<FuseAuthProviderState<User>>({
 		authStatus: 'configuring',
 		isAuthenticated: false,
-		user: null
+		user: null,
 	});
 
 	/**
@@ -82,7 +82,7 @@ function JwtAuthProvider(props: FuseAuthProviderComponentProps) {
 					setAuthState({
 						authStatus: 'authenticated',
 						isAuthenticated: true,
-						user: userData
+						user: userData,
 					});
 				} else {
 					removeTokenStorageValue();
@@ -90,7 +90,7 @@ function JwtAuthProvider(props: FuseAuthProviderComponentProps) {
 					setAuthState({
 						authStatus: 'unauthenticated',
 						isAuthenticated: false,
-						user: null
+						user: null,
 					});
 				}
 			});
@@ -105,13 +105,16 @@ function JwtAuthProvider(props: FuseAuthProviderComponentProps) {
 		async (credentials) => {
 			const response = await authSignIn(credentials);
 
-			const session = (await response.json()) as { user: User; access_token: string };
+			const session = (await response.json()) as {
+				user: User;
+				access_token: string;
+			};
 
 			if (session) {
 				setAuthState({
 					authStatus: 'authenticated',
 					isAuthenticated: true,
-					user: session.user
+					user: session.user,
 				});
 				setTokenStorageValue(session.access_token);
 				setGlobalHeaders({ Authorization: `Bearer ${session.access_token}` });
@@ -119,7 +122,7 @@ function JwtAuthProvider(props: FuseAuthProviderComponentProps) {
 
 			return response;
 		},
-		[setTokenStorageValue]
+		[setTokenStorageValue],
 	);
 
 	/**
@@ -129,13 +132,16 @@ function JwtAuthProvider(props: FuseAuthProviderComponentProps) {
 		async (data) => {
 			const response = await authSignUp(data);
 
-			const session = (await response.json()) as { user: User; access_token: string };
+			const session = (await response.json()) as {
+				user: User;
+				access_token: string;
+			};
 
 			if (session) {
 				setAuthState({
 					authStatus: 'authenticated',
 					isAuthenticated: true,
-					user: session.user
+					user: session.user,
 				});
 				setTokenStorageValue(session.access_token);
 				setGlobalHeaders({ Authorization: `Bearer ${session.access_token}` });
@@ -143,7 +149,7 @@ function JwtAuthProvider(props: FuseAuthProviderComponentProps) {
 
 			return response;
 		},
-		[setTokenStorageValue]
+		[setTokenStorageValue],
 	);
 
 	/**
@@ -155,7 +161,7 @@ function JwtAuthProvider(props: FuseAuthProviderComponentProps) {
 		setAuthState({
 			authStatus: 'unauthenticated',
 			isAuthenticated: false,
-			user: null
+			user: null,
 		});
 	}, [removeTokenStorageValue]);
 
@@ -193,9 +199,9 @@ function JwtAuthProvider(props: FuseAuthProviderComponentProps) {
 				signUp,
 				signOut,
 				updateUser,
-				refreshToken
+				refreshToken,
 			}) as JwtAuthContextType,
-		[authState, signIn, signUp, signOut, updateUser, refreshToken]
+		[authState, signIn, signUp, signOut, updateUser, refreshToken],
 	);
 
 	/**
@@ -203,7 +209,7 @@ function JwtAuthProvider(props: FuseAuthProviderComponentProps) {
 	 */
 	useImperativeHandle(ref, () => ({
 		signOut,
-		updateUser
+		updateUser,
 	}));
 
 	/**

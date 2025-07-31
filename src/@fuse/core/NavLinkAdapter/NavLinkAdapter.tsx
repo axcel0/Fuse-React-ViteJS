@@ -28,12 +28,10 @@ function NavLinkAdapter(props: NavLinkAdapterPropsType) {
 		<NavLink
 			role={role}
 			to={targetUrl}
-			className={({ isActive }) =>
-				[_props.className, isActive ? activeClassName : null].filter(Boolean).join(' ')
-			}
+			className={({ isActive }) => [_props.className, isActive ? activeClassName : null].filter(Boolean).join(' ')}
 			style={({ isActive }) => ({
 				..._props.style,
-				...(isActive ? activeStyle : null)
+				...(isActive ? activeStyle : null),
 			})}
 			ref={ref}
 			{..._props}

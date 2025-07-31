@@ -19,7 +19,7 @@ const Root = styled('div')(({ theme }) => ({
 	'& .FuseSettings-formControl': {
 		margin: '6px 0',
 		width: '100%',
-		'&:last-child': { marginBottom: 0 }
+		'&:last-child': { marginBottom: 0 },
 	},
 	'& .FuseSettings-formGroupTitle': {
 		position: 'absolute',
@@ -27,7 +27,7 @@ const Root = styled('div')(({ theme }) => ({
 		left: 8,
 		fontWeight: 600,
 		padding: '0 4px',
-		backgroundColor: theme.palette.background.paper
+		backgroundColor: theme.palette.background.paper,
 	},
 	'& .FuseSettings-formGroup': {
 		position: 'relative',
@@ -35,8 +35,8 @@ const Root = styled('div')(({ theme }) => ({
 		borderRadius: 2,
 		padding: '12px 12px 0 12px',
 		margin: '24px 0 16px 0',
-		'&:first-of-type': { marginTop: 16 }
-	}
+		'&:first-of-type': { marginTop: 16 },
+	},
 }));
 
 export type FuseThemeType = { palette: PartialDeep<Palette> };
@@ -45,7 +45,12 @@ export type FuseSettingsConfigType = {
 	layout: { style?: string; config?: PartialDeep<themeLayoutDefaultsProps> };
 	customScrollbars?: boolean;
 	direction: 'rtl' | 'ltr';
-	theme: { main: FuseThemeType; navbar: FuseThemeType; toolbar: FuseThemeType; footer: FuseThemeType };
+	theme: {
+		main: FuseThemeType;
+		navbar: FuseThemeType;
+		toolbar: FuseThemeType;
+		footer: FuseThemeType;
+	};
 	defaultAuth?: string[];
 	loginRedirectUrl: string;
 };
@@ -63,7 +68,10 @@ type FuseSettingsProps = {
  */
 function FuseSettings(props: FuseSettingsProps) {
 	const { onChange, value: settings } = props;
-	const { reset, watch, control } = useForm({ mode: 'onChange', defaultValues: settings });
+	const { reset, watch, control } = useForm({
+		mode: 'onChange',
+		defaultValues: settings,
+	});
 
 	const form = watch();
 	const formLayoutStyle = watch('layout.style');
@@ -110,10 +118,7 @@ function FuseSettings(props: FuseSettingsProps) {
 	return (
 		<Root>
 			<div className="FuseSettings-formGroup">
-				<Typography
-					className="FuseSettings-formGroupTitle"
-					color="text.secondary"
-				>
+				<Typography className="FuseSettings-formGroupTitle" color="text.secondary">
 					Layout
 				</Typography>
 
@@ -121,28 +126,13 @@ function FuseSettings(props: FuseSettingsProps) {
 					name="layout.style"
 					control={control}
 					render={({ field }) => (
-						<FormControl
-							component="fieldset"
-							className="FuseSettings-formControl"
-						>
-							<FormLabel
-								component="legend"
-								className="text-base"
-							>
+						<FormControl component="fieldset" className="FuseSettings-formControl">
+							<FormLabel component="legend" className="text-base">
 								Style
 							</FormLabel>
-							<RadioGroup
-								{...field}
-								aria-label="Layout Style"
-								className="FuseSettings-group"
-							>
+							<RadioGroup {...field} aria-label="Layout Style" className="FuseSettings-group">
 								{Object.entries(themeLayoutConfigs).map(([key, layout]) => (
-									<FormControlLabel
-										key={key}
-										value={key}
-										control={<Radio />}
-										label={layout.title}
-									/>
+									<FormControlLabel key={key} value={key} control={<Radio />} label={layout.title} />
 								))}
 							</RadioGroup>
 						</FormControl>
@@ -151,28 +141,18 @@ function FuseSettings(props: FuseSettingsProps) {
 
 				{useMemo(
 					() => (
-						<FuseLayoutConfigs
-							value={layoutFormConfigs}
-							prefix="layout.config"
-							control={control}
-						/>
+						<FuseLayoutConfigs value={layoutFormConfigs} prefix="layout.config" control={control} />
 					),
-					[layoutFormConfigs, control]
+					[layoutFormConfigs, control],
 				)}
 
-				<Typography
-					className="my-4 text-md italic"
-					color="text.secondary"
-				>
+				<Typography className="my-4 text-md italic" color="text.secondary">
 					*Not all option combinations are available
 				</Typography>
 			</div>
 
 			<div className="FuseSettings-formGroup pb-4">
-				<Typography
-					className="FuseSettings-formGroupTitle"
-					color="text.secondary"
-				>
+				<Typography className="FuseSettings-formGroupTitle" color="text.secondary">
 					Theme
 				</Typography>
 
@@ -186,10 +166,7 @@ function FuseSettings(props: FuseSettingsProps) {
 								onChange={onChange}
 								triggerElement={
 									<div className="group m-2 flex w-32 cursor-pointer flex-col items-center space-y-2">
-										<SectionPreview
-											className="transition-shadow group-hover:shadow-lg"
-											section="main"
-										/>
+										<SectionPreview className="transition-shadow group-hover:shadow-lg" section="main" />
 										<Typography className="mb-6 flex-1 text-base font-semibold opacity-80 group-hover:opacity-100">
 											Main Palette
 										</Typography>
@@ -207,10 +184,7 @@ function FuseSettings(props: FuseSettingsProps) {
 								onChange={onChange}
 								triggerElement={
 									<div className="group m-2 flex w-32 cursor-pointer flex-col items-center space-y-2">
-										<SectionPreview
-											className="transition-shadow group-hover:shadow-lg"
-											section="navbar"
-										/>
+										<SectionPreview className="transition-shadow group-hover:shadow-lg" section="navbar" />
 										<Typography className="mb-6 flex-1 text-base font-semibold opacity-80 group-hover:opacity-100">
 											Navbar Palette
 										</Typography>
@@ -228,10 +202,7 @@ function FuseSettings(props: FuseSettingsProps) {
 								onChange={onChange}
 								triggerElement={
 									<div className="group m-2 flex w-32 cursor-pointer flex-col items-center space-y-2">
-										<SectionPreview
-											className="transition-shadow group-hover:shadow-lg"
-											section="toolbar"
-										/>
+										<SectionPreview className="transition-shadow group-hover:shadow-lg" section="toolbar" />
 										<Typography className="mb-6 flex-1 text-base font-semibold opacity-80 group-hover:opacity-100">
 											Toolbar Palette
 										</Typography>
@@ -249,10 +220,7 @@ function FuseSettings(props: FuseSettingsProps) {
 								onChange={onChange}
 								triggerElement={
 									<div className="group m-2 flex w-32 cursor-pointer flex-col items-center space-y-2">
-										<SectionPreview
-											className="transition-shadow group-hover:shadow-lg"
-											section="footer"
-										/>
+										<SectionPreview className="transition-shadow group-hover:shadow-lg" section="footer" />
 										<Typography className="mb-6 flex-1 text-base font-semibold opacity-80 group-hover:opacity-100">
 											Footer Palette
 										</Typography>
@@ -267,21 +235,11 @@ function FuseSettings(props: FuseSettingsProps) {
 				name="customScrollbars"
 				control={control}
 				render={({ field: { onChange, value } }) => (
-					<FormControl
-						component="fieldset"
-						className="FuseSettings-formControl"
-					>
-						<FormLabel
-							component="legend"
-							className="text-base"
-						>
+					<FormControl component="fieldset" className="FuseSettings-formControl">
+						<FormLabel component="legend" className="text-base">
 							Custom Scrollbars
 						</FormLabel>
-						<Switch
-							checked={value}
-							onChange={(ev) => onChange(ev.target.checked)}
-							aria-label="Custom Scrollbars"
-						/>
+						<Switch checked={value} onChange={(ev) => onChange(ev.target.checked)} aria-label="Custom Scrollbars" />
 					</FormControl>
 				)}
 			/>
@@ -289,34 +247,13 @@ function FuseSettings(props: FuseSettingsProps) {
 				name="direction"
 				control={control}
 				render={({ field }) => (
-					<FormControl
-						component="fieldset"
-						className="FuseSettings-formControl"
-					>
-						<FormLabel
-							component="legend"
-							className="text-base"
-						>
+					<FormControl component="fieldset" className="FuseSettings-formControl">
+						<FormLabel component="legend" className="text-base">
 							Direction
 						</FormLabel>
-						<RadioGroup
-							{...field}
-							aria-label="Layout Direction"
-							className="FuseSettings-group"
-							row
-						>
-							<FormControlLabel
-								key="rtl"
-								value="rtl"
-								control={<Radio />}
-								label="RTL"
-							/>
-							<FormControlLabel
-								key="ltr"
-								value="ltr"
-								control={<Radio />}
-								label="LTR"
-							/>
+						<RadioGroup {...field} aria-label="Layout Direction" className="FuseSettings-group" row>
+							<FormControlLabel key="rtl" value="rtl" control={<Radio />} label="RTL" />
+							<FormControlLabel key="ltr" value="ltr" control={<Radio />} label="LTR" />
 						</RadioGroup>
 					</FormControl>
 				)}

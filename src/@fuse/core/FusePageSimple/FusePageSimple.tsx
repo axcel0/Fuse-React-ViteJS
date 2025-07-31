@@ -30,7 +30,10 @@ type FusePageSimpleProps = SystemStyleObject<Theme> & {
 	rightSidebarOnClose?: () => void;
 	leftSidebarOnClose?: () => void;
 	contentScrollbarsProps?: FuseScrollbarsProps;
-	ref?: RefObject<{ toggleLeftSidebar: (val: boolean) => void; toggleRightSidebar: (val: boolean) => void }>;
+	ref?: RefObject<{
+		toggleLeftSidebar: (val: boolean) => void;
+		toggleRightSidebar: (val: boolean) => void;
+	}>;
 };
 
 /**
@@ -48,7 +51,7 @@ const Root = styled('div')<FusePageSimpleProps>(({ theme, ...props }) => ({
 	backgroundColor: theme.palette.background.default,
 
 	'&.FusePageSimple-scroll-content': {
-		height: '100%'
+		height: '100%',
 	},
 
 	'& .FusePageSimple-wrapper': {
@@ -66,14 +69,14 @@ const Root = styled('div')<FusePageSimpleProps>(({ theme, ...props }) => ({
 			bottom: 0,
 			right: 0,
 			left: 0,
-			overflow: 'hidden'
-		})
+			overflow: 'hidden',
+		}),
 	},
 
 	'& .FusePageSimple-header': {
 		display: 'flex',
 		flex: '0 0 auto',
-		backgroundSize: 'cover'
+		backgroundSize: 'cover',
 	},
 
 	'& .FusePageSimple-topBg': {
@@ -82,7 +85,7 @@ const Root = styled('div')<FusePageSimpleProps>(({ theme, ...props }) => ({
 		right: 0,
 		top: 0,
 		height: headerHeight,
-		pointerEvents: 'none'
+		pointerEvents: 'none',
 	},
 
 	'& .FusePageSimple-contentWrapper': {
@@ -93,14 +96,14 @@ const Root = styled('div')<FusePageSimpleProps>(({ theme, ...props }) => ({
 		overflow: 'hidden',
 
 		//    WebkitOverflowScrolling: 'touch',
-		zIndex: 9999
+		zIndex: 9999,
 	},
 
 	'& .FusePageSimple-toolbar': {
 		height: toolbarHeight,
 		minHeight: toolbarHeight,
 		display: 'flex',
-		alignItems: 'center'
+		alignItems: 'center',
 	},
 
 	'& .FusePageSimple-content': {
@@ -113,8 +116,8 @@ const Root = styled('div')<FusePageSimpleProps>(({ theme, ...props }) => ({
 		'& > .container': {
 			display: 'flex',
 			flexDirection: 'column',
-			minHeight: '100%'
-		}
+			minHeight: '100%',
+		},
 	},
 
 	'& .FusePageSimple-sidebarWrapper': {
@@ -128,23 +131,23 @@ const Root = styled('div')<FusePageSimpleProps>(({ theme, ...props }) => ({
 				marginRight: 0,
 				transition: theme.transitions.create('margin', {
 					easing: theme.transitions.easing.sharp,
-					duration: theme.transitions.duration.leavingScreen
+					duration: theme.transitions.duration.leavingScreen,
 				}),
 				'&.closed': {
 					transition: theme.transitions.create('margin', {
 						easing: theme.transitions.easing.easeOut,
-						duration: theme.transitions.duration.enteringScreen
+						duration: theme.transitions.duration.enteringScreen,
 					}),
 
 					'&.FusePageSimple-leftSidebar': {
-						marginLeft: -props.leftSidebarWidth
+						marginLeft: -props.leftSidebarWidth,
 					},
 					'&.FusePageSimple-rightSidebar': {
-						marginRight: -props.rightSidebarWidth
-					}
-				}
-			}
-		}
+						marginRight: -props.rightSidebarWidth,
+					},
+				},
+			},
+		},
 	},
 
 	'& .FusePageSimple-sidebar': {
@@ -154,11 +157,11 @@ const Root = styled('div')<FusePageSimpleProps>(({ theme, ...props }) => ({
 
 		'&.permanent': {
 			[theme.breakpoints.up('lg')]: {
-				position: 'relative'
-			}
+				position: 'relative',
+			},
 		},
 		maxWidth: '100%',
-		height: '100%'
+		height: '100%',
 	},
 
 	'& .FusePageSimple-leftSidebar': {
@@ -166,8 +169,8 @@ const Root = styled('div')<FusePageSimpleProps>(({ theme, ...props }) => ({
 
 		[theme.breakpoints.up('lg')]: {
 			borderRight: `1px solid ${theme.palette.divider}`,
-			borderLeft: 0
-		}
+			borderLeft: 0,
+		},
 	},
 
 	'& .FusePageSimple-rightSidebar': {
@@ -175,13 +178,13 @@ const Root = styled('div')<FusePageSimpleProps>(({ theme, ...props }) => ({
 
 		[theme.breakpoints.up('lg')]: {
 			borderLeft: `1px solid ${theme.palette.divider}`,
-			borderRight: 0
-		}
+			borderRight: 0,
+		},
 	},
 
 	'& .FusePageSimple-backdrop': {
-		position: 'absolute'
-	}
+		position: 'absolute',
+	},
 }));
 
 /**
@@ -205,7 +208,7 @@ function FusePageSimple(props: FusePageSimpleProps) {
 		rightSidebarOnClose,
 		leftSidebarOnClose,
 		contentScrollbarsProps,
-		ref
+		ref,
 	} = props;
 
 	const leftSidebarRef = useRef<{ toggleSidebar: (T: boolean) => void }>(null);
@@ -219,7 +222,7 @@ function FusePageSimple(props: FusePageSimpleProps) {
 		},
 		toggleRightSidebar: (val: boolean) => {
 			rightSidebarRef?.current?.toggleSidebar(val);
-		}
+		},
 	}));
 
 	return (
@@ -228,22 +231,22 @@ function FusePageSimple(props: FusePageSimpleProps) {
 				styles={() => ({
 					...(scroll !== 'page' && {
 						'#fuse-toolbar': {
-							position: 'static'
+							position: 'static',
 						},
 						'#fuse-footer': {
-							position: 'static'
-						}
+							position: 'static',
+						},
 					}),
 					...(scroll === 'page' && {
 						'#fuse-toolbar': {
 							position: 'sticky',
-							top: 0
+							top: 0,
 						},
 						'#fuse-footer': {
 							position: 'sticky',
-							bottom: 0
-						}
-					})
+							bottom: 0,
+						},
+					}),
 				})}
 			/>
 			<Root

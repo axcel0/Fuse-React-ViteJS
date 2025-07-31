@@ -55,12 +55,7 @@ function FuseHighlight(props: FuseHighlightProps) {
 	return (
 		<div className={clsx('relative not-prose', className)}>
 			{copy && (
-				<Tooltip
-					title="Copied!"
-					open={open}
-					slotProps={{ popper: { placement: 'top' } }}
-					arrow
-				>
+				<Tooltip title="Copied!" open={open} slotProps={{ popper: { placement: 'top' } }} arrow>
 					<Button
 						variant="contained"
 						onClick={handleCopy}
@@ -71,8 +66,8 @@ function FuseHighlight(props: FuseHighlightProps) {
 						sx={{
 							backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.6),
 							'&:hover, &:focus': {
-								backgroundColor: (theme) => alpha(theme.palette.secondary.main, 1)
-							}
+								backgroundColor: (theme) => alpha(theme.palette.secondary.main, 1),
+							},
 						}}
 						startIcon={<FuseSvgIcon size={16}>heroicons-outline:clipboard</FuseSvgIcon>}
 					>
@@ -81,10 +76,7 @@ function FuseHighlight(props: FuseHighlightProps) {
 				</Tooltip>
 			)}
 
-			<Wrapper
-				className="m-0"
-				ref={innerRef}
-			>
+			<Wrapper className="m-0" ref={innerRef}>
 				{source}
 			</Wrapper>
 		</div>

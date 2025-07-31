@@ -13,7 +13,7 @@ const marks = [
 	{ value: 1, label: '100%' },
 	{ value: 1.1, label: '110%' },
 	{ value: 1.2, label: '120%' },
-	{ value: 1.3, label: '130%' }
+	{ value: 1.3, label: '130%' },
 ];
 
 type AdjustFontSizeProps = {
@@ -61,19 +61,16 @@ function AdjustFontSize(props: AdjustFontSizeProps) {
 				onClose={handleClose}
 				anchorOrigin={{
 					vertical: 'bottom',
-					horizontal: 'center'
+					horizontal: 'center',
 				}}
 				transformOrigin={{
 					vertical: 'top',
-					horizontal: 'center'
+					horizontal: 'center',
 				}}
 			>
 				<div className="px-6 py-3">
 					<Typography className="mb-2 flex items-center justify-center text-lg font-semibold">
-						<FuseSvgIcon
-							color="action"
-							className="mr-1"
-						>
+						<FuseSvgIcon color="action" className="mr-1">
 							material-outline:format_size
 						</FuseSvgIcon>
 						Font Size

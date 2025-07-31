@@ -20,20 +20,11 @@ function NumberFormController(props: NumberFormControllerProps) {
 	const { name, control, item } = props;
 
 	return (
-		<div
-			key={name}
-			className="FuseSettings-formControl"
-		>
+		<div key={name} className="FuseSettings-formControl">
 			<Controller
 				name={name}
 				control={control}
-				render={({ field: { onChange, value } }) => (
-					<NumberTextField
-						value={+value}
-						onChange={onChange}
-						item={item}
-					/>
-				)}
+				render={({ field: { onChange, value } }) => <NumberTextField value={+value} onChange={onChange} item={item} />}
 			/>
 		</div>
 	);
@@ -53,7 +44,7 @@ function NumberTextField(props: NumberTextFieldProps) {
 	const debouncedOnChange = useRef(
 		debounce((newValue: number) => {
 			onChange(newValue);
-		}, 500)
+		}, 500),
 	).current;
 
 	const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,8 +80,8 @@ function NumberTextField(props: NumberTextFieldProps) {
 			slotProps={{
 				inputLabel: { shrink: true },
 				input: {
-					inputProps: { min: item.min, max: item.max }
-				}
+					inputProps: { min: item.min, max: item.max },
+				},
 			}}
 			variant="outlined"
 			error={!!error}

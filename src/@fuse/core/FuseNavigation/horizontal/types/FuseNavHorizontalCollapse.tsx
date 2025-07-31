@@ -25,15 +25,15 @@ const Root = styled(ListItemButton)<ListItemButtonProps>(({ theme }) => ({
 		backgroundColor: `${theme.palette.secondary.main}!important`,
 		color: `${theme.palette.secondary.contrastText}!important`,
 		'&.open': {
-			backgroundColor: 'rgba(0,0,0,.08)'
+			backgroundColor: 'rgba(0,0,0,.08)',
 		},
 		'& > .fuse-list-item-text': {
-			padding: '0 0 0 16px'
+			padding: '0 0 0 16px',
 		},
 		'& .fuse-list-item-icon': {
-			color: 'inherit'
-		}
-	}
+			color: 'inherit',
+		},
+	},
 }));
 
 type FuseNavHorizontalCollapseProps = FuseNavItemComponentProps & {
@@ -59,10 +59,10 @@ function FuseNavHorizontalCollapse(props: FuseNavHorizontalCollapseProps) {
 				to: item.url,
 				end: item.end,
 				role: 'button',
-				exact: item?.exact
-			})
+				exact: item?.exact,
+			}),
 		}),
-		[item, component]
+		[item, component],
 	);
 
 	const handleToggle = useDebounce((open: boolean) => {
@@ -82,11 +82,7 @@ function FuseNavHorizontalCollapse(props: FuseNavHorizontalCollapseProps) {
 							<div ref={ref}>
 								<Root
 									component={component}
-									className={clsx(
-										'fuse-list-item',
-										opened && 'open',
-										isUrlInChildren(item, pathname) && 'active'
-									)}
+									className={clsx('fuse-list-item', opened && 'open', isUrlInChildren(item, pathname) && 'active')}
 									onMouseEnter={() => handleToggle(true)}
 									onMouseLeave={() => handleToggle(false)}
 									aria-owns={opened ? 'menu-fuse-list-grow' : null}
@@ -95,10 +91,7 @@ function FuseNavHorizontalCollapse(props: FuseNavHorizontalCollapseProps) {
 									{...itemProps}
 								>
 									{item.icon && (
-										<FuseSvgIcon
-											color="action"
-											className={clsx('fuse-list-item-icon shrink-0', item.iconClass)}
-										>
+										<FuseSvgIcon color="action" className={clsx('fuse-list-item-icon shrink-0', item.iconClass)}>
 											{item.icon}
 										</FuseSvgIcon>
 									)}
@@ -109,24 +102,10 @@ function FuseNavHorizontalCollapse(props: FuseNavHorizontalCollapseProps) {
 										classes={{ primary: 'text-md truncate' }}
 									/>
 
-									{item.badge && (
-										<FuseNavBadge
-											className="mx-1"
-											badge={item.badge}
-										/>
-									)}
-									<IconButton
-										disableRipple
-										className="h-3 w-3 p-0 ltr:ml-1 rtl:mr-1"
-										color="inherit"
-									>
-										<FuseSvgIcon
-											size={12}
-											className="arrow-icon"
-										>
-											{theme.direction === 'ltr'
-												? 'heroicons-outline:chevron-right'
-												: 'heroicons-outline:chevron-left'}
+									{item.badge && <FuseNavBadge className="mx-1" badge={item.badge} />}
+									<IconButton disableRipple className="h-3 w-3 p-0 ltr:ml-1 rtl:mr-1" color="inherit">
+										<FuseSvgIcon size={12} className="arrow-icon">
+											{theme.direction === 'ltr' ? 'heroicons-outline:chevron-right' : 'heroicons-outline:chevron-left'}
 										</FuseSvgIcon>
 									</IconButton>
 								</Root>
@@ -142,29 +121,19 @@ function FuseNavHorizontalCollapse(props: FuseNavHorizontalCollapseProps) {
 											ref={ref}
 											style={{
 												...style,
-												zIndex: 999 + nestedLevel + 1
+												zIndex: 999 + nestedLevel + 1,
 											}}
 											data-placement={placement}
 											className={clsx('z-999', !opened && 'pointer-events-none')}
 										>
-											<Grow
-												in={opened}
-												id="menu-fuse-list-grow"
-												style={{ transformOrigin: '0 0 0' }}
-											>
+											<Grow in={opened} id="menu-fuse-list-grow" style={{ transformOrigin: '0 0 0' }}>
 												<Paper
 													className="rounded-sm"
 													onMouseEnter={() => handleToggle(true)}
 													onMouseLeave={() => handleToggle(false)}
 												>
 													{item.children && (
-														<ul
-															className={clsx(
-																'popper-navigation-list',
-																dense && 'dense',
-																'px-0'
-															)}
-														>
+														<ul className={clsx('popper-navigation-list', dense && 'dense', 'px-0')}>
 															{item.children.map((_item) => (
 																<FuseNavItem
 																	key={_item.id}
@@ -182,12 +151,12 @@ function FuseNavHorizontalCollapse(props: FuseNavHorizontalCollapseProps) {
 									)
 								}
 							</Popper>,
-							document.querySelector('#root')
+							document.querySelector('#root'),
 						)}
 				</Manager>
 			</ul>
 		),
-		[component, dense, handleToggle, isMounted, item, itemProps, nestedLevel, opened, pathname, theme.direction]
+		[component, dense, handleToggle, isMounted, item, itemProps, nestedLevel, opened, pathname, theme.direction],
 	);
 
 	if (checkPermission && !item?.hasPermission) {

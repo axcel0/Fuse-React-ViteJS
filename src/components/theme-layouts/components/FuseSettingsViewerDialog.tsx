@@ -27,7 +27,7 @@ function FuseSettingsViewerDialog(props: FuseSettingsViewerDialogProps) {
 	const jsonStringifiedSettings = JSON.stringify(settings);
 	const queryString = qs.stringify({
 		defaultSettings: jsonStringifiedSettings,
-		strictNullHandling: true
+		strictNullHandling: true,
 	});
 
 	function handleOpenDialog() {
@@ -50,19 +50,12 @@ function FuseSettingsViewerDialog(props: FuseSettingsViewerDialogProps) {
 				View settings as json/query params
 			</Button>
 
-			<Dialog
-				open={openDialog}
-				onClose={handleCloseDialog}
-				aria-labelledby="form-dialog-title"
-			>
+			<Dialog open={openDialog} onClose={handleCloseDialog} aria-labelledby="form-dialog-title">
 				<DialogTitle>Fuse Settings Viewer</DialogTitle>
 				<DialogContent>
 					<Typography className="mb-4 mt-6 text-lg font-bold">JSON</Typography>
 
-					<FuseHighlight
-						component="pre"
-						className="language-json"
-					>
+					<FuseHighlight component="pre" className="language-json">
 						{JSON.stringify(settings, null, 2)}
 					</FuseHighlight>
 
@@ -71,11 +64,7 @@ function FuseSettingsViewerDialog(props: FuseSettingsViewerDialogProps) {
 					{queryString}
 				</DialogContent>
 				<DialogActions>
-					<Button
-						color="secondary"
-						variant="contained"
-						onClick={handleCloseDialog}
-					>
+					<Button color="secondary" variant="contained" onClick={handleCloseDialog}>
 						Close
 					</Button>
 				</DialogActions>

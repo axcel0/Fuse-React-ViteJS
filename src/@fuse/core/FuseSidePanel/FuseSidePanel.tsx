@@ -16,7 +16,7 @@ const Root = styled('div')(({ theme }) => ({
 		width: 56,
 		transition: theme.transitions.create(['transform', 'width', 'min-width'], {
 			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.shorter
+			duration: theme.transitions.duration.shorter,
 		}),
 		paddingBottom: 64,
 		height: '100%',
@@ -27,83 +27,80 @@ const Root = styled('div')(({ theme }) => ({
 		'&.left': {
 			'& .FuseSidePanel-buttonWrapper': {
 				left: 0,
-				right: 'auto'
+				right: 'auto',
 			},
 			'& .FuseSidePanel-buttonIcon': {
-				transform: 'rotate(0deg)'
-			}
+				transform: 'rotate(0deg)',
+			},
 		},
 		'&.right': {
 			'& .FuseSidePanel-buttonWrapper': {
 				right: 0,
-				left: 'auto'
+				left: 'auto',
 			},
 			'& .FuseSidePanel-buttonIcon': {
-				transform: 'rotate(-180deg)'
-			}
+				transform: 'rotate(-180deg)',
+			},
 		},
 		'&.closed': {
 			[theme.breakpoints.up('lg')]: {
-				width: 0
+				width: 0,
 			},
 			'&.left': {
 				'& .FuseSidePanel-buttonWrapper': {
-					justifyContent: 'start'
+					justifyContent: 'start',
 				},
 				'& .FuseSidePanel-button': {
 					borderBottomLeftRadius: 0,
 					borderTopLeftRadius: 0,
-					paddingLeft: 4
+					paddingLeft: 4,
 				},
 				'& .FuseSidePanel-buttonIcon': {
-					transform: 'rotate(-180deg)'
-				}
+					transform: 'rotate(-180deg)',
+				},
 			},
 			'&.right': {
 				'& .FuseSidePanel-buttonWrapper': {
-					justifyContent: 'flex-end'
+					justifyContent: 'flex-end',
 				},
 				'& .FuseSidePanel-button': {
 					borderBottomRightRadius: 0,
 					borderTopRightRadius: 0,
-					paddingRight: 4
+					paddingRight: 4,
 				},
 				'& .FuseSidePanel-buttonIcon': {
-					transform: 'rotate(0deg)'
-				}
+					transform: 'rotate(0deg)',
+				},
 			},
 			'& .FuseSidePanel-buttonWrapper': {
-				width: 'auto'
+				width: 'auto',
 			},
 			'& .FuseSidePanel-button': {
 				backgroundColor: theme.palette.background.paper,
 				borderRadius: 38,
-				transition: theme.transitions.create(
-					['background-color', 'border-radius', 'width', 'min-width', 'padding'],
-					{
-						easing: theme.transitions.easing.easeInOut,
-						duration: theme.transitions.duration.shorter
-					}
-				),
+				transition: theme.transitions.create(['background-color', 'border-radius', 'width', 'min-width', 'padding'], {
+					easing: theme.transitions.easing.easeInOut,
+					duration: theme.transitions.duration.shorter,
+				}),
 				width: 24,
 				'&:hover': {
 					width: 52,
 					paddingLeft: 8,
-					paddingRight: 8
-				}
+					paddingRight: 8,
+				},
 			},
 			'& .FuseSidePanel-content': {
-				opacity: 0
-			}
-		}
+				opacity: 0,
+			},
+		},
 	},
 	'& .FuseSidePanel-content': {
 		overflow: 'hidden',
 		opacity: 1,
 		transition: theme.transitions.create(['opacity'], {
 			easing: theme.transitions.easing.easeInOut,
-			duration: theme.transitions.duration.short
-		})
+			duration: theme.transitions.duration.short,
+		}),
 	},
 	'& .FuseSidePanel-buttonWrapper': {
 		position: 'absolute',
@@ -114,18 +111,18 @@ const Root = styled('div')(({ theme }) => ({
 		justifyContent: 'center',
 		padding: '12px 0',
 		width: '100%',
-		minWidth: 56
+		minWidth: 56,
 	},
 	'& .FuseSidePanel-button': {
 		padding: 8,
 		width: 40,
-		height: 40
+		height: 40,
 	},
 	'& .FuseSidePanel-buttonIcon': {
 		transition: theme.transitions.create(['transform'], {
 			easing: theme.transitions.easing.easeInOut,
-			duration: theme.transitions.duration.short
-		})
+			duration: theme.transitions.duration.short,
+		}),
 	},
 	'& .FuseSidePanel-mobileButton': {
 		height: 40,
@@ -138,18 +135,18 @@ const Root = styled('div')(({ theme }) => ({
 		backgroundColor: theme.palette.background.paper,
 		transition: theme.transitions.create(['background-color', 'border-radius', 'width', 'min-width', 'padding'], {
 			easing: theme.transitions.easing.easeInOut,
-			duration: theme.transitions.duration.shorter
+			duration: theme.transitions.duration.shorter,
 		}),
 		'&:hover': {
 			width: 52,
 			paddingLeft: 8,
-			paddingRight: 8
+			paddingRight: 8,
 		},
 		'&.left': {
 			borderBottomLeftRadius: 0,
 			borderTopLeftRadius: 0,
 			paddingLeft: 4,
-			left: 0
+			left: 0,
 		},
 		'&.right': {
 			borderBottomRightRadius: 0,
@@ -157,10 +154,10 @@ const Root = styled('div')(({ theme }) => ({
 			paddingRight: 4,
 			right: 0,
 			'& .FuseSidePanel-buttonIcon': {
-				transform: 'rotate(-180deg)'
-			}
-		}
-	}
+				transform: 'rotate(-180deg)',
+			},
+		},
+	},
 }));
 
 type FuseSidePanelProps = {
@@ -194,31 +191,15 @@ function FuseSidePanel(props: FuseSidePanelProps) {
 		<Root>
 			{!isMobile && (
 				<Paper
-					className={clsx(
-						'FuseSidePanel-paper',
-						className,
-						panelOpened ? 'opened' : 'closed',
-						position,
-						'shadow-lg'
-					)}
+					className={clsx('FuseSidePanel-paper', className, panelOpened ? 'opened' : 'closed', position, 'shadow-lg')}
 					square
 				>
 					<FuseScrollbars className={clsx('content', 'FuseSidePanel-content')}>{children}</FuseScrollbars>
 
 					<div className="FuseSidePanel-buttonWrapper">
-						<Tooltip
-							title="Toggle side panel"
-							placement={position === 'left' ? 'right' : 'right'}
-						>
-							<IconButton
-								className="FuseSidePanel-button"
-								onClick={toggleOpened}
-								disableRipple
-								size="large"
-							>
-								<FuseSvgIcon className="FuseSidePanel-buttonIcon">
-									heroicons-outline:chevron-left
-								</FuseSvgIcon>
+						<Tooltip title="Toggle side panel" placement={position === 'left' ? 'right' : 'right'}>
+							<IconButton className="FuseSidePanel-button" onClick={toggleOpened} disableRipple size="large">
+								<FuseSvgIcon className="FuseSidePanel-buttonIcon">heroicons-outline:chevron-left</FuseSvgIcon>
 							</IconButton>
 						</Tooltip>
 					</div>
@@ -229,7 +210,7 @@ function FuseSidePanel(props: FuseSidePanelProps) {
 				<>
 					<SwipeableDrawer
 						classes={{
-							paper: clsx('FuseSidePanel-paper', className)
+							paper: clsx('FuseSidePanel-paper', className),
 						}}
 						anchor={position}
 						open={mobileOpen}
@@ -240,18 +221,9 @@ function FuseSidePanel(props: FuseSidePanelProps) {
 						<FuseScrollbars className={clsx('content', 'FuseSidePanel-content')}>{children}</FuseScrollbars>
 					</SwipeableDrawer>
 
-					<Tooltip
-						title="Hide side panel"
-						placement={position === 'left' ? 'right' : 'right'}
-					>
-						<Fab
-							className={clsx('FuseSidePanel-mobileButton', position)}
-							onClick={toggleMobileDrawer}
-							disableRipple
-						>
-							<FuseSvgIcon className="FuseSidePanel-buttonIcon">
-								heroicons-outline:chevron-right
-							</FuseSvgIcon>
+					<Tooltip title="Hide side panel" placement={position === 'left' ? 'right' : 'right'}>
+						<Fab className={clsx('FuseSidePanel-mobileButton', position)} onClick={toggleMobileDrawer} disableRipple>
+							<FuseSvgIcon className="FuseSidePanel-buttonIcon">heroicons-outline:chevron-right</FuseSvgIcon>
 						</Fab>
 					</Tooltip>
 				</>

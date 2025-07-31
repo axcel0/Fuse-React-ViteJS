@@ -12,7 +12,7 @@ export const initialAuthState: AuthState = {
 	authStatus: null,
 	isAuthenticated: false,
 	user: null,
-	provider: null
+	provider: null,
 };
 
 export type FuseAuthContextType = {
@@ -24,7 +24,7 @@ export type FuseAuthContextType = {
 
 const FuseAuthContext = createContext<FuseAuthContextType>({
 	authState: initialAuthState,
-	providers: []
+	providers: [],
 });
 
 export default FuseAuthContext;

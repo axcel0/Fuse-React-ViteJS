@@ -15,7 +15,7 @@ const Root = styled(ListItem)<ListItemButtonComponentProps>(({ theme, ...props }
 	borderRadius: '8px',
 	margin: '28px 0 0 0',
 	'&:first-of-type': {
-		marginTop: 0
+		marginTop: 0,
 	},
 	paddingRight: 16,
 	paddingLeft: props.itempadding > 80 ? 80 : props.itempadding,
@@ -23,7 +23,7 @@ const Root = styled(ListItem)<ListItemButtonComponentProps>(({ theme, ...props }
 	paddingBottom: 10,
 	color: alpha(theme.palette.text.primary, 0.7),
 	fontWeight: 600,
-	letterSpacing: '0.025em'
+	letterSpacing: '0.025em',
 }));
 
 /**
@@ -41,10 +41,10 @@ function FuseNavVerticalGroup(props: FuseNavItemComponentProps) {
 				to: item.url,
 				end: item.end,
 				role: 'button',
-				exact: item?.exact
-			})
+				exact: item?.exact,
+			}),
 		}),
-		[item, component]
+		[item, component],
 	);
 
 	const memoizedContent = useMemo(
@@ -70,16 +70,16 @@ function FuseNavVerticalGroup(props: FuseNavItemComponentProps) {
 								letterSpacing: '.05em',
 								lineHeight: '20px',
 								...theme.applyStyles('dark', {
-									color: 'secondary.light'
-								})
+									color: 'secondary.light',
+								}),
 							},
 							'& > .MuiListItemText-secondary': {
 								fontSize: 11,
 								color: 'text.disabled',
 								letterSpacing: '.06px',
 								fontWeight: 500,
-								lineHeight: '1.5'
-							}
+								lineHeight: '1.5',
+							},
 						})}
 						primary={item.title}
 						secondary={item.subtitle}
@@ -101,7 +101,7 @@ function FuseNavVerticalGroup(props: FuseNavItemComponentProps) {
 				)}
 			</>
 		),
-		[checkPermission, component, item, itemProps, itempadding, nestedLevel, onItemClick]
+		[checkPermission, component, item, itemProps, itempadding, nestedLevel, onItemClick],
 	);
 
 	if (checkPermission && !item?.hasPermission) {

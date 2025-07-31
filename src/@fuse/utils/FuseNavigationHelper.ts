@@ -26,7 +26,7 @@ class FuseNavigationHelper {
 	static appendNavItem(
 		nav: FuseNavItemType[],
 		item: FuseNavItemType,
-		parentId: string | null = null
+		parentId: string | null = null,
 	): FuseNavItemType[] {
 		if (!parentId) {
 			return [...nav, item];
@@ -40,7 +40,10 @@ class FuseNavigationHelper {
 			}
 
 			if (node.children) {
-				return { ...node, children: this.appendNavItem(node.children, item, parentId) };
+				return {
+					...node,
+					children: this.appendNavItem(node.children, item, parentId),
+				};
 			}
 
 			return { ...node };
@@ -50,7 +53,7 @@ class FuseNavigationHelper {
 	static prependNavItem(
 		nav: FuseNavItemType[],
 		item: FuseNavItemType,
-		parentId: string | null = null
+		parentId: string | null = null,
 	): FuseNavItemType[] {
 		if (!parentId) {
 			return [item, ...nav];
@@ -64,7 +67,10 @@ class FuseNavigationHelper {
 			}
 
 			if (node.children) {
-				return { ...node, children: this.prependNavItem(node.children, item, parentId) };
+				return {
+					...node,
+					children: this.prependNavItem(node.children, item, parentId),
+				};
 			}
 
 			return { ...node };
@@ -95,7 +101,7 @@ class FuseNavigationHelper {
 				if (node.children) {
 					acc.push({
 						...node,
-						children: this.removeNavItem(node.children, id)
+						children: this.removeNavItem(node.children, id),
 					});
 				} else {
 					acc.push(node);
@@ -118,7 +124,7 @@ class FuseNavigationHelper {
 			if (node.children) {
 				return {
 					...node,
-					children: this.updateNavItem(node.children, id, item)
+					children: this.updateNavItem(node.children, id, item),
 				};
 			}
 
@@ -180,9 +186,7 @@ class FuseNavigationHelper {
 
 		return navigation?.flatMap((item, index) => {
 			const order = parentOrder ? `${parentOrder}.${index + 1}` : `${index + 1}`;
-			let flattened: FuseFlatNavItemType[] = [
-				{ ...item, order, children: item.children?.map((child) => child.id) }
-			];
+			let flattened: FuseFlatNavItemType[] = [{ ...item, order, children: item.children?.map((child) => child.id) }];
 
 			if (item.children) {
 				flattened = flattened.concat(this.flattenNavigation(item.children, order));

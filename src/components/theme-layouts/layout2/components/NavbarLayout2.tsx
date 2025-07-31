@@ -7,7 +7,7 @@ import Logo from '../../components/Logo';
 
 const Root = styled('div')(({ theme }) => ({
 	backgroundColor: theme.palette.background.default,
-	color: theme.palette.text.primary
+	color: theme.palette.text.primary,
 }));
 
 type NavbarLayout2Props = {
@@ -28,10 +28,7 @@ function NavbarLayout2(props: NavbarLayout2Props) {
 				</div>
 
 				<FuseScrollbars className="flex h-full items-center">
-					<Navigation
-						className="w-full"
-						layout="horizontal"
-					/>
+					<Navigation className="w-full" layout="horizontal" />
 				</FuseScrollbars>
 			</div>
 		</Root>

@@ -27,7 +27,10 @@ type FusePageCardedProps = SystemStyleObject<Theme> & {
 	rightSidebarOnClose?: () => void;
 	leftSidebarOnClose?: () => void;
 	contentScrollbarsProps?: FuseScrollbarsProps;
-	ref?: RefObject<{ toggleLeftSidebar: (val: boolean) => void; toggleRightSidebar: (val: boolean) => void }>;
+	ref?: RefObject<{
+		toggleLeftSidebar: (val: boolean) => void;
+		toggleRightSidebar: (val: boolean) => void;
+	}>;
 };
 
 const Root = styled('div')<FusePageCardedProps>(({ theme, ...props }) => ({
@@ -43,7 +46,7 @@ const Root = styled('div')<FusePageCardedProps>(({ theme, ...props }) => ({
 	backgroundColor: theme.palette.background.default,
 
 	'& .FusePageCarded-scroll-content': {
-		height: '100%'
+		height: '100%',
 	},
 
 	'& .FusePageCarded-wrapper': {
@@ -62,13 +65,13 @@ const Root = styled('div')<FusePageCardedProps>(({ theme, ...props }) => ({
 			bottom: 0,
 			right: 0,
 			left: 0,
-			overflow: 'hidden'
-		})
+			overflow: 'hidden',
+		}),
 	},
 
 	'& .FusePageCarded-header': {
 		display: 'flex',
-		flex: '0 0 auto'
+		flex: '0 0 auto',
 	},
 
 	'& .FusePageCarded-contentWrapper': {
@@ -77,18 +80,18 @@ const Root = styled('div')<FusePageCardedProps>(({ theme, ...props }) => ({
 		flex: '1 1 auto',
 		overflow: 'auto',
 		WebkitOverflowScrolling: 'touch',
-		zIndex: 9999
+		zIndex: 9999,
 	},
 
 	'& .FusePageCarded-toolbar': {
 		height: toolbarHeight,
 		minHeight: toolbarHeight,
 		display: 'flex',
-		alignItems: 'center'
+		alignItems: 'center',
 	},
 
 	'& .FusePageCarded-content': {
-		flex: '1 0 auto'
+		flex: '1 0 auto',
 	},
 
 	'& .FusePageCarded-sidebarWrapper': {
@@ -102,23 +105,23 @@ const Root = styled('div')<FusePageCardedProps>(({ theme, ...props }) => ({
 				marginRight: 0,
 				transition: theme.transitions.create('margin', {
 					easing: theme.transitions.easing.sharp,
-					duration: theme.transitions.duration.leavingScreen
+					duration: theme.transitions.duration.leavingScreen,
 				}),
 				'&.closed': {
 					transition: theme.transitions.create('margin', {
 						easing: theme.transitions.easing.easeOut,
-						duration: theme.transitions.duration.enteringScreen
+						duration: theme.transitions.duration.enteringScreen,
 					}),
 
 					'&.FusePageCarded-leftSidebar': {
-						marginLeft: -props.leftSidebarWidth
+						marginLeft: -props.leftSidebarWidth,
 					},
 					'&.FusePageCarded-rightSidebar': {
-						marginRight: -props.rightSidebarWidth
-					}
-				}
-			}
-		}
+						marginRight: -props.rightSidebarWidth,
+					},
+				},
+			},
+		},
 	},
 
 	'& .FusePageCarded-sidebar': {
@@ -128,11 +131,11 @@ const Root = styled('div')<FusePageCardedProps>(({ theme, ...props }) => ({
 
 		'&.permanent': {
 			[theme.breakpoints.up('lg')]: {
-				position: 'relative'
-			}
+				position: 'relative',
+			},
 		},
 		maxWidth: '100%',
-		height: '100%'
+		height: '100%',
 	},
 
 	'& .FusePageCarded-leftSidebar': {
@@ -141,7 +144,7 @@ const Root = styled('div')<FusePageCardedProps>(({ theme, ...props }) => ({
 		[theme.breakpoints.up('lg')]: {
 			// borderRight: `1px solid ${theme.palette.divider}`,
 			// borderLeft: 0,
-		}
+		},
 	},
 
 	'& .FusePageCarded-rightSidebar': {
@@ -150,32 +153,32 @@ const Root = styled('div')<FusePageCardedProps>(({ theme, ...props }) => ({
 		[theme.breakpoints.up('lg')]: {
 			// borderLeft: `1px solid ${theme.palette.divider}`,
 			// borderRight: 0,
-		}
+		},
 	},
 
 	'& .FusePageCarded-sidebarHeader': {
 		height: headerHeight,
 		minHeight: headerHeight,
 		backgroundColor: theme.palette.primary.dark,
-		color: theme.palette.primary.contrastText
+		color: theme.palette.primary.contrastText,
 	},
 
 	'& .FusePageCarded-sidebarHeaderInnerSidebar': {
 		backgroundColor: 'transparent',
 		color: 'inherit',
 		height: 'auto',
-		minHeight: 'auto'
+		minHeight: 'auto',
 	},
 
 	'& .FusePageCarded-sidebarContent': {
 		display: 'flex',
 		flexDirection: 'column',
-		minHeight: '100%'
+		minHeight: '100%',
 	},
 
 	'& .FusePageCarded-backdrop': {
-		position: 'absolute'
-	}
+		position: 'absolute',
+	},
 }));
 
 function FusePageCarded(props: FusePageCardedProps) {
@@ -195,7 +198,7 @@ function FusePageCarded(props: FusePageCardedProps) {
 		rightSidebarOnClose,
 		leftSidebarOnClose,
 		contentScrollbarsProps,
-		ref
+		ref,
 	} = props;
 
 	const leftSidebarRef = useRef<{ toggleSidebar: (T: boolean) => void }>(null);
@@ -212,7 +215,7 @@ function FusePageCarded(props: FusePageCardedProps) {
 			if (rightSidebarRef.current) {
 				rightSidebarRef.current.toggleSidebar(val);
 			}
-		}
+		},
 	}));
 
 	return (
@@ -221,22 +224,22 @@ function FusePageCarded(props: FusePageCardedProps) {
 				styles={() => ({
 					...(scroll !== 'page' && {
 						'#fuse-toolbar': {
-							position: 'static'
+							position: 'static',
 						},
 						'#fuse-footer': {
-							position: 'static'
-						}
+							position: 'static',
+						},
 					}),
 					...(scroll === 'page' && {
 						'#fuse-toolbar': {
 							position: 'sticky',
-							top: 0
+							top: 0,
 						},
 						'#fuse-footer': {
 							position: 'sticky',
-							bottom: 0
-						}
-					})
+							bottom: 0,
+						},
+					}),
 				})}
 			/>
 			<Root

@@ -7,7 +7,7 @@ import { ClassValue } from 'clsx';
  * @returns Combined class string
  */
 export function cn(...inputs: ClassValue[]): string {
-  return clsx(inputs);
+	return clsx(inputs);
 }
 
 /**
@@ -15,8 +15,8 @@ export function cn(...inputs: ClassValue[]): string {
  * @param element - The element to focus
  */
 export function focusElement(element: HTMLElement): void {
-  element.focus();
-  element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+	element.focus();
+	element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 /**
@@ -24,35 +24,35 @@ export function focusElement(element: HTMLElement): void {
  * @param container - The container element
  */
 export function createFocusTrap(container: HTMLElement): () => void {
-  const focusableElements = container.querySelectorAll(
-    'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
-  );
-  
-  const firstElement = focusableElements[0] as HTMLElement;
-  const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+	const focusableElements = container.querySelectorAll(
+		'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select',
+	);
 
-  function handleKeyDown(e: KeyboardEvent) {
-    if (e.key === 'Tab') {
-      if (e.shiftKey) {
-        if (document.activeElement === firstElement) {
-          lastElement.focus();
-          e.preventDefault();
-        }
-      } else {
-        if (document.activeElement === lastElement) {
-          firstElement.focus();
-          e.preventDefault();
-        }
-      }
-    }
-  }
+	const firstElement = focusableElements[0] as HTMLElement;
+	const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
 
-  container.addEventListener('keydown', handleKeyDown);
-  firstElement?.focus();
+	function handleKeyDown(e: KeyboardEvent) {
+		if (e.key === 'Tab') {
+			if (e.shiftKey) {
+				if (document.activeElement === firstElement) {
+					lastElement.focus();
+					e.preventDefault();
+				}
+			} else {
+				if (document.activeElement === lastElement) {
+					firstElement.focus();
+					e.preventDefault();
+				}
+			}
+		}
+	}
 
-  return () => {
-    container.removeEventListener('keydown', handleKeyDown);
-  };
+	container.addEventListener('keydown', handleKeyDown);
+	firstElement?.focus();
+
+	return () => {
+		container.removeEventListener('keydown', handleKeyDown);
+	};
 }
 
 /**
@@ -61,15 +61,11 @@ export function createFocusTrap(container: HTMLElement): () => void {
  * @param currency - The currency code (default: USD)
  * @param locale - The locale (default: en-US)
  */
-export function formatCurrency(
-  value: number,
-  currency: string = 'USD',
-  locale: string = 'en-US'
-): string {
-  return new Intl.NumberFormat(locale, {
-    style: 'currency',
-    currency,
-  }).format(value);
+export function formatCurrency(value: number, currency = 'USD', locale = 'en-US'): string {
+	return new Intl.NumberFormat(locale, {
+		style: 'currency',
+		currency,
+	}).format(value);
 }
 
 /**
@@ -79,16 +75,16 @@ export function formatCurrency(
  * @param options - Intl.DateTimeFormatOptions
  */
 export function formatDate(
-  date: Date | string,
-  locale: string = 'en-US',
-  options: Intl.DateTimeFormatOptions = { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
-  }
+	date: Date | string,
+	locale = 'en-US',
+	options: Intl.DateTimeFormatOptions = {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+	},
 ): string {
-  const dateObj = typeof date === 'string' ? new Date(date) : date;
-  return new Intl.DateTimeFormat(locale, options).format(dateObj);
+	const dateObj = typeof date === 'string' ? new Date(date) : date;
+	return new Intl.DateTimeFormat(locale, options).format(dateObj);
 }
 
 /**
@@ -96,16 +92,13 @@ export function formatDate(
  * @param func - The function to debounce
  * @param wait - The delay in milliseconds
  */
-export function debounce<T extends (...args: any[]) => any>(
-  func: T,
-  wait: number
-): (...args: Parameters<T>) => void {
-  let timeout: NodeJS.Timeout;
-  
-  return (...args: Parameters<T>) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), wait);
-  };
+export function debounce<T extends (...args: any[]) => any>(func: T, wait: number): (...args: Parameters<T>) => void {
+	let timeout: NodeJS.Timeout;
+
+	return (...args: Parameters<T>) => {
+		clearTimeout(timeout);
+		timeout = setTimeout(() => func(...args), wait);
+	};
 }
 
 /**
@@ -113,17 +106,14 @@ export function debounce<T extends (...args: any[]) => any>(
  * @param func - The function to throttle
  * @param limit - The time limit in milliseconds
  */
-export function throttle<T extends (...args: any[]) => any>(
-  func: T,
-  limit: number
-): (...args: Parameters<T>) => void {
-  let inThrottle: boolean;
-  
-  return (...args: Parameters<T>) => {
-    if (!inThrottle) {
-      func(...args);
-      inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
-    }
-  };
+export function throttle<T extends (...args: any[]) => any>(func: T, limit: number): (...args: Parameters<T>) => void {
+	let inThrottle: boolean;
+
+	return (...args: Parameters<T>) => {
+		if (!inThrottle) {
+			func(...args);
+			inThrottle = true;
+			setTimeout(() => (inThrottle = false), limit);
+		}
+	};
 }

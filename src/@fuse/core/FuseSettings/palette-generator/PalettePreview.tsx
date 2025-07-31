@@ -22,7 +22,7 @@ function PalettePreview(props: PalettePreviewProps) {
 			className={clsx('relative w-50 overflow-hidden rounded-md text-left font-bold shadow-sm', className)}
 			sx={{
 				backgroundColor: palette.background.default,
-				color: palette.text.primary
+				color: palette.text.primary,
 			}}
 			type="button"
 			component="button"
@@ -31,7 +31,7 @@ function PalettePreview(props: PalettePreviewProps) {
 				className="relative h-14 w-full px-2 pt-2"
 				sx={{
 					backgroundColor: palette.primary.main,
-					color: () => palette.primary.contrastText || palette.getContrastText(palette.primary.main)
+					color: () => palette.primary.contrastText || palette.getContrastText(palette.primary.main),
 				}}
 			>
 				<span className="text-md">Header (Primary)</span>
@@ -40,7 +40,7 @@ function PalettePreview(props: PalettePreviewProps) {
 					className="absolute bottom-0 right-0 -mb-2.5 mr-1 flex h-5 w-5 items-center justify-center rounded-full text-xs shadow-sm"
 					sx={{
 						backgroundColor: palette.secondary.main,
-						color: () => palette.secondary.contrastText || palette.getContrastText(palette.secondary.main)
+						color: () => palette.secondary.contrastText || palette.getContrastText(palette.secondary.main),
 					}}
 				>
 					<span>S</span>
@@ -51,7 +51,7 @@ function PalettePreview(props: PalettePreviewProps) {
 					className="relative h-24 w-full rounded-sm p-2 shadow-sm"
 					sx={{
 						backgroundColor: palette.background.paper,
-						color: palette.text.primary
+						color: palette.text.primary,
 					}}
 				>
 					<span className="text-md opacity-75">Paper</span>

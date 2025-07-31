@@ -117,10 +117,7 @@ function HeaderFullScreenToggle(props: HeaderFullScreenToggleProps) {
 	}
 
 	return (
-		<Tooltip
-			title="Fullscreen toggle"
-			placement="bottom"
-		>
+		<Tooltip title="Fullscreen toggle" placement="bottom">
 			<IconButton
 				onClick={toggleFullScreen}
 				className={clsx('border border-divider', className, isFullScreen && 'text-red-500')}

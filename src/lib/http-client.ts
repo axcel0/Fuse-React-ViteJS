@@ -6,21 +6,22 @@ import ky from 'ky';
 export const httpClient = ky.create({
 	// Base URL for API requests
 	prefixUrl: process.env.VITE_API_BASE_URL || '/api',
-	
+
 	// Default timeout for requests (30 seconds)
 	timeout: 30000,
-	
+
 	// Default headers
 	headers: {
 		'Content-Type': 'application/json',
 	},
-	
+
 	// Hooks for request/response interceptors
 	hooks: {
 		beforeRequest: [
 			(request) => {
 				// Add auth token if available
 				const token = localStorage.getItem('accessToken');
+
 				if (token) {
 					request.headers.set('Authorization', `Bearer ${token}`);
 				}
@@ -36,11 +37,12 @@ export const httpClient = ky.create({
 					// Redirect to login or trigger logout
 					window.location.href = '/sign-in';
 				}
+
 				return error;
 			},
 		],
 	},
-	
+
 	// Retry configuration
 	retry: {
 		limit: 3,

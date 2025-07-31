@@ -17,10 +17,7 @@ function NavbarToggleButton(props: NavbarToggleButtonProps) {
 	const {
 		className = '',
 		children = (
-			<FuseSvgIcon
-				size={20}
-				color="action"
-			>
+			<FuseSvgIcon size={20} color="action">
 				heroicons-outline:bars-3
 			</FuseSvgIcon>
 		),

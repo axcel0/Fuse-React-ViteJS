@@ -12,7 +12,7 @@ type I18nProviderProps = {
 const languages: LanguageType[] = [
 	{ id: 'en', title: 'English', flag: 'US' },
 	{ id: 'tr', title: 'Turkish', flag: 'TR' },
-	{ id: 'ar', title: 'Arabic', flag: 'SA' }
+	{ id: 'ar', title: 'Arabic', flag: 'SA' },
 ];
 
 export function I18nProvider(props: I18nProviderProps) {
@@ -46,9 +46,9 @@ export function I18nProvider(props: I18nProviderProps) {
 					languageId,
 					langDirection: i18n.dir(languageId),
 					languages,
-					changeLanguage
+					changeLanguage,
 				}),
-				[languageId]
+				[languageId],
 			)}
 		>
 			{children}

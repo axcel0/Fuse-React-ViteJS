@@ -24,11 +24,11 @@ const schema = z
 			.min(1, 'Please enter your password.')
 			.min(8, 'Password is too short - should be 8 chars minimum.'),
 		passwordConfirm: z.string().min(1, 'Password confirmation is required'),
-		acceptTermsConditions: z.boolean().refine((val) => val === true, 'The terms and conditions must be accepted.')
+		acceptTermsConditions: z.boolean().refine((val) => val === true, 'The terms and conditions must be accepted.'),
 	})
 	.refine((data) => data.password === data.passwordConfirm, {
 		message: 'Passwords must match',
-		path: ['passwordConfirm']
+		path: ['passwordConfirm'],
 	});
 
 type FormType = JwtSignUpPayload & {
@@ -41,7 +41,7 @@ const defaultValues = {
 	email: '',
 	password: '',
 	passwordConfirm: '',
-	acceptTermsConditions: false
+	acceptTermsConditions: false,
 };
 
 function JwtSignUpForm() {
@@ -50,7 +50,7 @@ function JwtSignUpForm() {
 	const { control, formState, handleSubmit, setError } = useForm<FormType>({
 		mode: 'onChange',
 		defaultValues,
-		resolver: zodResolver(schema)
+		resolver: zodResolver(schema),
 	});
 
 	const { isValid, dirtyFields, errors } = formState;
@@ -60,7 +60,7 @@ function JwtSignUpForm() {
 		signUp({
 			displayName,
 			password,
-			email
+			email,
 		})
 			.then(() => {
 				// No need to do anything, registered user data will be set at app/auth/AuthRouteProvider
@@ -164,12 +164,7 @@ function JwtSignUpForm() {
 					<FormControl error={!!errors.acceptTermsConditions}>
 						<FormControlLabel
 							label="I agree with Terms and Privacy Policy"
-							control={
-								<Checkbox
-									size="small"
-									{...field}
-								/>
-							}
+							control={<Checkbox size="small" {...field} />}
 						/>
 						<FormHelperText>{errors?.acceptTermsConditions?.message}</FormHelperText>
 					</FormControl>

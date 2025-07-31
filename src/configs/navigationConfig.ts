@@ -18,8 +18,8 @@ const navigationConfig: FuseNavItemType[] = [
 		translate: 'EXAMPLE',
 		type: 'item',
 		icon: 'heroicons-outline:star',
-		url: 'example'
-	}
+		url: 'example',
+	},
 ];
 
 export default navigationConfig;

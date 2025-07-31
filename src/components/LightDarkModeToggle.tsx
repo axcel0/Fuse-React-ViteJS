@@ -5,7 +5,6 @@ import IconButton from '@mui/material/IconButton';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { FuseThemeOption } from '@fuse/core/FuseThemeSelector/ThemePreview';
 import clsx from 'clsx';
-import { useMainTheme } from '@fuse/core/FuseSettings/hooks/fuseThemeHooks';
 import useFuseSettings from '@fuse/core/FuseSettings/hooks/useFuseSettings';
 import { FuseSettingsConfigType } from '@fuse/core/FuseSettings/FuseSettings';
 import { useFuseMessage } from '@fuse/core/FuseMessage/FuseMessageContext';
@@ -52,7 +51,9 @@ function LightDarkModeToggle(props: LightDarkModeToggleProps) {
 	};
 
 	async function handleThemeSelect(_theme: FuseThemeOption) {
-		const _newSettings = setSettings({ theme: { ..._theme?.section } } as Partial<FuseSettingsConfigType>);
+		const _newSettings = setSettings({
+			theme: { ..._theme?.section },
+		} as Partial<FuseSettingsConfigType>);
 
 		if (!isGuest) {
 			const updatedUserData = await updateUserSettings(_newSettings);
@@ -65,13 +66,18 @@ function LightDarkModeToggle(props: LightDarkModeToggleProps) {
 
 	const getDisplayIcon = () => {
 		if (isSystemMode) {
-			return resolvedTheme === 'dark' 
-				? <FuseSvgIcon>heroicons-outline:moon</FuseSvgIcon>
-				: <FuseSvgIcon>heroicons-outline:sun</FuseSvgIcon>;
+			return resolvedTheme === 'dark' ? (
+				<FuseSvgIcon>heroicons-outline:moon</FuseSvgIcon>
+			) : (
+				<FuseSvgIcon>heroicons-outline:sun</FuseSvgIcon>
+			);
 		}
-		return resolvedTheme === 'light' 
-			? <FuseSvgIcon>heroicons-outline:sun</FuseSvgIcon>
-			: <FuseSvgIcon>heroicons-outline:moon</FuseSvgIcon>;
+
+		return resolvedTheme === 'light' ? (
+			<FuseSvgIcon>heroicons-outline:sun</FuseSvgIcon>
+		) : (
+			<FuseSvgIcon>heroicons-outline:moon</FuseSvgIcon>
+		);
 	};
 
 	return (
@@ -85,32 +91,17 @@ function LightDarkModeToggle(props: LightDarkModeToggleProps) {
 			>
 				{getDisplayIcon()}
 			</IconButton>
-			<Menu
-				id="light-dark-toggle-menu"
-				anchorEl={anchorEl}
-				keepMounted
-				open={Boolean(anchorEl)}
-				onClose={handleClose}
-			>
-				<MenuItem
-					selected={mode === 'light'}
-					onClick={() => handleSelectionChange('light')}
-				>
+			<Menu id="light-dark-toggle-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+				<MenuItem selected={mode === 'light'} onClick={() => handleSelectionChange('light')}>
 					<FuseSvgIcon className="mr-8">heroicons-outline:sun</FuseSvgIcon>
 					Light
 				</MenuItem>
-				<MenuItem
-					selected={mode === 'dark'}
-					onClick={() => handleSelectionChange('dark')}
-				>
+				<MenuItem selected={mode === 'dark'} onClick={() => handleSelectionChange('dark')}>
 					<FuseSvgIcon className="mr-8">heroicons-outline:moon</FuseSvgIcon>
 					Dark
 				</MenuItem>
 				{showSystemOption && (
-					<MenuItem
-						selected={mode === 'system'}
-						onClick={() => handleSelectionChange('system')}
-					>
+					<MenuItem selected={mode === 'system'} onClick={() => handleSelectionChange('system')}>
 						<FuseSvgIcon className="mr-8">heroicons-outline:computer-desktop</FuseSvgIcon>
 						System
 					</MenuItem>

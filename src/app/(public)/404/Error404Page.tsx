@@ -13,10 +13,7 @@ function Error404Page() {
 	return (
 		<div className="flex flex-1 flex-col items-center justify-center p-4">
 			<div className="w-full max-w-5xl text-center">
-				<motion.div
-					initial={{ opacity: 0, scale: 0.6 }}
-					animate={{ opacity: 1, scale: 1, transition: { delay: 0.1 } }}
-				>
+				<motion.div initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1, transition: { delay: 0.1 } }}>
 					<Box
 						component="svg"
 						width="100%"
@@ -219,28 +216,18 @@ function Error404Page() {
 						</g>
 						<defs>
 							<clipPath id="clip0">
-								<rect
-									width="1074.39"
-									height="584.231"
-									fill="white"
-								/>
+								<rect width="1074.39" height="584.231" fill="white" />
 							</clipPath>
 						</defs>
 					</Box>
 				</motion.div>
-				<motion.div
-					initial={{ opacity: 0, y: 40 }}
-					animate={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
-				>
+				<motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}>
 					<Typography
 						variant="h1"
 						className="mt-12 text-center text-4xl font-extrabold leading-[1.25] tracking-tight sm:mt-24 md:text-7xl md:leading-none"
 					/>
 				</motion.div>
-				<motion.div
-					initial={{ opacity: 0, y: 40 }}
-					animate={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
-				>
+				<motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}>
 					<Typography
 						variant="h5"
 						color="text.secondary"
@@ -250,17 +237,11 @@ function Error404Page() {
 					</Typography>
 				</motion.div>
 				{!isGuest ? (
-					<Link
-						className="mt-12 block font-normal"
-						to="/"
-					>
+					<Link className="mt-12 block font-normal" to="/">
 						Back to Home
 					</Link>
 				) : (
-					<Link
-						className="mt-12 block font-normal"
-						to="/sign-in"
-					>
+					<Link className="mt-12 block font-normal" to="/sign-in">
 						Back to sign-in
 					</Link>
 				)}

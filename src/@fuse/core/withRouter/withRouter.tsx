@@ -18,14 +18,7 @@ const withRouter = <Props extends WithRouterProps>(Component: ComponentType<Prop
 		const params = useParams();
 		const navigate = useNavigate();
 
-		return (
-			<Component
-				{...(props as Props)}
-				location={location}
-				params={params}
-				navigate={navigate}
-			/>
-		);
+		return <Component {...(props as Props)} location={location} params={params} navigate={navigate} />;
 	});
 
 export default withRouter;

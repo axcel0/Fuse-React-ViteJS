@@ -25,7 +25,7 @@ function useNavigation() {
 				hasPermission: Boolean(FuseUtils.hasPermission(item?.auth, userRole)),
 				...item,
 				...(item?.translate && item?.title ? { title: i18n.t(`navigation:${item?.translate}`) } : {}),
-				...(item?.children ? { children: setAdditionalData(item?.children) } : {})
+				...(item?.children ? { children: setAdditionalData(item?.children) } : {}),
 			}));
 		}
 

@@ -42,7 +42,7 @@ function PaletteSelector(props: PaletteSelectorProps) {
 				<SectionPreview />
 				<Typography className="mb-6 flex-1 text-lg font-bold">Edit Palette</Typography>
 			</div>
-		)
+		),
 	} = props;
 	const [openDialog, setOpenDialog] = useState(false);
 
@@ -50,7 +50,7 @@ function PaletteSelector(props: PaletteSelectorProps) {
 
 	const methods = useForm<FuseThemeType>({
 		defaultValues: {},
-		mode: 'onChange'
+		mode: 'onChange',
 	});
 
 	const { reset, formState, trigger, handleSubmit, watch, control, setValue } = methods;
@@ -110,10 +110,7 @@ function PaletteSelector(props: PaletteSelectorProps) {
 
 	return (
 		<>
-			<div
-				onClick={handleOpenDialog}
-				role="button"
-			>
+			<div onClick={handleOpenDialog} role="button">
 				{triggerElement}
 			</div>
 			<Dialog
@@ -122,19 +119,13 @@ function PaletteSelector(props: PaletteSelectorProps) {
 				onClose={handleCloseDialog}
 				aria-labelledby="form-dialog-title"
 				classes={{
-					paper: 'rounded-5 w-full'
+					paper: 'rounded-5 w-full',
 				}}
 			>
-				<AppBar
-					elevation={0}
-					position="static"
-				>
+				<AppBar elevation={0} position="static">
 					<Toolbar className="flex w-full">
 						<Icon className="mr-3">palette</Icon>
-						<Typography
-							variant="subtitle1"
-							color="inherit"
-						>
+						<Typography variant="subtitle1" color="inherit">
 							Edit palette
 						</Typography>
 					</Toolbar>
@@ -147,16 +138,13 @@ function PaletteSelector(props: PaletteSelectorProps) {
 								name="palette.mode"
 								control={control}
 								render={({ field: { onChange: _onChange, value: _value } }) => (
-									<ButtonGroup
-										disableElevation
-										variant="contained"
-										color="secondary"
-										className="mb-8"
-									>
+									<ButtonGroup disableElevation variant="contained" color="secondary" className="mb-8">
 										<Button
 											onClick={() => {
 												_onChange('light');
-												setValue('palette.text', lightPaletteText, { shouldDirty: true });
+												setValue('palette.text', lightPaletteText, {
+													shouldDirty: true,
+												});
 											}}
 											variant={_value === 'light' ? 'contained' : 'outlined'}
 										>
@@ -166,7 +154,9 @@ function PaletteSelector(props: PaletteSelectorProps) {
 										<Button
 											onClick={() => {
 												_onChange('dark');
-												setValue('palette.text', darkPaletteText, { shouldDirty: true });
+												setValue('palette.text', darkPaletteText, {
+													shouldDirty: true,
+												});
 											}}
 											variant={_value === 'dark' ? 'contained' : 'outlined'}
 										>
@@ -185,16 +175,14 @@ function PaletteSelector(props: PaletteSelectorProps) {
 										onChange={(ev) => {
 											_onChange(ev.target.value);
 											setValue('palette.primary.light', lighten(ev.target.value, 0.8), {
-												shouldDirty: true
+												shouldDirty: true,
 											});
 											setValue('palette.primary.dark', darken(ev.target.value, 0.2), {
-												shouldDirty: true
+												shouldDirty: true,
 											});
-											setValue(
-												'palette.primary.contrastText',
-												theme.palette.getContrastText(ev.target.value),
-												{ shouldDirty: true }
-											);
+											setValue('palette.primary.contrastText', theme.palette.getContrastText(ev.target.value), {
+												shouldDirty: true,
+											});
 										}}
 										type="color"
 										variant="outlined"
@@ -214,16 +202,14 @@ function PaletteSelector(props: PaletteSelectorProps) {
 										onChange={(ev) => {
 											_onChange(ev.target.value);
 											setValue('palette.secondary.light', lighten(ev.target.value, 0.8), {
-												shouldDirty: true
+												shouldDirty: true,
 											});
 											setValue('palette.secondary.dark', darken(ev.target.value, 0.2), {
-												shouldDirty: true
+												shouldDirty: true,
 											});
-											setValue(
-												'palette.secondary.contrastText',
-												theme.palette.getContrastText(ev.target.value),
-												{ shouldDirty: true }
-											);
+											setValue('palette.secondary.contrastText', theme.palette.getContrastText(ev.target.value), {
+												shouldDirty: true,
+											});
 										}}
 										type="color"
 										variant="outlined"
@@ -239,8 +225,8 @@ function PaletteSelector(props: PaletteSelectorProps) {
 								control={control}
 								rules={{
 									validate: {
-										backgroundColorValidation
-									}
+										backgroundColorValidation,
+									},
 								}}
 								render={({ field }) => (
 									<TextField
@@ -261,8 +247,8 @@ function PaletteSelector(props: PaletteSelectorProps) {
 								control={control}
 								rules={{
 									validate: {
-										backgroundColorValidation
-									}
+										backgroundColorValidation,
+									},
 								}}
 								render={({ field }) => (
 									<TextField
@@ -279,10 +265,7 @@ function PaletteSelector(props: PaletteSelectorProps) {
 						</div>
 
 						<div className="flex flex-col items-center justify-center p-12">
-							<Typography
-								className="-mt-12 mb-4 text-lg font-semibold"
-								color="text.secondary"
-							>
+							<Typography className="-mt-12 mb-4 text-lg font-semibold" color="text.secondary">
 								Preview
 							</Typography>
 							<PalettePreview palette={form.palette} />
@@ -290,10 +273,7 @@ function PaletteSelector(props: PaletteSelectorProps) {
 					</div>
 				</DialogContent>
 				<DialogActions className="flex justify-between p-4">
-					<Button
-						onClick={handleCloseDialog}
-						color="primary"
-					>
+					<Button onClick={handleCloseDialog} color="primary">
 						Cancel
 					</Button>
 					<Button

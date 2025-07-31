@@ -32,13 +32,13 @@ const Root = styled(List)<ListComponentProps>(({ theme, ...props }) => ({
 		paddingBottom: 10,
 		color: alpha(theme.palette.text.primary, 0.7),
 		'&:hover': {
-			color: theme.palette.text.primary
+			color: theme.palette.text.primary,
 		},
 		'& > .fuse-list-item-icon': {
 			marginRight: 16,
-			color: 'inherit'
-		}
-	}
+			color: 'inherit',
+		},
+	},
 }));
 
 function needsToBeOpened(pathname: string, item: FuseNavItemType) {
@@ -62,19 +62,15 @@ function FuseNavVerticalCollapse(props: FuseNavItemComponentProps) {
 				to: item.url,
 				end: item.end,
 				role: 'button',
-				exact: item?.exact
-			})
+				exact: item?.exact,
+			}),
 		}),
-		[item, component]
+		[item, component],
 	);
 
 	const memoizedContent = useMemo(
 		() => (
-			<Root
-				className={clsx(open && 'open')}
-				itempadding={itempadding}
-				sx={item.sx}
-			>
+			<Root className={clsx(open && 'open')} itempadding={itempadding} sx={item.sx}>
 				<ListItemButton
 					component={component}
 					className="fuse-list-item"
@@ -84,10 +80,7 @@ function FuseNavVerticalCollapse(props: FuseNavItemComponentProps) {
 					{...itemProps}
 				>
 					{item.icon && (
-						<FuseSvgIcon
-							className={clsx('fuse-list-item-icon shrink-0', item.iconClass)}
-							color="action"
-						>
+						<FuseSvgIcon className={clsx('fuse-list-item-icon shrink-0', item.iconClass)} color="action">
 							{item.icon}
 						</FuseSvgIcon>
 					)}
@@ -98,16 +91,11 @@ function FuseNavVerticalCollapse(props: FuseNavItemComponentProps) {
 						secondary={item.subtitle}
 						classes={{
 							primary: 'text-md font-medium fuse-list-item-text-primary truncate',
-							secondary: 'text-sm font-medium fuse-list-item-text-secondary leading-[1.5] truncate'
+							secondary: 'text-sm font-medium fuse-list-item-text-secondary leading-[1.5] truncate',
 						}}
 					/>
 
-					{item.badge && (
-						<FuseNavBadge
-							className="mx-1"
-							badge={item.badge}
-						/>
-					)}
+					{item.badge && <FuseNavBadge className="mx-1" badge={item.badge} />}
 
 					<IconButton
 						disableRipple
@@ -118,21 +106,14 @@ function FuseNavVerticalCollapse(props: FuseNavItemComponentProps) {
 							setOpen(!open);
 						}}
 					>
-						<FuseSvgIcon
-							size={13}
-							className="arrow-icon"
-							color="inherit"
-						>
+						<FuseSvgIcon size={13} className="arrow-icon" color="inherit">
 							{open ? 'heroicons-solid:chevron-down' : 'heroicons-solid:chevron-right'}
 						</FuseSvgIcon>
 					</IconButton>
 				</ListItemButton>
 
 				{item.children && (
-					<Collapse
-						in={open}
-						className="collapse-children"
-					>
+					<Collapse in={open} className="collapse-children">
 						{item.children.map((_item) => (
 							<FuseNavItem
 								key={_item.id}
@@ -161,8 +142,8 @@ function FuseNavVerticalCollapse(props: FuseNavItemComponentProps) {
 			itempadding,
 			nestedLevel,
 			onItemClick,
-			open
-		]
+			open,
+		],
 	);
 
 	if (checkPermission && !item?.hasPermission) {

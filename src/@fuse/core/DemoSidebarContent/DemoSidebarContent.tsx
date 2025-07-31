@@ -11,8 +11,8 @@ function DemoSidebarContent() {
 	function generate(element: JSX.Element) {
 		return _(30).times((value) =>
 			cloneElement(element, {
-				key: value
-			})
+				key: value,
+			}),
 		);
 	}
 
@@ -22,7 +22,7 @@ function DemoSidebarContent() {
 				{generate(
 					<ListItemButton>
 						<ListItemText primary="Single-line item" />
-					</ListItemButton>
+					</ListItemButton>,
 				)}
 			</List>
 		</div>

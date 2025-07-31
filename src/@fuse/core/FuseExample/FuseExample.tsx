@@ -36,30 +36,22 @@ function FuseExample(props: FuseExampleProps) {
 			<Box
 				sx={{
 					backgroundColor: (theme) =>
-						darken(theme.palette.background.paper, theme.palette.mode === 'light' ? 0.02 : 0.2)
+						darken(theme.palette.background.paper, theme.palette.mode === 'light' ? 0.02 : 0.2),
 				}}
 			>
 				<Tabs
 					classes={{
 						root: 'border-b-1',
-						flexContainer: 'justify-end'
+						flexContainer: 'justify-end',
 					}}
 					value={currentTab}
 					onChange={handleChange}
 					textColor="secondary"
 					indicatorColor="secondary"
 				>
-					{Component && (
-						<Tab
-							classes={{ root: 'min-w-16' }}
-							icon={<FuseSvgIcon>heroicons-outline:eye</FuseSvgIcon>}
-						/>
-					)}
+					{Component && <Tab classes={{ root: 'min-w-16' }} icon={<FuseSvgIcon>heroicons-outline:eye</FuseSvgIcon>} />}
 					{raw && (
-						<Tab
-							classes={{ root: 'min-w-16' }}
-							icon={<FuseSvgIcon>heroicons-outline:code-bracket</FuseSvgIcon>}
-						/>
+						<Tab classes={{ root: 'min-w-16' }} icon={<FuseSvgIcon>heroicons-outline:code-bracket</FuseSvgIcon>} />
 					)}
 				</Tabs>
 			</Box>
@@ -79,10 +71,7 @@ function FuseExample(props: FuseExampleProps) {
 				<div className={currentTab === 1 ? 'flex flex-1' : 'hidden'}>
 					{raw && (
 						<div className="flex flex-1">
-							<FuseHighlight
-								component="pre"
-								className="language-javascript w-full"
-							>
+							<FuseHighlight component="pre" className="language-javascript w-full">
 								{raw}
 							</FuseHighlight>
 						</div>

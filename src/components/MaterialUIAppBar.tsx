@@ -1,39 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  InputBase,
-  Menu,
-  MenuItem,
-  Box,
-  useScrollTrigger,
-  Slide,
-  Chip,
-  Avatar,
-  Badge,
-  Tooltip,
-  Divider,
-  useTheme,
-  alpha,
-  Breadcrumbs,
-  Link
+	AppBar,
+	Toolbar,
+	IconButton,
+	Typography,
+	InputBase,
+	Menu,
+	MenuItem,
+	Box,
+	useScrollTrigger,
+	Slide,
+	Avatar,
+	Badge,
+	Tooltip,
+	Divider,
+	useTheme,
+	alpha,
+	Breadcrumbs,
+	Link,
 } from '@mui/material';
 import {
-  Search as SearchIcon,
-  Menu as MenuIcon,
-  Notifications as NotificationsIcon,
-  Settings as SettingsIcon,
-  AccountCircle,
-  Logout,
-  Dashboard,
-  Person,
-  MoreVert,
-  Home,
-  ChevronRight
+	Search as SearchIcon,
+	Notifications as NotificationsIcon,
+	Settings as SettingsIcon,
+	AccountCircle,
+	Logout,
+	Dashboard,
+	Person,
+	MoreVert,
+	Home,
+	ChevronRight,
 } from '@mui/icons-material';
-import { styled, ThemeProvider } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import { useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 
@@ -43,7 +41,6 @@ import NavbarToggleButton from 'src/components/theme-layouts/components/navbar/N
 import LightDarkModeToggle from 'src/components/LightDarkModeToggle';
 import FullScreenToggle from 'src/components/theme-layouts/components/FullScreenToggle';
 import LanguageSwitcher from 'src/components/theme-layouts/components/LanguageSwitcher';
-import NavigationSearch from 'src/components/theme-layouts/components/navigation/NavigationSearch';
 import NavigationShortcuts from 'src/components/theme-layouts/components/navigation/NavigationShortcuts';
 import QuickPanelToggleButton from 'src/components/theme-layouts/components/quickPanel/QuickPanelToggleButton';
 import useFuseLayoutSettings from '@fuse/core/FuseLayout/useFuseLayoutSettings';
@@ -56,555 +53,533 @@ import _ from 'lodash';
 
 // Simple Material-UI Search Component - No fancy effects, just works
 const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
+	position: 'relative',
+	borderRadius: theme.shape.borderRadius,
+	backgroundColor: alpha(theme.palette.common.white, 0.15),
+	'&:hover': {
+		backgroundColor: alpha(theme.palette.common.white, 0.25),
+	},
+	marginRight: theme.spacing(2),
+	marginLeft: 0,
+	width: '100%',
+	[theme.breakpoints.up('sm')]: {
+		marginLeft: theme.spacing(3),
+		width: 'auto',
+	},
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+	padding: theme.spacing(0, 2),
+	height: '100%',
+	position: 'absolute',
+	pointerEvents: 'none',
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
+	color: 'inherit',
+	'& .MuiInputBase-input': {
+		padding: theme.spacing(1, 1, 1, 0),
+		// vertical padding + font size from searchIcon
+		paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+		transition: theme.transitions.create('width'),
+		width: '100%',
+		[theme.breakpoints.up('md')]: {
+			width: '20ch',
+		},
+	},
 }));
 
 // Styled AppBar with black/white theme colors
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  // Menggunakan warna hitam/putih sesuai theme
-  backgroundColor: theme.palette.mode === 'dark' 
-    ? theme.palette.grey[900]  // Hitam untuk dark mode
-    : theme.palette.common.white,  // Putih untuk light mode
-  color: theme.palette.mode === 'dark' 
-    ? theme.palette.common.white  // Putih text untuk dark mode
-    : theme.palette.grey[900],  // Hitam text untuk light mode
-  boxShadow: theme.shadows[1], // Shadow yang lebih minimal
-  borderBottom: `1px solid ${theme.palette.divider}`, // Border untuk definisi yang lebih jelas
-  transition: theme.transitions.create(['background-color', 'color'], {
-    duration: theme.transitions.duration.short,
-  }),
+	// Menggunakan warna hitam/putih sesuai theme
+	backgroundColor:
+		theme.palette.mode === 'dark'
+			? theme.palette.grey[900] // Hitam untuk dark mode
+			: theme.palette.common.white, // Putih untuk light mode
+	color:
+		theme.palette.mode === 'dark'
+			? theme.palette.common.white // Putih text untuk dark mode
+			: theme.palette.grey[900], // Hitam text untuk light mode
+	boxShadow: theme.shadows[1], // Shadow yang lebih minimal
+	borderBottom: `1px solid ${theme.palette.divider}`, // Border untuk definisi yang lebih jelas
+	transition: theme.transitions.create(['background-color', 'color'], {
+		duration: theme.transitions.duration.short,
+	}),
 }));
 
 // Hide on scroll component
 interface HideOnScrollProps {
-  children: React.ReactElement;
-  window?: () => Window;
+	children: React.ReactElement;
+	window?: () => Window;
 }
 
 function HideOnScroll(props: HideOnScrollProps) {
-  const { children, window } = props;
-  const trigger = useScrollTrigger({
-    target: window ? window() : undefined,
-  });
+	const { children, window } = props;
+	const trigger = useScrollTrigger({
+		target: window ? window() : undefined,
+	});
 
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  );
+	return (
+		<Slide appear={false} direction="down" in={!trigger}>
+			{children}
+		</Slide>
+	);
 }
 
 // Main component props
 interface MaterialUIAppBarProps {
-  className?: string;
-  hideOnScroll?: boolean;
-  position?: 'fixed' | 'static' | 'sticky' | 'absolute' | 'relative';
-  elevation?: number;
-  variant?: 'dense' | 'regular' | 'prominent';
-  enableColorOnDark?: boolean;
-  showBreadcrumbs?: boolean;
-  showSearch?: boolean;
-  showNotifications?: boolean;
-  showUserMenu?: boolean;
-  // New props for navbar integration
-  showNavbarToggle?: boolean;
-  navbarPosition?: 'left' | 'right';
-  navbarStyle?: string;
+	className?: string;
+	hideOnScroll?: boolean;
+	position?: 'fixed' | 'static' | 'sticky' | 'absolute' | 'relative';
+	elevation?: number;
+	variant?: 'dense' | 'regular' | 'prominent';
+	enableColorOnDark?: boolean;
+	showBreadcrumbs?: boolean;
+	showSearch?: boolean;
+	showNotifications?: boolean;
+	showUserMenu?: boolean;
+	// New props for navbar integration
+	showNavbarToggle?: boolean;
+	navbarPosition?: 'left' | 'right';
+	navbarStyle?: string;
 }
 
 /**
  * Enhanced Material-UI AppBar with all modern features
  */
 function MaterialUIAppBar(props: MaterialUIAppBarProps) {
-  const {
-    className,
-    hideOnScroll = false,
-    position = 'static',
-    elevation = 1,
-    variant = 'regular',
-    enableColorOnDark = true,
-    showBreadcrumbs = true,
-    showSearch = true,
-    showNotifications = true,
-    showUserMenu = true,
-    showNavbarToggle = false,
-    navbarPosition = 'left',
-    navbarStyle = 'style-1',
-  } = props;
+	const {
+		className,
+		hideOnScroll = false,
+		position = 'static',
+		elevation = 1,
+		variant = 'regular',
+		enableColorOnDark = true,
+		showBreadcrumbs = true,
+		showSearch = true,
+		showNotifications = true,
+		showUserMenu = true,
+		showNavbarToggle = false,
+		navbarPosition = 'left',
+		navbarStyle = 'style-1',
+	} = props;
 
-  const theme = useTheme();
-  const location = useLocation();
-  const settings = useFuseLayoutSettings();
-  const config = settings.config as Layout1ConfigDefaultsType;
-  const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
-  const { navbar } = useNavbar();
-  // Menggunakan Material-UI default theme, tidak perlu custom toolbar theme
-  // const toolbarTheme = useToolbarTheme();
+	const theme = useTheme();
+	const location = useLocation();
+	const settings = useFuseLayoutSettings();
+	const config = settings.config as Layout1ConfigDefaultsType;
+	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
+	const { navbar } = useNavbar();
+	// Menggunakan Material-UI default theme, tidak perlu custom toolbar theme
+	// const toolbarTheme = useToolbarTheme();
 
-  // State management
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const [anchorElNotifications, setAnchorElNotifications] = useState<null | HTMLElement>(null);
-  const [anchorElMore, setAnchorElMore] = useState<null | HTMLElement>(null);
-  const [notificationCount, setNotificationCount] = useState(3);
-  const [searchValue, setSearchValue] = useState('');
+	// State management
+	const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+	const [anchorElNotifications, setAnchorElNotifications] = useState<null | HTMLElement>(null);
+	const [anchorElMore, setAnchorElMore] = useState<null | HTMLElement>(null);
+	const [notificationCount, setNotificationCount] = useState(3);
+	const [searchValue, setSearchValue] = useState('');
 
-  // Get page breadcrumbs from location
-  const getBreadcrumbs = () => {
-    const pathnames = location.pathname.split('/').filter((x) => x);
-    const breadcrumbs = [
-      { label: 'Home', path: '/', icon: <Home sx={{ mr: 0.5 }} fontSize="inherit" /> }
-    ];
+	// Get page breadcrumbs from location
+	const getBreadcrumbs = () => {
+		const pathnames = location.pathname.split('/').filter((x) => x);
+		const breadcrumbs = [
+			{
+				label: 'Home',
+				path: '/',
+				icon: <Home sx={{ mr: 0.5 }} fontSize="inherit" />,
+			},
+		];
 
-    pathnames.forEach((value, index) => {
-      const path = `/${pathnames.slice(0, index + 1).join('/')}`;
-      const label = value.charAt(0).toUpperCase() + value.slice(1).replace(/-/g, ' ');
-      breadcrumbs.push({ 
-        label, 
-        path, 
-        icon: <ChevronRight sx={{ mr: 0.5 }} fontSize="inherit" /> 
-      });
-    });
+		pathnames.forEach((value, index) => {
+			const path = `/${pathnames.slice(0, index + 1).join('/')}`;
+			const label = value.charAt(0).toUpperCase() + value.slice(1).replace(/-/g, ' ');
+			breadcrumbs.push({
+				label,
+				path,
+				icon: <ChevronRight sx={{ mr: 0.5 }} fontSize="inherit" />,
+			});
+		});
 
-    return breadcrumbs;
-  };
+		return breadcrumbs;
+	};
 
-  // Event handlers
-  const handleUserMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
+	// Event handlers
+	const handleUserMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorElUser(event.currentTarget);
+	};
 
-  const handleNotificationsOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNotifications(event.currentTarget);
-  };
+	const handleNotificationsOpen = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorElNotifications(event.currentTarget);
+	};
 
-  const handleMoreMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElMore(event.currentTarget);
-  };
+	const handleMoreMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorElMore(event.currentTarget);
+	};
 
-  const handleMenuClose = () => {
-    setAnchorElUser(null);
-    setAnchorElNotifications(null);
-    setAnchorElMore(null);
-  };
+	const handleMenuClose = () => {
+		setAnchorElUser(null);
+		setAnchorElNotifications(null);
+		setAnchorElMore(null);
+	};
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
-  };
+	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setSearchValue(event.target.value);
+	};
 
-  const handleSearchSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    if (searchValue.trim()) {
-      console.log('Search:', searchValue);
-      // Implement search logic here
-    }
-  };
+	const handleSearchSubmit = (event: React.FormEvent) => {
+		event.preventDefault();
 
-  // Simple Material-UI Search Component
-  const SimpleSearch = () => (
-    <Search>
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
-      <StyledInputBase
-        placeholder="Search…"
-        inputProps={{ 'aria-label': 'search' }}
-        value={searchValue}
-        onChange={handleSearchChange}
-        onKeyPress={(e) => {
-          if (e.key === 'Enter') {
-            handleSearchSubmit(e);
-          }
-        }}
-      />
-    </Search>
-  );
+		if (searchValue.trim()) {
+			// TODO: Implement search logic here
+			// console.error('Search:', searchValue);
+		}
+	};
 
-  // Toolbar variants
-  const getToolbarHeight = () => {
-    switch (variant) {
-      case 'dense':
-        return 48;
-      case 'prominent':
-        return 128;
-      default:
-        return 64;
-    }
-  };
+	// Simple Material-UI Search Component
+	const SimpleSearch = () => (
+		<Search>
+			<SearchIconWrapper>
+				<SearchIcon />
+			</SearchIconWrapper>
+			<StyledInputBase
+				placeholder="Search…"
+				inputProps={{ 'aria-label': 'search' }}
+				value={searchValue}
+				onChange={handleSearchChange}
+				onKeyPress={(e) => {
+					if (e.key === 'Enter') {
+						handleSearchSubmit(e);
+					}
+				}}
+			/>
+		</Search>
+	);
 
-  const toolbarContent = (
-    <Toolbar
-      variant={variant === 'dense' ? 'dense' : 'regular'}
-      sx={{
-        minHeight: getToolbarHeight(),
-        px: { xs: 1, sm: 2, md: 3 },
-        ...(variant === 'prominent' && {
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-          py: 2
-        })
-      }}
-    >
-      {/* Left Section - Navigation */}
-      <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
-        {/* Navbar Toggle Button */}
-        {showNavbarToggle && navbarPosition === 'left' && (
-          <>
-            {!isMobile && (
-              <>
-                {(navbarStyle === 'style-3' || navbarStyle === 'style-3-dense') && (
-                  <NavbarToggleButton 
-                    sx={{ mr: 1, width: 40, height: 40, p: 0 }}
-                    color="inherit"
-                  />
-                )}
-                {navbarStyle === 'style-1' && !navbar.open && (
-                  <NavbarToggleButton 
-                    sx={{ mr: 1, width: 40, height: 40, p: 0 }}
-                    color="inherit"
-                  />
-                )}
-              </>
-            )}
-            {isMobile && (
-              <NavbarToggleButton 
-                sx={{ mr: 1, width: 40, height: 40, p: 0 }}
-                color="inherit"
-              />
-            )}
-          </>
-        )}
+	// Toolbar variants
+	const getToolbarHeight = () => {
+		switch (variant) {
+			case 'dense':
+				return 48;
+			case 'prominent':
+				return 128;
+			default:
+				return 64;
+		}
+	};
 
-        {/* Navigation Shortcuts */}
-        {!isMobile && <NavigationShortcuts />}
+	const toolbarContent = (
+		<Toolbar
+			variant={variant === 'dense' ? 'dense' : 'regular'}
+			sx={{
+				minHeight: getToolbarHeight(),
+				px: { xs: 1, sm: 2, md: 3 },
+				...(variant === 'prominent' && {
+					flexDirection: 'column',
+					alignItems: 'flex-start',
+					py: 2,
+				}),
+			}}
+		>
+			{/* Left Section - Navigation */}
+			<Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
+				{/* Navbar Toggle Button */}
+				{showNavbarToggle && navbarPosition === 'left' && (
+					<>
+						{!isMobile && (
+							<>
+								{(navbarStyle === 'style-3' || navbarStyle === 'style-3-dense') && (
+									<NavbarToggleButton sx={{ mr: 1, width: 40, height: 40, p: 0 }} color="inherit" />
+								)}
+								{navbarStyle === 'style-1' && !navbar.open && (
+									<NavbarToggleButton sx={{ mr: 1, width: 40, height: 40, p: 0 }} color="inherit" />
+								)}
+							</>
+						)}
+						{isMobile && <NavbarToggleButton sx={{ mr: 1, width: 40, height: 40, p: 0 }} color="inherit" />}
+					</>
+				)}
 
-        {/* Logo/Brand */}
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{
-            display: { xs: 'none', sm: 'block' },
-            fontWeight: 600,
-            color: 'inherit',
-            ml: showNavbarToggle ? 1 : 0
-          }}
-        >
-          FUSE REACT
-        </Typography>
-      </Box>
+				{/* Navigation Shortcuts */}
+				{!isMobile && <NavigationShortcuts />}
 
-      {/* Center Section - Search (in prominent mode) */}
-      {variant === 'prominent' && showSearch && (
-        <Box sx={{ width: '100%', mt: 2, display: 'flex', justifyContent: 'center' }}>
-          <SimpleSearch />
-        </Box>
-      )}
+				{/* Logo/Brand */}
+				<Typography
+					variant="h6"
+					noWrap
+					component="div"
+					sx={{
+						display: { xs: 'none', sm: 'block' },
+						fontWeight: 600,
+						color: 'inherit',
+						ml: showNavbarToggle ? 1 : 0,
+					}}
+				>
+					FUSE REACT
+				</Typography>
+			</Box>
 
-      {/* Spacer */}
-      <Box sx={{ flexGrow: 1 }} />
+			{/* Center Section - Search (in prominent mode) */}
+			{variant === 'prominent' && showSearch && (
+				<Box
+					sx={{
+						width: '100%',
+						mt: 2,
+						display: 'flex',
+						justifyContent: 'center',
+					}}
+				>
+					<SimpleSearch />
+				</Box>
+			)}
 
-      {/* Right Section - Actions */}
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-        {/* Simple Search for non-prominent modes */}
-        {variant !== 'prominent' && showSearch && !isMobile && (
-          <Box sx={{ mr: 1 }}>
-            <SimpleSearch />
-          </Box>
-        )}
+			{/* Spacer */}
+			<Box sx={{ flexGrow: 1 }} />
 
-        {/* Language Switcher */}
-        <LanguageSwitcher />
+			{/* Right Section - Actions */}
+			<Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+				{/* Simple Search for non-prominent modes */}
+				{variant !== 'prominent' && showSearch && !isMobile && (
+					<Box sx={{ mr: 1 }}>
+						<SimpleSearch />
+					</Box>
+				)}
 
-        {/* Fullscreen Toggle */}
-        <FullScreenToggle />
+				{/* Language Switcher */}
+				<LanguageSwitcher />
 
-        {/* Light/Dark Mode Toggle */}
-        <LightDarkModeToggle
-          lightTheme={_.find(themeOptions, { id: 'Default' })}
-          darkTheme={_.find(themeOptions, { id: 'Default Dark' })}
-        />
+				{/* Fullscreen Toggle */}
+				<FullScreenToggle />
 
-        {/* Notifications */}
-        {showNotifications && (
-          <Tooltip title="Notifications">
-            <IconButton
-              color="inherit"
-              onClick={handleNotificationsOpen}
-              aria-label={`show ${notificationCount} new notifications`}
-            >
-              <Badge badgeContent={notificationCount} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-          </Tooltip>
-        )}
+				{/* Light/Dark Mode Toggle */}
+				<LightDarkModeToggle
+					lightTheme={_.find(themeOptions, { id: 'Default' })}
+					darkTheme={_.find(themeOptions, { id: 'Default Dark' })}
+				/>
 
-        {/* Quick Panel */}
-        <QuickPanelToggleButton />
+				{/* Notifications */}
+				{showNotifications && (
+					<Tooltip title="Notifications">
+						<IconButton
+							color="inherit"
+							onClick={handleNotificationsOpen}
+							aria-label={`show ${notificationCount} new notifications`}
+						>
+							<Badge badgeContent={notificationCount} color="error">
+								<NotificationsIcon />
+							</Badge>
+						</IconButton>
+					</Tooltip>
+				)}
 
-        {/* User Menu */}
-        {showUserMenu && (
-          <Tooltip title="Account settings">
-            <IconButton
-              onClick={handleUserMenuOpen}
-              color="inherit"
-              aria-label="account menu"
-            >
-              <Avatar sx={{ width: 32, height: 32 }}>
-                <AccountCircle />
-              </Avatar>
-            </IconButton>
-          </Tooltip>
-        )}
+				{/* Quick Panel */}
+				<QuickPanelToggleButton />
 
-        {/* More menu for mobile */}
-        {isMobile && (
-          <IconButton
-            color="inherit"
-            onClick={handleMoreMenuOpen}
-            aria-label="more options"
-          >
-            <MoreVert />
-          </IconButton>
-        )}
+				{/* User Menu */}
+				{showUserMenu && (
+					<Tooltip title="Account settings">
+						<IconButton onClick={handleUserMenuOpen} color="inherit" aria-label="account menu">
+							<Avatar sx={{ width: 32, height: 32 }}>
+								<AccountCircle />
+							</Avatar>
+						</IconButton>
+					</Tooltip>
+				)}
 
-        {/* Navbar Toggle Button for Right Position */}
-        {showNavbarToggle && navbarPosition === 'right' && (
-          <>
-            {!isMobile && (
-              <>
-                {(navbarStyle === 'style-3' || navbarStyle === 'style-3-dense') && (
-                  <NavbarToggleButton 
-                    sx={{ ml: 1, width: 40, height: 40, p: 0 }}
-                    color="inherit"
-                  />
-                )}
-                {navbarStyle === 'style-1' && !navbar.open && (
-                  <NavbarToggleButton 
-                    sx={{ ml: 1, width: 40, height: 40, p: 0 }}
-                    color="inherit"
-                  />
-                )}
-              </>
-            )}
-            {isMobile && (
-              <NavbarToggleButton 
-                sx={{ ml: 1, width: 40, height: 40, p: 0 }}
-                color="inherit"
-              />
-            )}
-          </>
-        )}
-      </Box>
-    </Toolbar>
-  );
+				{/* More menu for mobile */}
+				{isMobile && (
+					<IconButton color="inherit" onClick={handleMoreMenuOpen} aria-label="more options">
+						<MoreVert />
+					</IconButton>
+				)}
 
-  // Create the complete component with AppBar and associated menus
-  const appBarWithMenus = (
-    <>
-      <StyledAppBar
-        position={position}
-        elevation={elevation}
-        enableColorOnDark={enableColorOnDark}
-        className={clsx('fuse-toolbar', className)}
-      >
-        {toolbarContent}
-        
-        {/* Breadcrumbs */}
-        {showBreadcrumbs && variant !== 'dense' && (
-          <Box sx={{ px: 3, pb: 1 }}>
-            <Breadcrumbs
-              aria-label="breadcrumb"
-              separator={<ChevronRight fontSize="small" />}
-                sx={{ fontSize: '0.875rem' }}
-              >
-                {getBreadcrumbs().map((breadcrumb, index) => (
-                  <Link
-                    key={breadcrumb.path}
-                    color="inherit"
-                    href={breadcrumb.path}
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      textDecoration: 'none',
-                      '&:hover': { textDecoration: 'underline' }
-                    }}
-                  >
-                    {breadcrumb.icon}
-                    {breadcrumb.label}
-                  </Link>
-                ))}
-              </Breadcrumbs>
-            </Box>
-          )}
-        </StyledAppBar>
+				{/* Navbar Toggle Button for Right Position */}
+				{showNavbarToggle && navbarPosition === 'right' && (
+					<>
+						{!isMobile && (
+							<>
+								{(navbarStyle === 'style-3' || navbarStyle === 'style-3-dense') && (
+									<NavbarToggleButton sx={{ ml: 1, width: 40, height: 40, p: 0 }} color="inherit" />
+								)}
+								{navbarStyle === 'style-1' && !navbar.open && (
+									<NavbarToggleButton sx={{ ml: 1, width: 40, height: 40, p: 0 }} color="inherit" />
+								)}
+							</>
+						)}
+						{isMobile && <NavbarToggleButton sx={{ ml: 1, width: 40, height: 40, p: 0 }} color="inherit" />}
+					</>
+				)}
+			</Box>
+		</Toolbar>
+	);
 
-        {/* User Menu */}
-        <Menu
-          anchorEl={anchorElUser}
-          open={Boolean(anchorElUser)}
-          onClose={handleMenuClose}
-          onClick={handleMenuClose}
-          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-          PaperProps={{
-            elevation: 3,
-            sx: {
-              mt: 1.5,
-              minWidth: 200,
-              '& .MuiMenuItem-root': {
-                gap: 1.5,
-              },
-            },
-          }}
-        >
-          <MenuItem onClick={handleMenuClose}>
-            <Avatar sx={{ width: 24, height: 24 }} />
-            Profile
-          </MenuItem>
-          <MenuItem onClick={handleMenuClose}>
-            <Dashboard sx={{ width: 24, height: 24 }} />
-            Dashboard
-          </MenuItem>
-          <MenuItem onClick={handleMenuClose}>
-            <SettingsIcon sx={{ width: 24, height: 24 }} />
-            Settings
-          </MenuItem>
-          <Divider />
-          <MenuItem onClick={handleMenuClose}>
-            <Logout sx={{ width: 24, height: 24 }} />
-            Logout
-          </MenuItem>
-        </Menu>
+	// Create the complete component with AppBar and associated menus
+	const appBarWithMenus = (
+		<>
+			<StyledAppBar
+				position={position}
+				elevation={elevation}
+				enableColorOnDark={enableColorOnDark}
+				className={clsx('fuse-toolbar', className)}
+			>
+				{toolbarContent}
 
-        {/* Notifications Menu */}
-        <Menu
-          anchorEl={anchorElNotifications}
-          open={Boolean(anchorElNotifications)}
-          onClose={handleMenuClose}
-          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-          PaperProps={{
-            elevation: 3,
-            sx: {
-              mt: 1.5,
-              maxWidth: 360,
-              maxHeight: 400,
-            },
-          }}
-        >
-          <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
-            <Typography variant="h6">Notifications</Typography>
-          </Box>
-          <MenuItem onClick={handleMenuClose}>
-            <Avatar sx={{ mr: 2, bgcolor: 'primary.main' }}>
-              <Person />
-            </Avatar>
-            <Box>
-              <Typography variant="body2">New user registered</Typography>
-              <Typography variant="caption" color="text.secondary">
-                2 minutes ago
-              </Typography>
-            </Box>
-          </MenuItem>
-          <MenuItem onClick={handleMenuClose}>
-            <Avatar sx={{ mr: 2, bgcolor: 'success.main' }}>
-              <Dashboard />
-            </Avatar>
-            <Box>
-              <Typography variant="body2">System update available</Typography>
-              <Typography variant="caption" color="text.secondary">
-                1 hour ago
-              </Typography>
-            </Box>
-          </MenuItem>
-          <MenuItem onClick={handleMenuClose}>
-            <Avatar sx={{ mr: 2, bgcolor: 'warning.main' }}>
-              <NotificationsIcon />
-            </Avatar>
-            <Box>
-              <Typography variant="body2">Maintenance scheduled</Typography>
-              <Typography variant="caption" color="text.secondary">
-                3 hours ago
-              </Typography>
-            </Box>
-          </MenuItem>
-          <Divider />
-          <MenuItem onClick={handleMenuClose} sx={{ justifyContent: 'center' }}>
-            <Typography variant="body2" color="primary">
-              View all notifications
-            </Typography>
-          </MenuItem>
-        </Menu>
+				{/* Breadcrumbs */}
+				{showBreadcrumbs && variant !== 'dense' && (
+					<Box sx={{ px: 3, pb: 1 }}>
+						<Breadcrumbs
+							aria-label="breadcrumb"
+							separator={<ChevronRight fontSize="small" />}
+							sx={{ fontSize: '0.875rem' }}
+						>
+							{getBreadcrumbs().map((breadcrumb, index) => (
+								<Link
+									key={breadcrumb.path}
+									color="inherit"
+									href={breadcrumb.path}
+									sx={{
+										display: 'flex',
+										alignItems: 'center',
+										textDecoration: 'none',
+										'&:hover': { textDecoration: 'underline' },
+									}}
+								>
+									{breadcrumb.icon}
+									{breadcrumb.label}
+								</Link>
+							))}
+						</Breadcrumbs>
+					</Box>
+				)}
+			</StyledAppBar>
 
-        {/* Mobile More Menu */}
-        <Menu
-          anchorEl={anchorElMore}
-          open={Boolean(anchorElMore)}
-          onClose={handleMenuClose}
-          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        >
-          <MenuItem onClick={handleMenuClose}>
-            <SearchIcon sx={{ mr: 1 }} />
-            Search
-          </MenuItem>
-          <MenuItem onClick={handleMenuClose}>
-            <NotificationsIcon sx={{ mr: 1 }} />
-            Notifications
-          </MenuItem>
-          <MenuItem onClick={handleMenuClose}>
-            <SettingsIcon sx={{ mr: 1 }} />
-            Settings
-          </MenuItem>
-        </Menu>
-      </>
-    );
+			{/* User Menu */}
+			<Menu
+				anchorEl={anchorElUser}
+				open={Boolean(anchorElUser)}
+				onClose={handleMenuClose}
+				onClick={handleMenuClose}
+				transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+				anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+				PaperProps={{
+					elevation: 3,
+					sx: {
+						mt: 1.5,
+						minWidth: 200,
+						'& .MuiMenuItem-root': {
+							gap: 1.5,
+						},
+					},
+				}}
+			>
+				<MenuItem onClick={handleMenuClose}>
+					<Avatar sx={{ width: 24, height: 24 }} />
+					Profile
+				</MenuItem>
+				<MenuItem onClick={handleMenuClose}>
+					<Dashboard sx={{ width: 24, height: 24 }} />
+					Dashboard
+				</MenuItem>
+				<MenuItem onClick={handleMenuClose}>
+					<SettingsIcon sx={{ width: 24, height: 24 }} />
+					Settings
+				</MenuItem>
+				<Divider />
+				<MenuItem onClick={handleMenuClose}>
+					<Logout sx={{ width: 24, height: 24 }} />
+					Logout
+				</MenuItem>
+			</Menu>
 
-  // Return with or without hide on scroll
-  return hideOnScroll ? (
-    <HideOnScroll>
-      {appBarWithMenus}
-    </HideOnScroll>
-  ) : (
-    appBarWithMenus
-  );
+			{/* Notifications Menu */}
+			<Menu
+				anchorEl={anchorElNotifications}
+				open={Boolean(anchorElNotifications)}
+				onClose={handleMenuClose}
+				transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+				anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+				PaperProps={{
+					elevation: 3,
+					sx: {
+						mt: 1.5,
+						maxWidth: 360,
+						maxHeight: 400,
+					},
+				}}
+			>
+				<Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
+					<Typography variant="h6">Notifications</Typography>
+				</Box>
+				<MenuItem onClick={handleMenuClose}>
+					<Avatar sx={{ mr: 2, bgcolor: 'primary.main' }}>
+						<Person />
+					</Avatar>
+					<Box>
+						<Typography variant="body2">New user registered</Typography>
+						<Typography variant="caption" color="text.secondary">
+							2 minutes ago
+						</Typography>
+					</Box>
+				</MenuItem>
+				<MenuItem onClick={handleMenuClose}>
+					<Avatar sx={{ mr: 2, bgcolor: 'success.main' }}>
+						<Dashboard />
+					</Avatar>
+					<Box>
+						<Typography variant="body2">System update available</Typography>
+						<Typography variant="caption" color="text.secondary">
+							1 hour ago
+						</Typography>
+					</Box>
+				</MenuItem>
+				<MenuItem onClick={handleMenuClose}>
+					<Avatar sx={{ mr: 2, bgcolor: 'warning.main' }}>
+						<NotificationsIcon />
+					</Avatar>
+					<Box>
+						<Typography variant="body2">Maintenance scheduled</Typography>
+						<Typography variant="caption" color="text.secondary">
+							3 hours ago
+						</Typography>
+					</Box>
+				</MenuItem>
+				<Divider />
+				<MenuItem onClick={handleMenuClose} sx={{ justifyContent: 'center' }}>
+					<Typography variant="body2" color="primary">
+						View all notifications
+					</Typography>
+				</MenuItem>
+			</Menu>
+
+			{/* Mobile More Menu */}
+			<Menu
+				anchorEl={anchorElMore}
+				open={Boolean(anchorElMore)}
+				onClose={handleMenuClose}
+				transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+				anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+			>
+				<MenuItem onClick={handleMenuClose}>
+					<SearchIcon sx={{ mr: 1 }} />
+					Search
+				</MenuItem>
+				<MenuItem onClick={handleMenuClose}>
+					<NotificationsIcon sx={{ mr: 1 }} />
+					Notifications
+				</MenuItem>
+				<MenuItem onClick={handleMenuClose}>
+					<SettingsIcon sx={{ mr: 1 }} />
+					Settings
+				</MenuItem>
+			</Menu>
+		</>
+	);
+
+	// Return with or without hide on scroll
+	return hideOnScroll ? <HideOnScroll>{appBarWithMenus}</HideOnScroll> : appBarWithMenus;
 }
 
 export default MaterialUIAppBar;

@@ -14,15 +14,15 @@ const Root = styled('div')(({ theme }) => ({
 	'& ::-webkit-scrollbar-thumb': {
 		boxShadow: `inset 0 0 0 20px ${'rgba(255, 255, 255, 0.24)'}`,
 		...theme.applyStyles('light', {
-			boxShadow: `inset 0 0 0 20px ${'rgba(0, 0, 0, 0.24)'}`
-		})
+			boxShadow: `inset 0 0 0 20px ${'rgba(0, 0, 0, 0.24)'}`,
+		}),
 	},
 	'& ::-webkit-scrollbar-thumb:active': {
 		boxShadow: `inset 0 0 0 20px ${'rgba(255, 255, 255, 0.37)'}`,
 		...theme.applyStyles('light', {
-			boxShadow: `inset 0 0 0 20px ${'rgba(0, 0, 0, 0.37)'}`
-		})
-	}
+			boxShadow: `inset 0 0 0 20px ${'rgba(0, 0, 0, 0.37)'}`,
+		}),
+	},
 }));
 
 const StyledContent = styled(FuseScrollbars)(() => ({
@@ -32,7 +32,7 @@ const StyledContent = styled(FuseScrollbars)(() => ({
 	WebkitOverflowScrolling: 'touch',
 	backgroundRepeat: 'no-repeat',
 	backgroundSize: '100% 40px, 100% 10px',
-	backgroundAttachment: 'local, scroll'
+	backgroundAttachment: 'local, scroll',
 }));
 
 type NavbarStyle1ContentProps = {
@@ -58,11 +58,7 @@ function NavbarStyle1Content(props: NavbarStyle1ContentProps) {
 				<Navigation layout="vertical" />
 
 				<div className="shrink-0 flex items-center justify-center py-12 opacity-10">
-					<img
-						className="w-full max-w-16"
-						src="/assets/images/logo/logo.svg"
-						alt="footer logo"
-					/>
+					<img className="w-full max-w-16" src="/assets/images/logo/logo.svg" alt="footer logo" />
 				</div>
 			</StyledContent>
 

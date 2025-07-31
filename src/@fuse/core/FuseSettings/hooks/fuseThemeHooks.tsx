@@ -14,7 +14,7 @@ const generateMuiTheme = (theme: FuseThemeType, direction: Direction): Theme => 
 	const themeOptions = {
 		...mergedTheme,
 		mixins: extendThemeWithMixins(mergedTheme),
-		direction
+		direction,
 	} as ThemeOptions;
 	return createTheme(themeOptions);
 };
@@ -49,10 +49,10 @@ export const changeThemeMode = (theme: FuseThemeType, mode: 'dark' | 'light'): F
 				divider: 'rgba(241,245,249,.12)',
 				background: {
 					paper: '#1E2125',
-					default: '#121212'
+					default: '#121212',
 				},
-				text: darkPaletteText
-			}
+				text: darkPaletteText,
+			},
 		},
 		light: {
 			palette: {
@@ -60,11 +60,11 @@ export const changeThemeMode = (theme: FuseThemeType, mode: 'dark' | 'light'): F
 				divider: '#e2e8f0',
 				background: {
 					paper: '#FFFFFF',
-					default: '#F7F7F7'
+					default: '#F7F7F7',
 				},
-				text: lightPaletteText
-			}
-		}
+				text: lightPaletteText,
+			},
+		},
 	};
 	return _.merge({}, theme, modes[mode]);
 };

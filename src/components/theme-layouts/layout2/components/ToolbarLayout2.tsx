@@ -39,9 +39,7 @@ function ToolbarLayout2(props: ToolbarLayout2Props) {
 			>
 				<Toolbar className="container min-h-12 p-0 md:min-h-16 lg:px-6">
 					<div className="flex flex-1 px-2 md:px-4 space-x-2 ">
-						{config.navbar.display && isMobile && (
-							<NavbarToggleButton className="mx-0 h-9 w-9 p-0 sm:mx-2" />
-						)}
+						{config.navbar.display && isMobile && <NavbarToggleButton className="mx-0 h-9 w-9 p-0 sm:mx-2" />}
 
 						{!isMobile && <NavigationShortcuts />}
 					</div>
@@ -59,12 +57,12 @@ function ToolbarLayout2(props: ToolbarLayout2Props) {
 								popoverProps={{
 									anchorOrigin: {
 										vertical: 'bottom',
-										horizontal: 'center'
+										horizontal: 'center',
 									},
 									transformOrigin: {
 										vertical: 'top',
-										horizontal: 'center'
-									}
+										horizontal: 'center',
+									},
 								}}
 							/>
 						)}

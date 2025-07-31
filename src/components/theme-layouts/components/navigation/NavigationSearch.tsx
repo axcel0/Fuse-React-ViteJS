@@ -13,13 +13,7 @@ function NavigationSearch(props: NavigationSearchProps) {
 	const { variant, className } = props;
 	const { flattenNavigation: navigation } = useNavigation();
 
-	return (
-		<FuseSearch
-			className={className}
-			variant={variant}
-			navigation={navigation}
-		/>
-	);
+	return <FuseSearch className={className} variant={variant} navigation={navigation} />;
 }
 
 export default NavigationSearch;

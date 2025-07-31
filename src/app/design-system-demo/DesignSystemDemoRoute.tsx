@@ -8,7 +8,7 @@ const DesignSystemDemo = lazy(() => import('./page'));
  */
 const DesignSystemDemoRoute: FuseRouteItemType = {
 	path: 'design-system-demo',
-	element: <DesignSystemDemo />
+	element: <DesignSystemDemo />,
 };
 
 export default DesignSystemDemoRoute;

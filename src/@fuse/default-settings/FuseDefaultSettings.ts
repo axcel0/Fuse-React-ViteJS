@@ -14,33 +14,33 @@ const defaultTheme = {
 		text: {
 			primary: 'rgb(17, 24, 39)',
 			secondary: 'rgb(107, 114, 128)',
-			disabled: 'rgb(149, 156, 169)'
+			disabled: 'rgb(149, 156, 169)',
 		},
 		common: {
 			black: 'rgb(17, 24, 39)',
-			white: 'rgb(255, 255, 255)'
+			white: 'rgb(255, 255, 255)',
 		},
 		primary: {
 			light: '#bec1c5',
 			main: '#252f3e',
 			dark: '#0d121b',
-			contrastDefaultColor: 'light'
+			contrastDefaultColor: 'light',
 		},
 		secondary: {
 			light: '#bdf2fa',
 			main: '#22d3ee',
-			dark: '#0cb7e2'
+			dark: '#0cb7e2',
 		},
 		background: {
 			paper: '#FFFFFF',
-			default: '#f6f7f9'
+			default: '#f6f7f9',
 		},
 		error: {
 			light: '#ffcdd2',
 			main: '#f44336',
-			dark: '#b71c1c'
-		}
-	}
+			dark: '#b71c1c',
+		},
+	},
 };
 
 /**
@@ -54,8 +54,8 @@ export const defaultSettings = {
 		main: defaultTheme,
 		navbar: defaultTheme,
 		toolbar: defaultTheme,
-		footer: defaultTheme
-	}
+		footer: defaultTheme,
+	},
 };
 
 /**
@@ -67,7 +67,9 @@ export function getParsedQuerySettings(): FuseSettingsConfigType | object {
 		return null;
 	}
 
-	const parsedQueryString = qs.parse(window?.location?.search, { ignoreQueryPrefix: true });
+	const parsedQueryString = qs.parse(window?.location?.search, {
+		ignoreQueryPrefix: true,
+	});
 
 	const { defaultSettings = {} } = parsedQueryString;
 
@@ -93,7 +95,7 @@ export const defaultThemeOptions = {
 		fontFamily: ['Geist', 'Inter var', 'Roboto', '"Helvetica"', 'Arial', 'sans-serif'].join(','),
 		fontWeightLight: 300,
 		fontWeightRegular: 400,
-		fontWeightMedium: 500
+		fontWeightMedium: 500,
 	},
 	breakpoints: {
 		values: {
@@ -101,8 +103,8 @@ export const defaultThemeOptions = {
 			sm: 600, // Small devices
 			md: 960, // Medium devices
 			lg: 1280, // Large devices
-			xl: 1920 // Extra large devices
-		}
+			xl: 1920, // Extra large devices
+		},
 	},
 	components: {
 		MuiSvgIcon: {
@@ -111,219 +113,219 @@ export const defaultThemeOptions = {
 				root: {},
 				sizeSmall: {
 					width: 16,
-					height: 16
+					height: 16,
 				},
 				sizeMedium: {
 					width: 20,
-					height: 20
+					height: 20,
 				},
 				sizeLarge: {
 					width: 24,
-					height: 24
-				}
-			}
+					height: 24,
+				},
+			},
 		},
 		MuiAppBar: {
 			defaultProps: {
-				enableColorOnDark: true
+				enableColorOnDark: true,
 			},
 			styleOverrides: {
 				root: {
-					backgroundImage: 'none'
-				}
-			}
+					backgroundImage: 'none',
+				},
+			},
 		},
 		MuiPickersPopper: {
 			styleOverrides: {
 				root: {
-					zIndex: 99999
-				}
-			}
+					zIndex: 99999,
+				},
+			},
 		},
 		MuiAutocomplete: {
 			styleOverrides: {
 				popper: {
-					zIndex: 99999
-				}
-			}
+					zIndex: 99999,
+				},
+			},
 		},
 		MuiButtonBase: {
 			defaultProps: {
 				// disableRipple: true
 			},
 			styleOverrides: {
-				root: {}
-			}
+				root: {},
+			},
 		},
 		MuiIconButton: {
 			styleOverrides: {
 				root: {
-					borderRadius: 8
+					borderRadius: 8,
 				},
 				sizeMedium: {
 					width: 36,
 					height: 36,
-					maxHeight: 36
+					maxHeight: 36,
 				},
 				sizeSmall: {
 					width: 32,
 					height: 32,
-					maxHeight: 32
+					maxHeight: 32,
 				},
 				sizeLarge: {
 					width: 40,
 					height: 40,
-					maxHeight: 40
-				}
-			}
+					maxHeight: 40,
+				},
+			},
 		},
 		MuiBadge: {
 			defaultProps: {},
 			styleOverrides: {
-				root: {}
-			}
+				root: {},
+			},
 		},
 		MuiAvatar: {
 			defaultProps: {},
 			styleOverrides: {
 				root: {
 					width: 36,
-					height: 36
-				}
-			}
+					height: 36,
+				},
+			},
 		},
 		MuiButton: {
 			defaultProps: {
 				variant: 'text',
-				color: 'inherit'
+				color: 'inherit',
 			},
 			styleOverrides: {
 				root: {
-					textTransform: 'none'
+					textTransform: 'none',
 					// lineHeight: 1,
 				},
 				sizeMedium: {
 					borderRadius: 8,
 					height: 36,
 					minHeight: 36,
-					maxHeight: 36
+					maxHeight: 36,
 				},
 				sizeSmall: {
 					borderRadius: 8,
 					height: 32,
 					minHeight: 32,
-					maxHeight: 32
+					maxHeight: 32,
 				},
 				sizeLarge: {
 					height: 40,
 					minHeight: 40,
 					maxHeight: 40,
-					borderRadius: 8
+					borderRadius: 8,
 				},
 				contained: {
 					boxShadow: 'none',
 					'&:hover, &:focus': {
-						boxShadow: 'none'
-					}
-				}
-			}
+						boxShadow: 'none',
+					},
+				},
+			},
 		},
 		MuiButtonGroup: {
 			defaultProps: {
-				color: 'secondary'
+				color: 'secondary',
 			},
 			styleOverrides: {
 				contained: {
-					borderRadius: 8
-				}
-			}
+					borderRadius: 8,
+				},
+			},
 		},
 		MuiTab: {
 			styleOverrides: {
 				root: {
-					textTransform: 'none'
-				}
-			}
+					textTransform: 'none',
+				},
+			},
 		},
 		MuiDrawer: {
 			styleOverrides: {
-				paper: {}
-			}
+				paper: {},
+			},
 		},
 		MuiDialog: {
 			styleOverrides: {
 				paper: {
-					borderRadius: 12
-				}
-			}
+					borderRadius: 12,
+				},
+			},
 		},
 		MuiPaper: {
 			styleOverrides: {
 				root: {
-					backgroundImage: 'none'
+					backgroundImage: 'none',
 				},
 				rounded: {
-					borderRadius: 12
-				}
-			}
+					borderRadius: 12,
+				},
+			},
 		},
 		MuiCard: {
-			styleOverrides: {}
+			styleOverrides: {},
 		},
 		MuiPopover: {
 			styleOverrides: {
 				paper: {
-					borderRadius: 8
-				}
-			}
+					borderRadius: 8,
+				},
+			},
 		},
 		MuiTextField: {
 			defaultProps: {
-				color: 'secondary'
+				color: 'secondary',
 			},
 			styleOverrides: {
 				root: {
 					'& > .MuiFormHelperText-root': {
-						marginLeft: 11
-					}
-				}
-			}
+						marginLeft: 11,
+					},
+				},
+			},
 		},
 		MuiInputLabel: {
 			defaultProps: {
-				color: 'secondary'
+				color: 'secondary',
 			},
 			styleOverrides: {
 				shrink: {
-					transform: 'translate(11px, -7px) scale(0.8)'
+					transform: 'translate(11px, -7px) scale(0.8)',
 				},
 				root: {
 					transform: 'translate(11px, 8px) scale(1)',
-					'&.Mui-focused': {}
-				}
-			}
+					'&.Mui-focused': {},
+				},
+			},
 		},
 		MuiSelect: {
 			defaultProps: {
-				color: 'secondary'
+				color: 'secondary',
 			},
 			styleOverrides: {
 				select: {
-					minHeight: 0
-				}
-			}
+					minHeight: 0,
+				},
+			},
 		},
 		MuiFormHelperText: {
 			styleOverrides: {
-				root: {}
-			}
+				root: {},
+			},
 		},
 		MuiInputAdornment: {
 			styleOverrides: {
 				root: {
-					marginRight: 0
-				}
-			}
+					marginRight: 0,
+				},
+			},
 		},
 		MuiInputBase: {
 			styleOverrides: {
@@ -331,92 +333,92 @@ export const defaultThemeOptions = {
 					// height: 36,
 					minHeight: 36,
 					borderRadius: 8,
-					lineHeight: 1
+					lineHeight: 1,
 				},
 				legend: {
-					fontSize: '0.75em'
+					fontSize: '0.75em',
 				},
 				input: {
-					padding: '5px 11px'
+					padding: '5px 11px',
 				},
 				adornedStart: {
-					paddingLeft: `11px!important`
+					paddingLeft: `11px!important`,
 				},
 				sizeSmall: {
 					height: 32,
 					minHeight: 32,
-					borderRadius: 8
+					borderRadius: 8,
 				},
 				sizeMedium: {
 					height: 36,
 					minHeight: 36,
-					borderRadius: 8
+					borderRadius: 8,
 				},
 				sizeLarge: {
 					height: 40,
 					minHeight: 40,
-					borderRadius: 8
-				}
-			}
+					borderRadius: 8,
+				},
+			},
 		},
 		MuiOutlinedInput: {
 			defaultProps: {
-				color: 'secondary'
+				color: 'secondary',
 			},
 			styleOverrides: {
 				root: {
 					// paddingLeft: 11
 				},
 				input: {
-					padding: '5px 11px'
-				}
-			}
+					padding: '5px 11px',
+				},
+			},
 		},
 		MuiFilledInput: {
 			styleOverrides: {
 				root: {
 					borderRadius: 8,
 					'&:before, &:after': {
-						display: 'none'
-					}
+						display: 'none',
+					},
 				},
 
 				input: {
-					padding: '5px 11px'
-				}
-			}
+					padding: '5px 11px',
+				},
+			},
 		},
 		MuiSlider: {
 			defaultProps: {
-				color: 'secondary'
-			}
+				color: 'secondary',
+			},
 		},
 		MuiCheckbox: {
 			defaultProps: {
-				color: 'secondary'
-			}
+				color: 'secondary',
+			},
 		},
 		MuiRadio: {
 			defaultProps: {
-				color: 'secondary'
-			}
+				color: 'secondary',
+			},
 		},
 		MuiSwitch: {
 			defaultProps: {
-				color: 'secondary'
-			}
+				color: 'secondary',
+			},
 		},
 		MuiTypography: {
 			variants: [
 				{
 					props: { color: 'text.secondary' },
 					style: {
-						color: 'text.secondary'
-					}
-				}
-			]
-		}
-	}
+						color: 'text.secondary',
+					},
+				},
+			],
+		},
+	},
 };
 
 /**
@@ -426,12 +428,12 @@ export const mustHaveThemeOptions = {
 	typography: {
 		fontSize: 13,
 		body1: {
-			fontSize: '0.8125rem'
+			fontSize: '0.8125rem',
 		},
 		body2: {
-			fontSize: '0.8125rem'
-		}
-	}
+			fontSize: '0.8125rem',
+		},
+	},
 };
 
 /**
@@ -445,13 +447,13 @@ export const defaultThemes = {
 			secondary: {
 				light: lightBlue[400],
 				main: lightBlue[600],
-				dark: lightBlue[700]
+				dark: lightBlue[700],
 			},
-			error: red
+			error: red,
 		},
 		status: {
-			danger: 'orange'
-		}
+			danger: 'orange',
+		},
 	},
 	defaultDark: {
 		palette: {
@@ -460,14 +462,14 @@ export const defaultThemes = {
 			secondary: {
 				light: lightBlue[400],
 				main: lightBlue[600],
-				dark: lightBlue[700]
+				dark: lightBlue[700],
 			},
-			error: red
+			error: red,
 		},
 		status: {
-			danger: 'orange'
-		}
-	}
+			danger: 'orange',
+		},
+	},
 };
 
 /**
@@ -479,27 +481,27 @@ export function extendThemeWithMixins(obj: ThemeOptions) {
 		border: (width = 1) => ({
 			borderWidth: width,
 			borderStyle: 'solid',
-			borderColor: theme.palette.divider
+			borderColor: theme.palette.divider,
 		}),
 		borderLeft: (width = 1) => ({
 			borderLeftWidth: width,
 			borderStyle: 'solid',
-			borderColor: theme.palette.divider
+			borderColor: theme.palette.divider,
 		}),
 		borderRight: (width = 1) => ({
 			borderRightWidth: width,
 			borderStyle: 'solid',
-			borderColor: theme.palette.divider
+			borderColor: theme.palette.divider,
 		}),
 		borderTop: (width = 1) => ({
 			borderTopWidth: width,
 			borderStyle: 'solid',
-			borderColor: theme.palette.divider
+			borderColor: theme.palette.divider,
 		}),
 		borderBottom: (width = 1) => ({
 			borderBottomWidth: width,
 			borderStyle: 'solid',
-			borderColor: theme.palette.divider
-		})
+			borderColor: theme.palette.divider,
+		}),
 	};
 }

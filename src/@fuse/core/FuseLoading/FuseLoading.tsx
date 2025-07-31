@@ -24,15 +24,15 @@ function FuseLoading(props: FuseLoadingProps) {
 			className={clsx(
 				className,
 				'flex flex-1 min-h-full h-full w-full self-center flex-col items-center justify-center p-6',
-				!showLoading ? 'hidden' : ''
+				!showLoading ? 'hidden' : '',
 			)}
 		>
 			<Box
 				id="spinner"
 				sx={{
 					'& > div': {
-						backgroundColor: 'palette.secondary.main'
-					}
+						backgroundColor: 'palette.secondary.main',
+					},
 				}}
 			>
 				<div className="bounce1" />

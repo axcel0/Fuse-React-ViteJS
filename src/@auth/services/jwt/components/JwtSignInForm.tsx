@@ -21,7 +21,7 @@ const schema = z.object({
 	password: z
 		.string()
 		.min(4, 'Password is too short - must be at least 4 chars.')
-		.min(1, 'Please enter your password.')
+		.min(1, 'Please enter your password.'),
 });
 
 type FormType = JwtSignInPayload & {
@@ -31,7 +31,7 @@ type FormType = JwtSignInPayload & {
 const defaultValues = {
 	email: '',
 	password: '',
-	remember: true
+	remember: true,
 };
 
 function JwtSignInForm() {
@@ -40,14 +40,20 @@ function JwtSignInForm() {
 	const { control, formState, handleSubmit, setValue, setError } = useForm<FormType>({
 		mode: 'onChange',
 		defaultValues,
-		resolver: zodResolver(schema)
+		resolver: zodResolver(schema),
 	});
 
 	const { isValid, dirtyFields, errors } = formState;
 
 	useEffect(() => {
-		setValue('email', 'admin@fusetheme.com', { shouldDirty: true, shouldValidate: true });
-		setValue('password', '5;4+0IOx:\\Dy', { shouldDirty: true, shouldValidate: true });
+		setValue('email', 'admin@fusetheme.com', {
+			shouldDirty: true,
+			shouldValidate: true,
+		});
+		setValue('password', '5;4+0IOx:\\Dy', {
+			shouldDirty: true,
+			shouldValidate: true,
+		});
 	}, [setValue]);
 
 	function onSubmit(formData: FormType) {
@@ -55,7 +61,7 @@ function JwtSignInForm() {
 
 		signIn({
 			email,
-			password
+			password,
 		}).catch((error: FetchApiError) => {
 			const errorData = error.data as {
 				type: 'email' | 'password' | 'remember' | `root.${string}` | 'root';
@@ -65,7 +71,7 @@ function JwtSignInForm() {
 			errorData?.forEach?.((err) => {
 				setError(err.type, {
 					type: 'manual',
-					message: err.message
+					message: err.message,
 				});
 			});
 		});
@@ -121,23 +127,12 @@ function JwtSignInForm() {
 					control={control}
 					render={({ field }) => (
 						<FormControl>
-							<FormControlLabel
-								label="Remember me"
-								control={
-									<Checkbox
-										size="small"
-										{...field}
-									/>
-								}
-							/>
+							<FormControlLabel label="Remember me" control={<Checkbox size="small" {...field} />} />
 						</FormControl>
 					)}
 				/>
 
-				<Link
-					className="text-md font-medium"
-					to="/#"
-				>
+				<Link className="text-md font-medium" to="/#">
 					Forgot password?
 				</Link>
 			</div>

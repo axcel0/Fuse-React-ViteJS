@@ -24,7 +24,7 @@ const wrapInLayer: (layerName: string) => StylisPlugin = (layerName) => (node) =
 		return: '',
 		root: null,
 		type: '@layer',
-		value: `@layer ${layerName}`
+		value: `@layer ${layerName}`,
 	});
 };
 
@@ -32,13 +32,13 @@ const emotionCacheOptions: Record<string, Options> = {
 	rtl: {
 		key: 'muirtl',
 		stylisPlugins: [rtlPlugin, wrapInLayer('mui')],
-		prepend: false
+		prepend: false,
 	},
 	ltr: {
 		key: 'muiltr',
 		stylisPlugins: [wrapInLayer('mui')],
-		prepend: false
-	}
+		prepend: false,
+	},
 };
 
 function MainThemeProvider({ children }: MainThemeProviderProps) {
@@ -49,10 +49,7 @@ function MainThemeProvider({ children }: MainThemeProviderProps) {
 
 	return (
 		<CacheProvider value={cacheProviderValue}>
-			<FuseTheme
-				theme={mainTheme}
-				root
-			>
+			<FuseTheme theme={mainTheme} root>
 				{children}
 			</FuseTheme>
 		</CacheProvider>

@@ -20,21 +20,11 @@ function SwitchFormController(props: SwitchFormControllerProps) {
 			name={name}
 			control={control}
 			render={({ field: { onChange, value } }) => (
-				<FormControl
-					component="fieldset"
-					className="FuseSettings-formControl"
-				>
-					<FormLabel
-						component="legend"
-						className="text-base"
-					>
+				<FormControl component="fieldset" className="FuseSettings-formControl">
+					<FormLabel component="legend" className="text-base">
 						{item.title}
 					</FormLabel>
-					<Switch
-						checked={value as boolean}
-						onChange={(ev, checked) => onChange(checked)}
-						aria-label={item.title}
-					/>
+					<Switch checked={value as boolean} onChange={(ev, checked) => onChange(checked)} aria-label={item.title} />
 				</FormControl>
 			)}
 		/>

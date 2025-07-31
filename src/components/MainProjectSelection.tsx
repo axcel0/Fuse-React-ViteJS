@@ -15,15 +15,15 @@ const projectOptions: ProjectOption[] = [
 		logo: '/assets/images/logo/vite.svg',
 		darkLogo: '/assets/images/logo/vite.svg',
 		name: 'Vitejs',
-		url: 'https://fuse-react-vitejs-skeleton.fusetheme.com'
+		url: 'https://fuse-react-vitejs-skeleton.fusetheme.com',
 	},
 	{
 		value: 'Nextjs',
 		logo: '/assets/images/logo/nextjs.svg',
 		darkLogo: '/assets/images/logo/nextjs-dark.svg',
 		name: 'Nextjs',
-		url: 'https://fuse-react-nextjs-skeleton.fusetheme.com'
-	}
+		url: 'https://fuse-react-nextjs-skeleton.fusetheme.com',
+	},
 ];
 
 function MainProjectSelection() {
@@ -63,20 +63,17 @@ function MainProjectSelection() {
 			sx={{
 				backgroundColor: 'transparent',
 				'& .MuiInputBase-input': {
-					padding: '0 22px 0 8px!important'
+					padding: '0 22px 0 8px!important',
 				},
 				'& .MuiSelect-icon': {
 					width: 20,
-					right: 1
-				}
+					right: 1,
+				},
 			}}
 			size="small"
 		>
 			{projectOptions.map((project) => (
-				<MenuItem
-					key={project.value}
-					value={project.value}
-				>
+				<MenuItem key={project.value} value={project.value}>
 					<ListItemIcon>
 						<img
 							src={theme.palette.mode === 'dark' ? project.darkLogo : project.logo}
@@ -85,10 +82,7 @@ function MainProjectSelection() {
 							height={20}
 						/>
 					</ListItemIcon>
-					<ListItemText
-						primary={project.name}
-						classes={{ primary: 'text-md font-semibold' }}
-					/>
+					<ListItemText primary={project.name} classes={{ primary: 'text-md font-semibold' }} />
 				</MenuItem>
 			))}
 		</Select>

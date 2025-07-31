@@ -16,7 +16,7 @@ import useNavigation from '@/components/theme-layouts/components/navigation/hook
 
 const Root = styled('div')(({ theme }) => ({
 	backgroundColor: theme.palette.background.default,
-	color: theme.palette.text.primary
+	color: theme.palette.text.primary,
 }));
 
 type StyledPanelProps = {
@@ -29,7 +29,7 @@ const StyledPanel = styled(FuseScrollbars)<StyledPanelProps>(({ theme }) => ({
 	color: theme.palette.text.primary,
 	transition: theme.transitions.create(['opacity'], {
 		easing: theme.transitions.easing.sharp,
-		duration: theme.transitions.duration.shortest
+		duration: theme.transitions.duration.shortest,
 	}),
 	opacity: 0,
 	pointerEvents: 'none',
@@ -39,10 +39,10 @@ const StyledPanel = styled(FuseScrollbars)<StyledPanelProps>(({ theme }) => ({
 			props: ({ opened }) => opened,
 			style: {
 				opacity: 1,
-				pointerEvents: 'initial'
-			}
-		}
-	]
+				pointerEvents: 'initial',
+			},
+		},
+	],
 }));
 
 /**
@@ -52,8 +52,8 @@ function needsToBeOpened(pathname: string, item: FuseNavItemType) {
 	return pathname && isUrlInChildren(item, pathname);
 }
 
-type NavbarStyle3ContentProps = { 
-	className?: string; 
+type NavbarStyle3ContentProps = {
+	className?: string;
 	dense?: number;
 	onMobileNavClose?: () => void; // Added for navbar close functionality
 };
@@ -112,21 +112,14 @@ function NavbarStyle3Content(props: NavbarStyle3ContentProps) {
 	return (
 		<ClickAwayListener onClickAway={() => setPanelOpen(false)}>
 			<Root className={clsx('flex h-full flex-auto', className)}>
-				<div
-					id="fuse-navbar-side-panel"
-					className="flex shrink-0 flex-col items-center h-full"
-				>
-					<img
-						className="my-8 w-11"
-						src="/assets/images/logo/logo.svg"
-						alt="logo"
-					/>
+				<div id="fuse-navbar-side-panel" className="flex shrink-0 flex-col items-center h-full">
+					<img className="my-8 w-11" src="/assets/images/logo/logo.svg" alt="logo" />
 
 					<FuseScrollbars
 						className="flex flex-col min-h-0 w-full flex-1 justify-start overflow-y-auto overflow-x-hidden"
 						option={{
 							suppressScrollX: true,
-							wheelPropagation: false
+							wheelPropagation: false,
 						}}
 					>
 						<FuseNavigation

@@ -27,7 +27,7 @@ function FuseAuthProvider(props: FuseAuthenticationProviderProps) {
 
 	const allProvidersReady = useMemo(() => {
 		return providers.every(
-			(provider) => providerStatuses[provider.name] && providerStatuses[provider.name] !== 'configuring'
+			(provider) => providerStatuses[provider.name] && providerStatuses[provider.name] !== 'configuring',
 		);
 	}, [providers, providerStatuses]);
 
@@ -49,7 +49,7 @@ function FuseAuthProvider(props: FuseAuthenticationProviderProps) {
 		(providerAuthState: FuseAuthProviderState, name: string) => {
 			setProviderStatuses((prevStatuses) => ({
 				...prevStatuses,
-				[name]: providerAuthState.authStatus
+				[name]: providerAuthState.authStatus,
 			}));
 			setAuthState((prev) => {
 				// Scenario 1: Same provider, user logged out
@@ -71,7 +71,7 @@ function FuseAuthProvider(props: FuseAuthenticationProviderProps) {
 				return prev;
 			});
 		},
-		[setAuthProvider]
+		[setAuthProvider],
 	);
 
 	useEffect(() => {
@@ -104,7 +104,7 @@ function FuseAuthProvider(props: FuseAuthenticationProviderProps) {
 
 			throw new Error('No current auth provider to updateUser from');
 		},
-		[currentProvider]
+		[currentProvider],
 	);
 
 	const contextValue = useMemo(
@@ -116,9 +116,9 @@ function FuseAuthProvider(props: FuseAuthenticationProviderProps) {
 			providers,
 			signOut,
 			updateUser,
-			authState
+			authState,
 		}),
-		[authState, getAuthProvider, setAuthProvider, resetAuthProvider, providers, signOut, updateUser]
+		[authState, getAuthProvider, setAuthProvider, resetAuthProvider, providers, signOut, updateUser],
 	);
 
 	// Nest providers with handleAuthStateChange and ref
@@ -140,9 +140,9 @@ function FuseAuthProvider(props: FuseAuthenticationProviderProps) {
 						</Provider>
 					);
 				},
-				!isLoading ? children(authState) : <FuseLoading />
+				!isLoading ? children(authState) : <FuseLoading />,
 			),
-		[providers, isLoading, handleAuthStateChange, children, authState]
+		[providers, isLoading, handleAuthStateChange, children, authState],
 	);
 
 	return <FuseAuthContext value={contextValue}>{nestedProviders}</FuseAuthContext>;

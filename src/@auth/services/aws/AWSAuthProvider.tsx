@@ -23,7 +23,7 @@ function AWSAuthProviderContent(props: FuseAuthProviderComponentProps) {
 	const [authState, setAuthState] = useState<FuseAuthProviderState>({
 		authStatus: 'configuring',
 		isAuthenticated: false,
-		user: null
+		user: null,
 	});
 
 	/**
@@ -58,7 +58,7 @@ function AWSAuthProviderContent(props: FuseAuthProviderComponentProps) {
 					email: userAttributes.email,
 					role: ['admin'],
 					displayName: userAttributes.displayName,
-					photoURL: userAttributes.photoURL
+					photoURL: userAttributes.photoURL,
 				});
 				userDbData = (await newUserResponse.json()) as User;
 			}
@@ -72,7 +72,7 @@ function AWSAuthProviderContent(props: FuseAuthProviderComponentProps) {
 					setAuthState({
 						user: userDbData,
 						isAuthenticated: true,
-						authStatus: 'authenticated'
+						authStatus: 'authenticated',
 					});
 				})
 				.catch((error) => {
@@ -80,7 +80,7 @@ function AWSAuthProviderContent(props: FuseAuthProviderComponentProps) {
 					setAuthState({
 						authStatus: 'unauthenticated',
 						isAuthenticated: false,
-						user: null
+						user: null,
 					});
 				});
 		} else if (awsAuthStatus !== 'configuring') {
@@ -90,7 +90,7 @@ function AWSAuthProviderContent(props: FuseAuthProviderComponentProps) {
 			setAuthState({
 				authStatus: 'unauthenticated',
 				isAuthenticated: false,
-				user: null
+				user: null,
 			});
 		}
 	}, [awsAuthStatus]);
@@ -119,7 +119,7 @@ function AWSAuthProviderContent(props: FuseAuthProviderComponentProps) {
 	 */
 	useImperativeHandle(ref, () => ({
 		signOut: handleSignOut,
-		updateUser
+		updateUser,
 	}));
 
 	/**
@@ -129,9 +129,9 @@ function AWSAuthProviderContent(props: FuseAuthProviderComponentProps) {
 		() => ({
 			...authState,
 			signOut: handleSignOut,
-			updateUser
+			updateUser,
 		}),
-		[authState, handleSignOut, updateUser]
+		[authState, handleSignOut, updateUser],
 	);
 
 	return <AWSAuthContext value={authContextValue}>{children}</AWSAuthContext>;
@@ -142,10 +142,7 @@ function AWSAuthProvider(props: FuseAuthProviderComponentProps) {
 
 	return (
 		<Authenticator.Provider>
-			<AWSAuthProviderContent
-				ref={ref}
-				onAuthStateChanged={onAuthStateChanged}
-			>
+			<AWSAuthProviderContent ref={ref} onAuthStateChanged={onAuthStateChanged}>
 				{children}
 			</AWSAuthProviderContent>
 		</Authenticator.Provider>

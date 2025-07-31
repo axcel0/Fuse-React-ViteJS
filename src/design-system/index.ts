@@ -20,17 +20,17 @@ export type { InputProps, TextareaProps, SelectProps } from './components/Input'
 
 // ===== COMPONENT COLLECTIONS =====
 export const DesignSystem = {
-  Button: () => import('./components/Button'),
-  Card: () => import('./components/Card'),
-  Input: () => import('./components/Input'),
+	Button: () => import('./components/Button'),
+	Card: () => import('./components/Card'),
+	Input: () => import('./components/Input'),
 };
 
 export const Components = {
-  Button: () => import('./components/Button'),
-  Card: () => import('./components/Card'),
-  Input: () => import('./components/Input'),
-  Textarea: () => import('./components/Input').then(m => ({ default: m.Textarea })),
-  Select: () => import('./components/Input').then(m => ({ default: m.Select })),
+	Button: () => import('./components/Button'),
+	Card: () => import('./components/Card'),
+	Input: () => import('./components/Input'),
+	Textarea: () => import('./components/Input').then((m) => ({ default: m.Textarea })),
+	Select: () => import('./components/Input').then((m) => ({ default: m.Select })),
 };
 
 // ===== THEME INTEGRATION =====

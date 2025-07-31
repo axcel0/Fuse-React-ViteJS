@@ -38,20 +38,13 @@ function ToolbarLayout3(props: ToolbarLayout3Props) {
 			>
 				<Toolbar className="container min-h-12 p-0 md:min-h-16 lg:px-6">
 					<div className={clsx('flex shrink px-2 md:px-0 space-x-2')}>
-						{config.navbar.display && isMobile && (
-							<NavbarToggleButton className="mx-0 h-9 w-9 p-0 sm:mx-2" />
-						)}
+						{config.navbar.display && isMobile && <NavbarToggleButton className="mx-0 h-9 w-9 p-0 sm:mx-2" />}
 
 						{!isMobile && <Logo />}
 					</div>
 
 					<div className="flex flex-1">
-						{!isMobile && (
-							<NavigationSearch
-								className="mx-4 lg:mx-6"
-								variant="basic"
-							/>
-						)}
+						{!isMobile && <NavigationSearch className="mx-4 lg:mx-6" variant="basic" />}
 					</div>
 
 					<div className="flex items-center overflow-x-auto px-2 md:px-4 space-x-1.5">
@@ -67,12 +60,12 @@ function ToolbarLayout3(props: ToolbarLayout3Props) {
 								popoverProps={{
 									anchorOrigin: {
 										vertical: 'bottom',
-										horizontal: 'center'
+										horizontal: 'center',
 									},
 									transformOrigin: {
 										vertical: 'top',
-										horizontal: 'center'
-									}
+										horizontal: 'center',
+									},
 								}}
 							/>
 						)}

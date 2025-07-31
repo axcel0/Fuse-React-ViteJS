@@ -33,6 +33,7 @@ export const userKeys = {
 const userApi = {
 	getUsers: async (filters?: Record<string, unknown>): Promise<User[]> => {
 		const searchParams = new URLSearchParams();
+
 		if (filters) {
 			Object.entries(filters).forEach(([key, value]) => {
 				if (value !== undefined && value !== null) {
@@ -40,6 +41,7 @@ const userApi = {
 				}
 			});
 		}
+
 		const response = await httpClient.get(`users?${searchParams.toString()}`);
 		return response.json();
 	},

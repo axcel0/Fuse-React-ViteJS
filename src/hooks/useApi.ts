@@ -70,7 +70,9 @@ export function useUpdateProduct() {
 
 	return useMutation({
 		mutationFn: async ({ id, ...productData }: Partial<Product> & { id: string }): Promise<Product> => {
-			const response = await httpClient.put(`products/${id}`, { json: productData });
+			const response = await httpClient.put(`products/${id}`, {
+				json: productData,
+			});
 			return response.json();
 		},
 		onSuccess: (updatedProduct) => {

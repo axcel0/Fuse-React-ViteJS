@@ -18,7 +18,10 @@ const authApi = [
 		if (newTokenResponse) {
 			const { access_token } = newTokenResponse;
 
-			return HttpResponse.json(null, { status: 200, headers: { 'New-Access-Token': access_token } });
+			return HttpResponse.json(null, {
+				status: 200,
+				headers: { 'New-Access-Token': access_token },
+			});
 		}
 
 		const error = 'Invalid access token detected or user not found';
@@ -31,7 +34,10 @@ const authApi = [
 
 		if (newTokenResponse) {
 			const { access_token, user } = newTokenResponse;
-			return HttpResponse.json(user, { status: 200, headers: { 'New-Access-Token': access_token } });
+			return HttpResponse.json(user, {
+				status: 200,
+				headers: { 'New-Access-Token': access_token },
+			});
 		}
 
 		const error = 'Invalid access token detected or user not found';
@@ -53,14 +59,14 @@ const authApi = [
 		if (!user) {
 			error.push({
 				type: 'email',
-				message: 'Check your email address'
+				message: 'Check your email address',
 			});
 		}
 
 		if (user && password === '') {
 			error.push({
 				type: 'password',
-				message: 'Check your password'
+				message: 'Check your password',
 			});
 		}
 
@@ -71,7 +77,7 @@ const authApi = [
 
 			const response = {
 				user,
-				access_token
+				access_token,
 			};
 
 			return HttpResponse.json(response, { status: 200 });
@@ -82,7 +88,11 @@ const authApi = [
 
 	http.post('/api/mock/auth/sign-up', async ({ request }) => {
 		const api = mockApi('users');
-		const data = (await request.json()) as { displayName: string; password: string; email: string };
+		const data = (await request.json()) as {
+			displayName: string;
+			password: string;
+			email: string;
+		};
 		const { displayName, password, email } = data;
 		const isEmailExists = (await api.findAll({ email }))?.[0];
 		const error = [];
@@ -90,7 +100,7 @@ const authApi = [
 		if (isEmailExists) {
 			error.push({
 				type: 'email',
-				message: 'The email address is already in use'
+				message: 'The email address is already in use',
 			});
 		}
 
@@ -101,7 +111,7 @@ const authApi = [
 				photoURL: '/assets/images/avatars/Abbott.jpg',
 				email,
 				shortcuts: [],
-				settings: {}
+				settings: {},
 			});
 
 			newUser.id = FuseUtils.generateGUID();
@@ -115,7 +125,7 @@ const authApi = [
 
 			const response = {
 				user,
-				access_token
+				access_token,
 			};
 
 			return HttpResponse.json(response, { status: 200 });
@@ -159,7 +169,7 @@ const authApi = [
 		delete (updatedUser as Partial<UserAuthType>).password;
 
 		return HttpResponse.json(updatedUser);
-	})
+	}),
 ];
 
 export default authApi;
@@ -188,11 +198,11 @@ function base64url(source: CryptoJS.lib.WordArray) {
 	return encodedSource;
 }
 
-function generateJWTToken(tokenPayload: { [key:string]: unknown } ) {
+function generateJWTToken(tokenPayload: { [key: string]: unknown }) {
 	// Define token header
 	const header = {
 		alg: 'HS256',
-		typ: 'JWT'
+		typ: 'JWT',
 	};
 
 	// Calculate the issued at and expiration dates
@@ -205,7 +215,7 @@ function generateJWTToken(tokenPayload: { [key:string]: unknown } ) {
 		iat,
 		iss: 'Fuse',
 		exp,
-		...tokenPayload
+		...tokenPayload,
 	};
 
 	// Stringify and encode the header
@@ -260,7 +270,7 @@ async function generateAccessToken(request: Request): Promise<{ access_token: st
 	if (verifyJWTToken(access_token)) {
 		const { id }: { id: string } = jwtDecode(access_token);
 
-		const user = await mockApi('users').find(id) as User | undefined;
+		const user = (await mockApi('users').find(id)) as User | undefined;
 
 		if (user) {
 			delete user.password;

@@ -23,8 +23,8 @@ interface QuickPanelProps {
 
 const StyledSwipeableDrawer = styled(SwipeableDrawer)(() => ({
 	'& .MuiDrawer-paper': {
-		width: 280
-	}
+		width: 280,
+	},
 }));
 
 /**
@@ -35,7 +35,7 @@ function QuickPanel({ open = false, onClose }: QuickPanelProps) {
 	const data = {
 		notes: [],
 		events: [],
-		tasks: []
+		tasks: [],
 	};
 
 	const [checked, setChecked] = useState<string[]>(['notifications']);
@@ -54,40 +54,22 @@ function QuickPanel({ open = false, onClose }: QuickPanelProps) {
 	};
 
 	return (
-		<StyledSwipeableDrawer
-			open={open}
-			anchor="right"
-			onOpen={() => {}}
-			onClose={() => onClose?.()}
-			disableSwipeToOpen
-		>
+		<StyledSwipeableDrawer open={open} anchor="right" onOpen={() => {}} onClose={() => onClose?.()} disableSwipeToOpen>
 			<FuseScrollbars>
 				<ListSubheader component="div">Today</ListSubheader>
 
 				<div className="mb-0 px-6 py-4">
-					<Typography
-						className="mb-3 text-5xl"
-						color="text.secondary"
-					>
+					<Typography className="mb-3 text-5xl" color="text.secondary">
 						{format(new Date(), 'eeee')}
 					</Typography>
 					<div className="flex">
-						<Typography
-							className="text-5xl leading-none"
-							color="text.secondary"
-						>
+						<Typography className="text-5xl leading-none" color="text.secondary">
 							{format(new Date(), 'dd')}
 						</Typography>
-						<Typography
-							className="text-lg leading-none"
-							color="text.secondary"
-						>
+						<Typography className="text-lg leading-none" color="text.secondary">
 							th
 						</Typography>
-						<Typography
-							className="text-5xl leading-none"
-							color="text.secondary"
-						>
+						<Typography className="text-5xl leading-none" color="text.secondary">
 							{format(new Date(), 'MMMM')}
 						</Typography>
 					</div>
@@ -98,10 +80,7 @@ function QuickPanel({ open = false, onClose }: QuickPanelProps) {
 					{data &&
 						data.events.map((event) => (
 							<ListItem key={event.id}>
-								<ListItemText
-									primary={event.title}
-									secondary={event.detail}
-								/>
+								<ListItemText primary={event.title} secondary={event.detail} />
 							</ListItem>
 						))}
 				</List>
@@ -111,10 +90,7 @@ function QuickPanel({ open = false, onClose }: QuickPanelProps) {
 					{data &&
 						data.notes.map((note) => (
 							<ListItem key={note.id}>
-								<ListItemText
-									primary={note.title}
-									secondary={note.detail}
-								/>
+								<ListItemText primary={note.title} secondary={note.detail} />
 							</ListItem>
 						))}
 				</List>

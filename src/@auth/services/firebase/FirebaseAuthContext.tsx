@@ -20,7 +20,7 @@ const defaultAuthContext: FirebaseAuthContextType = {
 	updateUser: null,
 	signIn: null,
 	signUp: null,
-	signOut: null
+	signOut: null,
 };
 
 const FirebaseAuthContext = createContext<FirebaseAuthContextType>(defaultAuthContext);

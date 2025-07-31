@@ -13,10 +13,7 @@ function Error401Page() {
 	return (
 		<div className="flex flex-1 flex-col items-center justify-center p-4">
 			<div className="w-full max-w-5xl text-center">
-				<motion.div
-					initial={{ opacity: 0, scale: 0.6 }}
-					animate={{ opacity: 1, scale: 1, transition: { delay: 0.1 } }}
-				>
+				<motion.div initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1, transition: { delay: 0.1 } }}>
 					<Box
 						component="svg"
 						width="100%"
@@ -27,13 +24,7 @@ function Error401Page() {
 						xmlns="http://www.w3.org/2000/svg"
 						sx={{ color: 'secondary.main' }}
 					>
-						<ellipse
-							cx="158"
-							cy="539.73152"
-							rx="158"
-							ry="12"
-							fill="#e6e6e6"
-						/>
+						<ellipse cx="158" cy="539.73152" rx="158" ry="12" fill="#e6e6e6" />
 						<path
 							d="M324.27227,296.55377c27.49676-11.6953,61.74442-4.28528,95.19092.85757.31124-6.228,4.08385-13.80782.132-18.15284-4.80115-5.2788-4.35917-10.82529-1.47008-16.40375,7.38788-14.265-3.1969-29.44375-13.88428-42.0647a23.66937,23.66937,0,0,0-19.75537-8.29179l-19.7975,1.41411A23.70939,23.70939,0,0,0,343.635,230.85851v0c-4.72724,6.42917-7.25736,12.84055-5.66438,19.21854-7.08065,4.83882-8.27029,10.67977-5.08851,17.2644,2.698,4.14592,2.66928,8.18161-.12275,12.1056a55.89079,55.89079,0,0,0-8.31011,16.5061Z"
 							transform="translate(-203.5 -174.13424)"
@@ -59,12 +50,7 @@ function Error401Page() {
 							transform="translate(-203.5 -174.13424)"
 							fill="#2f2e41"
 						/>
-						<circle
-							cx="492.34196"
-							cy="67.97967"
-							r="4.97412"
-							fill="#fff"
-						/>
+						<circle cx="492.34196" cy="67.97967" r="4.97412" fill="#fff" />
 						<path
 							d="M651.69986,593.61853a3.32114,3.32114,0,0,0-3.20165,2.4536l-5.35679,19.89649a3.31576,3.31576,0,0,0,3.20166,4.17856h101.874a3.31531,3.31531,0,0,0,3.13257-4.40093l-6.88691-19.89649a3.31784,3.31784,0,0,0-3.13366-2.23123Z"
 							transform="translate(-203.5 -174.13424)"
@@ -74,12 +60,7 @@ function Error401Page() {
 							points="720.046 337.135 720.046 341.556 264.306 341.556 264.649 341.004 264.649 337.135 720.046 337.135"
 							fill="#2f2e41"
 						/>
-						<circle
-							cx="707.33457"
-							cy="77.37523"
-							r="77.37523"
-							fill="currentColor"
-						/>
+						<circle cx="707.33457" cy="77.37523" r="77.37523" fill="currentColor" />
 						<path
 							d="M942.89,285.223H878.77911a4.42582,4.42582,0,0,1-4.42144-4.42145V242.11391a4.42616,4.42616,0,0,1,4.42144-4.42144H942.89a4.42616,4.42616,0,0,1,4.42144,4.42144v38.68761A4.42582,4.42582,0,0,1,942.89,285.223Zm-64.11091-43.10906v38.68761h64.11415L942.89,242.11391Z"
 							transform="translate(-203.5 -174.13424)"
@@ -90,23 +71,13 @@ function Error401Page() {
 							transform="translate(-203.5 -174.13424)"
 							fill="#fff"
 						/>
-						<circle
-							cx="707.33457"
-							cy="86.21811"
-							r="4.42144"
-							fill="#fff"
-						/>
+						<circle cx="707.33457" cy="86.21811" r="4.42144" fill="#fff" />
 						<path
 							d="M856.81994,421.28372H538.18006a5.90767,5.90767,0,0,1-5.90073-5.90073V336.342a5.90767,5.90767,0,0,1,5.90073-5.90072H856.81994a5.90767,5.90767,0,0,1,5.90073,5.90072V415.383A5.90767,5.90767,0,0,1,856.81994,421.28372Zm-318.63988-88.4821a3.5443,3.5443,0,0,0-3.54043,3.54043V415.383a3.54431,3.54431,0,0,0,3.54043,3.54044H856.81994a3.54431,3.54431,0,0,0,3.54043-3.54044V336.342a3.5443,3.5443,0,0,0-3.54043-3.54043Z"
 							transform="translate(-203.5 -174.13424)"
 							fill="#e6e6e6"
 						/>
-						<circle
-							cx="384.19021"
-							cy="198.69546"
-							r="24.03645"
-							fill="#e6e6e6"
-						/>
+						<circle cx="384.19021" cy="198.69546" r="24.03645" fill="#e6e6e6" />
 						<path
 							d="M643.203,356.80541a4.00608,4.00608,0,1,0,0,8.01215H832.06074a4.00607,4.00607,0,0,0,0-8.01215Z"
 							transform="translate(-203.5 -174.13424)"
@@ -162,12 +133,7 @@ function Error401Page() {
 							transform="translate(-203.5 -174.13424)"
 							fill="currentColor"
 						/>
-						<circle
-							cx="172.52496"
-							cy="78.09251"
-							r="23.80211"
-							fill="#ffb8b8"
-						/>
+						<circle cx="172.52496" cy="78.09251" r="23.80211" fill="#ffb8b8" />
 						<path
 							d="M404.5,249.22353c-23.56616,2.30811-41.52338-1.54606-53-12.52007v-8.8377h51Z"
 							transform="translate(-203.5 -174.13424)"
@@ -178,12 +144,12 @@ function Error401Page() {
 				<motion.div
 					initial={{
 						opacity: 0,
-						y: 40
+						y: 40,
 					}}
 					animate={{
 						opacity: 1,
 						y: 0,
-						transition: { delay: 0.2 }
+						transition: { delay: 0.2 },
 					}}
 				>
 					<Typography
@@ -196,12 +162,12 @@ function Error401Page() {
 				<motion.div
 					initial={{
 						opacity: 0,
-						y: 40
+						y: 40,
 					}}
 					animate={{
 						opacity: 1,
 						y: 0,
-						transition: { delay: 0.2 }
+						transition: { delay: 0.2 },
 					}}
 				>
 					<Typography
@@ -213,17 +179,11 @@ function Error401Page() {
 					</Typography>
 				</motion.div>
 				{!isGuest ? (
-					<Link
-						className="mt-12 block font-normal"
-						to="/"
-					>
+					<Link className="mt-12 block font-normal" to="/">
 						Back to Home
 					</Link>
 				) : (
-					<Link
-						className="mt-12 block font-normal"
-						to="/sign-in"
-					>
+					<Link className="mt-12 block font-normal" to="/sign-in">
 						Back to sign-in
 					</Link>
 				)}

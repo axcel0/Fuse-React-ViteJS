@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { styled } from '@mui/material/styles';
 import { Editor } from '@tinymce/tinymce-react';
 import DOMPurify from 'dompurify';
@@ -21,7 +21,7 @@ const Root = styled('div')({
 	},
 	'& .tox-edit-area__iframe': {
 		minHeight: '256px !important',
-	}
+	},
 });
 
 /* The props for the WYSIWYG editor component.
@@ -45,19 +45,35 @@ function WYSIWYGEditor(props: WYSIWYGEditorProps) {
 	function handleEditorChange(content: string) {
 		// Sanitize the HTML to prevent XSS attacks
 		const sanitizedHtml = DOMPurify.sanitize(content, {
-			ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'ol', 'ul', 'li', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'code', 'pre'],
+			ALLOWED_TAGS: [
+				'p',
+				'br',
+				'strong',
+				'em',
+				'u',
+				'ol',
+				'ul',
+				'li',
+				'a',
+				'h1',
+				'h2',
+				'h3',
+				'h4',
+				'h5',
+				'h6',
+				'blockquote',
+				'code',
+				'pre',
+			],
 			ALLOWED_ATTR: ['href', 'target', 'title', 'style'],
-			ALLOW_DATA_ATTR: false
+			ALLOW_DATA_ATTR: false,
 		});
 
 		onChange(sanitizedHtml);
 	}
 
 	return (
-		<Root
-			className={clsx('w-full overflow-hidden rounded-sm border-1', className)}
-			ref={ref}
-		>
+		<Root className={clsx('w-full overflow-hidden rounded-sm border-1', className)} ref={ref}>
 			<Editor
 				apiKey="no-api-key"
 				initialValue={initialValue}
@@ -66,15 +82,30 @@ function WYSIWYGEditor(props: WYSIWYGEditorProps) {
 					height: 256,
 					menubar: false,
 					plugins: [
-						'advlist', 'autolink', 'lists', 'link', 'charmap', 'preview',
-						'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-						'insertdatetime', 'table', 'help', 'wordcount', 'autoresize'
+						'advlist',
+						'autolink',
+						'lists',
+						'link',
+						'charmap',
+						'preview',
+						'anchor',
+						'searchreplace',
+						'visualblocks',
+						'code',
+						'fullscreen',
+						'insertdatetime',
+						'table',
+						'help',
+						'wordcount',
+						'autoresize',
 					],
-					toolbar: 'undo redo | blocks | ' +
+					toolbar:
+						'undo redo | blocks | ' +
 						'bold italic underline forecolor backcolor | alignleft aligncenter ' +
 						'alignright alignjustify | bullist numlist outdent indent | ' +
 						'removeformat | help',
-					content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px }',
+					content_style:
+						'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px }',
 					branding: false,
 					resize: false,
 					statusbar: false,

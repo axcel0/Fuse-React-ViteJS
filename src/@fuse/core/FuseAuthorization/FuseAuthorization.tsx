@@ -3,7 +3,7 @@ import withRouter, { WithRouterProps } from '@fuse/core/withRouter/withRouter';
 import {
 	getSessionRedirectUrl,
 	resetSessionRedirectUrl,
-	setSessionRedirectUrl
+	setSessionRedirectUrl,
 } from '@fuse/core/FuseAuthorization/sessionRedirectUrl';
 import { getFuseRouteParamUtil } from '@fuse/hooks/useFuseRouteParameter';
 import FuseUtils from '@fuse/utils/FuseUtils';
@@ -34,7 +34,7 @@ class FuseAuthorization extends Component<FuseAuthorizationProps, State> {
 		super(props);
 
 		this.state = {
-			accessGranted: true
+			accessGranted: true,
 		};
 	}
 
@@ -90,7 +90,7 @@ class FuseAuthorization extends Component<FuseAuthorizationProps, State> {
 		}
 
 		return {
-			accessGranted: auth ? userHasPermission : true
+			accessGranted: auth ? userHasPermission : true,
 		};
 	}
 
