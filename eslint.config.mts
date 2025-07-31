@@ -21,7 +21,6 @@ const config = tseslint.config(
     // Ignore specific JS files that cause parsing issues
     {
         ignores: [
-            'src/@fuse/tailwind/plugins/icon-size.js',
             'src/utils/node-scripts/**/*.js'
         ]
     },
