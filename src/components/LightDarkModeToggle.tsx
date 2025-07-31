@@ -28,28 +28,32 @@ function LightDarkModeToggle(props: LightDarkModeToggleProps) {
 	const { mode, resolvedTheme, setMode, isSystemMode } = useTheme();
 
 	const handleThemeSelect = useCallback(
-		async (_theme: FuseThemeOption) => {
+		async (_theme: FuseThemeOption, showNotification = false) => {
 			const _newSettings = setSettings({
 				theme: { ..._theme?.section }
 			} as Partial<FuseSettingsConfigType>);
 
-			if (!isGuest) {
+			if (!isGuest && showNotification) {
 				const updatedUserData = await updateUserSettings(_newSettings);
 
 				if (updatedUserData) {
-					showMessage({ message: 'User preferences saved successfully' });
+					showMessage({
+						message: 'User preferences saved successfully',
+						variant: 'success',
+						autoHideDuration: 3000
+					});
 				}
 			}
 		},
 		[setSettings, isGuest, updateUserSettings, showMessage]
 	);
 
-	// Sync MUI theme with resolved theme from theme system
+	// Sync MUI theme with resolved theme from theme system (without notification)
 	useEffect(() => {
 		if (resolvedTheme === 'light') {
-			handleThemeSelect(lightTheme);
+			handleThemeSelect(lightTheme, false);
 		} else {
-			handleThemeSelect(darkTheme);
+			handleThemeSelect(darkTheme, false);
 		}
 	}, [resolvedTheme, lightTheme, darkTheme, handleThemeSelect]);
 
@@ -61,10 +65,17 @@ function LightDarkModeToggle(props: LightDarkModeToggleProps) {
 		setAnchorEl(null);
 	};
 
-	const handleSelectionChange = (selection: ThemeMode) => {
+	const handleSelectionChange = async (selection: ThemeMode) => {
 		// Update theme mode - MUI theme will be synced by useEffect
 		setMode(selection);
 		handleClose();
+
+		// Show notification for manual theme change
+		if (!isGuest) {
+			const currentTheme =
+				selection === 'light' || (selection === 'system' && resolvedTheme === 'light') ? lightTheme : darkTheme;
+			await handleThemeSelect(currentTheme, true);
+		}
 	};
 
 	const getDisplayIcon = () => {
