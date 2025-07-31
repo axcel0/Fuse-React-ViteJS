@@ -3,7 +3,7 @@
 /**
  * Vercel Branch Deploy Guard
  * TypeScript version with enhanced logging and error handling
- * 
+ *
  * This script is a deployment guard for Vercel, allowing deployment only from specified branches.
  * Add this script to vercel/settings/Ignored Build Step in the Vercel dashboard.
  * Select "Run my node script" and add the script as below:
@@ -39,7 +39,7 @@ const logger = {
  */
 function checkBranchDeployment(): void {
 	logger.info('Vercel Branch Deploy Guard - TypeScript Edition');
-	
+
 	// Retrieve allowed branches as a comma-separated argument (e.g., "main,dev,skeleton")
 	const allowedBranchesArg: string | undefined = process.argv[2];
 
@@ -52,8 +52,8 @@ function checkBranchDeployment(): void {
 	// Split the allowed branches into an array for validation
 	const allowedBranches: string[] = allowedBranchesArg
 		.split(',')
-		.map(branch => branch.trim())
-		.filter(branch => branch.length > 0);
+		.map((branch) => branch.trim())
+		.filter((branch) => branch.length > 0);
 
 	logger.debug(`Allowed branches: [${allowedBranches.join(', ')}]`);
 

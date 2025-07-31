@@ -21,12 +21,12 @@ function Example() {
 	return (
 		<Root
 			header={
-				<div className="p-6">
+				<div className="p-1.5">
 					<h4>{t('TITLE')}</h4>
 				</div>
 			}
 			content={
-				<div className="p-6">
+				<div className="p-1.5">
 					<h4>Content</h4>
 					<br />
 					<DemoContent />

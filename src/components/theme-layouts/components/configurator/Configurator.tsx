@@ -79,7 +79,7 @@ function Configurator() {
 				className="buttonWrapper"
 			>
 				<Button
-					className="settingsButton m-0 h-9 w-9 min-w-9"
+					className="settingsButton m-0 h-2.25 w-2.25 min-w-2.25"
 					onClick={() => handleOpen('settings')}
 					variant="text"
 					color="inherit"
@@ -93,7 +93,7 @@ function Configurator() {
 				</Button>
 
 				<Button
-					className="m-0 h-9 w-9 min-w-9"
+					className="m-0 h-2.25 w-2.25 min-w-2.25"
 					onClick={() => handleOpen('schemes')}
 					variant="text"
 					color="inherit"

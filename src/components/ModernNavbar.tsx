@@ -23,7 +23,7 @@ const ModernNavbar: React.FC<ModernNavbarProps> = ({ className, children }) => {
 			{/* Mobile Menu Overlay */}
 			{isMobileMenuOpen && (
 				<div
-					className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+					className="fixed inset-0 bg-black/50 z-40 lg:hidden"
 					onClick={toggleMobileMenu}
 				/>
 			)}
@@ -38,10 +38,10 @@ const ModernNavbar: React.FC<ModernNavbarProps> = ({ className, children }) => {
 				)}
 			>
 				{/* Header */}
-				<div className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-800">
+				<div className="flex items-center justify-between p-1 border-b border-neutral-200 dark:border-neutral-800">
 					{!isCollapsed && (
-						<div className="flex items-center space-x-2">
-							<div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
+						<div className="flex items-center space-x-0.5">
+							<div className="w-2 h-2 bg-primary-500 rounded-lg flex items-center justify-center">
 								<span className="text-white text-sm font-bold">F</span>
 							</div>
 							<span className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">Fuse</span>
@@ -77,9 +77,9 @@ const ModernNavbar: React.FC<ModernNavbarProps> = ({ className, children }) => {
 				</div>
 
 				{/* Navigation Content */}
-				<div className="flex-1 overflow-y-auto p-4">
+				<div className="flex-1 overflow-y-auto p-1">
 					{/* Navigation Items */}
-					<nav className="space-y-2">
+					<nav className="space-y-0.5">
 						<NavItem
 							icon="🏠"
 							label="Dashboard"
@@ -114,10 +114,10 @@ const ModernNavbar: React.FC<ModernNavbarProps> = ({ className, children }) => {
 				</div>
 
 				{/* Footer */}
-				<div className="p-4 border-t border-neutral-200 dark:border-neutral-800">
+				<div className="p-1 border-t border-neutral-200 dark:border-neutral-800">
 					{!isCollapsed ? (
-						<div className="flex items-center space-x-3">
-							<div className="w-8 h-8 bg-neutral-300 dark:bg-neutral-700 rounded-full flex items-center justify-center">
+						<div className="flex items-center space-x-0.75">
+							<div className="w-2 h-2 bg-neutral-300 dark:bg-neutral-700 rounded-full flex items-center justify-center">
 								<span className="text-xs font-medium text-neutral-600 dark:text-neutral-400">U</span>
 							</div>
 							<div className="flex-1 min-w-0">
@@ -130,7 +130,7 @@ const ModernNavbar: React.FC<ModernNavbarProps> = ({ className, children }) => {
 							</div>
 						</div>
 					) : (
-						<div className="w-8 h-8 bg-neutral-300 dark:bg-neutral-700 rounded-full flex items-center justify-center mx-auto">
+						<div className="w-2 h-2 bg-neutral-300 dark:bg-neutral-700 rounded-full flex items-center justify-center mx-auto">
 							<span className="text-xs font-medium text-neutral-600 dark:text-neutral-400">U</span>
 						</div>
 					)}
@@ -140,11 +140,11 @@ const ModernNavbar: React.FC<ModernNavbarProps> = ({ className, children }) => {
 			{/* Mobile Menu Button */}
 			<button
 				onClick={toggleMobileMenu}
-				className="fixed top-4 left-4 z-50 lg:hidden w-10 h-10 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-md shadow-sm flex items-center justify-center"
+				className="fixed top-1 left-1 z-50 lg:hidden w-2.5 h-2.5 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-md shadow-xs flex items-center justify-center"
 				aria-label="Toggle mobile menu"
 			>
 				<svg
-					className="w-5 h-5 text-neutral-600 dark:text-neutral-400"
+					className="w-1.25 h-1.25 text-neutral-600 dark:text-neutral-400"
 					fill="none"
 					stroke="currentColor"
 					viewBox="0 0 24 24"

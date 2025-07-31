@@ -48,9 +48,9 @@ function NavbarStyle2Content(props: NavbarStyle2ContentProps) {
 
 	return (
 		<Root className={clsx('flex h-full flex-auto flex-col overflow-hidden', className)}>
-			<div className="flex h-12 shrink-0 flex-row items-center px-3 md:h-19 gap-1.5">
+			<div className="flex h-3 shrink-0 flex-row items-center px-0.75 md:h-4.75 gap-0.375">
 				<Logo />
-				<NavbarPinToggleButton className="h-8 w-8 p-0" />
+				<NavbarPinToggleButton className="h-2 w-2 p-0" />
 			</div>
 
 			<StyledContent
@@ -60,11 +60,11 @@ function NavbarStyle2Content(props: NavbarStyle2ContentProps) {
 				<Navigation layout="vertical" />
 			</StyledContent>
 
-			<GoToDocBox className="mx-3 my-4" />
+			<GoToDocBox className="mx-0.75 my-1" />
 
 			<Divider />
 
-			<div className="p-1 md:p-2.5 w-full">
+			<div className="p-0.25 md:p-0.625 w-full">
 				<UserMenu className="w-full" />
 			</div>
 		</Root>

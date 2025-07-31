@@ -68,11 +68,11 @@ function AdjustFontSize(props: AdjustFontSizeProps) {
 					horizontal: 'center'
 				}}
 			>
-				<div className="px-6 py-3">
-					<Typography className="mb-2 flex items-center justify-center text-lg font-semibold">
+				<div className="px-1.5 py-0.75">
+					<Typography className="mb-0.5 flex items-center justify-center text-lg font-semibold">
 						<FuseSvgIcon
 							color="action"
-							className="mr-1"
+							className="mr-0.25"
 						>
 							material-outline:format_size
 						</FuseSvgIcon>

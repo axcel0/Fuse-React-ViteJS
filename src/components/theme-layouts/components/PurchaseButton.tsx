@@ -15,7 +15,7 @@ function PurchaseButton(props: PurchaseButtonProps) {
 		children = (
 			<>
 				<span>Purchase</span>
-				<span className="flex items-center space-x-1">
+				<span className="flex items-center space-x-0.25">
 					<span>FUSE React</span>
 				</span>
 			</>

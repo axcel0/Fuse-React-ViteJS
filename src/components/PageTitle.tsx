@@ -21,7 +21,7 @@ function PageTitle(props: PageTitleProps) {
 		<div className={clsx('flex flex-col justify-between', className)}>
 			{backUrl && backTitle && (
 				<Typography
-					className="flex items-center leading-none space-x-0.25 mb-px"
+					className="flex items-center leading-none space-x-0.0625 mb-px"
 					component={Link}
 					to={backUrl}
 					role="button"
@@ -31,7 +31,7 @@ function PageTitle(props: PageTitleProps) {
 					<span>{backTitle}</span>
 				</Typography>
 			)}
-			<div className="flex items-center space-x-1">
+			<div className="flex items-center space-x-0.25">
 				{title && <Typography className="text-xl font-bold truncate">{title}</Typography>}
 				{badgeTitle && badgeTitle !== '' && (
 					<Chip

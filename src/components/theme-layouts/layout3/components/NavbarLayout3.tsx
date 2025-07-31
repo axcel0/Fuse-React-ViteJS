@@ -21,7 +21,7 @@ function NavbarLayout3(props: NavbarLayout3Props) {
 
 	return (
 		<Root className={clsx('h-16 max-h-16 min-h-16 w-full shadow-md', className)}>
-			<div className="container flex h-full w-full flex-auto items-center px-4 lg:px-6">
+			<div className="container flex h-full w-full flex-auto items-center px-1 lg:px-1.5">
 				<FuseScrollbars className="flex h-full items-center">
 					<Navigation
 						className="w-full"

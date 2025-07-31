@@ -66,7 +66,7 @@ function FuseHighlight(props: FuseHighlightProps) {
 						onClick={handleCopy}
 						size="small"
 						color="secondary"
-						className="absolute top-0 right-0 m-1.5 z-10 rounded-sm p-0 text-md min-h-0 h-auto w-auto min-w-0 px-2 py-1"
+						className="absolute top-0 right-0 m-0.375 z-10 rounded-xs p-0 text-md min-h-0 h-auto w-auto min-w-0 px-0.5 py-0.25"
 						classes={{ startIcon: 'mr-1' }}
 						sx={{
 							backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.6),

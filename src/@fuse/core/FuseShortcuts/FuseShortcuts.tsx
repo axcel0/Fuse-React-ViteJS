@@ -102,7 +102,7 @@ function FuseShortcuts(props: FuseShortcutsProps) {
 											title={_item.title}
 											placement={variant === 'horizontal' ? 'bottom' : 'left'}
 										>
-											<IconButton className="h-9 w-9 p-0 rounded-none">
+											<IconButton className="h-2.25 w-2.25 p-0 rounded-none">
 												{_item.icon ? (
 													<FuseSvgIcon size={20}>{_item.icon}</FuseSvgIcon>
 												) : (
@@ -121,7 +121,7 @@ function FuseShortcuts(props: FuseShortcutsProps) {
 							placement={variant === 'horizontal' ? 'bottom' : 'left'}
 						>
 							<IconButton
-								className="h-9 w-9 p-0 rounded-none"
+								className="h-2.25 w-2.25 p-0 rounded-none"
 								aria-haspopup="true"
 								onClick={addMenuClick}
 							>
@@ -154,7 +154,7 @@ function FuseShortcuts(props: FuseShortcutsProps) {
 					}
 				}}
 			>
-				<div className="p-4 pt-2">
+				<div className="p-1 pt-0.5">
 					<Input
 						inputRef={searchInputRef}
 						value={searchText}
@@ -188,7 +188,7 @@ function FuseShortcuts(props: FuseShortcutsProps) {
 				{searchText.length !== 0 && searchResults.length === 0 && (
 					<Typography
 						color="text.secondary"
-						className="p-4 pb-2"
+						className="p-1 pb-0.5"
 					>
 						No results..
 					</Typography>
@@ -233,7 +233,7 @@ function ShortcutMenuItem(props: {
 			role="button"
 		>
 			<MenuItem key={item.id}>
-				<ListItemIcon className="min-w-9">
+				<ListItemIcon className="min-w-2.25">
 					{item.icon ? (
 						<FuseSvgIcon>{item.icon}</FuseSvgIcon>
 					) : (

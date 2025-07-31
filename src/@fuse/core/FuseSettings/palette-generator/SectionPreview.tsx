@@ -42,13 +42,13 @@ function SectionPreview(props: SectionPreviewProps) {
 								}
 							}
 				]}
-				className="w-8 space-y-0.25 px-1.5 pt-3"
+				className="w-2 space-y-0.0625 px-0.375 pt-0.75"
 			>
-				<div className="h-1 rounded-xs" />
-				<div className="h-1 rounded-xs" />
-				<div className="h-1 rounded-xs" />
-				<div className="h-1 rounded-xs" />
-				<div className="h-1 rounded-xs" />
+				<div className="h-0.25 rounded-xs" />
+				<div className="h-0.25 rounded-xs" />
+				<div className="h-0.25 rounded-xs" />
+				<div className="h-0.25 rounded-xs" />
+				<div className="h-0.25 rounded-xs" />
 			</Box>
 			<div className="flex flex-auto flex-col border-l">
 				<Box
@@ -78,9 +78,9 @@ function SectionPreview(props: SectionPreviewProps) {
 					]}
 					className={clsx('flex h-3 items-center justify-end pr-1.5')}
 				>
-					<div className="ml-1 h-1 w-1 rounded-full" />
-					<div className="ml-1 h-1 w-1 rounded-full" />
-					<div className="ml-1 h-1 w-1 rounded-full" />
+					<div className="ml-0.25 h-0.25 w-0.25 rounded-full" />
+					<div className="ml-0.25 h-0.25 w-0.25 rounded-full" />
+					<div className="ml-0.25 h-0.25 w-0.25 rounded-full" />
 				</Box>
 				<Box
 					sx={[
@@ -125,9 +125,9 @@ function SectionPreview(props: SectionPreviewProps) {
 					]}
 					className={clsx('flex h-3 items-center pr-1.5')}
 				>
-					<div className="ml-1 h-1 w-1 rounded-full" />
-					<div className="ml-1 h-1 w-1 rounded-full" />
-					<div className="ml-1 h-1 w-1 rounded-full" />
+					<div className="ml-0.25 h-0.25 w-0.25 rounded-full" />
+					<div className="ml-0.25 h-0.25 w-0.25 rounded-full" />
+					<div className="ml-0.25 h-0.25 w-0.25 rounded-full" />
 				</Box>
 			</div>
 		</div>

@@ -117,7 +117,7 @@ function NavbarStyle3Content(props: NavbarStyle3ContentProps) {
 					className="flex shrink-0 flex-col items-center h-full"
 				>
 					<img
-						className="my-8 w-11"
+						className="my-2 w-2.75"
 						src="/assets/images/logo/logo.svg"
 						alt="logo"
 					/>
@@ -140,7 +140,7 @@ function NavbarStyle3Content(props: NavbarStyle3ContentProps) {
 						/>
 					</FuseScrollbars>
 
-					<div className="flex shrink-0 justify-center w-full py-4">
+					<div className="flex shrink-0 justify-center w-full py-1">
 						<UserMenu className="" />
 					</div>
 				</div>

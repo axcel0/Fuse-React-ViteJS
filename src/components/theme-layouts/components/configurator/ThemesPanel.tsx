@@ -96,7 +96,7 @@ function ThemesPanel(props: ThemesPanelProps) {
 			}}
 			{...schemesHandlers}
 		>
-			<FuseScrollbars className="p-4 sm:p-6">
+			<FuseScrollbars className="p-1 sm:p-1.5">
 				<IconButton
 					className="fixed top-0 z-10 ltr:right-0 rtl:left-0"
 					onClick={onClose}
@@ -106,14 +106,14 @@ function ThemesPanel(props: ThemesPanelProps) {
 				</IconButton>
 
 				<Typography
-					className="mb-8"
+					className="mb-2"
 					variant="h6"
 				>
 					Theme Color Options
 				</Typography>
 
 				<Typography
-					className="mb-6 text-justify text-md italic"
+					className="mb-1.5 text-justify text-md italic"
 					color="text.secondary"
 				>
 					* Selected option will be applied to all layout elements (navbar, toolbar, etc.). You can also

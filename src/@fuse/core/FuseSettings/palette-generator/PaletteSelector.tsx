@@ -38,9 +38,9 @@ function PaletteSelector(props: PaletteSelectorProps) {
 		value,
 		onChange,
 		triggerElement = (
-			<div className="m-2 flex w-32 flex-col items-center space-y-2">
+			<div className="m-0.5 flex w-8 flex-col items-center space-y-0.5">
 				<SectionPreview />
-				<Typography className="mb-6 flex-1 text-lg font-bold">Edit Palette</Typography>
+				<Typography className="mb-1.5 flex-1 text-lg font-bold">Edit Palette</Typography>
 			</div>
 		)
 	} = props;
@@ -130,7 +130,7 @@ function PaletteSelector(props: PaletteSelectorProps) {
 					position="static"
 				>
 					<Toolbar className="flex w-full">
-						<Icon className="mr-3">palette</Icon>
+						<Icon className="mr-0.75">palette</Icon>
 						<Typography
 							variant="subtitle1"
 							color="inherit"
@@ -142,7 +142,7 @@ function PaletteSelector(props: PaletteSelectorProps) {
 
 				<DialogContent>
 					<div className="flex w-full">
-						<div className="flex flex-1 flex-col items-center justify-center p-6">
+						<div className="flex flex-1 flex-col items-center justify-center p-1.5">
 							<Controller
 								name="palette.mode"
 								control={control}
@@ -151,7 +151,7 @@ function PaletteSelector(props: PaletteSelectorProps) {
 										disableElevation
 										variant="contained"
 										color="secondary"
-										className="mb-8"
+										className="mb-2"
 									>
 										<Button
 											onClick={() => {
@@ -204,7 +204,7 @@ function PaletteSelector(props: PaletteSelectorProps) {
 										}}
 										type="color"
 										variant="outlined"
-										className="mb-8"
+										className="mb-2"
 										label="Primary color"
 										InputProps={{ className: 'w-50  h-8' }}
 									/>
@@ -235,7 +235,7 @@ function PaletteSelector(props: PaletteSelectorProps) {
 										}}
 										type="color"
 										variant="outlined"
-										className="mb-8"
+										className="mb-2"
 										label="Secondary color"
 										InputProps={{ className: 'w-50 h-8' }}
 									/>
@@ -255,7 +255,7 @@ function PaletteSelector(props: PaletteSelectorProps) {
 										{...field}
 										type="color"
 										variant="outlined"
-										className="mb-8"
+										className="mb-2"
 										label="Background paper"
 										InputProps={{ className: 'w-50 h-8' }}
 										error={!!errors?.palette?.background?.paper}
@@ -286,9 +286,9 @@ function PaletteSelector(props: PaletteSelectorProps) {
 							/>
 						</div>
 
-						<div className="flex flex-col items-center justify-center p-12">
+						<div className="flex flex-col items-center justify-center p-3">
 							<Typography
-								className="-mt-12 mb-4 text-lg font-semibold"
+								className="-mt-3 mb-1 text-lg font-semibold"
 								color="text.secondary"
 							>
 								Preview
@@ -297,7 +297,7 @@ function PaletteSelector(props: PaletteSelectorProps) {
 						</div>
 					</div>
 				</DialogContent>
-				<DialogActions className="flex justify-between p-4">
+				<DialogActions className="flex justify-between p-1">
 					<Button
 						onClick={handleCloseDialog}
 						color="primary"

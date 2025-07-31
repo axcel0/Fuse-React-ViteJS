@@ -28,7 +28,7 @@ function PalettePreview(props: PalettePreviewProps) {
 			component="button"
 		>
 			<Box
-				className="relative h-14 w-full px-2 pt-2"
+				className="relative h-3.5 w-full px-0.5 pt-0.5"
 				sx={{
 					backgroundColor: palette.primary.main,
 					color: () => palette.primary.contrastText || palette.getContrastText(palette.primary.main)
@@ -37,7 +37,7 @@ function PalettePreview(props: PalettePreviewProps) {
 				<span className="text-md">Header (Primary)</span>
 
 				<Box
-					className="absolute bottom-0 right-0 -mb-2.5 mr-1 flex h-5 w-5 items-center justify-center rounded-full text-xs shadow-sm"
+					className="absolute bottom-0 right-0 -mb-0.625 mr-0.25 flex h-1.25 w-1.25 items-center justify-center rounded-full text-xs shadow-xs"
 					sx={{
 						backgroundColor: palette.secondary.main,
 						color: () => palette.secondary.contrastText || palette.getContrastText(palette.secondary.main)
@@ -46,9 +46,9 @@ function PalettePreview(props: PalettePreviewProps) {
 					<span>S</span>
 				</Box>
 			</Box>
-			<div className="-mt-6 w-full pl-2 pr-7">
+			<div className="-mt-1.5 w-full pl-0.5 pr-1.75">
 				<Box
-					className="relative h-24 w-full rounded-sm p-2 shadow-sm"
+					className="relative h-6 w-full rounded-xs p-0.5 shadow-xs"
 					sx={{
 						backgroundColor: palette.background.paper,
 						color: palette.text.primary
@@ -58,11 +58,11 @@ function PalettePreview(props: PalettePreviewProps) {
 				</Box>
 			</div>
 
-			<div className="w-full p-2">
+			<div className="w-full p-0.5">
 				<span className="text-md opacity-75">Background</span>
 			</div>
 
-			{/* <pre className="language-js p-6 w-100">{JSON.stringify(palette, null, 2)}</pre> */}
+			{/* <pre className="language-js p-1.5 w-25">{JSON.stringify(palette, null, 2)}</pre> */}
 		</Box>
 	);
 }

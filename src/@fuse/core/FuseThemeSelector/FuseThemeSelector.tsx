@@ -16,7 +16,7 @@ function FuseThemeSelector(props: FuseThemeSchemesProps) {
 
 	return (
 		<div>
-			<div className="w-full grid grid-cols-2 gap-3">
+			<div className="w-full grid grid-cols-2 gap-0.75">
 				{options.map((item) => (
 					<ThemePreview
 						key={item.id}

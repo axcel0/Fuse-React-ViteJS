@@ -47,7 +47,7 @@ function SchemePreview(props: SchemePreviewProps) {
 				type="button"
 			>
 				<div
-					className="relative h-14 w-full px-2 pt-2"
+					className="relative h-3.5 w-full px-0.5 pt-0.5"
 					style={{
 						backgroundColor: primaryColor,
 						color: primaryColorContrast
@@ -56,7 +56,7 @@ function SchemePreview(props: SchemePreviewProps) {
 					<span className="text-md opacity-75">Header (Primary)</span>
 
 					<div
-						className="absolute bottom-0 right-0 -mb-2.5 mr-1 flex h-5 w-5 items-center justify-center rounded-full text-xs shadow-sm"
+						className="absolute bottom-0 right-0 -mb-0.625 mr-0.25 flex h-1.25 w-1.25 items-center justify-center rounded-full text-xs shadow-xs"
 						style={{
 							backgroundColor: secondaryColor,
 							color: secondaryColorContrast
@@ -65,9 +65,9 @@ function SchemePreview(props: SchemePreviewProps) {
 						<span className="opacity-75">S</span>
 					</div>
 				</div>
-				<div className="-mt-6 w-full pl-2 pr-7">
+				<div className="-mt-1.5 w-full pl-0.5 pr-1.75">
 					<div
-						className="relative h-24 w-full rounded-sm p-2 shadow-sm"
+						className="relative h-6 w-full rounded-xs p-0.5 shadow-xs"
 						style={{
 							backgroundColor: paperColor,
 							color: paperColorContrast
@@ -77,11 +77,11 @@ function SchemePreview(props: SchemePreviewProps) {
 					</div>
 				</div>
 
-				<div className="w-full p-2">
+				<div className="w-full p-0.5">
 					<span className="text-md opacity-75">Background</span>
 				</div>
 			</button>
-			<Typography className="mt-3 w-full text-center font-semibold">{id}</Typography>
+			<Typography className="mt-0.75 w-full text-center font-semibold">{id}</Typography>
 		</div>
 	);
 }

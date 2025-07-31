@@ -38,13 +38,13 @@ function LanguageSwitcher() {
 				onClick={langMenuClick}
 			>
 				<img
-					className="mx-1 min-w-5"
+					className="mx-0.25 min-w-1.25"
 					src={`/assets/images/flags/${language.flag}.svg`}
 					alt={language.title}
 				/>
 
 				<Typography
-					className="mx-1 font-semibold text-md uppercase"
+					className="mx-0.25 font-semibold text-md uppercase"
 					sx={(theme) => ({
 						color: theme.palette.text.secondary,
 						...theme.applyStyles('dark', {
@@ -76,9 +76,9 @@ function LanguageSwitcher() {
 						key={lng.id}
 						onClick={() => handleLanguageChange(lng)}
 					>
-						<ListItemIcon className="min-w-9">
+						<ListItemIcon className="min-w-2.25">
 							<img
-								className="min-w-5"
+								className="min-w-1.25"
 								src={`/assets/images/flags/${lng.flag}.svg`}
 								alt={lng.title}
 							/>

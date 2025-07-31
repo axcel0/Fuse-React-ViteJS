@@ -110,7 +110,7 @@ function FirebaseSignInForm() {
 			<form
 				name="loginForm"
 				noValidate
-				className="mt-8 flex w-full flex-col justify-center"
+				className="mt-2 flex w-full flex-col justify-center"
 				onSubmit={handleSubmit(onSubmit)}
 			>
 				<Controller
@@ -119,7 +119,7 @@ function FirebaseSignInForm() {
 					render={({ field }) => (
 						<TextField
 							{...field}
-							className="mb-6"
+							className="mb-1.5"
 							label="Email"
 							autoFocus
 							type="email"
@@ -138,7 +138,7 @@ function FirebaseSignInForm() {
 					render={({ field }) => (
 						<TextField
 							{...field}
-							className="mb-6"
+							className="mb-1.5"
 							label="Password"
 							type="password"
 							error={!!errors.password}

@@ -81,7 +81,7 @@ function JwtSignInForm() {
 		<form
 			name="loginForm"
 			noValidate
-			className="mt-8 flex w-full flex-col justify-center"
+			className="mt-2 flex w-full flex-col justify-center"
 			onSubmit={handleSubmit(onSubmit)}
 		>
 			<Controller
@@ -90,7 +90,7 @@ function JwtSignInForm() {
 				render={({ field }) => (
 					<TextField
 						{...field}
-						className="mb-6"
+						className="mb-1.5"
 						label="Email"
 						autoFocus
 						type="email"
@@ -109,7 +109,7 @@ function JwtSignInForm() {
 				render={({ field }) => (
 					<TextField
 						{...field}
-						className="mb-6"
+						className="mb-1.5"
 						label="Password"
 						type="password"
 						error={!!errors.password}
@@ -151,7 +151,7 @@ function JwtSignInForm() {
 			<Button
 				variant="contained"
 				color="secondary"
-				className=" mt-4 w-full"
+				className=" mt-1 w-full"
 				aria-label="Sign in"
 				disabled={_.isEmpty(dirtyFields) || !isValid}
 				type="submit"

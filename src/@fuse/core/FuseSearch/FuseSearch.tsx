@@ -86,7 +86,7 @@ function renderInputComponent(props: RenderInputComponentProps) {
 						{...other}
 					/>
 					<FuseSvgIcon
-						className="pointer-events-none absolute top-0 h-9 w-9 p-2 ltr:right-0 rtl:left-0"
+						className="pointer-events-none absolute top-0 h-2.25 w-2.25 p-0.5 ltr:right-0 rtl:left-0"
 						color="action"
 						size={20}
 					>
@@ -124,11 +124,11 @@ function renderSuggestion(suggestion: FuseFlatNavItemType, { query, isHighlighte
 			selected={Boolean(isHighlighted)}
 			component="div"
 		>
-			<ListItemIcon className="min-w-9">
+			<ListItemIcon className="min-w-2.25">
 				{suggestion.icon ? (
 					<FuseSvgIcon>{suggestion.icon}</FuseSvgIcon>
 				) : (
-					<span className="w-6 text-center text-2xl font-semibold uppercase">{suggestion.title[0]}</span>
+					<span className="w-1.5 text-center text-2xl font-semibold uppercase">{suggestion.title[0]}</span>
 				)}
 			</ListItemIcon>
 			<ListItemText
@@ -416,7 +416,7 @@ function FuseSearch(props: FuseSearchProps) {
 										>
 											{options.children}
 											{state.noSuggestions && (
-												<Typography className="px-4 py-3">{noResults}</Typography>
+												<Typography className="px-1 py-0.75">{noResults}</Typography>
 											)}
 										</Paper>
 									</div>
@@ -504,7 +504,7 @@ function FuseSearch(props: FuseSearchProps) {
 														>
 															{options.children}
 															{state.noSuggestions && (
-																<Typography className="px-4 py-3">
+																<Typography className="px-1 py-0.75">
 																	{noResults}
 																</Typography>
 															)}
@@ -516,7 +516,7 @@ function FuseSearch(props: FuseSearchProps) {
 									/>
 									<IconButton
 										onClick={hideSearch}
-										className="mx-2"
+										className="mx-0.5"
 										size="large"
 									>
 										<FuseSvgIcon>heroicons-outline:x-mark</FuseSvgIcon>

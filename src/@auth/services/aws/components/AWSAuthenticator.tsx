@@ -121,7 +121,7 @@ function AwsAuthenticator(props: AuthenticatorProps) {
 
 	if (authStatus === 'authenticated') {
 		return (
-			<div className="flex flex-col w-full items-center justify-center py-16 space-y-6">
+			<div className="flex flex-col w-full items-center justify-center py-4 space-y-1.5">
 				<FuseLoading />
 			</div>
 		);

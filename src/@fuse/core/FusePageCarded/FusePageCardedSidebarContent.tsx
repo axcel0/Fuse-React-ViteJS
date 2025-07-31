@@ -21,7 +21,7 @@ function FusePageCardedSidebarContent(props: FusePageCardedSidebarContentProps) 
 
 	return (
 		<FuseScrollbars enable={innerScroll}>
-			<div className="FusePageCarded-sidebarContent min-w-80 lg:min-w-0">{children}</div>
+			<div className="FusePageCarded-sidebarContent min-w-20 lg:min-w-0">{children}</div>
 		</FuseScrollbars>
 	);
 }

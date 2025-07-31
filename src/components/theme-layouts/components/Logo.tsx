@@ -44,8 +44,8 @@ const PLogoIcon = styled(Box)(({ theme }) => ({
  */
 function Logo() {
 	return (
-		<Root className="flex flex-1 items-center space-x-3">
-			<div className="flex flex-1 items-center space-x-2 px-2.5">
+		<Root className="flex flex-1 items-center space-x-0.75">
+			<div className="flex flex-1 items-center space-x-0.5 px-0.625">
 				<PLogoIcon className="logo-icon">P</PLogoIcon>
 			</div>
 			<MainProjectSelection />

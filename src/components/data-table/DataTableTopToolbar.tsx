@@ -50,7 +50,7 @@ function DataTableTopToolbar<TData extends MRT_RowData>({ table }: MRT_TopToolba
 		table
 	};
 	return (
-		<div className="flex flex-col w-full py-1 px-3 border-b-1">
+		<div className="flex flex-col w-full py-0.25 px-0.75 border-b-1">
 			<Box
 				className="flex flex-col w-full items-center"
 				{...toolbarProps}
@@ -96,7 +96,7 @@ function DataTableTopToolbar<TData extends MRT_RowData>({ table }: MRT_TopToolba
 					<div className="flex flex-1">{renderTopToolbarCustomActions?.({ table }) ?? null}</div>
 
 					{enableToolbarInternalActions ? (
-						<Box className="flex items-center space-x-2">
+						<Box className="flex items-center space-x-0.5">
 							{enableGlobalFilter && positionGlobalFilter === 'right' && (
 								<MRT_GlobalFilterTextField
 									{...globalFilterProps}
@@ -128,7 +128,7 @@ function DataTableTopToolbar<TData extends MRT_RowData>({ table }: MRT_TopToolba
 				/>
 			</Box>
 			<MRT_ToolbarAlertBanner
-				className="mt-1 rounded-md flex justify-center"
+				className="mt-0.25 rounded-md flex justify-center"
 				stackAlertBanner={stackAlertBanner}
 				table={table}
 				sx={{

@@ -34,7 +34,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 
 		if (hasError) {
 			return (
-				<div className="bg-white p-6">
+				<div className="bg-white p-1.5">
 					<h1 className="text-2xl font-semibold">Something went wrong.</h1>
 					<p className="text-base whitespace-pre-wrap">
 						{error && error.toString()}

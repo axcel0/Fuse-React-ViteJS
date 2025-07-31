@@ -77,7 +77,7 @@ function FuseNavHorizontalLink(props: FuseNavHorizontalLinkProps) {
 
 				{item.badge && (
 					<FuseNavBadge
-						className="ltr:ml-2 rtl:mr-2"
+						className="ltr:ml-0.5 rtl:mr-0.5"
 						badge={item.badge}
 					/>
 				)}

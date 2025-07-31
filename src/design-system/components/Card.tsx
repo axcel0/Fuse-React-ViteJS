@@ -117,15 +117,15 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
 				{...props}
 			>
 				{/* Media Section */}
-				{media && <div className="card-media overflow-hidden -mt-4 -mx-4 mb-4 first:mt-0">{media}</div>}
+				{media && <div className="card-media overflow-hidden -mt-1 -mx-1 mb-1 first:mt-0">{media}</div>}
 
 				{/* Header Section */}
 				{(header || title || subtitle) && (
-					<div className="card-header mb-4 last:mb-0">
+					<div className="card-header mb-1 last:mb-0">
 						{header || (
 							<div>
 								{title && (
-									<h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">
+									<h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-0.25">
 										{title}
 									</h3>
 								)}
@@ -139,11 +139,11 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
 				{children && <div className="card-content">{children}</div>}
 
 				{/* Actions Section */}
-				{actions && <div className="card-actions mt-4 first:mt-0 flex gap-2 justify-end">{actions}</div>}
+				{actions && <div className="card-actions mt-1 first:mt-0 flex gap-0.5 justify-end">{actions}</div>}
 
 				{/* Footer Section */}
 				{footer && (
-					<div className="card-footer mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 first:mt-0 first:pt-0 first:border-t-0">
+					<div className="card-footer mt-1 pt-1 border-t border-gray-200 dark:border-gray-700 first:mt-0 first:pt-0 first:border-t-0">
 						{footer}
 					</div>
 				)}

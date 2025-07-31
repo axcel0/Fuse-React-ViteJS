@@ -17,7 +17,7 @@ function GoToDocBox(props: GoToDocBoxProps) {
 		>
 			<Typography className="truncate">Need assistance to get started?</Typography>
 			<Typography
-				className="flex items-center gap-1 truncate"
+				className="flex items-center gap-0.25 truncate"
 				component={Link}
 				to="/documentation"
 				color="secondary"

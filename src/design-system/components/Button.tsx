@@ -52,7 +52,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 			>
 				{loading && (
 					<svg
-						className="mr-2 h-4 w-4 animate-spin"
+						className="mr-0.5 h-1 w-1 animate-spin"
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
@@ -72,9 +72,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 						/>
 					</svg>
 				)}
-				{!loading && leftIcon && <span className="mr-2">{leftIcon}</span>}
+				{!loading && leftIcon && <span className="mr-0.5">{leftIcon}</span>}
 				{children}
-				{!loading && rightIcon && <span className="ml-2">{rightIcon}</span>}
+				{!loading && rightIcon && <span className="ml-0.5">{rightIcon}</span>}
 			</button>
 		);
 	}

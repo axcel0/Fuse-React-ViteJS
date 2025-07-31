@@ -104,14 +104,14 @@ function FuseNavVerticalCollapse(props: FuseNavItemComponentProps) {
 
 					{item.badge && (
 						<FuseNavBadge
-							className="mx-1"
+							className="mx-0.25"
 							badge={item.badge}
 						/>
 					)}
 
 					<IconButton
 						disableRipple
-						className="-mx-3 h-5 w-5 p-0 hover:bg-transparent focus:bg-transparent"
+						className="-mx-0.75 h-1.25 w-1.25 p-0 hover:bg-transparent focus:bg-transparent"
 						onClick={(ev) => {
 							ev.preventDefault();
 							ev.stopPropagation();

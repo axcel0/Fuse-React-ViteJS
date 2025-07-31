@@ -190,7 +190,7 @@ function NavbarStyle2() {
 		>
 			{!isMobile && (
 				<StyledNavbar
-					className="hidden lg:flex sticky top-0 z-20 h-screen flex-auto shrink-0 flex-col overflow-hidden shadow-sm"
+					className="hidden lg:flex sticky top-0 z-20 h-screen flex-auto shrink-0 flex-col overflow-hidden shadow-xs"
 					position={config?.navbar?.position}
 					folded={folded ? 1 : 0}
 					foldedandopened={foldedandopened ? 1 : 0}

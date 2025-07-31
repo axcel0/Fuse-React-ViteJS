@@ -81,7 +81,7 @@ function JwtSignUpForm() {
 		<form
 			name="registerForm"
 			noValidate
-			className="mt-8 flex w-full flex-col justify-center"
+			className="mt-2 flex w-full flex-col justify-center"
 			onSubmit={handleSubmit(onSubmit)}
 		>
 			<Controller
@@ -90,7 +90,7 @@ function JwtSignUpForm() {
 				render={({ field }) => (
 					<TextField
 						{...field}
-						className="mb-6"
+						className="mb-1.5"
 						label="Display name"
 						autoFocus
 						type="name"
@@ -109,7 +109,7 @@ function JwtSignUpForm() {
 				render={({ field }) => (
 					<TextField
 						{...field}
-						className="mb-6"
+						className="mb-1.5"
 						label="Email"
 						type="email"
 						error={!!errors.email}
@@ -127,7 +127,7 @@ function JwtSignUpForm() {
 				render={({ field }) => (
 					<TextField
 						{...field}
-						className="mb-6"
+						className="mb-1.5"
 						label="Password"
 						type="password"
 						error={!!errors.password}
@@ -145,7 +145,7 @@ function JwtSignUpForm() {
 				render={({ field }) => (
 					<TextField
 						{...field}
-						className="mb-6"
+						className="mb-1.5"
 						label="Password (Confirm)"
 						type="password"
 						error={!!errors.passwordConfirm}
@@ -179,7 +179,7 @@ function JwtSignUpForm() {
 			<Button
 				variant="contained"
 				color="secondary"
-				className="mt-6 w-full"
+				className="mt-1.5 w-full"
 				aria-label="Register"
 				disabled={_.isEmpty(dirtyFields) || !isValid}
 				type="submit"

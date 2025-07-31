@@ -65,7 +65,7 @@ function UserMenu(props: UserMenuProps) {
 							background: theme.palette.background.default,
 							color: theme.palette.text.secondary
 						})}
-						className="avatar w-10 h-10 rounded-lg"
+						className="avatar w-2.5 h-2.5 rounded-lg"
 						alt="user photo"
 						src={user?.photoURL}
 						variant="rounded"
@@ -76,12 +76,12 @@ function UserMenu(props: UserMenuProps) {
 							background: (theme) => darken(theme.palette.background.default, 0.05),
 							color: theme.palette.text.secondary
 						})}
-						className="avatar md:mx-1"
+						className="avatar md:mx-0.25"
 					>
 						{user?.displayName?.[0]}
 					</Avatar>
 				)}
-				<div className="flex flex-col flex-auto space-y-2">
+				<div className="flex flex-col flex-auto space-y-0.5">
 					<Typography
 						component="span"
 						className="title flex font-semibold text-base capitalize truncate tracking-tight leading-none"
@@ -95,7 +95,7 @@ function UserMenu(props: UserMenuProps) {
 						{user?.email}
 					</Typography>
 				</div>
-				<div className="flex shrink-0 items-center space-x-2">
+				<div className="flex shrink-0 items-center space-x-0.5">
 					<Tooltip
 						title={
 							<>
@@ -143,7 +143,7 @@ function UserMenu(props: UserMenuProps) {
 							to="/sign-in"
 							role="button"
 						>
-							<ListItemIcon className="min-w-9">
+							<ListItemIcon className="min-w-2.25">
 								<FuseSvgIcon>heroicons-outline:lock-closed</FuseSvgIcon>
 							</ListItemIcon>
 							<ListItemText primary="Sign In" />
@@ -153,7 +153,7 @@ function UserMenu(props: UserMenuProps) {
 							to="/sign-up"
 							role="button"
 						>
-							<ListItemIcon className="min-w-9">
+							<ListItemIcon className="min-w-2.25">
 								<FuseSvgIcon>heroicons-outline:user-plus</FuseSvgIcon>
 							</ListItemIcon>
 							<ListItemText primary="Sign up" />
@@ -165,7 +165,7 @@ function UserMenu(props: UserMenuProps) {
 							signOut();
 						}}
 					>
-						<ListItemIcon className="min-w-9">
+						<ListItemIcon className="min-w-2.25">
 							<FuseSvgIcon>heroicons-outline:arrow-right-on-rectangle</FuseSvgIcon>
 						</ListItemIcon>
 						<ListItemText primary="Sign out" />

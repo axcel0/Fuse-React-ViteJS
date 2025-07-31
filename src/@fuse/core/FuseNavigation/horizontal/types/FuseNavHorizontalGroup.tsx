@@ -119,7 +119,7 @@ function FuseNavHorizontalGroup(props: FuseNavHorizontalGroupProps) {
 								{nestedLevel > 0 && (
 									<IconButton
 										disableRipple
-										className="h-4 w-4 p-0 ltr:ml-1 rtl:mr-1"
+										className="h-1 w-1 p-0 ltr:ml-0.25 rtl:mr-0.25"
 										color="inherit"
 									>
 										<FuseSvgIcon
@@ -155,7 +155,7 @@ function FuseNavHorizontalGroup(props: FuseNavHorizontalGroupProps) {
 										style={{ transformOrigin: '0 0 0' }}
 									>
 										<Paper
-											className="rounded-sm"
+											className="rounded-xs"
 											onMouseEnter={() => handleToggle(true)}
 											onMouseLeave={() => handleToggle(false)}
 										>

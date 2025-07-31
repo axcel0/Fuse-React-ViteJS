@@ -189,6 +189,14 @@ const config = tseslint.config(
         "import/no-extraneous-dependencies": "off",
         "camelcase": "off",
         }
+    },
+    
+    // Override for Node.js scripts - allow console statements
+    {
+        files: ["src/utils/node-scripts/**/*.ts"],
+        rules: {
+            "no-console": "off"
+        }
     }
 );
 

@@ -93,7 +93,7 @@ function FuseMessage() {
 						{variantIcon[messageState.options.variant] && (
 							<FuseSvgIcon color="inherit">{variantIcon[messageState.options.variant]}</FuseSvgIcon>
 						)}
-						<Typography className="mx-2">{messageState.options.message}</Typography>
+						<Typography className="mx-0.5">{messageState.options.message}</Typography>
 					</div>
 				}
 				action={[

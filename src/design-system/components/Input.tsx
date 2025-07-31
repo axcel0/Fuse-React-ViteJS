@@ -79,8 +79,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 				<div className="relative">
 					{/* Start Icon */}
 					{startIcon && (
-						<div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-							<div className="text-gray-400 dark:text-gray-500 h-5 w-5">{startIcon}</div>
+						<div className="absolute inset-y-0 left-0 pl-0.75 flex items-center pointer-events-none">
+							<div className="text-gray-400 dark:text-gray-500 h-1.25 w-1.25">{startIcon}</div>
 						</div>
 					)}
 
@@ -100,8 +100,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
 					{/* End Icon */}
 					{endIcon && (
-						<div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-							<div className="text-gray-400 dark:text-gray-500 h-5 w-5">{endIcon}</div>
+						<div className="absolute inset-y-0 right-0 pr-0.75 flex items-center pointer-events-none">
+							<div className="text-gray-400 dark:text-gray-500 h-1.25 w-1.25">{endIcon}</div>
 						</div>
 					)}
 				</div>

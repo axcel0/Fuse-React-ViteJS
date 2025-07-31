@@ -116,14 +116,14 @@ function LightDarkModeToggle(props: LightDarkModeToggleProps) {
 					selected={mode === 'light'}
 					onClick={() => handleSelectionChange('light')}
 				>
-					<FuseSvgIcon className="mr-8">heroicons-outline:sun</FuseSvgIcon>
+					<FuseSvgIcon className="mr-2">heroicons-outline:sun</FuseSvgIcon>
 					Light
 				</MenuItem>
 				<MenuItem
 					selected={mode === 'dark'}
 					onClick={() => handleSelectionChange('dark')}
 				>
-					<FuseSvgIcon className="mr-8">heroicons-outline:moon</FuseSvgIcon>
+					<FuseSvgIcon className="mr-2">heroicons-outline:moon</FuseSvgIcon>
 					Dark
 				</MenuItem>
 				{showSystemOption && (
@@ -131,7 +131,7 @@ function LightDarkModeToggle(props: LightDarkModeToggleProps) {
 						selected={mode === 'system'}
 						onClick={() => handleSelectionChange('system')}
 					>
-						<FuseSvgIcon className="mr-8">heroicons-outline:computer-desktop</FuseSvgIcon>
+						<FuseSvgIcon className="mr-2">heroicons-outline:computer-desktop</FuseSvgIcon>
 						System
 					</MenuItem>
 				)}

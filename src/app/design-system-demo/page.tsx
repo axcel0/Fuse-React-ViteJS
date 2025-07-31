@@ -25,20 +25,20 @@ const DesignSystemDemo: React.FC = () => {
 	return (
 		<ModernNavbar>
 			<div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 transition-colors duration-300">
-				<div className="container mx-auto p-8 space-y-8">
+				<div className="container mx-auto p-2 space-y-2">
 					{/* Header */}
 					<div className="flex justify-between items-center">
 						<div>
 							<h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
 								Design System Demo
 							</h1>
-							<p className="text-neutral-600 dark:text-neutral-400 mt-2">
+							<p className="text-neutral-600 dark:text-neutral-400 mt-0.5">
 								Current theme: {theme} {isSystem && `(${effectiveTheme})`}
 							</p>
 						</div>
 
 						{/* Theme Controls */}
-						<div className="flex gap-2">
+						<div className="flex gap-0.5">
 							<Button
 								variant={theme === 'light' ? 'primary' : 'outline'}
 								size="sm"
@@ -69,7 +69,7 @@ const DesignSystemDemo: React.FC = () => {
 					{/* Theme Status Card */}
 					<Card variant="outlined">
 						<CardContent>
-							<div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+							<div className="grid grid-cols-1 md:grid-cols-3 gap-1 text-center">
 								<div>
 									<h3 className="font-semibold text-neutral-900 dark:text-neutral-100">Theme Mode</h3>
 									<p className="text-neutral-600 dark:text-neutral-400">{theme}</p>
@@ -97,13 +97,13 @@ const DesignSystemDemo: React.FC = () => {
 							<CardDescription>Button variants in different sizes and states</CardDescription>
 						</CardHeader>
 						<CardContent>
-							<div className="space-y-4">
+							<div className="space-y-1">
 								{/* Primary Buttons */}
 								<div>
-									<h4 className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+									<h4 className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-0.5">
 										Primary Buttons
 									</h4>
-									<div className="flex flex-wrap gap-2">
+									<div className="flex flex-wrap gap-0.5">
 										<Button
 											variant="primary"
 											size="sm"
@@ -133,10 +133,10 @@ const DesignSystemDemo: React.FC = () => {
 
 								{/* Secondary Buttons */}
 								<div>
-									<h4 className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+									<h4 className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-0.5">
 										Secondary Buttons
 									</h4>
-									<div className="flex flex-wrap gap-2">
+									<div className="flex flex-wrap gap-0.5">
 										<Button variant="secondary">Secondary</Button>
 										<Button variant="outline">Outline</Button>
 										<Button variant="ghost">Ghost</Button>
@@ -146,10 +146,10 @@ const DesignSystemDemo: React.FC = () => {
 
 								{/* Buttons with Icons */}
 								<div>
-									<h4 className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+									<h4 className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-0.5">
 										Buttons with Icons
 									</h4>
-									<div className="flex flex-wrap gap-2">
+									<div className="flex flex-wrap gap-0.5">
 										<Button
 											variant="primary"
 											leftIcon="📄"
@@ -182,7 +182,7 @@ const DesignSystemDemo: React.FC = () => {
 							<CardDescription>Card variants with different content layouts</CardDescription>
 						</CardHeader>
 						<CardContent>
-							<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+							<div className="grid grid-cols-1 md:grid-cols-3 gap-1">
 								{/* Elevated Card */}
 								<Card
 									variant="elevated"
@@ -268,9 +268,9 @@ const DesignSystemDemo: React.FC = () => {
 							</CardDescription>
 						</CardHeader>
 						<CardContent>
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
 								{/* Left Column */}
-								<div className="space-y-4">
+								<div className="space-y-1">
 									<Input
 										label="Email Address"
 										type="email"
@@ -306,7 +306,7 @@ const DesignSystemDemo: React.FC = () => {
 								</div>
 
 								{/* Right Column */}
-								<div className="space-y-4">
+								<div className="space-y-1">
 									<Select
 										label="Country"
 										placeholder="Select a country"
@@ -327,7 +327,7 @@ const DesignSystemDemo: React.FC = () => {
 										fullWidth
 									/>
 
-									<div className="grid grid-cols-2 gap-2">
+									<div className="grid grid-cols-2 gap-0.5">
 										<Input
 											label="Size Small"
 											size="sm"
@@ -345,7 +345,7 @@ const DesignSystemDemo: React.FC = () => {
 							</div>
 						</CardContent>
 						<CardFooter>
-							<div className="flex gap-2">
+							<div className="flex gap-0.5">
 								<Button variant="primary">Submit Form</Button>
 								<Button variant="outline">Reset</Button>
 							</div>
@@ -359,8 +359,8 @@ const DesignSystemDemo: React.FC = () => {
 						onClick={() => alert('Card clicked!')}
 					>
 						<CardContent>
-							<div className="text-center py-8">
-								<h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
+							<div className="text-center py-2">
+								<h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-0.5">
 									Interactive Card
 								</h3>
 								<p className="text-neutral-600 dark:text-neutral-400">

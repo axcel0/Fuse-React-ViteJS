@@ -71,7 +71,7 @@ function FuseExample(props: FuseExampleProps) {
 								<Component />
 							</DemoFrame>
 						) : (
-							<div className="flex max-w-full flex-1 justify-center p-6">
+							<div className="flex max-w-full flex-1 justify-center p-1.5">
 								<Component />
 							</div>
 						))}

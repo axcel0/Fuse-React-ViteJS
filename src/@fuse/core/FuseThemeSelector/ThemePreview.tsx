@@ -44,7 +44,7 @@ function ThemePreview(props: ThemePreviewProps) {
 				type="button"
 			>
 				<div
-					className="flex flex-col w-1/3 min-h-full p-1 border-r-1 border-gray-700"
+					className="flex flex-col w-1/3 min-h-full p-0.25 border-r-1 border-gray-700"
 					style={{
 						backgroundColor: navbar.palette.background.default,
 						color: navbar.palette.text.primary
@@ -55,7 +55,7 @@ function ThemePreview(props: ThemePreviewProps) {
 
 				<div className="flex flex-col w-2/3">
 					<div
-						className="w-full px-1 py-1 border-b-1 border-gray-700"
+						className="w-full px-0.25 py-0.25 border-b-1 border-gray-700"
 						style={{
 							backgroundColor: toolbar.palette.background.default,
 							color: toolbar.palette.text.primary
@@ -66,7 +66,7 @@ function ThemePreview(props: ThemePreviewProps) {
 
 					<div className="flex flex-1 flex-col w-full">
 						<div
-							className="relative h-11 w-full px-1"
+							className="relative h-2.75 w-full px-0.25"
 							style={{
 								backgroundColor: main.palette.primary.main,
 								color: main.palette.primary.contrastText
@@ -75,7 +75,7 @@ function ThemePreview(props: ThemePreviewProps) {
 							<span className="text-sm">Header</span>
 
 							<div
-								className="absolute bottom-0 right-0 mb-2.5 mr-2 flex h-6 w-6 items-center justify-center rounded-full text-xs shadow-1 z-10"
+								className="absolute bottom-0 right-0 mb-0.625 mr-0.5 flex h-1.5 w-1.5 items-center justify-center rounded-full text-xs shadow-1 z-10"
 								style={{
 									backgroundColor: main.palette.secondary.main,
 									color: main.palette.secondary.contrastText
@@ -85,9 +85,9 @@ function ThemePreview(props: ThemePreviewProps) {
 							</div>
 						</div>
 
-						<div className="-mt-6 flex-1 w-full pl-1 pr-1">
+						<div className="-mt-1.5 flex-1 w-full pl-0.25 pr-0.25">
 							<div
-								className="relative w-full h-full rounded-sm p-1 shadow-1"
+								className="relative w-full h-full rounded-xs p-0.25 shadow-1"
 								style={{
 									backgroundColor: main.palette.background.paper,
 									color: main.palette.text.primary
@@ -97,13 +97,13 @@ function ThemePreview(props: ThemePreviewProps) {
 							</div>
 						</div>
 
-						<div className="w-full p-1">
+						<div className="w-full p-0.25">
 							<span className="text-sm">Background</span>
 						</div>
 					</div>
 
 					<div
-						className="w-full px-2 py-1 border-t-1 border-gray-700"
+						className="w-full px-0.5 py-0.25 border-t-1 border-gray-700"
 						style={{
 							backgroundColor: footer.palette.background.default,
 							color: footer.palette.text.primary
@@ -113,7 +113,7 @@ function ThemePreview(props: ThemePreviewProps) {
 					</div>
 				</div>
 			</button>
-			<Typography className="mt-1 w-full text-center font-semibold">{id}</Typography>
+			<Typography className="mt-0.25 w-full text-center font-semibold">{id}</Typography>
 		</div>
 	);
 }

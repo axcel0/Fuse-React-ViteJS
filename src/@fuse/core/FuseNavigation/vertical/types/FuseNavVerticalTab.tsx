@@ -102,7 +102,7 @@ function FuseNavVerticalTab(props: FuseNavVerticalTabProps) {
 							title={item.title || ''}
 							placement="right"
 						>
-							<div className="relative flex h-8 min-h-8 w-8 items-center justify-center">
+							<div className="relative flex h-2 min-h-2 w-2 items-center justify-center">
 								{item.icon ? (
 									<FuseSvgIcon
 										className={clsx('fuse-list-item-icon', item.iconClass)}
@@ -116,14 +116,14 @@ function FuseNavVerticalTab(props: FuseNavVerticalTabProps) {
 								{item.badge && (
 									<FuseNavBadge
 										badge={item.badge}
-										className="absolute top-0 h-4 min-w-4 justify-center p-1 ltr:right-0 rtl:left-0"
+										className="absolute top-0 h-1 min-w-1 justify-center p-0.25 ltr:right-0 rtl:left-0"
 									/>
 								)}
 							</div>
 						</Tooltip>
 					) : (
 						<>
-							<div className="relative mb-2 flex h-8 min-h-8 w-8 items-center justify-center">
+							<div className="relative mb-0.5 flex h-2 min-h-2 w-2 items-center justify-center">
 								{item.icon ? (
 									<FuseSvgIcon
 										size={32}
@@ -140,13 +140,13 @@ function FuseNavVerticalTab(props: FuseNavVerticalTabProps) {
 								{item.badge && (
 									<FuseNavBadge
 										badge={item.badge}
-										className="absolute top-0 h-4 min-w-4 justify-center p-1 ltr:right-0 rtl:left-0"
+										className="absolute top-0 h-1 min-w-1 justify-center p-0.25 ltr:right-0 rtl:left-0"
 									/>
 								)}
 							</div>
 
 							<ListItemText
-								className="fuse-list-item-text w-full grow-0 px-2"
+								className="fuse-list-item-text w-full grow-0 px-0.5"
 								primary={item.title}
 								classes={{
 									primary:
