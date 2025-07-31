@@ -2,7 +2,7 @@ import '@i18n/i18n';
 import './styles/index.css';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import routes from 'src/configs/routesConfig';
+import routes from '@/configs/routesConfig';
 import { worker } from '@mock-utils/mswMockAdapter';
 import { API_BASE_URL } from '@/utils/apiFetch';
 

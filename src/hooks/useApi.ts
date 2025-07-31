@@ -19,13 +19,13 @@ export interface Product {
 export const productKeys = {
 	all: ['products'] as const,
 	lists: () => [...productKeys.all, 'list'] as const,
-	list: (filters: Record<string, any>) => [...productKeys.lists(), { filters }] as const,
+	list: (filters: Record<string, string>) => [...productKeys.lists(), { filters }] as const,
 	details: () => [...productKeys.all, 'detail'] as const,
 	detail: (id: string) => [...productKeys.details(), id] as const
 };
 
 // Get products list
-export function useProducts(filters: Record<string, any> = {}) {
+export function useProducts(filters: Record<string, string> = {}) {
 	return useQuery({
 		queryKey: productKeys.list(filters),
 		queryFn: async (): Promise<Product[]> => {

@@ -25,7 +25,11 @@ function NavbarToggleFabLayout1(props: NavbarToggleFabLayout1Props) {
 		<NavbarToggleFab
 			className={className}
 			onClick={() => {
-				isMobile ? navbarToggleMobile() : navbarToggle();
+				if (isMobile) {
+					navbarToggleMobile();
+				} else {
+					navbarToggle();
+				}
 			}}
 			position={config.navbar.position}
 		/>

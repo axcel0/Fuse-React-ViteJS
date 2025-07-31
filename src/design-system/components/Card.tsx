@@ -56,6 +56,10 @@ export interface CardProps
 	 * Media content (image, video, etc.)
 	 */
 	media?: React.ReactNode;
+	/**
+	 * Handler for keyboard interactions (Enter/Space)
+	 */
+	onKeyboardActivate?: () => void;
 }
 
 // ===== CARD COMPONENT =====
@@ -74,6 +78,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
 			media,
 			children,
 			onClick,
+			onKeyboardActivate,
 			...props
 		},
 		ref
@@ -96,7 +101,15 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
 						? (e) => {
 								if (e.key === 'Enter' || e.key === ' ') {
 									e.preventDefault();
-									onClick?.(e as any);
+									// Use dedicated keyboard handler if provided, otherwise simulate click
+
+									if (onKeyboardActivate) {
+										onKeyboardActivate();
+									} else {
+										// Simulate click by creating a basic mouse event
+										const target = e.currentTarget;
+										target.click();
+									}
 								}
 							}
 						: undefined

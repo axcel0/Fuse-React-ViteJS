@@ -77,10 +77,10 @@ interface MaterialNavbarProps {
 	className?: string;
 }
 
-const MaterialNavbar: React.FC<MaterialNavbarProps> = ({ className }) => {
+const MaterialNavbar: React.FC<MaterialNavbarProps> = ({ className: _className }) => {
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
-	const { navbar, navbarToggle, navbarToggleMobile, navbarCloseMobile } = useNavbar();
+	const { navbar, navbarToggle, navbarToggleMobile: _navbarToggleMobile, navbarCloseMobile } = useNavbar();
 	const location = useLocation();
 	const navigate = useNavigate();
 

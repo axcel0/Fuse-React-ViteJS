@@ -13,8 +13,10 @@ export const queryClient = new QueryClient({
 			// Retry failed requests
 			retry: (failureCount, error: { status?: number } | unknown) => {
 				// Don't retry on 4xx errors (client errors)
+
 				if (error && typeof error === 'object' && 'status' in error) {
 					const errorWithStatus = error as { status: number };
+
 					if (errorWithStatus.status >= 400 && errorWithStatus.status < 500) {
 						return false;
 					}

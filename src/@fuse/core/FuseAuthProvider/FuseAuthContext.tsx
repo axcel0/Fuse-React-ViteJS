@@ -7,7 +7,6 @@ export type AuthState = FuseAuthProviderState & {
 	provider: string | null;
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const initialAuthState: AuthState = {
 	authStatus: null,
 	isAuthenticated: false,

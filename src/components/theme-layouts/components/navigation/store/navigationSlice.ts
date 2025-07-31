@@ -10,12 +10,12 @@ const initialNavigation = FuseNavigationHelper.flattenNavigation(navigationConfi
 
 // Legacy action creators (now simplified)
 export const appendNavigationItem = (item: FuseNavItemType, parentId?: string | null) => {
-	console.warn('appendNavigationItem action is deprecated. Navigation should be managed via context');
+	console.error('appendNavigationItem action is deprecated. Navigation should be managed via context');
 	return { type: 'DEPRECATED', payload: { item, parentId } };
 };
 
 export const prependNavigationItem = (item: FuseNavItemType, parentId?: string | null) => {
-	console.warn('prependNavigationItem action is deprecated. Navigation should be managed via context');
+	console.error('prependNavigationItem action is deprecated. Navigation should be managed via context');
 	return { type: 'DEPRECATED', payload: { item, parentId } };
 };
 
@@ -25,17 +25,17 @@ export const updateNavigationItem = (id: string, item: Record<string, unknown>) 
 };
 
 export const removeNavigationItem = (id: string) => {
-	console.warn('removeNavigationItem action is deprecated. Navigation should be managed via context');
+	console.error('removeNavigationItem action is deprecated. Navigation should be managed via context');
 	return { type: 'DEPRECATED', payload: { id } };
 };
 
 export const setNavigation = (navigation: FuseNavItemType[]) => {
-	console.warn('setNavigation action is deprecated. Navigation should be managed via context');
+	console.error('setNavigation action is deprecated. Navigation should be managed via context');
 	return { type: 'DEPRECATED', payload: navigation };
 };
 
 export const resetNavigation = () => {
-	console.warn('resetNavigation action is deprecated. Navigation should be managed via context');
+	console.error('resetNavigation action is deprecated. Navigation should be managed via context');
 	return { type: 'DEPRECATED' };
 };
 

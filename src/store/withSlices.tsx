@@ -3,13 +3,13 @@
 
 import React from 'react';
 
-export default function withSlices(...slices: unknown[]) {
-	return function <T extends React.ComponentType<any>>(Component: T): T {
+export default function withSlices(..._slices: unknown[]) {
+	return function <T extends React.ComponentType<Record<string, unknown>>>(Component: T): T {
 		console.error(
 			'withSlices HOC is deprecated. Please remove this wrapper and migrate to React Context or TanStack Query.'
 		);
 
-		const WrappedComponent = (props: any) => {
+		const WrappedComponent = (props: Record<string, unknown>) => {
 			return React.createElement(Component, props);
 		};
 

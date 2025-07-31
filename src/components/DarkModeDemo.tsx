@@ -7,7 +7,7 @@ import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
  * with Material-UI components
  */
 function DarkModeDemo() {
-	const { theme, effectiveTheme, setTheme, toggleTheme, isDark, isLight: _isLight, isSystem } = useTheme();
+	const { theme, effectiveTheme, setTheme, toggleTheme, isDark: _isDark, isLight: _isLight, isSystem } = useTheme();
 
 	return (
 		<div className="p-6 space-y-6">

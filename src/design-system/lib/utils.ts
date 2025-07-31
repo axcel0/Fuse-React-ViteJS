@@ -92,7 +92,10 @@ export function formatDate(
  * @param func - The function to debounce
  * @param wait - The delay in milliseconds
  */
-export function debounce<T extends (...args: any[]) => any>(func: T, wait: number): (...args: Parameters<T>) => void {
+export function debounce<T extends (...args: unknown[]) => unknown>(
+	func: T,
+	wait: number
+): (...args: Parameters<T>) => void {
 	let timeout: NodeJS.Timeout;
 
 	return (...args: Parameters<T>) => {
@@ -106,7 +109,10 @@ export function debounce<T extends (...args: any[]) => any>(func: T, wait: numbe
  * @param func - The function to throttle
  * @param limit - The time limit in milliseconds
  */
-export function throttle<T extends (...args: any[]) => any>(func: T, limit: number): (...args: Parameters<T>) => void {
+export function throttle<T extends (...args: unknown[]) => unknown>(
+	func: T,
+	limit: number
+): (...args: Parameters<T>) => void {
 	let inThrottle: boolean;
 
 	return (...args: Parameters<T>) => {

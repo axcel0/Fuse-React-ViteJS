@@ -12,20 +12,20 @@ export interface User {
 	name: string;
 	avatar?: string;
 	role: string[];
-	settings?: Record<string, any>;
+	settings?: Record<string, unknown>;
 }
 
 export interface UserUpdateData {
 	name?: string;
 	avatar?: string;
-	settings?: Record<string, any>;
+	settings?: Record<string, unknown>;
 }
 
 // Query Keys
 export const userKeys = {
 	all: ['users'] as const,
 	lists: () => [...userKeys.all, 'list'] as const,
-	list: (filters: Record<string, any>) => [...userKeys.lists(), { filters }] as const,
+	list: (filters: Record<string, unknown>) => [...userKeys.lists(), { filters }] as const,
 	details: () => [...userKeys.all, 'detail'] as const,
 	detail: (id: string) => [...userKeys.details(), id] as const,
 	me: () => [...userKeys.all, 'me'] as const
@@ -42,8 +42,10 @@ export function useUser() {
 		staleTime: 5 * 60 * 1000, // 5 minutes
 		retry: (failureCount, error: unknown) => {
 			// Don't retry if unauthorized
+
 			if (error && typeof error === 'object' && 'response' in error) {
 				const errorWithResponse = error as { response: { status: number } };
+
 				if (errorWithResponse.response?.status === 401) {
 					return false;
 				}
@@ -81,7 +83,7 @@ export function useUpdateUserSettings() {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: async (settings: Record<string, any>): Promise<User> => {
+		mutationFn: async (settings: Record<string, unknown>): Promise<User> => {
 			const response = await httpClient.put('auth/me/settings', {
 				json: { settings }
 			});
@@ -94,7 +96,7 @@ export function useUpdateUserSettings() {
 }
 
 // Example: Get users list (for admin functionality)
-export function useUsers(filters: Record<string, any> = {}) {
+export function useUsers(filters: Record<string, string> = {}) {
 	return useQuery({
 		queryKey: userKeys.list(filters),
 		queryFn: async (): Promise<User[]> => {

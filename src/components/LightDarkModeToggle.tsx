@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
@@ -27,6 +27,23 @@ function LightDarkModeToggle(props: LightDarkModeToggleProps) {
 	const { showMessage } = useFuseMessage();
 	const { mode, resolvedTheme, setMode, isSystemMode } = useTheme();
 
+	const handleThemeSelect = useCallback(
+		async (_theme: FuseThemeOption) => {
+			const _newSettings = setSettings({
+				theme: { ..._theme?.section }
+			} as Partial<FuseSettingsConfigType>);
+
+			if (!isGuest) {
+				const updatedUserData = await updateUserSettings(_newSettings);
+
+				if (updatedUserData) {
+					showMessage({ message: 'User preferences saved successfully' });
+				}
+			}
+		},
+		[setSettings, isGuest, updateUserSettings, showMessage]
+	);
+
 	// Sync MUI theme with resolved theme from theme system
 	useEffect(() => {
 		if (resolvedTheme === 'light') {
@@ -34,7 +51,7 @@ function LightDarkModeToggle(props: LightDarkModeToggleProps) {
 		} else {
 			handleThemeSelect(darkTheme);
 		}
-	}, [resolvedTheme, lightTheme, darkTheme]);
+	}, [resolvedTheme, lightTheme, darkTheme, handleThemeSelect]);
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -49,20 +66,6 @@ function LightDarkModeToggle(props: LightDarkModeToggleProps) {
 		setMode(selection);
 		handleClose();
 	};
-
-	async function handleThemeSelect(_theme: FuseThemeOption) {
-		const _newSettings = setSettings({
-			theme: { ..._theme?.section }
-		} as Partial<FuseSettingsConfigType>);
-
-		if (!isGuest) {
-			const updatedUserData = await updateUserSettings(_newSettings);
-
-			if (updatedUserData) {
-				showMessage({ message: 'User settings saved.' });
-			}
-		}
-	}
 
 	const getDisplayIcon = () => {
 		if (isSystemMode) {

@@ -16,7 +16,7 @@ import NavbarStyle3 from './navbar/style-3/NavbarStyle3';
 function NavbarWrapperLayout1() {
 	const { config } = useFuseLayoutSettings();
 
-	const { navbar, navbarCloseMobile } = useNavbar();
+	const { navbar: _navbar, navbarCloseMobile } = useNavbar();
 	const pathname = usePathname();
 
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));

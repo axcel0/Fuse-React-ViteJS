@@ -33,7 +33,7 @@ export const resetNavbar = () => {
 };
 
 // Legacy selectors (return static data for compatibility)
-export const selectFuseNavbar = (state: unknown) => ({
+export const selectFuseNavbar = (_state: unknown) => ({
 	open: true,
 	mobileOpen: false,
 	foldedOpen: false

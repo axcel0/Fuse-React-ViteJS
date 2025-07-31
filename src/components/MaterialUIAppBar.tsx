@@ -482,7 +482,7 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 							separator={<ChevronRight fontSize="small" />}
 							sx={{ fontSize: '0.875rem' }}
 						>
-							{getBreadcrumbs().map((breadcrumb, index) => (
+							{getBreadcrumbs().map((breadcrumb, _index) => (
 								<Link
 									key={breadcrumb.path}
 									color="inherit"

@@ -79,7 +79,7 @@ export const useNavbar = () => {
 };
 
 // Legacy compatibility selector for components that haven't been migrated yet
-export const selectFuseNavbar = (state: unknown) => {
+export const selectFuseNavbar = (_state: unknown) => {
 	// This will be replaced by the useNavbar hook in components
 	return defaultNavbarState;
 };

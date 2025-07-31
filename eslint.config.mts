@@ -18,13 +18,31 @@ const compat = new FlatCompat({
 });
 
 const config = tseslint.config(
+    // Ignore specific JS files that cause parsing issues
+    {
+        ignores: [
+            'src/@fuse/tailwind/plugins/icon-size.js',
+            'src/utils/node-scripts/**/*.js'
+        ]
+    },
     {
         files: ['**/*.ts', '**/*.tsx'],
         ignores: [
             '**/app/(public)/documentation/material-ui-components/components/**',
             '**/app/(public)/documentation/material-ui-components/doc/**',
-            '**/utils/node-scripts/fuse-react-message.js'
+            '**/utils/node-scripts/fuse-react-message.js',
+            '**/tailwind/plugins/**/*.js'
         ],
+    },
+    // Disable react-refresh for context files and design system
+    {
+        files: [
+            'src/**/*Context.tsx',
+            'src/design-system/**/*.tsx'
+        ],
+        rules: {
+            'react-refresh/only-export-components': 'off'
+        }
     },
     {
         languageOptions: {
@@ -126,6 +144,9 @@ const config = tseslint.config(
         "react/jsx-filename-extension": "off",
         "import/extensions": "off",
         
+        // React refresh - disable for context files and design system
+        "react-refresh/only-export-components": "off",
+        
         // Unused imports
         "unused-imports/no-unused-imports": "error",
         
@@ -161,7 +182,6 @@ const config = tseslint.config(
         "react/jsx-props-no-spreading": "off",
         "react/no-array-index-key": "off",
         "react/jsx-pascal-case": "off",
-        "react-refresh/only-export-components": "warn",
         
         "no-useless-constructor": "off",
         "no-tabs": "off",
