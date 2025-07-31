@@ -29,7 +29,6 @@ const config = tseslint.config(
         ignores: [
             '**/app/(public)/documentation/material-ui-components/components/**',
             '**/app/(public)/documentation/material-ui-components/doc/**',
-            '**/utils/node-scripts/fuse-react-message.js',
             '**/tailwind/plugins/**/*.js'
         ],
     },

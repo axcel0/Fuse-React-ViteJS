@@ -126,8 +126,8 @@
     "lint:fix": "eslint --fix ./src --config ./eslint.config.mts",
     "preview": "vite preview",
     "build-docs": "npx tsx  \"./src/app/(public)/documentation/material-ui-components/utils/build.ts\"",
-    "postinstall": "node src/utils/node-scripts/fuse-react-message.js",
-    "poststart": "node src/utils/node-scripts/fuse-react-message.js",
+    "postinstall": "npx tsx src/utils/node-scripts/fuse-react-message.ts",
+    "poststart": "npx tsx src/utils/node-scripts/fuse-react-message.ts",
     "audit": "npm audit --production"
   },
   "engines": {
