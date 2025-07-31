@@ -17,7 +17,7 @@ import {
 	List,
 	ListItem,
 	ListItemText,
-	ListItemIcon,
+	ListItemIcon
 } from '@mui/material';
 import { Code, Visibility, Settings, CheckCircle, Star, TrendingUp } from '@mui/icons-material';
 import MaterialUIAppBar from '../../../components/MaterialUIAppBar';
@@ -41,51 +41,63 @@ function MaterialUIAppBarDemo() {
 		{
 			icon: <CheckCircle color="success" />,
 			title: 'Material-UI Native',
-			description: 'Built with Material-UI components following Google Material Design principles',
+			description: 'Built with Material-UI components following Google Material Design principles'
 		},
 		{
 			icon: <Visibility color="primary" />,
 			title: 'Responsive Design',
-			description: 'Automatically adapts to different screen sizes with mobile-optimized interactions',
+			description: 'Automatically adapts to different screen sizes with mobile-optimized interactions'
 		},
 		{
 			icon: <Settings color="secondary" />,
 			title: 'Highly Configurable',
-			description: 'Multiple variants, positions, and customization options available',
+			description: 'Multiple variants, positions, and customization options available'
 		},
 		{
 			icon: <Star color="warning" />,
 			title: 'Modern Features',
-			description: 'Hide on scroll, breadcrumbs, search, notifications, and user menu integration',
-		},
+			description: 'Hide on scroll, breadcrumbs, search, notifications, and user menu integration'
+		}
 	];
 
 	const variants = [
 		{
 			value: 'regular',
 			title: 'Regular AppBar',
-			description: 'Standard height with all navigation elements in a single row',
+			description: 'Standard height with all navigation elements in a single row'
 		},
 		{
 			value: 'dense',
 			title: 'Dense AppBar',
-			description: 'Compact height perfect for desktop applications with limited space',
+			description: 'Compact height perfect for desktop applications with limited space'
 		},
 		{
 			value: 'prominent',
 			title: 'Prominent AppBar',
-			description: 'Larger height with search bar prominently displayed',
-		},
+			description: 'Larger height with search bar prominently displayed'
+		}
 	];
 
 	return (
-		<Container maxWidth="xl" sx={{ py: 4 }}>
+		<Container
+			maxWidth="xl"
+			sx={{ py: 4 }}
+		>
 			{/* Header */}
 			<Box sx={{ mb: 4, textAlign: 'center' }}>
-				<Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
+				<Typography
+					variant="h3"
+					component="h1"
+					gutterBottom
+					fontWeight="bold"
+				>
 					Material-UI AppBar Migration
 				</Typography>
-				<Typography variant="h6" color="text.secondary" sx={{ mb: 2 }}>
+				<Typography
+					variant="h6"
+					color="text.secondary"
+					sx={{ mb: 2 }}
+				>
 					Modern, responsive, and feature-rich navigation header built with Material-UI
 				</Typography>
 				<Box
@@ -93,20 +105,42 @@ function MaterialUIAppBarDemo() {
 						display: 'flex',
 						gap: 1,
 						justifyContent: 'center',
-						flexWrap: 'wrap',
+						flexWrap: 'wrap'
 					}}
 				>
-					<Chip icon={<Code />} label="TypeScript" color="primary" />
-					<Chip icon={<CheckCircle />} label="Material-UI v6" color="success" />
-					<Chip icon={<TrendingUp />} label="Responsive" color="info" />
-					<Chip icon={<Star />} label="Modern" color="warning" />
+					<Chip
+						icon={<Code />}
+						label="TypeScript"
+						color="primary"
+					/>
+					<Chip
+						icon={<CheckCircle />}
+						label="Material-UI v6"
+						color="success"
+					/>
+					<Chip
+						icon={<TrendingUp />}
+						label="Responsive"
+						color="info"
+					/>
+					<Chip
+						icon={<Star />}
+						label="Modern"
+						color="warning"
+					/>
 				</Box>
 			</Box>
 
 			{/* Live Preview */}
-			<Paper elevation={2} sx={{ mb: 4, overflow: 'hidden' }}>
+			<Paper
+				elevation={2}
+				sx={{ mb: 4, overflow: 'hidden' }}
+			>
 				<Box sx={{ p: 2, bgcolor: 'primary.main', color: 'white' }}>
-					<Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+					<Typography
+						variant="h6"
+						sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+					>
 						<Visibility />
 						Live Preview
 					</Typography>
@@ -116,7 +150,7 @@ function MaterialUIAppBarDemo() {
 				<Box
 					sx={{
 						position: 'relative',
-						minHeight: position === 'static' ? 'auto' : '100px',
+						minHeight: position === 'static' ? 'auto' : '100px'
 					}}
 				>
 					<MaterialUIAppBar
@@ -135,14 +169,20 @@ function MaterialUIAppBarDemo() {
 
 				{/* Sample Content */}
 				<Box sx={{ p: 3 }}>
-					<Typography variant="h6" gutterBottom>
+					<Typography
+						variant="h6"
+						gutterBottom
+					>
 						Sample Page Content
 					</Typography>
 					<Typography paragraph>
-						This is sample content to demonstrate how the AppBar interacts with page content. The AppBar position and
-						behavior can be customized using the controls below.
+						This is sample content to demonstrate how the AppBar interacts with page content. The AppBar
+						position and behavior can be customized using the controls below.
 					</Typography>
-					<Alert severity="info" sx={{ mt: 2 }}>
+					<Alert
+						severity="info"
+						sx={{ mt: 2 }}
+					>
 						Try scrolling when "Hide on Scroll" is enabled to see the AppBar behavior!
 					</Alert>
 				</Box>
@@ -152,78 +192,167 @@ function MaterialUIAppBarDemo() {
 				sx={{
 					display: 'grid',
 					gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
-					gap: 4,
+					gap: 4
 				}}
 			>
 				{/* Configuration Controls */}
-				<Paper elevation={1} sx={{ p: 3 }}>
-					<Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+				<Paper
+					elevation={1}
+					sx={{ p: 3 }}
+				>
+					<Typography
+						variant="h6"
+						gutterBottom
+						sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+					>
 						<Settings />
 						Configuration
 					</Typography>
 
 					{/* Position Control */}
-					<FormControl component="fieldset" sx={{ mb: 3, width: '100%' }}>
+					<FormControl
+						component="fieldset"
+						sx={{ mb: 3, width: '100%' }}
+					>
 						<FormLabel component="legend">Position</FormLabel>
-						<RadioGroup value={position} onChange={(e) => setPosition(e.target.value as any)} row>
-							<FormControlLabel value="static" control={<Radio />} label="Static" />
-							<FormControlLabel value="fixed" control={<Radio />} label="Fixed" />
-							<FormControlLabel value="sticky" control={<Radio />} label="Sticky" />
+						<RadioGroup
+							value={position}
+							onChange={(e) => setPosition(e.target.value as 'fixed' | 'static' | 'sticky')}
+							row
+						>
+							<FormControlLabel
+								value="static"
+								control={<Radio />}
+								label="Static"
+							/>
+							<FormControlLabel
+								value="fixed"
+								control={<Radio />}
+								label="Fixed"
+							/>
+							<FormControlLabel
+								value="sticky"
+								control={<Radio />}
+								label="Sticky"
+							/>
 						</RadioGroup>
 					</FormControl>
 
 					{/* Variant Control */}
-					<FormControl component="fieldset" sx={{ mb: 3, width: '100%' }}>
+					<FormControl
+						component="fieldset"
+						sx={{ mb: 3, width: '100%' }}
+					>
 						<FormLabel component="legend">Variant</FormLabel>
-						<RadioGroup value={variant} onChange={(e) => setVariant(e.target.value as any)}>
-							<FormControlLabel value="regular" control={<Radio />} label="Regular" />
-							<FormControlLabel value="dense" control={<Radio />} label="Dense" />
-							<FormControlLabel value="prominent" control={<Radio />} label="Prominent" />
+						<RadioGroup
+							value={variant}
+							onChange={(e) => setVariant(e.target.value as 'dense' | 'regular' | 'prominent')}
+						>
+							<FormControlLabel
+								value="regular"
+								control={<Radio />}
+								label="Regular"
+							/>
+							<FormControlLabel
+								value="dense"
+								control={<Radio />}
+								label="Dense"
+							/>
+							<FormControlLabel
+								value="prominent"
+								control={<Radio />}
+								label="Prominent"
+							/>
 						</RadioGroup>
 					</FormControl>
 
 					{/* Feature Toggles */}
 					<Box sx={{ mb: 3 }}>
-						<Typography variant="subtitle2" gutterBottom>
+						<Typography
+							variant="subtitle2"
+							gutterBottom
+						>
 							Features
 						</Typography>
 						<FormControlLabel
-							control={<Switch checked={hideOnScroll} onChange={(e) => setHideOnScroll(e.target.checked)} />}
+							control={
+								<Switch
+									checked={hideOnScroll}
+									onChange={(e) => setHideOnScroll(e.target.checked)}
+								/>
+							}
 							label="Hide on Scroll"
 						/>
 						<FormControlLabel
-							control={<Switch checked={enableColorOnDark} onChange={(e) => setEnableColorOnDark(e.target.checked)} />}
+							control={
+								<Switch
+									checked={enableColorOnDark}
+									onChange={(e) => setEnableColorOnDark(e.target.checked)}
+								/>
+							}
 							label="Enable Color on Dark"
 						/>
 						<FormControlLabel
-							control={<Switch checked={showBreadcrumbs} onChange={(e) => setShowBreadcrumbs(e.target.checked)} />}
+							control={
+								<Switch
+									checked={showBreadcrumbs}
+									onChange={(e) => setShowBreadcrumbs(e.target.checked)}
+								/>
+							}
 							label="Show Breadcrumbs"
 						/>
 						<FormControlLabel
-							control={<Switch checked={showSearch} onChange={(e) => setShowSearch(e.target.checked)} />}
+							control={
+								<Switch
+									checked={showSearch}
+									onChange={(e) => setShowSearch(e.target.checked)}
+								/>
+							}
 							label="Show Search"
 						/>
 						<FormControlLabel
-							control={<Switch checked={showNotifications} onChange={(e) => setShowNotifications(e.target.checked)} />}
+							control={
+								<Switch
+									checked={showNotifications}
+									onChange={(e) => setShowNotifications(e.target.checked)}
+								/>
+							}
 							label="Show Notifications"
 						/>
 						<FormControlLabel
-							control={<Switch checked={showUserMenu} onChange={(e) => setShowUserMenu(e.target.checked)} />}
+							control={
+								<Switch
+									checked={showUserMenu}
+									onChange={(e) => setShowUserMenu(e.target.checked)}
+								/>
+							}
 							label="Show User Menu"
 						/>
 					</Box>
 				</Paper>
 
 				{/* Features Overview */}
-				<Paper elevation={1} sx={{ p: 3 }}>
-					<Typography variant="h6" gutterBottom>
+				<Paper
+					elevation={1}
+					sx={{ p: 3 }}
+				>
+					<Typography
+						variant="h6"
+						gutterBottom
+					>
 						Key Features
 					</Typography>
 					<List>
 						{features.map((feature, index) => (
-							<ListItem key={index} alignItems="flex-start">
+							<ListItem
+								key={index}
+								alignItems="flex-start"
+							>
 								<ListItemIcon sx={{ mt: 1 }}>{feature.icon}</ListItemIcon>
-								<ListItemText primary={feature.title} secondary={feature.description} />
+								<ListItemText
+									primary={feature.title}
+									secondary={feature.description}
+								/>
 							</ListItem>
 						))}
 					</List>
@@ -231,15 +360,21 @@ function MaterialUIAppBarDemo() {
 			</Box>
 
 			{/* Variant Descriptions */}
-			<Paper elevation={1} sx={{ p: 3, mt: 4 }}>
-				<Typography variant="h6" gutterBottom>
+			<Paper
+				elevation={1}
+				sx={{ p: 3, mt: 4 }}
+			>
+				<Typography
+					variant="h6"
+					gutterBottom
+				>
 					AppBar Variants
 				</Typography>
 				<Box
 					sx={{
 						display: 'grid',
 						gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' },
-						gap: 3,
+						gap: 3
 					}}
 				>
 					{variants.map((variantInfo, index) => (
@@ -252,16 +387,22 @@ function MaterialUIAppBarDemo() {
 								'&:hover': { boxShadow: 2 },
 								...(variant === variantInfo.value && {
 									borderColor: 'primary.main',
-									boxShadow: 1,
-								}),
+									boxShadow: 1
+								})
 							}}
-							onClick={() => setVariant(variantInfo.value as any)}
+							onClick={() => setVariant(variantInfo.value as 'dense' | 'regular' | 'prominent')}
 						>
 							<CardContent>
-								<Typography variant="h6" gutterBottom>
+								<Typography
+									variant="h6"
+									gutterBottom
+								>
 									{variantInfo.title}
 								</Typography>
-								<Typography variant="body2" color="text.secondary">
+								<Typography
+									variant="body2"
+									color="text.secondary"
+								>
 									{variantInfo.description}
 								</Typography>
 							</CardContent>
@@ -271,15 +412,28 @@ function MaterialUIAppBarDemo() {
 			</Paper>
 
 			{/* Implementation Guide */}
-			<Paper elevation={1} sx={{ p: 3, mt: 4 }}>
-				<Typography variant="h6" gutterBottom>
+			<Paper
+				elevation={1}
+				sx={{ p: 3, mt: 4 }}
+			>
+				<Typography
+					variant="h6"
+					gutterBottom
+				>
 					Implementation Guide
 				</Typography>
-				<Alert severity="success" sx={{ mb: 2 }}>
+				<Alert
+					severity="success"
+					sx={{ mb: 2 }}
+				>
 					✅ Material-UI AppBar successfully migrated with all existing functionality preserved!
 				</Alert>
 
-				<Typography variant="subtitle2" gutterBottom sx={{ mt: 2 }}>
+				<Typography
+					variant="subtitle2"
+					gutterBottom
+					sx={{ mt: 2 }}
+				>
 					How to Use:
 				</Typography>
 				<Box
@@ -289,7 +443,7 @@ function MaterialUIAppBarDemo() {
 						p: 2,
 						borderRadius: 1,
 						overflow: 'auto',
-						fontSize: '0.875rem',
+						fontSize: '0.875rem'
 					}}
 				>
 					{`import MaterialUIAppBar from './components/MaterialUIAppBar';
@@ -309,37 +463,56 @@ function MaterialUIAppBarDemo() {
 />`}
 				</Box>
 
-				<Typography variant="subtitle2" gutterBottom sx={{ mt: 3 }}>
+				<Typography
+					variant="subtitle2"
+					gutterBottom
+					sx={{ mt: 3 }}
+				>
 					Migration Benefits:
 				</Typography>
 				<List dense>
 					<ListItem>
 						<ListItemIcon>
-							<CheckCircle color="success" fontSize="small" />
+							<CheckCircle
+								color="success"
+								fontSize="small"
+							/>
 						</ListItemIcon>
 						<ListItemText primary="100% Material-UI native components" />
 					</ListItem>
 					<ListItem>
 						<ListItemIcon>
-							<CheckCircle color="success" fontSize="small" />
+							<CheckCircle
+								color="success"
+								fontSize="small"
+							/>
 						</ListItemIcon>
 						<ListItemText primary="Improved accessibility with ARIA labels" />
 					</ListItem>
 					<ListItem>
 						<ListItemIcon>
-							<CheckCircle color="success" fontSize="small" />
+							<CheckCircle
+								color="success"
+								fontSize="small"
+							/>
 						</ListItemIcon>
 						<ListItemText primary="Better responsive behavior" />
 					</ListItem>
 					<ListItem>
 						<ListItemIcon>
-							<CheckCircle color="success" fontSize="small" />
+							<CheckCircle
+								color="success"
+								fontSize="small"
+							/>
 						</ListItemIcon>
 						<ListItemText primary="Enhanced theming support" />
 					</ListItem>
 					<ListItem>
 						<ListItemIcon>
-							<CheckCircle color="success" fontSize="small" />
+							<CheckCircle
+								color="success"
+								fontSize="small"
+							/>
 						</ListItemIcon>
 						<ListItemText primary="Modern features like hide on scroll" />
 					</ListItem>

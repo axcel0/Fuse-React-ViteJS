@@ -17,38 +17,38 @@ const Root = styled(Tooltip)<{ position: 'left' | 'right' }>(({ theme }) => ({
 		backgroundColor: theme.palette.background.paper,
 		transition: theme.transitions.create(['background-color', 'border-radius', 'width', 'min-width', 'padding'], {
 			easing: theme.transitions.easing.easeInOut,
-			duration: theme.transitions.duration.shorter,
+			duration: theme.transitions.duration.shorter
 		}),
 		'&:hover': {
 			width: 52,
 			paddingLeft: 8,
-			paddingRight: 8,
+			paddingRight: 8
 		},
 		'& > .button-icon': {
 			fontSize: 18,
 			transition: theme.transitions.create(['transform'], {
 				easing: theme.transitions.easing.easeInOut,
-				duration: theme.transitions.duration.short,
-			}),
-		},
+				duration: theme.transitions.duration.short
+			})
+		}
 	},
 	variants: [
 		{
 			props: {
-				position: 'left',
+				position: 'left'
 			},
 			style: {
 				'& > .button': {
 					borderBottomLeftRadius: 0,
 					borderTopLeftRadius: 0,
 					paddingLeft: 4,
-					left: 0,
-				},
-			},
+					left: 0
+				}
+			}
 		},
 		{
 			props: {
-				position: 'right',
+				position: 'right'
 			},
 			style: {
 				'& > .button': {
@@ -57,12 +57,12 @@ const Root = styled(Tooltip)<{ position: 'left' | 'right' }>(({ theme }) => ({
 					paddingRight: 4,
 					right: 0,
 					'& > .button-icon': {
-						transform: 'rotate(-180deg)',
-					},
-				},
-			},
-		},
-	],
+						transform: 'rotate(-180deg)'
+					}
+				}
+			}
+		}
+	]
 }));
 
 type NavbarToggleFabProps = {
@@ -83,8 +83,15 @@ function NavbarToggleFab(props: NavbarToggleFabProps) {
 			placement={position === 'left' ? 'right' : 'left'}
 			position={position as 'left' | 'right'}
 		>
-			<Fab className={clsx('button', className)} onClick={onClick} disableRipple>
-				<FuseSvgIcon color="action" className="button-icon">
+			<Fab
+				className={clsx('button', className)}
+				onClick={onClick}
+				disableRipple
+			>
+				<FuseSvgIcon
+					color="action"
+					className="button-icon"
+				>
 					heroicons-outline:bars-3
 				</FuseSvgIcon>
 			</Fab>

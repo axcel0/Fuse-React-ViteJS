@@ -8,7 +8,7 @@ import {
 	MRT_TablePagination,
 	MRT_ToolbarAlertBanner,
 	MRT_ToolbarDropZone,
-	MRT_ToolbarInternalButtons,
+	MRT_ToolbarInternalButtons
 } from 'material-react-table';
 import parseFromValuesOrFunc from 'src/components/data-table/utils/parseFromValuesOrFunc';
 
@@ -27,9 +27,9 @@ function DataTableTopToolbar<TData extends MRT_RowData>({ table }: MRT_TopToolba
 			positionGlobalFilter,
 			positionPagination,
 			positionToolbarDropZone,
-			renderTopToolbarCustomActions,
+			renderTopToolbarCustomActions
 		},
-		refs: { topToolbarRef },
+		refs: { topToolbarRef }
 	} = table;
 
 	const { isFullScreen, showGlobalFilter } = getState();
@@ -44,10 +44,10 @@ function DataTableTopToolbar<TData extends MRT_RowData>({ table }: MRT_TopToolba
 	const globalFilterProps = {
 		sx: !isTablet
 			? {
-					zIndex: 2,
+					zIndex: 2
 				}
 			: undefined,
-		table,
+		table
 	};
 	return (
 		<div className="flex flex-col w-full py-1 px-3 border-b-1">
@@ -68,22 +68,22 @@ function DataTableTopToolbar<TData extends MRT_RowData>({ table }: MRT_TopToolba
 						backgroundColor: table.options.mrtTheme.baseBackgroundColor,
 						transition: 'all 150ms ease-in-out',
 						zIndex: 1,
-						...(parseFromValuesOrFunc(toolbarProps?.sx, theme) as unknown as object),
+						...(parseFromValuesOrFunc(toolbarProps?.sx, theme) as unknown as object)
 					}),
 					isFullScreen
 						? {
-								position: 'sticky',
+								position: 'sticky'
 							}
 						: {
-								position: 'relative',
+								position: 'relative'
 							},
 					isFullScreen
 						? {
-								top: '0',
+								top: '0'
 							}
 						: {
-								top: null,
-							},
+								top: null
+							}
 				]}
 			>
 				{['both', 'top'].includes(positionToolbarDropZone ?? '') && <MRT_ToolbarDropZone table={table} />}
@@ -104,8 +104,8 @@ function DataTableTopToolbar<TData extends MRT_RowData>({ table }: MRT_TopToolba
 										'& .MuiOutlinedInput-root': {
 											height: 32,
 											minHeight: 32,
-											paddingX: 1,
-										},
+											paddingX: 1
+										}
 									}}
 								/>
 							)}
@@ -117,9 +117,15 @@ function DataTableTopToolbar<TData extends MRT_RowData>({ table }: MRT_TopToolba
 					)}
 				</div>
 				{enablePagination && ['both', 'top'].includes(positionPagination ?? '') && (
-					<MRT_TablePagination position="top" table={table} />
+					<MRT_TablePagination
+						position="top"
+						table={table}
+					/>
 				)}
-				<MRT_LinearProgressBar isTopToolbar table={table} />
+				<MRT_LinearProgressBar
+					isTopToolbar
+					table={table}
+				/>
 			</Box>
 			<MRT_ToolbarAlertBanner
 				className="mt-1 rounded-md flex justify-center"
@@ -130,8 +136,8 @@ function DataTableTopToolbar<TData extends MRT_RowData>({ table }: MRT_TopToolba
 						display: 'flex',
 						justifyContent: 'center',
 						width: '100%',
-						fontSize: 13,
-					},
+						fontSize: 13
+					}
 				}}
 			/>
 		</div>

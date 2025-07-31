@@ -20,7 +20,7 @@ function checkDeps(deps: DependencyListType) {
 
 	if (deps.every(isPrimitive)) {
 		throw new Error(
-			'useDeepCompareEffect should not be used with dependencies that are all primitive values. Use React.useEffect instead.',
+			'useDeepCompareEffect should not be used with dependencies that are all primitive values. Use React.useEffect instead.'
 		);
 	}
 }
@@ -65,7 +65,7 @@ function useDeepCompareEffect(callback: EffectCallbackType, dependencies: Depend
 
 export function useDeepCompareEffectNoCheck(
 	callback: EffectCallbackType,
-	dependencies: DependencyListType,
+	dependencies: DependencyListType
 ): UseEffectReturn {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	return useEffect(callback, useDeepCompareMemoize(dependencies));

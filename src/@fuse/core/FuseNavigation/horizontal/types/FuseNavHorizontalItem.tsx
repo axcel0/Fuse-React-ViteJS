@@ -17,16 +17,16 @@ const Root = styled(ListItemButton)<ListItemButtonProps>(({ theme }) => ({
 		backgroundColor: `${theme.palette.secondary.main}!important`,
 		color: `${theme.palette.secondary.contrastText}!important`,
 		'& .fuse-list-item-text-primary': {
-			color: 'inherit',
+			color: 'inherit'
 		},
 		'& .fuse-list-item-icon': {
-			color: 'inherit',
-		},
+			color: 'inherit'
+		}
 	},
 	'& .fuse-list-item-icon': {},
 	'& .fuse-list-item-text': {
-		padding: '0 0 0 16px',
-	},
+		padding: '0 0 0 16px'
+	}
 }));
 
 type FuseNavHorizontalItemProps = FuseNavItemComponentProps & WithRouterProps;
@@ -45,10 +45,10 @@ function FuseNavHorizontalItem(props: FuseNavHorizontalItemProps) {
 				to: item.url || '',
 				end: item.end,
 				role: 'button',
-				exact: item?.exact,
-			}),
+				exact: item?.exact
+			})
 		}),
-		[item, component],
+		[item, component]
 	);
 
 	const memoizedContent = useMemo(
@@ -60,7 +60,10 @@ function FuseNavHorizontalItem(props: FuseNavHorizontalItemProps) {
 				{...itemProps}
 			>
 				{item.icon && (
-					<FuseSvgIcon className={clsx('fuse-list-item-icon shrink-0', item.iconClass)} color="action">
+					<FuseSvgIcon
+						className={clsx('fuse-list-item-icon shrink-0', item.iconClass)}
+						color="action"
+					>
 						{item.icon}
 					</FuseSvgIcon>
 				)}
@@ -71,10 +74,15 @@ function FuseNavHorizontalItem(props: FuseNavHorizontalItemProps) {
 					classes={{ primary: 'text-md fuse-list-item-text-primary truncate' }}
 				/>
 
-				{item.badge && <FuseNavBadge className="ltr:ml-2 rtl:mr-2" badge={item.badge} />}
+				{item.badge && (
+					<FuseNavBadge
+						className="ltr:ml-2 rtl:mr-2"
+						badge={item.badge}
+					/>
+				)}
 			</Root>
 		),
-		[component, item.active, item.badge, item.icon, item.iconClass, item.sx, item.title, itemProps],
+		[component, item.active, item.badge, item.icon, item.iconClass, item.sx, item.title, itemProps]
 	);
 
 	if (checkPermission && !item?.hasPermission) {

@@ -47,7 +47,7 @@ function PageBreadcrumb(props: PageBreadcrumbProps) {
 				acc.push({ title, url });
 				return acc;
 			},
-			skipHome ? [] : [{ title: 'Home', url: '/' }],
+			skipHome ? [] : [{ title: 'Home', url: '/' }]
 		);
 
 	return (

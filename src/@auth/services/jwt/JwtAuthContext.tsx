@@ -19,7 +19,7 @@ const defaultAuthContext: JwtAuthContextType = {
 	signIn: null,
 	signUp: null,
 	signOut: null,
-	refreshToken: null,
+	refreshToken: null
 };
 
 const JwtAuthContext = createContext<JwtAuthContextType>(defaultAuthContext);

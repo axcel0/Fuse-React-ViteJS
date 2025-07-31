@@ -16,7 +16,7 @@ const getInitialSettings = (): FuseSettingsConfigType => {
 	const defaultLayoutStyle = settingsConfig.layout?.style || 'layout1';
 	const layout = {
 		style: defaultLayoutStyle,
-		config: themeLayoutConfigs[defaultLayoutStyle]?.defaults,
+		config: themeLayoutConfigs[defaultLayoutStyle]?.defaults
 	};
 	return _.merge({}, defaultSettings, { layout }, settingsConfig, getParsedQuerySettings());
 };
@@ -30,17 +30,17 @@ interface FuseSettingsProviderProps extends WithRouterProps {
 
 const generateSettings = (
 	_defaultSettings: FuseSettingsConfigType,
-	_newSettings: PartialDeep<FuseSettingsConfigType>,
+	_newSettings: PartialDeep<FuseSettingsConfigType>
 ) => {
 	return _.merge(
 		{},
 		_defaultSettings,
 		{
 			layout: {
-				config: themeLayoutConfigs[_newSettings?.layout?.style]?.defaults,
-			},
+				config: themeLayoutConfigs[_newSettings?.layout?.style]?.defaults
+			}
 		},
-		_newSettings,
+		_newSettings
 	);
 };
 class FuseSettingsProvider extends Component<FuseSettingsProviderProps, FuseSettingsProviderState> {
@@ -55,7 +55,7 @@ class FuseSettingsProvider extends Component<FuseSettingsProviderProps, FuseSett
 			initial,
 			defaults: _.merge({}, initial),
 			data: _.merge({}, initial),
-			userSettings,
+			userSettings
 		};
 	}
 
@@ -64,7 +64,9 @@ class FuseSettingsProvider extends Component<FuseSettingsProviderProps, FuseSett
 
 		const userSettingsChanged = !_.isEqual(user?.settings, prevState.userSettings);
 
-		const defaults = userSettingsChanged ? generateSettings(prevState.defaults, user?.settings) : prevState.defaults;
+		const defaults = userSettingsChanged
+			? generateSettings(prevState.defaults, user?.settings)
+			: prevState.defaults;
 
 		const matchedSettings = getFuseRouteParamUtil(location.pathname, 'settings', true);
 
@@ -85,7 +87,7 @@ class FuseSettingsProvider extends Component<FuseSettingsProviderProps, FuseSett
 		this.setState((prevState) => {
 			return {
 				...prevState,
-				defaults: newDefaults,
+				defaults: newDefaults
 			};
 		});
 
@@ -101,7 +103,7 @@ class FuseSettingsProvider extends Component<FuseSettingsProviderProps, FuseSett
 			data,
 			initial,
 			defaults,
-			setSettings,
+			setSettings
 		};
 
 		return <FuseSettingsContext value={contextValue}>{children}</FuseSettingsContext>;

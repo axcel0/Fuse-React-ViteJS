@@ -19,7 +19,7 @@ interface NavbarContextType {
 const defaultNavbarState: NavbarState = {
 	open: true,
 	mobileOpen: false,
-	foldedOpen: false,
+	foldedOpen: false
 };
 
 const NavbarContext = createContext<NavbarContextType | undefined>(undefined);
@@ -60,7 +60,7 @@ export const NavbarProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 				navbarCloseMobile,
 				navbarCloseFolded,
 				navbarOpenFolded,
-				resetNavbar,
+				resetNavbar
 			}}
 		>
 			{children}

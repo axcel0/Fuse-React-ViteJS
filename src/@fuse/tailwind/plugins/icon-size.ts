@@ -13,9 +13,9 @@ const iconSize = plugin(({ addUtilities, theme, matchUtilities }) => {
 		'.icon-size-0': {
 			'& svg': {
 				width: '0',
-				height: '0',
-			},
-		},
+				height: '0'
+			}
+		}
 	});
 
 	// Using matchUtilities for dynamic values
@@ -24,13 +24,13 @@ const iconSize = plugin(({ addUtilities, theme, matchUtilities }) => {
 			'icon-size': (value: string) => ({
 				'& svg': {
 					width: value,
-					height: value,
-				},
-			}),
+					height: value
+				}
+			})
 		},
 		{
-			values: spacingScale,
-		},
+			values: spacingScale
+		}
 	);
 
 	matchUtilities(
@@ -38,13 +38,13 @@ const iconSize = plugin(({ addUtilities, theme, matchUtilities }) => {
 			'icon-size': (value: string) => ({
 				'& svg': {
 					width: value,
-					height: value,
-				},
-			}),
+					height: value
+				}
+			})
 		},
 		{
-			type: ['length', 'number'],
-		},
+			type: ['length', 'number']
+		}
 	);
 });
 

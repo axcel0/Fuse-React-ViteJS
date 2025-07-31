@@ -19,56 +19,56 @@ const StyledSnackbar = styled(Snackbar)<StyledSnackbarProps>(({ theme }) => ({
 	variants: [
 		{
 			props: {
-				variant: 'success',
+				variant: 'success'
 			},
 			style: {
 				'& .FuseMessage-content': {
 					backgroundColor: green[600],
-					color: '#FFFFFF',
-				},
-			},
+					color: '#FFFFFF'
+				}
+			}
 		},
 		{
 			props: {
-				variant: 'error',
+				variant: 'error'
 			},
 			style: {
 				'& .FuseMessage-content': {
 					backgroundColor: theme.palette.error.dark,
-					color: theme.palette.getContrastText(theme.palette.error.dark),
-				},
-			},
+					color: theme.palette.getContrastText(theme.palette.error.dark)
+				}
+			}
 		},
 		{
 			props: {
-				variant: 'info',
+				variant: 'info'
 			},
 			style: {
 				'& .FuseMessage-content': {
 					backgroundColor: blue[600],
-					color: '#FFFFFF',
-				},
-			},
+					color: '#FFFFFF'
+				}
+			}
 		},
 		{
 			props: {
-				variant: 'warning',
+				variant: 'warning'
 			},
 			style: {
 				'& .FuseMessage-content': {
 					backgroundColor: amber[600],
-					color: '#FFFFFF',
-				},
-			},
-		},
-	],
+					color: '#FFFFFF'
+				}
+			}
+		}
+	]
 }));
 
 const variantIcon = {
 	success: 'check_circle',
 	warning: 'warning',
 	error: 'error_outline',
-	info: 'info',
+	info: 'info'
 };
 
 /**
@@ -97,9 +97,15 @@ function FuseMessage() {
 					</div>
 				}
 				action={[
-					<IconButton key="close" aria-label="Close" color="inherit" onClick={() => hideMessage()} size="large">
+					<IconButton
+						key="close"
+						aria-label="Close"
+						color="inherit"
+						onClick={() => hideMessage()}
+						size="large"
+					>
 						<FuseSvgIcon>heroicons-outline:x-mark</FuseSvgIcon>
-					</IconButton>,
+					</IconButton>
 				]}
 			/>
 		</StyledSnackbar>

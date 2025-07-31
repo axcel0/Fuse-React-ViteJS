@@ -21,23 +21,26 @@ function SectionPreview(props: SectionPreviewProps) {
 				sx={[
 					section === 'navbar'
 						? {
-								backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.3),
+								backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.3)
 							}
 						: {
 								backgroundColor: (theme) =>
-									lighten(theme.palette.background.default, theme.palette.mode === 'light' ? 0.4 : 0.02),
+									lighten(
+										theme.palette.background.default,
+										theme.palette.mode === 'light' ? 0.4 : 0.02
+									)
 							},
 					section === 'navbar'
 						? {
 								'& > div': {
-									backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.3),
-								},
+									backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.3)
+								}
 							}
 						: {
 								'& > div': {
-									backgroundColor: (theme) => theme.palette.divider,
-								},
-							},
+									backgroundColor: (theme) => theme.palette.divider
+								}
+							}
 				]}
 				className="w-8 space-y-0.25 px-1.5 pt-3"
 			>
@@ -52,23 +55,26 @@ function SectionPreview(props: SectionPreviewProps) {
 					sx={[
 						section === 'toolbar'
 							? {
-									backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.3),
+									backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.3)
 								}
 							: {
 									backgroundColor: (theme) =>
-										lighten(theme.palette.background.default, theme.palette.mode === 'light' ? 0.4 : 0.02),
+										lighten(
+											theme.palette.background.default,
+											theme.palette.mode === 'light' ? 0.4 : 0.02
+										)
 								},
 						section === 'toolbar'
 							? {
 									'& > div': {
-										backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.3),
-									},
+										backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.3)
+									}
 								}
 							: {
 									'& > div': {
-										backgroundColor: (theme) => theme.palette.divider,
-									},
-								},
+										backgroundColor: (theme) => theme.palette.divider
+									}
+								}
 					]}
 					className={clsx('flex h-3 items-center justify-end pr-1.5')}
 				>
@@ -80,12 +86,15 @@ function SectionPreview(props: SectionPreviewProps) {
 					sx={[
 						section === 'main'
 							? {
-									backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.3),
+									backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.3)
 								}
 							: {
 									backgroundColor: (theme) =>
-										lighten(theme.palette.background.default, theme.palette.mode === 'light' ? 0.4 : 0.02),
-								},
+										lighten(
+											theme.palette.background.default,
+											theme.palette.mode === 'light' ? 0.4 : 0.02
+										)
+								}
 					]}
 					className={clsx('flex flex-auto border-y')}
 				/>
@@ -93,23 +102,26 @@ function SectionPreview(props: SectionPreviewProps) {
 					sx={[
 						section === 'footer'
 							? {
-									backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.3),
+									backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.3)
 								}
 							: {
 									backgroundColor: (theme) =>
-										lighten(theme.palette.background.default, theme.palette.mode === 'light' ? 0.4 : 0.02),
+										lighten(
+											theme.palette.background.default,
+											theme.palette.mode === 'light' ? 0.4 : 0.02
+										)
 								},
 						section === 'footer'
 							? {
 									'& > div': {
-										backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.3),
-									},
+										backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.3)
+									}
 								}
 							: {
 									'& > div': {
-										backgroundColor: (theme) => theme.palette.divider,
-									},
-								},
+										backgroundColor: (theme) => theme.palette.divider
+									}
+								}
 					]}
 					className={clsx('flex h-3 items-center pr-1.5')}
 				>

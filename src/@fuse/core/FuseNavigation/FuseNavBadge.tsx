@@ -13,7 +13,7 @@ const Root = styled('div')(({ theme }) => ({
 	display: 'flex',
 	alignItems: 'center',
 	backgroundColor: theme.palette.secondary.main,
-	color: theme.palette.secondary.contrastText,
+	color: theme.palette.secondary.contrastText
 }));
 
 type FuseNavBadgeProps = {
@@ -35,7 +35,7 @@ function FuseNavBadge(props: FuseNavBadgeProps) {
 			className={clsx('item-badge', className, classes)}
 			style={{
 				backgroundColor: badge.bg,
-				color: badge.fg,
+				color: badge.fg
 			}}
 		>
 			{badge.title}

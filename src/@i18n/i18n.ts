@@ -7,9 +7,9 @@ import { initReactI18next } from 'react-i18next';
 const resources = {
 	en: {
 		translation: {
-			'Welcome to React': 'Welcome to React and react-i18next',
-		},
-	},
+			'Welcome to React': 'Welcome to React and react-i18next'
+		}
+	}
 };
 
 /**
@@ -17,8 +17,7 @@ const resources = {
  * The keySeparator option is set to false because we do not use keys in form messages.welcome.
  * The interpolation option is set to false because we do not use interpolation in form messages.welcome.
  */
-i18n
-	.use(initReactI18next) // passes i18n down to react-i18next
+i18n.use(initReactI18next) // passes i18n down to react-i18next
 	.init({
 		resources,
 		lng: 'en',
@@ -26,8 +25,8 @@ i18n
 		keySeparator: false, // we do not use keys in form messages.welcome
 
 		interpolation: {
-			escapeValue: false, // react already safes from xss
-		},
+			escapeValue: false // react already safes from xss
+		}
 	});
 
 export default i18n;

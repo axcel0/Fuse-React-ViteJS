@@ -22,7 +22,7 @@ export type { InputProps, TextareaProps, SelectProps } from './components/Input'
 export const DesignSystem = {
 	Button: () => import('./components/Button'),
 	Card: () => import('./components/Card'),
-	Input: () => import('./components/Input'),
+	Input: () => import('./components/Input')
 };
 
 export const Components = {
@@ -30,7 +30,7 @@ export const Components = {
 	Card: () => import('./components/Card'),
 	Input: () => import('./components/Input'),
 	Textarea: () => import('./components/Input').then((m) => ({ default: m.Textarea })),
-	Select: () => import('./components/Input').then((m) => ({ default: m.Select })),
+	Select: () => import('./components/Input').then((m) => ({ default: m.Select }))
 };
 
 // ===== THEME INTEGRATION =====

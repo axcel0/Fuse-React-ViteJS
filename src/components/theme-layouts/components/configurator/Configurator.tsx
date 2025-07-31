@@ -27,21 +27,21 @@ const Root = styled('div')(({ theme }) => ({
 	color: theme.palette.getContrastText(red[500]),
 	backgroundColor: red[400],
 	'&:hover': {
-		backgroundColor: red[500],
+		backgroundColor: red[500]
 	},
 	'& .settingsButton': {
 		'& > span': {
-			animation: 'rotating 3s linear infinite',
-		},
+			animation: 'rotating 3s linear infinite'
+		}
 	},
 	'@keyframes rotating': {
 		from: {
-			transform: 'rotate(0deg)',
+			transform: 'rotate(0deg)'
 		},
 		to: {
-			transform: 'rotate(360deg)',
-		},
-	},
+			transform: 'rotate(360deg)'
+		}
+	}
 }));
 
 /**
@@ -54,7 +54,7 @@ function Configurator() {
 
 	const handlerOptions = {
 		onSwipedLeft: () => Boolean(open) && theme.direction === 'rtl' && handleClose(),
-		onSwipedRight: () => Boolean(open) && theme.direction === 'ltr' && handleClose(),
+		onSwipedRight: () => Boolean(open) && theme.direction === 'ltr' && handleClose()
 	};
 
 	const settingsHandlers = useSwipeable(handlerOptions);
@@ -74,7 +74,10 @@ function Configurator() {
 
 	return (
 		<>
-			<Root id="fuse-settings-panel" className="buttonWrapper">
+			<Root
+				id="fuse-settings-panel"
+				className="buttonWrapper"
+			>
 				<Button
 					className="settingsButton m-0 h-9 w-9 min-w-9"
 					onClick={() => handleOpen('settings')}
@@ -101,9 +104,17 @@ function Configurator() {
 				</Button>
 			</Root>
 
-			<SettingsPanel open={Boolean(open === 'settings')} onClose={handleClose} settingsHandlers={settingsHandlers} />
+			<SettingsPanel
+				open={Boolean(open === 'settings')}
+				onClose={handleClose}
+				settingsHandlers={settingsHandlers}
+			/>
 
-			<ThemesPanel schemesHandlers={schemesHandlers} onClose={handleClose} open={Boolean(open === 'schemes')} />
+			<ThemesPanel
+				schemesHandlers={schemesHandlers}
+				onClose={handleClose}
+				open={Boolean(open === 'schemes')}
+			/>
 		</>
 	);
 }

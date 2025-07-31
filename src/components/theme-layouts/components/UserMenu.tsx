@@ -43,15 +43,18 @@ function UserMenu(props: UserMenuProps) {
 	return (
 		<>
 			<Button
-				className={clsx('user-menu flex justify-start shrink-0 min-h-14 h-14 rounded-lg p-2 space-x-3', className)}
+				className={clsx(
+					'user-menu flex justify-start shrink-0 min-h-14 h-14 rounded-lg p-2 space-x-3',
+					className
+				)}
 				sx={(theme) => ({
 					borderColor: theme.palette.divider,
 					'&:hover, &:focus': {
 						backgroundColor: alpha(theme.palette.divider, 0.6),
 						...theme.applyStyles('dark', {
-							backgroundColor: alpha(theme.palette.divider, 0.1),
-						}),
-					},
+							backgroundColor: alpha(theme.palette.divider, 0.1)
+						})
+					}
 				})}
 				onClick={userMenuClick}
 				color="inherit"
@@ -60,7 +63,7 @@ function UserMenu(props: UserMenuProps) {
 					<Avatar
 						sx={(theme) => ({
 							background: theme.palette.background.default,
-							color: theme.palette.text.secondary,
+							color: theme.palette.text.secondary
 						})}
 						className="avatar w-10 h-10 rounded-lg"
 						alt="user photo"
@@ -71,7 +74,7 @@ function UserMenu(props: UserMenuProps) {
 					<Avatar
 						sx={(theme) => ({
 							background: (theme) => darken(theme.palette.background.default, 0.05),
-							color: theme.palette.text.secondary,
+							color: theme.palette.text.secondary
 						})}
 						className="avatar md:mx-1"
 					>
@@ -101,11 +104,17 @@ function UserMenu(props: UserMenuProps) {
 							</>
 						}
 					>
-						<FuseSvgIcon className="info-icon" size={20}>
+						<FuseSvgIcon
+							className="info-icon"
+							size={20}
+						>
 							heroicons-outline:information-circle
 						</FuseSvgIcon>
 					</Tooltip>
-					<FuseSvgIcon className="arrow" size={13}>
+					<FuseSvgIcon
+						className="arrow"
+						size={13}
+					>
 						{arrowIcon}
 					</FuseSvgIcon>
 				</div>
@@ -116,26 +125,34 @@ function UserMenu(props: UserMenuProps) {
 				onClose={userMenuClose}
 				anchorOrigin={{
 					vertical: 'top',
-					horizontal: 'center',
+					horizontal: 'center'
 				}}
 				transformOrigin={{
 					vertical: 'bottom',
-					horizontal: 'center',
+					horizontal: 'center'
 				}}
 				classes={{
-					paper: 'py-2 min-w-64',
+					paper: 'py-2 min-w-64'
 				}}
 				{...popoverProps}
 			>
 				{isGuest ? (
 					<>
-						<MenuItem component={Link} to="/sign-in" role="button">
+						<MenuItem
+							component={Link}
+							to="/sign-in"
+							role="button"
+						>
 							<ListItemIcon className="min-w-9">
 								<FuseSvgIcon>heroicons-outline:lock-closed</FuseSvgIcon>
 							</ListItemIcon>
 							<ListItemText primary="Sign In" />
 						</MenuItem>
-						<MenuItem component={Link} to="/sign-up" role="button">
+						<MenuItem
+							component={Link}
+							to="/sign-up"
+							role="button"
+						>
 							<ListItemIcon className="min-w-9">
 								<FuseSvgIcon>heroicons-outline:user-plus</FuseSvgIcon>
 							</ListItemIcon>

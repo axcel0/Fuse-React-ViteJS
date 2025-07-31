@@ -20,7 +20,7 @@ function useDebounce<T extends (...args: never[]) => void>(callback: T, delay: n
 		_.debounce((...args: never[]) => {
 			callbackRef.current(...args);
 		}, delay),
-		[delay],
+		[delay]
 	);
 
 	useEffect(() => {

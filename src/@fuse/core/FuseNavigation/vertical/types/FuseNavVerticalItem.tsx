@@ -25,7 +25,7 @@ const Root = styled(ListItemButton)<ListItemButtonStyleProps>(({ theme, ...props
 	cursor: 'pointer',
 	textDecoration: 'none!important',
 	'&:hover': {
-		color: theme.palette.text.primary,
+		color: theme.palette.text.primary
 	},
 	'&.active': {
 		color: theme.palette.text.primary,
@@ -33,17 +33,17 @@ const Root = styled(ListItemButton)<ListItemButtonStyleProps>(({ theme, ...props
 			theme.palette.mode === 'light' ? 'rgba(0, 0, 0, .05)!important' : 'rgba(255, 255, 255, .1)!important',
 		transition: 'border-radius .15s cubic-bezier(0.4,0.0,0.2,1)',
 		'& > .fuse-list-item-text-primary': {
-			color: 'inherit',
+			color: 'inherit'
 		},
 		'& > .fuse-list-item-icon': {
-			color: 'inherit',
-		},
+			color: 'inherit'
+		}
 	},
 	'& > .fuse-list-item-icon': {
 		marginRight: 16,
-		color: 'inherit',
+		color: 'inherit'
 	},
-	'& > .fuse-list-item-text': {},
+	'& > .fuse-list-item-text': {}
 }));
 
 /**
@@ -61,10 +61,10 @@ function FuseNavVerticalItem(props: FuseNavItemComponentProps) {
 				to: item.url || '',
 				end: item.end,
 				role: 'button',
-				exact: item?.exact,
-			}),
+				exact: item?.exact
+			})
 		}),
-		[item, component],
+		[item, component]
 	);
 
 	const memoizedContent = useMemo(
@@ -78,7 +78,10 @@ function FuseNavVerticalItem(props: FuseNavItemComponentProps) {
 				{...itemProps}
 			>
 				{item.icon && (
-					<FuseSvgIcon className={clsx('fuse-list-item-icon shrink-0', item.iconClass)} color="action">
+					<FuseSvgIcon
+						className={clsx('fuse-list-item-icon shrink-0', item.iconClass)}
+						color="action"
+					>
 						{item.icon}
 					</FuseSvgIcon>
 				)}
@@ -89,13 +92,13 @@ function FuseNavVerticalItem(props: FuseNavItemComponentProps) {
 					secondary={item.subtitle}
 					classes={{
 						primary: 'text-md font-medium fuse-list-item-text-primary truncate',
-						secondary: 'text-sm font-medium fuse-list-item-text-secondary leading-[1.5] truncate',
+						secondary: 'text-sm font-medium fuse-list-item-text-secondary leading-[1.5] truncate'
 					}}
 				/>
 				{item.badge && <FuseNavBadge badge={item.badge} />}
 			</Root>
 		),
-		[component, item, itemProps, itempadding, onItemClick],
+		[component, item, itemProps, itempadding, onItemClick]
 	);
 
 	if (checkPermission && !item?.hasPermission) {

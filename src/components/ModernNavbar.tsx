@@ -22,7 +22,10 @@ const ModernNavbar: React.FC<ModernNavbarProps> = ({ className, children }) => {
 		<>
 			{/* Mobile Menu Overlay */}
 			{isMobileMenuOpen && (
-				<div className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden" onClick={toggleMobileMenu} />
+				<div
+					className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+					onClick={toggleMobileMenu}
+				/>
 			)}
 
 			{/* Sidebar */}
@@ -31,7 +34,7 @@ const ModernNavbar: React.FC<ModernNavbarProps> = ({ className, children }) => {
 					'fixed inset-y-0 left-0 z-50 bg-white dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800 transition-all duration-300',
 					isCollapsed ? 'w-16' : 'w-64',
 					isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
-					className,
+					className
 				)}
 			>
 				{/* Header */}
@@ -50,20 +53,25 @@ const ModernNavbar: React.FC<ModernNavbarProps> = ({ className, children }) => {
 						onClick={toggleSidebar}
 						className={cn(
 							'hidden lg:flex items-center justify-center w-8 h-8 rounded-md bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 transition-colors',
-							isCollapsed && 'mx-auto',
+							isCollapsed && 'mx-auto'
 						)}
 						aria-label="Toggle sidebar"
 					>
 						<svg
 							className={cn(
 								'w-4 h-4 text-neutral-600 dark:text-neutral-400 transition-transform duration-200',
-								isCollapsed && 'rotate-180',
+								isCollapsed && 'rotate-180'
 							)}
 							fill="none"
 							stroke="currentColor"
 							viewBox="0 0 24 24"
 						>
-							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M15 19l-7-7 7-7"
+							/>
 						</svg>
 					</button>
 				</div>
@@ -72,11 +80,36 @@ const ModernNavbar: React.FC<ModernNavbarProps> = ({ className, children }) => {
 				<div className="flex-1 overflow-y-auto p-4">
 					{/* Navigation Items */}
 					<nav className="space-y-2">
-						<NavItem icon="🏠" label="Dashboard" href="/" isCollapsed={isCollapsed} />
-						<NavItem icon="📊" label="Analytics" href="/analytics" isCollapsed={isCollapsed} />
-						<NavItem icon="👥" label="Users" href="/users" isCollapsed={isCollapsed} />
-						<NavItem icon="⚙️" label="Settings" href="/settings" isCollapsed={isCollapsed} />
-						<NavItem icon="🎨" label="Design System" href="/design-system-demo" isCollapsed={isCollapsed} />
+						<NavItem
+							icon="🏠"
+							label="Dashboard"
+							href="/"
+							isCollapsed={isCollapsed}
+						/>
+						<NavItem
+							icon="📊"
+							label="Analytics"
+							href="/analytics"
+							isCollapsed={isCollapsed}
+						/>
+						<NavItem
+							icon="👥"
+							label="Users"
+							href="/users"
+							isCollapsed={isCollapsed}
+						/>
+						<NavItem
+							icon="⚙️"
+							label="Settings"
+							href="/settings"
+							isCollapsed={isCollapsed}
+						/>
+						<NavItem
+							icon="🎨"
+							label="Design System"
+							href="/design-system-demo"
+							isCollapsed={isCollapsed}
+						/>
 					</nav>
 				</div>
 
@@ -88,8 +121,12 @@ const ModernNavbar: React.FC<ModernNavbarProps> = ({ className, children }) => {
 								<span className="text-xs font-medium text-neutral-600 dark:text-neutral-400">U</span>
 							</div>
 							<div className="flex-1 min-w-0">
-								<p className="text-sm font-medium text-neutral-900 dark:text-neutral-100 truncate">John Doe</p>
-								<p className="text-xs text-neutral-500 dark:text-neutral-400 truncate">john@example.com</p>
+								<p className="text-sm font-medium text-neutral-900 dark:text-neutral-100 truncate">
+									John Doe
+								</p>
+								<p className="text-xs text-neutral-500 dark:text-neutral-400 truncate">
+									john@example.com
+								</p>
 							</div>
 						</div>
 					) : (
@@ -112,7 +149,12 @@ const ModernNavbar: React.FC<ModernNavbarProps> = ({ className, children }) => {
 					stroke="currentColor"
 					viewBox="0 0 24 24"
 				>
-					<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+					<path
+						strokeLinecap="round"
+						strokeLinejoin="round"
+						strokeWidth={2}
+						d="M4 6h16M4 12h16M4 18h16"
+					/>
 				</svg>
 			</button>
 
@@ -120,7 +162,7 @@ const ModernNavbar: React.FC<ModernNavbarProps> = ({ className, children }) => {
 			<main
 				className={cn(
 					'transition-all duration-300 min-h-screen bg-neutral-50 dark:bg-neutral-900',
-					isCollapsed ? 'lg:ml-16' : 'lg:ml-64',
+					isCollapsed ? 'lg:ml-16' : 'lg:ml-64'
 				)}
 			>
 				{children}
@@ -146,7 +188,7 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, href, isCollapsed, isAct
 				isActive
 					? 'bg-primary-100 text-primary-900 dark:bg-primary-900 dark:text-primary-100'
 					: 'text-neutral-700 hover:bg-neutral-100 dark:text-neutral-300 dark:hover:bg-neutral-800',
-				isCollapsed && 'justify-center',
+				isCollapsed && 'justify-center'
 			)}
 			title={isCollapsed ? label : undefined}
 		>

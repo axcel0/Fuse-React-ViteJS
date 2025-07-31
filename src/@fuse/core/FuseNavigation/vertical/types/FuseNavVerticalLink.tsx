@@ -25,18 +25,18 @@ const Root = styled(ListItemButton)<ListItemButtonStyleProps>(({ theme, ...props
 		color: `${theme.palette.secondary.contrastText}!important`,
 		transition: 'border-radius .15s cubic-bezier(0.4,0.0,0.2,1)',
 		'& > .fuse-list-item-text-primary': {
-			color: 'inherit',
+			color: 'inherit'
 		},
 		'& > .fuse-list-item-icon': {
-			color: 'inherit',
-		},
+			color: 'inherit'
+		}
 	},
 	'& > .fuse-list-item-icon': {
-		marginRight: 16,
+		marginRight: 16
 	},
 	'& > .fuse-list-item-text': {},
 	color: theme.palette.text.primary,
-	textDecoration: 'none!important',
+	textDecoration: 'none!important'
 }));
 
 /**
@@ -55,10 +55,10 @@ function FuseNavVerticalLink(props: FuseNavItemComponentProps) {
 				to: item.url,
 				role: 'button',
 				target: item.target ? item.target : '_blank',
-				exact: item?.exact,
-			}),
+				exact: item?.exact
+			})
 		}),
-		[item, component],
+		[item, component]
 	);
 
 	const memoizedContent = useMemo(
@@ -72,7 +72,10 @@ function FuseNavVerticalLink(props: FuseNavItemComponentProps) {
 				{...itemProps}
 			>
 				{item.icon && (
-					<FuseSvgIcon className={clsx('fuse-list-item-icon shrink-0', item.iconClass)} color="action">
+					<FuseSvgIcon
+						className={clsx('fuse-list-item-icon shrink-0', item.iconClass)}
+						color="action"
+					>
 						{item.icon}
 					</FuseSvgIcon>
 				)}
@@ -83,14 +86,14 @@ function FuseNavVerticalLink(props: FuseNavItemComponentProps) {
 					secondary={item.subtitle}
 					classes={{
 						primary: 'text-md font-medium fuse-list-item-text-primary truncate',
-						secondary: 'text-sm font-medium fuse-list-item-text-secondary leading-[1.5] truncate',
+						secondary: 'text-sm font-medium fuse-list-item-text-secondary leading-[1.5] truncate'
 					}}
 				/>
 
 				{item.badge && <FuseNavBadge badge={item.badge} />}
 			</Root>
 		),
-		[component, itempadding, item, itemProps, onItemClick],
+		[component, itempadding, item, itemProps, onItemClick]
 	);
 
 	if (checkPermission && !item?.hasPermission) {

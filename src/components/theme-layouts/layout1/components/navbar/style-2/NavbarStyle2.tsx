@@ -23,7 +23,7 @@ const Root = styled('div')<StyledNavBarPropsProps>(({ theme }) => ({
 	zIndex: 4,
 	[theme.breakpoints.up('lg')]: {
 		width: navbarWidth,
-		minWidth: navbarWidth,
+		minWidth: navbarWidth
 	},
 	variants: [
 		{
@@ -31,11 +31,11 @@ const Root = styled('div')<StyledNavBarPropsProps>(({ theme }) => ({
 			style: {
 				[theme.breakpoints.up('lg')]: {
 					width: 76,
-					minWidth: 76,
-				},
-			},
-		},
-	],
+					minWidth: 76
+				}
+			}
+		}
+	]
 }));
 
 type StyledNavBarProps = {
@@ -55,26 +55,26 @@ const StyledNavbar = styled('div')<StyledNavBarProps>(({ theme }) => ({
 	maxHeight: '100%',
 	transition: theme.transitions.create(['width', 'min-width'], {
 		easing: theme.transitions.easing.sharp,
-		duration: theme.transitions.duration.shorter,
+		duration: theme.transitions.duration.shorter
 	}),
 	variants: [
 		{
 			props: {
-				position: 'left',
+				position: 'left'
 			},
 			style: {
 				borderRight: `1px solid ${theme.palette.divider}`,
-				left: 0,
-			},
+				left: 0
+			}
 		},
 		{
 			props: {
-				position: 'right',
+				position: 'right'
 			},
 			style: {
 				borderLight: `1px solid ${theme.palette.divider}`,
-				right: 0,
-			},
+				right: 0
+			}
 		},
 		{
 			props: ({ folded }) => folded,
@@ -83,15 +83,15 @@ const StyledNavbar = styled('div')<StyledNavBarProps>(({ theme }) => ({
 				width: 76,
 				minWidth: 76,
 				top: 0,
-				bottom: 0,
-			},
+				bottom: 0
+			}
 		},
 		{
 			props: ({ foldedandopened }) => foldedandopened,
 			style: {
 				width: navbarWidth,
-				minWidth: navbarWidth,
-			},
+				minWidth: navbarWidth
+			}
 		},
 		{
 			props: ({ foldedandclosed }) => foldedandclosed,
@@ -99,22 +99,22 @@ const StyledNavbar = styled('div')<StyledNavBarProps>(({ theme }) => ({
 				'& .NavbarStyle2-content': {
 					'& .logo-icon': {
 						width: 44,
-						height: 44,
+						height: 44
 					},
 					'& .logo-text': {
-						opacity: 0,
+						opacity: 0
 					},
 					'& .react-badge': {
-						opacity: 0,
+						opacity: 0
 					},
 					'& .fuse-list-item': {
-						width: 52,
+						width: 52
 					},
 					'& .fuse-list-item-text, & .arrow-icon, & .item-badge': {
-						opacity: 0,
+						opacity: 0
 					},
 					'& .fuse-list-subheader .fuse-list-subheader-text': {
-						opacity: 0,
+						opacity: 0
 					},
 					'& .fuse-list-subheader:before': {
 						content: '""',
@@ -122,30 +122,30 @@ const StyledNavbar = styled('div')<StyledNavBarProps>(({ theme }) => ({
 						position: 'absolute',
 						minWidth: 16,
 						borderTop: '2px solid',
-						opacity: 0.2,
+						opacity: 0.2
 					},
 					'& .collapse-children': {
-						display: 'none',
+						display: 'none'
 					},
 					'& .user-menu': {
 						minWidth: 52,
 						'& .title': {
-							opacity: 0,
+							opacity: 0
 						},
 						'& .subtitle': {
-							opacity: 0,
+							opacity: 0
 						},
 						'& .info-icon': {
-							opacity: 0,
+							opacity: 0
 						},
 						'& .arrow': {
-							opacity: 0,
-						},
-					},
-				},
-			},
-		},
-	],
+							opacity: 0
+						}
+					}
+				}
+			}
+		}
+	]
 }));
 
 const StyledNavbarMobile = styled(SwipeableDrawer)<StyledNavBarProps>(({ theme }) => ({
@@ -156,9 +156,9 @@ const StyledNavbarMobile = styled(SwipeableDrawer)<StyledNavBarProps>(({ theme }
 		maxHeight: '100%',
 		transition: theme.transitions.create(['width', 'min-width'], {
 			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.shorter,
-		}),
-	},
+			duration: theme.transitions.duration.shorter
+		})
+	}
 }));
 
 /**
@@ -182,7 +182,12 @@ function NavbarStyle2() {
 	}, [resetNavbar]);
 
 	return (
-		<Root folded={folded ? 1 : 0} open={navbar.open} id="fuse-navbar" className="sticky top-0 z-20 h-screen shrink-0">
+		<Root
+			folded={folded ? 1 : 0}
+			open={navbar.open}
+			id="fuse-navbar"
+			className="sticky top-0 z-20 h-screen shrink-0"
+		>
 			{!isMobile && (
 				<StyledNavbar
 					className="hidden lg:flex sticky top-0 z-20 h-screen flex-auto shrink-0 flex-col overflow-hidden shadow-sm"
@@ -201,7 +206,7 @@ function NavbarStyle2() {
 				<StyledNavbarMobile
 					classes={{
 						root: 'flex lg:hidden',
-						paper: 'flex-col flex-auto h-full',
+						paper: 'flex-col flex-auto h-full'
 					}}
 					folded={folded ? 1 : 0}
 					foldedandopened={foldedandopened ? 1 : 0}
@@ -213,7 +218,7 @@ function NavbarStyle2() {
 					onOpen={() => {}}
 					disableSwipeToOpen
 					ModalProps={{
-						keepMounted: true, // Better open performance on mobile.
+						keepMounted: true // Better open performance on mobile.
 					}}
 				>
 					<NavbarStyle2Content className="NavbarStyle2-content" />

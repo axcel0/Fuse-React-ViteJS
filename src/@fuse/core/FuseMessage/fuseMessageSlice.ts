@@ -20,7 +20,7 @@ export { useFuseMessage, selectFuseMessageState, selectFuseMessageOptions };
 // Compatibility exports
 export const fuseMessageSlice = {
 	actions: { showMessage, hideMessage },
-	name: 'fuseMessage',
+	name: 'fuseMessage'
 };
 
 export type messageSliceType = typeof fuseMessageSlice;

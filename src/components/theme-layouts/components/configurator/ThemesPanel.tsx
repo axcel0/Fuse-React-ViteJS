@@ -28,8 +28,8 @@ const StyledDialog = styled(Dialog)(({ theme }) => ({
 		right: 0,
 		margin: 0,
 		zIndex: 1000,
-		borderRadius: 0,
-	},
+		borderRadius: 0
+	}
 }));
 
 type TransitionProps = {
@@ -47,7 +47,11 @@ function Transition(props: TransitionProps) {
 	}
 
 	return (
-		<Slide direction={theme.direction === 'ltr' ? 'left' : 'right'} ref={ref} {...other}>
+		<Slide
+			direction={theme.direction === 'ltr' ? 'left' : 'right'}
+			ref={ref}
+			{...other}
+		>
 			{children}
 		</Slide>
 	);
@@ -67,7 +71,7 @@ function ThemesPanel(props: ThemesPanelProps) {
 
 	async function handleThemeSelect(_theme: FuseThemeOption) {
 		const _newSettings = setSettings({
-			theme: { ..._theme?.section },
+			theme: { ..._theme?.section }
 		} as Partial<FuseSettingsConfigType>);
 
 		if (!isGuest) {
@@ -88,25 +92,38 @@ function ThemesPanel(props: ThemesPanelProps) {
 			onClose={onClose}
 			BackdropProps={{ invisible: true }}
 			classes={{
-				paper: 'shadow-lg',
+				paper: 'shadow-lg'
 			}}
 			{...schemesHandlers}
 		>
 			<FuseScrollbars className="p-4 sm:p-6">
-				<IconButton className="fixed top-0 z-10 ltr:right-0 rtl:left-0" onClick={onClose} size="large">
+				<IconButton
+					className="fixed top-0 z-10 ltr:right-0 rtl:left-0"
+					onClick={onClose}
+					size="large"
+				>
 					<FuseSvgIcon>heroicons-outline:x-mark</FuseSvgIcon>
 				</IconButton>
 
-				<Typography className="mb-8" variant="h6">
+				<Typography
+					className="mb-8"
+					variant="h6"
+				>
 					Theme Color Options
 				</Typography>
 
-				<Typography className="mb-6 text-justify text-md italic" color="text.secondary">
-					* Selected option will be applied to all layout elements (navbar, toolbar, etc.). You can also create your own
-					theme options and color schemes.
+				<Typography
+					className="mb-6 text-justify text-md italic"
+					color="text.secondary"
+				>
+					* Selected option will be applied to all layout elements (navbar, toolbar, etc.). You can also
+					create your own theme options and color schemes.
 				</Typography>
 
-				<FuseThemeSelector options={themeOptions} onSelect={handleThemeSelect} />
+				<FuseThemeSelector
+					options={themeOptions}
+					onSelect={handleThemeSelect}
+				/>
 			</FuseScrollbars>
 		</StyledDialog>
 	);

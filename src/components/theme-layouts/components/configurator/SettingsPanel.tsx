@@ -25,8 +25,8 @@ const StyledDialog = styled(Dialog)(({ theme }) => ({
 		right: 0,
 		margin: 0,
 		zIndex: 1000,
-		borderRadius: 0,
-	},
+		borderRadius: 0
+	}
 }));
 
 type TransitionProps = {
@@ -44,7 +44,11 @@ function Transition(props: TransitionProps) {
 	}
 
 	return (
-		<Slide direction={theme.direction === 'ltr' ? 'left' : 'right'} ref={ref} {...other}>
+		<Slide
+			direction={theme.direction === 'ltr' ? 'left' : 'right'}
+			ref={ref}
+			{...other}
+		>
 			{children}
 		</Slide>
 	);
@@ -84,20 +88,30 @@ function SettingsPanel(props: SettingsPanelProps) {
 			onClose={onClose}
 			BackdropProps={{ invisible: true }}
 			classes={{
-				paper: 'shadow-lg',
+				paper: 'shadow-lg'
 			}}
 			{...settingsHandlers}
 		>
 			<FuseScrollbars className="p-4 sm:p-6 space-y-8">
-				<IconButton className="fixed top-0 z-10 ltr:right-0 rtl:left-0" onClick={onClose} size="large">
+				<IconButton
+					className="fixed top-0 z-10 ltr:right-0 rtl:left-0"
+					onClick={onClose}
+					size="large"
+				>
 					<FuseSvgIcon>heroicons-outline:x-mark</FuseSvgIcon>
 				</IconButton>
 
-				<Typography className="font-semibold" variant="h6">
+				<Typography
+					className="font-semibold"
+					variant="h6"
+				>
 					Theme Settings
 				</Typography>
 
-				<FuseSettings value={settings} onChange={handleSettingsChange} />
+				<FuseSettings
+					value={settings}
+					onChange={handleSettingsChange}
+				/>
 
 				<div className="py-8">
 					<FuseSettingsViewerDialog />

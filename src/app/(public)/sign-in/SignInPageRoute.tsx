@@ -9,24 +9,24 @@ const SignInPageRoute: FuseRouteItemType = {
 		layout: {
 			config: {
 				navbar: {
-					display: false,
+					display: false
 				},
 				toolbar: {
-					display: false,
+					display: false
 				},
 				footer: {
-					display: false,
+					display: false
 				},
 				leftSidePanel: {
-					display: false,
+					display: false
 				},
 				rightSidePanel: {
-					display: false,
-				},
-			},
-		},
+					display: false
+				}
+			}
+		}
 	},
-	auth: authRoles.onlyGuest, // []
+	auth: authRoles.onlyGuest // []
 };
 
 export default SignInPageRoute;

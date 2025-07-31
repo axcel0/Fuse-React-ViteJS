@@ -26,7 +26,7 @@ export const userKeys = {
 	lists: () => [...userKeys.all, 'list'] as const,
 	list: (filters: Record<string, unknown>) => [...userKeys.lists(), { filters }] as const,
 	details: () => [...userKeys.all, 'detail'] as const,
-	detail: (id: string) => [...userKeys.details(), id] as const,
+	detail: (id: string) => [...userKeys.details(), id] as const
 };
 
 // API Functions
@@ -63,7 +63,7 @@ const userApi = {
 
 	deleteUser: async (id: string): Promise<void> => {
 		await httpClient.delete(`users/${id}`);
-	},
+	}
 };
 
 // Custom Hooks
@@ -75,7 +75,7 @@ export const useUsers = (filters?: Record<string, unknown>) => {
 	return useQuery({
 		queryKey: userKeys.list(filters || {}),
 		queryFn: () => userApi.getUsers(filters),
-		staleTime: 5 * 60 * 1000, // 5 minutes
+		staleTime: 5 * 60 * 1000 // 5 minutes
 	});
 };
 
@@ -86,7 +86,7 @@ export const useUser = (id: string) => {
 	return useQuery({
 		queryKey: userKeys.detail(id),
 		queryFn: () => userApi.getUser(id),
-		enabled: !!id, // Only run query if ID exists
+		enabled: !!id // Only run query if ID exists
 	});
 };
 
@@ -101,7 +101,7 @@ export const useCreateUser = () => {
 		onSuccess: () => {
 			// Invalidate and refetch users list
 			queryClient.invalidateQueries({ queryKey: userKeys.lists() });
-		},
+		}
 	});
 };
 
@@ -118,7 +118,7 @@ export const useUpdateUser = () => {
 			queryClient.setQueryData(userKeys.detail(updatedUser.id), updatedUser);
 			// Invalidate users list to ensure consistency
 			queryClient.invalidateQueries({ queryKey: userKeys.lists() });
-		},
+		}
 	});
 };
 
@@ -135,6 +135,6 @@ export const useDeleteUser = () => {
 			queryClient.removeQueries({ queryKey: userKeys.detail(deletedUserId) });
 			// Invalidate users list
 			queryClient.invalidateQueries({ queryKey: userKeys.lists() });
-		},
+		}
 	});
 };

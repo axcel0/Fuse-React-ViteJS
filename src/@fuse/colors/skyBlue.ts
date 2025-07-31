@@ -16,7 +16,7 @@ const skyBlue = {
 	A200: '#daf7ff',
 	A400: '#a7ecff',
 	A700: '#8de6ff',
-	contrastDefaultColor: 'dark',
+	contrastDefaultColor: 'dark'
 };
 
 export default skyBlue;

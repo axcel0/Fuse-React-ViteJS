@@ -228,7 +228,7 @@ class FuseUtils {
 	 */
 	static setRoutes(
 		config: FuseRouteConfigType,
-		defaultAuth: FuseSettingsConfigType['defaultAuth'] = undefined,
+		defaultAuth: FuseSettingsConfigType['defaultAuth'] = undefined
 	): FuseRouteItemType[] {
 		let routes: FuseRouteItemType[] = [];
 
@@ -243,7 +243,7 @@ class FuseUtils {
 			const newRoute = {
 				...route,
 				settings,
-				auth,
+				auth
 			};
 
 			if (route.children) {
@@ -266,7 +266,10 @@ class FuseUtils {
 	 * It takes in an array of route configurations as a parameter and returns an array of routes.
 	 *
 	 */
-	static generateRoutesFromConfigs(configs: FuseRouteConfigsType, defaultAuth: FuseSettingsConfigType['defaultAuth']) {
+	static generateRoutesFromConfigs(
+		configs: FuseRouteConfigsType,
+		defaultAuth: FuseSettingsConfigType['defaultAuth']
+	) {
 		let allRoutes: FuseRouteItemType[] = [];
 		configs.forEach((config: FuseRouteConfigType) => {
 			allRoutes = [...allRoutes, ...this.setRoutes(config, defaultAuth)];
@@ -320,7 +323,7 @@ class FuseUtils {
 			'yellow',
 			'amber',
 			'orange',
-			'deepOrange',
+			'deepOrange'
 		];
 
 		const randomColor = mainColors[Math.floor(Math.random() * mainColors.length)];
@@ -343,7 +346,7 @@ class FuseUtils {
 								: value;
 					}
 				},
-				{},
+				{}
 			);
 		}
 

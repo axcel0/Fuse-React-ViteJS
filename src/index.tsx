@@ -10,8 +10,8 @@ async function mockSetup() {
 	return worker.start({
 		onUnhandledRequest: 'bypass',
 		serviceWorker: {
-			url: `${API_BASE_URL}/mockServiceWorker.js`,
-		},
+			url: `${API_BASE_URL}/mockServiceWorker.js`
+		}
 	});
 }
 
@@ -34,7 +34,7 @@ mockSetup().then(() => {
 		},
 		onCaughtError: (error, errorInfo) => {
 			console.error('Caught error', error, errorInfo.componentStack);
-		},
+		}
 	});
 
 	const router = createBrowserRouter(routes);

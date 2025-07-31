@@ -30,25 +30,28 @@ function FramedDemo(props: FramedDemoProps) {
 				key: `iframe-demo-${theme.direction}`,
 				prepend: true,
 				container: document.head,
-				stylisPlugins: theme.direction === 'rtl' ? [rtlPlugin] : [],
+				stylisPlugins: theme.direction === 'rtl' ? [rtlPlugin] : []
 			}),
-		[document, theme.direction],
+		[document, theme.direction]
 	);
 
 	const getWindow = React.useCallback(() => document.defaultView, [document]);
 
 	return (
-		<StyleSheetManager target={document.head} stylisPlugins={theme.direction === 'rtl' ? [rtlPlugin] : []}>
+		<StyleSheetManager
+			target={document.head}
+			stylisPlugins={theme.direction === 'rtl' ? [rtlPlugin] : []}
+		>
 			<CacheProvider value={cache}>
 				<GlobalStyles
 					styles={() => ({
 						html: {
-							fontSize: '62.5%',
-						},
+							fontSize: '62.5%'
+						}
 					})}
 				/>
 				{React.cloneElement(children, {
-					window: getWindow,
+					window: getWindow
 				})}
 			</CacheProvider>
 		</StyleSheetManager>

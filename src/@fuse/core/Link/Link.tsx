@@ -15,7 +15,13 @@ function Link(props: CustomLinkProps) {
 	const { ref, to, href, children, className, role, ...rest } = props;
 
 	return (
-		<ILink className={className} to={to || href} role={role} ref={ref} {...rest}>
+		<ILink
+			className={className}
+			to={to || href}
+			role={role}
+			ref={ref}
+			{...rest}
+		>
 			{children}
 		</ILink>
 	);

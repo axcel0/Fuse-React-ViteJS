@@ -21,11 +21,11 @@ const inputGlobalStyles = (
 		styles={(theme) => ({
 			html: {
 				backgroundColor: `${theme.palette.background.default}!important`,
-				color: `${theme.palette.text.primary}!important`,
+				color: `${theme.palette.text.primary}!important`
 			},
 			body: {
 				backgroundColor: theme.palette.background.default,
-				color: theme.palette.text.primary,
+				color: theme.palette.text.primary
 			},
 			/*  'code:not([class*="language-"])': {
         color: theme.palette.secondary.dark,
@@ -36,21 +36,21 @@ const inputGlobalStyles = (
         lineHeight: 1.7,
       }, */
 			'& .MuiOutlinedInput-root': {
-				backgroundColor: theme.palette.background.paper,
+				backgroundColor: theme.palette.background.paper
 			},
 			'& .border-divider ': {
-				borderColor: `${theme.palette.divider}!important`,
+				borderColor: `${theme.palette.divider}!important`
 			},
 			'table.simple tbody tr th': {
-				borderColor: theme.palette.divider,
+				borderColor: theme.palette.divider
 			},
 			'table.simple thead tr th': {
-				borderColor: theme.palette.divider,
+				borderColor: theme.palette.divider
 			},
 			'a:not([role=button]):not(.MuiButtonBase-root)': {
 				color: theme.palette.secondary.main,
 				textDecoration: 'underline',
-				'&:hover': {},
+				'&:hover': {}
 			},
 			'a.link, a:not([role=button])[target=_blank]': {
 				background: alpha(theme.palette.secondary.main, 0.2),
@@ -59,31 +59,31 @@ const inputGlobalStyles = (
 				textDecoration: 'none',
 				'&:hover': {
 					background: alpha(theme.palette.secondary.main, 0.3),
-					textDecoration: 'none',
-				},
+					textDecoration: 'none'
+				}
 			},
 			'[class^="border"]': {
-				borderColor: theme.palette.divider,
+				borderColor: theme.palette.divider
 			},
 			'[class*="border"]': {
-				borderColor: theme.palette.divider,
+				borderColor: theme.palette.divider
 			},
 			'[class*="divide-"] > :not([hidden])': {
-				borderColor: theme.palette.divider,
+				borderColor: theme.palette.divider
 			},
 			hr: {
-				borderColor: theme.palette.divider,
+				borderColor: theme.palette.divider
 			},
 			'::-webkit-scrollbar-thumb': {
 				boxShadow: `inset 0 0 0 20px ${
 					theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.24)' : 'rgba(255, 255, 255, 0.24)'
-				}`,
+				}`
 			},
 			'::-webkit-scrollbar-thumb:active': {
 				boxShadow: `inset 0 0 0 20px ${
 					theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.37)' : 'rgba(255, 255, 255, 0.37)'
-				}`,
-			},
+				}`
+			}
 		})}
 	/>
 );

@@ -10,18 +10,18 @@ import clsx from 'clsx';
 const Root = styled('div')({
 	'& .tox-tinymce': {
 		border: 'none !important',
-		borderRadius: '4px',
+		borderRadius: '4px'
 	},
 	'& .tox-toolbar__primary': {
-		borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+		borderBottom: '1px solid rgba(0, 0, 0, 0.12)'
 	},
 	'& .tox-editor-header': {
 		borderTopLeftRadius: '4px',
-		borderTopRightRadius: '4px',
+		borderTopRightRadius: '4px'
 	},
 	'& .tox-edit-area__iframe': {
-		minHeight: '256px !important',
-	},
+		minHeight: '256px !important'
+	}
 });
 
 /* The props for the WYSIWYG editor component.
@@ -63,17 +63,20 @@ function WYSIWYGEditor(props: WYSIWYGEditorProps) {
 				'h6',
 				'blockquote',
 				'code',
-				'pre',
+				'pre'
 			],
 			ALLOWED_ATTR: ['href', 'target', 'title', 'style'],
-			ALLOW_DATA_ATTR: false,
+			ALLOW_DATA_ATTR: false
 		});
 
 		onChange(sanitizedHtml);
 	}
 
 	return (
-		<Root className={clsx('w-full overflow-hidden rounded-sm border-1', className)} ref={ref}>
+		<Root
+			className={clsx('w-full overflow-hidden rounded-sm border-1', className)}
+			ref={ref}
+		>
 			<Editor
 				apiKey="no-api-key"
 				initialValue={initialValue}
@@ -97,7 +100,7 @@ function WYSIWYGEditor(props: WYSIWYGEditorProps) {
 						'table',
 						'help',
 						'wordcount',
-						'autoresize',
+						'autoresize'
 					],
 					toolbar:
 						'undo redo | blocks | ' +
@@ -114,7 +117,7 @@ function WYSIWYGEditor(props: WYSIWYGEditorProps) {
 					allow_html_data_urls: false,
 					paste_data_images: false,
 					paste_webkit_styles: 'none',
-					paste_retain_style_properties: 'color font-size font-family',
+					paste_retain_style_properties: 'color font-size font-family'
 				}}
 			/>
 		</Root>

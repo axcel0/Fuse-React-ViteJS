@@ -19,7 +19,7 @@ const schema = z.object({
 	password: z
 		.string()
 		.min(4, 'Password is too short - must be at least 4 chars.')
-		.min(1, 'Please enter your password.'),
+		.min(1, 'Please enter your password.')
 });
 
 type FormType = FirebaseSignInPayload;
@@ -27,7 +27,7 @@ type FormType = FirebaseSignInPayload;
 const defaultValues = {
 	email: '',
 	password: '',
-	remember: true,
+	remember: true
 };
 
 function FirebaseSignInForm() {
@@ -38,7 +38,7 @@ function FirebaseSignInForm() {
 	const { control, formState, handleSubmit, setValue, setError } = useForm<FormType>({
 		mode: 'onChange',
 		defaultValues,
-		resolver: zodResolver(schema),
+		resolver: zodResolver(schema)
 	});
 
 	const { isValid, dirtyFields, errors } = formState;
@@ -46,11 +46,11 @@ function FirebaseSignInForm() {
 	useEffect(() => {
 		setValue('email', 'hi@withinpixels.com', {
 			shouldDirty: true,
-			shouldValidate: true,
+			shouldValidate: true
 		});
 		setValue('password', 'dummyPassword', {
 			shouldDirty: true,
-			shouldValidate: true,
+			shouldValidate: true
 		});
 	}, [setValue]);
 
@@ -59,7 +59,7 @@ function FirebaseSignInForm() {
 
 		signIn({
 			email,
-			password,
+			password
 		}).catch((_error) => {
 			const error = _error as firebase.auth.Error;
 
@@ -73,21 +73,21 @@ function FirebaseSignInForm() {
 				'auth/invalid-email',
 				'auth/operation-not-allowed',
 				'auth/user-not-found',
-				'auth/user-disabled',
+				'auth/user-disabled'
 			];
 			const passwordErrorCodes = ['auth/weak-password', 'auth/wrong-password'];
 
 			if (emailErrorCodes.includes(error.code)) {
 				errors.push({
 					type: 'email',
-					message: error.message,
+					message: error.message
 				});
 			}
 
 			if (passwordErrorCodes.includes(error.code)) {
 				errors.push({
 					type: 'password',
-					message: error.message,
+					message: error.message
 				});
 			}
 
@@ -99,7 +99,7 @@ function FirebaseSignInForm() {
 			errors.forEach((err) => {
 				setError(err.type, {
 					type: 'manual',
-					message: err.message,
+					message: err.message
 				});
 			});
 		});

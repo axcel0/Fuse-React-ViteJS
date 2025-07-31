@@ -15,7 +15,7 @@ export async function authRefreshToken(): Promise<Response> {
  */
 export async function authSignInWithToken(accessToken: string): Promise<Response> {
 	return apiFetch('/api/mock/auth/sign-in-with-token', {
-		headers: { Authorization: `Bearer ${accessToken}` },
+		headers: { Authorization: `Bearer ${accessToken}` }
 	});
 }
 
@@ -25,7 +25,7 @@ export async function authSignInWithToken(accessToken: string): Promise<Response
 export async function authSignIn(credentials: { email: string; password: string }): Promise<Response> {
 	return apiFetch('/api/mock/auth/sign-in', {
 		method: 'POST',
-		body: JSON.stringify(credentials),
+		body: JSON.stringify(credentials)
 	});
 }
 
@@ -35,7 +35,7 @@ export async function authSignIn(credentials: { email: string; password: string 
 export async function authSignUp(data: { displayName: string; email: string; password: string }): Promise<Response> {
 	return apiFetch('/api/mock/auth/sign-up', {
 		method: 'POST',
-		body: JSON.stringify(data),
+		body: JSON.stringify(data)
 	});
 }
 
@@ -59,7 +59,7 @@ export async function authGetDbUserByEmail(email: string): Promise<Response> {
 export function authUpdateDbUser(user: PartialDeep<User>) {
 	return apiFetch(`/api/mock/auth/user/${user.id}`, {
 		method: 'PUT',
-		body: JSON.stringify(UserModel(user)),
+		body: JSON.stringify(UserModel(user))
 	});
 }
 
@@ -69,6 +69,6 @@ export function authUpdateDbUser(user: PartialDeep<User>) {
 export async function authCreateDbUser(user: PartialDeep<User>) {
 	return apiFetch('/api/mock/users', {
 		method: 'POST',
-		body: JSON.stringify(UserModel(user)),
+		body: JSON.stringify(UserModel(user))
 	});
 }

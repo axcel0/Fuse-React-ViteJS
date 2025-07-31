@@ -13,7 +13,7 @@ import {
 	Avatar,
 	useMediaQuery,
 	useTheme,
-	Collapse,
+	Collapse
 } from '@mui/material';
 import {
 	Dashboard as DashboardIcon,
@@ -24,7 +24,7 @@ import {
 	ChevronLeft as ChevronLeftIcon,
 	ChevronRight as ChevronRightIcon,
 	ExpandLess,
-	ExpandMore,
+	ExpandMore
 } from '@mui/icons-material';
 import { useNavbar } from '../navbar/NavbarContext';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -42,32 +42,32 @@ const navigationItems: NavigationItem[] = [
 		id: 'dashboard',
 		title: 'Dashboard',
 		icon: <DashboardIcon />,
-		url: '/',
+		url: '/'
 	},
 	{
 		id: 'analytics',
 		title: 'Analytics',
 		icon: <AnalyticsIcon />,
-		url: '/analytics',
+		url: '/analytics'
 	},
 	{
 		id: 'users',
 		title: 'Users',
 		icon: <PeopleIcon />,
-		url: '/users',
+		url: '/users'
 	},
 	{
 		id: 'design-system',
 		title: 'Design System',
 		icon: <PaletteIcon />,
-		url: '/design-system-demo',
+		url: '/design-system-demo'
 	},
 	{
 		id: 'settings',
 		title: 'Settings',
 		icon: <SettingsIcon />,
-		url: '/settings',
-	},
+		url: '/settings'
+	}
 ];
 
 const DRAWER_WIDTH = 280;
@@ -124,7 +124,10 @@ const MaterialNavbar: React.FC<MaterialNavbarProps> = ({ className }) => {
 
 		return (
 			<React.Fragment key={item.id}>
-				<ListItem disablePadding sx={{ display: 'block' }}>
+				<ListItem
+					disablePadding
+					sx={{ display: 'block' }}
+				>
 					<ListItemButton
 						onClick={() => handleItemClick(item)}
 						sx={{
@@ -136,11 +139,13 @@ const MaterialNavbar: React.FC<MaterialNavbarProps> = ({ className }) => {
 							backgroundColor: isActive ? theme.palette.primary.main + '12' : 'transparent',
 							color: isActive ? theme.palette.primary.main : theme.palette.text.primary,
 							'&:hover': {
-								backgroundColor: isActive ? theme.palette.primary.main + '20' : theme.palette.action.hover,
+								backgroundColor: isActive
+									? theme.palette.primary.main + '20'
+									: theme.palette.action.hover
 							},
 							borderRadius: '8px',
 							mx: 1,
-							mb: 0.5,
+							mb: 0.5
 						}}
 					>
 						<ListItemIcon
@@ -148,7 +153,7 @@ const MaterialNavbar: React.FC<MaterialNavbarProps> = ({ className }) => {
 								minWidth: 0,
 								mr: !isMobile && !navbar.open ? 'auto' : 3,
 								justifyContent: 'center',
-								color: isActive ? theme.palette.primary.main : 'inherit',
+								color: isActive ? theme.palette.primary.main : 'inherit'
 							}}
 						>
 							{item.icon}
@@ -162,8 +167,8 @@ const MaterialNavbar: React.FC<MaterialNavbarProps> = ({ className }) => {
 										opacity: 1,
 										'& .MuiListItemText-primary': {
 											fontSize: '0.875rem',
-											fontWeight: isActive ? 600 : 400,
-										},
+											fontWeight: isActive ? 600 : 400
+										}
 									}}
 								/>
 								{hasChildren && (isExpanded ? <ExpandLess /> : <ExpandMore />)}
@@ -174,8 +179,15 @@ const MaterialNavbar: React.FC<MaterialNavbarProps> = ({ className }) => {
 
 				{/* Render children if expanded */}
 				{hasChildren && (isMobile || navbar.open) && (
-					<Collapse in={isExpanded} timeout="auto" unmountOnExit>
-						<List component="div" disablePadding>
+					<Collapse
+						in={isExpanded}
+						timeout="auto"
+						unmountOnExit
+					>
+						<List
+							component="div"
+							disablePadding
+						>
 							{item.children?.map((child) => renderNavigationItem(child, level + 1))}
 						</List>
 					</Collapse>
@@ -195,7 +207,7 @@ const MaterialNavbar: React.FC<MaterialNavbarProps> = ({ className }) => {
 					px: 2,
 					py: 2,
 					borderBottom: `1px solid ${theme.palette.divider}`,
-					minHeight: 64,
+					minHeight: 64
 				}}
 			>
 				{(isMobile || navbar.open) && (
@@ -206,12 +218,15 @@ const MaterialNavbar: React.FC<MaterialNavbarProps> = ({ className }) => {
 								height: 32,
 								backgroundColor: theme.palette.primary.main,
 								fontSize: '1rem',
-								fontWeight: 'bold',
+								fontWeight: 'bold'
 							}}
 						>
 							F
 						</Avatar>
-						<Typography variant="h6" sx={{ fontWeight: 600, color: theme.palette.text.primary }}>
+						<Typography
+							variant="h6"
+							sx={{ fontWeight: 600, color: theme.palette.text.primary }}
+						>
 							Fuse
 						</Typography>
 					</Box>
@@ -222,7 +237,7 @@ const MaterialNavbar: React.FC<MaterialNavbarProps> = ({ className }) => {
 						onClick={navbarToggle}
 						sx={{
 							ml: navbar.open ? 'auto' : 0,
-							mx: navbar.open ? 0 : 'auto',
+							mx: navbar.open ? 0 : 'auto'
 						}}
 					>
 						{navbar.open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
@@ -239,17 +254,25 @@ const MaterialNavbar: React.FC<MaterialNavbarProps> = ({ className }) => {
 			<Box
 				sx={{
 					borderTop: `1px solid ${theme.palette.divider}`,
-					p: 2,
+					p: 2
 				}}
 			>
 				{isMobile || navbar.open ? (
 					<Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
 						<Avatar sx={{ width: 32, height: 32 }}>U</Avatar>
 						<Box sx={{ flexGrow: 1, minWidth: 0 }}>
-							<Typography variant="body2" sx={{ fontWeight: 600 }} noWrap>
+							<Typography
+								variant="body2"
+								sx={{ fontWeight: 600 }}
+								noWrap
+							>
 								John Doe
 							</Typography>
-							<Typography variant="caption" color="text.secondary" noWrap>
+							<Typography
+								variant="caption"
+								color="text.secondary"
+								noWrap
+							>
 								john@example.com
 							</Typography>
 						</Box>
@@ -273,15 +296,15 @@ const MaterialNavbar: React.FC<MaterialNavbarProps> = ({ className }) => {
 				disableBackdropTransition={!iOS}
 				disableDiscovery={iOS}
 				ModalProps={{
-					keepMounted: true, // Better open performance on mobile
+					keepMounted: true // Better open performance on mobile
 				}}
 				sx={{
 					'& .MuiDrawer-paper': {
 						boxSizing: 'border-box',
 						width: DRAWER_WIDTH,
 						borderRight: 'none',
-						boxShadow: theme.shadows[8],
-					},
+						boxShadow: theme.shadows[8]
+					}
 				}}
 			>
 				{drawerContent}
@@ -301,12 +324,12 @@ const MaterialNavbar: React.FC<MaterialNavbarProps> = ({ className }) => {
 					width: navbar.open ? DRAWER_WIDTH : MINI_DRAWER_WIDTH,
 					transition: theme.transitions.create('width', {
 						easing: theme.transitions.easing.sharp,
-						duration: theme.transitions.duration.enteringScreen,
+						duration: theme.transitions.duration.enteringScreen
 					}),
 					overflowX: 'hidden',
 					borderRight: `1px solid ${theme.palette.divider}`,
-					boxShadow: 'none',
-				},
+					boxShadow: 'none'
+				}
 			}}
 		>
 			{drawerContent}

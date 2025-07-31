@@ -7,8 +7,8 @@ const themeOptions = [
 			main: themesConfig.default,
 			navbar: themesConfig.defaultDark,
 			toolbar: themesConfig.default,
-			footer: themesConfig.defaultDark,
-		},
+			footer: themesConfig.defaultDark
+		}
 	},
 	{
 		id: 'Default Dark',
@@ -16,8 +16,8 @@ const themeOptions = [
 			main: themesConfig.defaultDark,
 			navbar: themesConfig.defaultDark,
 			toolbar: themesConfig.defaultDark,
-			footer: themesConfig.defaultDark,
-		},
+			footer: themesConfig.defaultDark
+		}
 	},
 	{
 		id: 'Charcoal Teal',
@@ -25,8 +25,8 @@ const themeOptions = [
 			main: themesConfig.charcoalTeal,
 			navbar: themesConfig.charcoalTealDark,
 			toolbar: themesConfig.charcoalTeal,
-			footer: themesConfig.charcoalTealDark,
-		},
+			footer: themesConfig.charcoalTealDark
+		}
 	},
 	{
 		id: 'Charcoal Teal Dark',
@@ -34,8 +34,8 @@ const themeOptions = [
 			main: themesConfig.charcoalTealDark,
 			navbar: themesConfig.charcoalTealDark,
 			toolbar: themesConfig.charcoalTealDark,
-			footer: themesConfig.charcoalTealDark,
-		},
+			footer: themesConfig.charcoalTealDark
+		}
 	},
 	{
 		id: 'Blue Silver',
@@ -43,8 +43,8 @@ const themeOptions = [
 			main: themesConfig.darkBlueSilver,
 			navbar: themesConfig.darkBlueSilverDark,
 			toolbar: themesConfig.darkBlueSilver,
-			footer: themesConfig.darkBlueSilverDark,
-		},
+			footer: themesConfig.darkBlueSilverDark
+		}
 	},
 	{
 		id: 'Blue Silver Dark',
@@ -52,8 +52,8 @@ const themeOptions = [
 			main: themesConfig.darkBlueSilverDark,
 			navbar: themesConfig.darkBlueSilverDark,
 			toolbar: themesConfig.darkBlueSilverDark,
-			footer: themesConfig.darkBlueSilverDark,
-		},
+			footer: themesConfig.darkBlueSilverDark
+		}
 	},
 	{
 		id: 'Slate Crimson',
@@ -61,8 +61,8 @@ const themeOptions = [
 			main: themesConfig.slateCrimson,
 			navbar: themesConfig.slateCrimsonDark,
 			toolbar: themesConfig.slateCrimson,
-			footer: themesConfig.slateCrimsonDark,
-		},
+			footer: themesConfig.slateCrimsonDark
+		}
 	},
 	{
 		id: 'Slate Crimson Dark',
@@ -70,8 +70,8 @@ const themeOptions = [
 			main: themesConfig.slateCrimsonDark,
 			navbar: themesConfig.slateCrimsonDark,
 			toolbar: themesConfig.slateCrimsonDark,
-			footer: themesConfig.slateCrimsonDark,
-		},
+			footer: themesConfig.slateCrimsonDark
+		}
 	},
 	{
 		id: 'Emarald Gold',
@@ -79,8 +79,8 @@ const themeOptions = [
 			main: themesConfig.emeraldGold,
 			navbar: themesConfig.emeraldGoldDark,
 			toolbar: themesConfig.emeraldGold,
-			footer: themesConfig.emeraldGoldDark,
-		},
+			footer: themesConfig.emeraldGoldDark
+		}
 	},
 	{
 		id: 'Emarald Gold Dark',
@@ -88,8 +88,8 @@ const themeOptions = [
 			main: themesConfig.emeraldGoldDark,
 			navbar: themesConfig.emeraldGoldDark,
 			toolbar: themesConfig.emeraldGoldDark,
-			footer: themesConfig.emeraldGoldDark,
-		},
+			footer: themesConfig.emeraldGoldDark
+		}
 	},
 	{
 		id: 'Indigo Coral',
@@ -97,8 +97,8 @@ const themeOptions = [
 			main: themesConfig.indigoCoral,
 			navbar: themesConfig.indigoCoralDark,
 			toolbar: themesConfig.indigoCoral,
-			footer: themesConfig.indigoCoralDark,
-		},
+			footer: themesConfig.indigoCoralDark
+		}
 	},
 	{
 		id: 'Indigo Coral Dark',
@@ -106,8 +106,8 @@ const themeOptions = [
 			main: themesConfig.indigoCoralDark,
 			navbar: themesConfig.indigoCoralDark,
 			toolbar: themesConfig.indigoCoralDark,
-			footer: themesConfig.indigoCoralDark,
-		},
+			footer: themesConfig.indigoCoralDark
+		}
 	},
 	{
 		id: 'Sky Blue Orange',
@@ -115,8 +115,8 @@ const themeOptions = [
 			main: themesConfig.skyBlueOrange,
 			navbar: themesConfig.skyBlueOrangeDark,
 			toolbar: themesConfig.skyBlueOrange,
-			footer: themesConfig.skyBlueOrangeDark,
-		},
+			footer: themesConfig.skyBlueOrangeDark
+		}
 	},
 	{
 		id: 'Sky Blue Orange Dark',
@@ -124,8 +124,8 @@ const themeOptions = [
 			main: themesConfig.skyBlueOrangeDark,
 			navbar: themesConfig.skyBlueOrangeDark,
 			toolbar: themesConfig.skyBlueOrangeDark,
-			footer: themesConfig.skyBlueOrangeDark,
-		},
+			footer: themesConfig.skyBlueOrangeDark
+		}
 	},
 	{
 		id: 'Soft Green Maroon',
@@ -133,8 +133,8 @@ const themeOptions = [
 			main: themesConfig.softGreenMaroon,
 			navbar: themesConfig.softGreenMaroonDark,
 			toolbar: themesConfig.softGreenMaroon,
-			footer: themesConfig.softGreenMaroonDark,
-		},
+			footer: themesConfig.softGreenMaroonDark
+		}
 	},
 	{
 		id: 'Soft Green Maroon Dark',
@@ -142,8 +142,8 @@ const themeOptions = [
 			main: themesConfig.softGreenMaroonDark,
 			navbar: themesConfig.softGreenMaroonDark,
 			toolbar: themesConfig.softGreenMaroonDark,
-			footer: themesConfig.softGreenMaroonDark,
-		},
+			footer: themesConfig.softGreenMaroonDark
+		}
 	},
 	{
 		id: 'Cool Grey Pink',
@@ -151,8 +151,8 @@ const themeOptions = [
 			main: themesConfig.coolGreyPink,
 			navbar: themesConfig.coolGreyPinkDark,
 			toolbar: themesConfig.coolGreyPink,
-			footer: themesConfig.coolGreyPinkDark,
-		},
+			footer: themesConfig.coolGreyPinkDark
+		}
 	},
 	{
 		id: 'Cool Grey Pink Dark',
@@ -160,9 +160,9 @@ const themeOptions = [
 			main: themesConfig.coolGreyPinkDark,
 			navbar: themesConfig.coolGreyPinkDark,
 			toolbar: themesConfig.coolGreyPinkDark,
-			footer: themesConfig.coolGreyPinkDark,
-		},
-	},
+			footer: themesConfig.coolGreyPinkDark
+		}
+	}
 ];
 
 export default themeOptions;

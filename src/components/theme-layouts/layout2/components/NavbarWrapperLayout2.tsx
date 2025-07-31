@@ -18,9 +18,9 @@ const StyledSwipeableDrawer = styled(SwipeableDrawer)(({ theme }) => ({
 		minWidth: 280,
 		transition: theme.transitions.create(['width', 'min-width'], {
 			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.shorter,
-		}),
-	},
+			duration: theme.transitions.duration.shorter
+		})
+	}
 }));
 
 type NavbarWrapperLayout2Props = {
@@ -73,7 +73,7 @@ function NavbarWrapperLayout2(props: NavbarWrapperLayout2Props) {
 						disableSwipeToOpen
 						className={className}
 						ModalProps={{
-							keepMounted: true, // Better open performance on mobile.
+							keepMounted: true // Better open performance on mobile.
 						}}
 					>
 						<NavbarMobileLayout2 />
@@ -81,7 +81,10 @@ function NavbarWrapperLayout2(props: NavbarWrapperLayout2Props) {
 				)}
 			</ThemeProvider>
 			{config.navbar.display && !config.toolbar.display && isMobile && (
-				<NavbarToggleFabLayout2 onToggle={handleToggle} onToggleMobile={handleMobileToggle} />
+				<NavbarToggleFabLayout2
+					onToggle={handleToggle}
+					onToggleMobile={handleMobileToggle}
+				/>
 			)}
 		</>
 	);

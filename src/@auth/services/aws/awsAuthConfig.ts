@@ -16,7 +16,7 @@ const awsAuthConfig: awsAuthConfig = {
 		scope: ['phone', 'email', 'openid', 'profile', 'aws.cognito.signin.user.admin'],
 		redirectSignIn: import.meta.env.VITE_AWS_OAUTH_REDIRECT_SIGN_IN,
 		redirectSignOut: import.meta.env.VITE_AWS_OAUTH_REDIRECT_SIGN_OUT,
-		responseType: 'code',
+		responseType: 'code'
 	},
 	aws_cognito_verification_mechanisms: ['EMAIL'],
 	federationTarget: 'COGNITO_USER_POOLS',
@@ -27,8 +27,8 @@ const awsAuthConfig: awsAuthConfig = {
 	aws_cognito_mfa_types: ['SMS'],
 	aws_cognito_password_protection_settings: {
 		passwordPolicyMinLength: 8,
-		passwordPolicyCharacters: [],
-	},
+		passwordPolicyCharacters: []
+	}
 };
 
 export default awsAuthConfig;

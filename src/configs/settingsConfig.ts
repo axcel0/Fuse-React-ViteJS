@@ -21,9 +21,9 @@ const settingsConfig: FuseSettingsConfigType = {
 		 */
 		config: {
 			navbar: {
-				style: 'style-2',
-			},
-		}, // checkout default layout configs at src/components/theme-layouts for example  src/components/theme-layouts/layout1/Layout1Config.js
+				style: 'style-2'
+			}
+		} // checkout default layout configs at src/components/theme-layouts for example  src/components/theme-layouts/layout1/Layout1Config.js
 	},
 
 	/**
@@ -42,7 +42,7 @@ const settingsConfig: FuseSettingsConfigType = {
 		main: themesConfig.default,
 		navbar: themesConfig.defaultDark,
 		toolbar: themesConfig.default,
-		footer: themesConfig.defaultDark,
+		footer: themesConfig.defaultDark
 	},
 
 	/**
@@ -56,7 +56,7 @@ const settingsConfig: FuseSettingsConfigType = {
 	/**
 	 * The loginRedirectUrl property defines the default redirect URL for the logged-in user.
 	 */
-	loginRedirectUrl: '/',
+	loginRedirectUrl: '/'
 };
 
 export default settingsConfig;

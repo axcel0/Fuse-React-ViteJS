@@ -16,7 +16,7 @@ const FuseDialogContext = createContext<DialogContextType | undefined>(undefined
 export const FuseDialogProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 	const [dialogState, setDialogState] = useState<DialogState>({
 		open: false,
-		children: '',
+		children: ''
 	});
 
 	const openDialog = (children: ReactElement | string) => {
@@ -28,7 +28,9 @@ export const FuseDialogProvider: React.FC<{ children: ReactNode }> = ({ children
 	};
 
 	return (
-		<FuseDialogContext.Provider value={{ dialogState, openDialog, closeDialog }}>{children}</FuseDialogContext.Provider>
+		<FuseDialogContext.Provider value={{ dialogState, openDialog, closeDialog }}>
+			{children}
+		</FuseDialogContext.Provider>
 	);
 };
 

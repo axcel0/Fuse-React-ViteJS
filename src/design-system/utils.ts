@@ -22,7 +22,7 @@ export const tailwindTokens = {
 				800: colors.primary[800],
 				900: colors.primary[900],
 				950: colors.primary[950],
-				DEFAULT: colors.primary[500],
+				DEFAULT: colors.primary[500]
 			},
 			// Secondary colors
 			secondary: {
@@ -37,7 +37,7 @@ export const tailwindTokens = {
 				800: colors.secondary[800],
 				900: colors.secondary[900],
 				950: colors.secondary[950],
-				DEFAULT: colors.secondary[500],
+				DEFAULT: colors.secondary[500]
 			},
 			// Neutral colors
 			neutral: {
@@ -52,13 +52,13 @@ export const tailwindTokens = {
 				800: colors.neutral[800],
 				900: colors.neutral[900],
 				950: colors.neutral[950],
-				DEFAULT: colors.neutral[500],
+				DEFAULT: colors.neutral[500]
 			},
 			// Semantic colors
 			success: colors.success,
 			warning: colors.warning,
 			error: colors.error,
-			info: colors.info,
+			info: colors.info
 		},
 		spacing: {
 			xs: spacing.xs,
@@ -69,7 +69,7 @@ export const tailwindTokens = {
 			'2xl': spacing['2xl'],
 			'3xl': spacing['3xl'],
 			'4xl': spacing['4xl'],
-			'5xl': spacing['5xl'],
+			'5xl': spacing['5xl']
 		},
 		fontFamily: typography.fontFamily,
 		fontSize: typography.fontSize,
@@ -82,7 +82,7 @@ export const tailwindTokens = {
 			lg: borderRadius.xl,
 			xl: borderRadius['2xl'],
 			'2xl': borderRadius['3xl'],
-			full: borderRadius.full,
+			full: borderRadius.full
 		},
 		boxShadow: {
 			'elevation-1': elevation.sm,
@@ -90,11 +90,11 @@ export const tailwindTokens = {
 			'elevation-3': elevation.md,
 			'elevation-4': elevation.lg,
 			'elevation-5': elevation.xl,
-			'elevation-6': elevation['2xl'],
+			'elevation-6': elevation['2xl']
 		},
 		transitionDuration: animation.duration,
-		transitionTimingFunction: animation.easing,
-	},
+		transitionTimingFunction: animation.easing
+	}
 };
 
 // ===== MATERIAL-UI THEME INTEGRATION =====
@@ -115,7 +115,7 @@ export const createMuiTokens = (mode: 'light' | 'dark') => ({
 			main: colors.primary[500],
 			light: colors.primary[300],
 			dark: colors.primary[700],
-			contrastText: '#ffffff',
+			contrastText: '#ffffff'
 		},
 		secondary: {
 			50: colors.secondary[50],
@@ -131,7 +131,7 @@ export const createMuiTokens = (mode: 'light' | 'dark') => ({
 			main: colors.secondary[500],
 			light: colors.secondary[300],
 			dark: colors.secondary[700],
-			contrastText: '#ffffff',
+			contrastText: '#ffffff'
 		},
 		error: {
 			50: colors.error[50],
@@ -143,7 +143,7 @@ export const createMuiTokens = (mode: 'light' | 'dark') => ({
 			main: colors.error[500],
 			light: colors.error[100],
 			dark: colors.error[700],
-			contrastText: '#ffffff',
+			contrastText: '#ffffff'
 		},
 		warning: {
 			50: colors.warning[50],
@@ -155,7 +155,7 @@ export const createMuiTokens = (mode: 'light' | 'dark') => ({
 			main: colors.warning[500],
 			light: colors.warning[100],
 			dark: colors.warning[700],
-			contrastText: '#ffffff',
+			contrastText: '#ffffff'
 		},
 		info: {
 			50: colors.info[50],
@@ -167,7 +167,7 @@ export const createMuiTokens = (mode: 'light' | 'dark') => ({
 			main: colors.info[500],
 			light: colors.info[100],
 			dark: colors.info[700],
-			contrastText: '#ffffff',
+			contrastText: '#ffffff'
 		},
 		success: {
 			50: colors.success[50],
@@ -179,7 +179,7 @@ export const createMuiTokens = (mode: 'light' | 'dark') => ({
 			main: colors.success[500],
 			light: colors.success[100],
 			dark: colors.success[700],
-			contrastText: '#ffffff',
+			contrastText: '#ffffff'
 		},
 		grey: {
 			50: colors.neutral[50],
@@ -191,69 +191,69 @@ export const createMuiTokens = (mode: 'light' | 'dark') => ({
 			600: colors.neutral[600],
 			700: colors.neutral[700],
 			800: colors.neutral[800],
-			900: colors.neutral[900],
+			900: colors.neutral[900]
 		},
 		background: {
 			default: mode === 'light' ? colors.neutral[50] : colors.neutral[900],
-			paper: mode === 'light' ? '#ffffff' : colors.neutral[800],
+			paper: mode === 'light' ? '#ffffff' : colors.neutral[800]
 		},
 		text: {
 			primary: mode === 'light' ? colors.neutral[900] : colors.neutral[100],
 			secondary: mode === 'light' ? colors.neutral[600] : colors.neutral[400],
-			disabled: mode === 'light' ? colors.neutral[400] : colors.neutral[600],
+			disabled: mode === 'light' ? colors.neutral[400] : colors.neutral[600]
 		},
-		divider: mode === 'light' ? colors.neutral[200] : colors.neutral[700],
+		divider: mode === 'light' ? colors.neutral[200] : colors.neutral[700]
 	},
 	typography: {
 		fontFamily: typography.fontFamily.sans.join(','),
 		h1: {
 			fontSize: typography.fontSize['4xl'][0],
 			fontWeight: typography.fontWeight.bold,
-			lineHeight: typography.fontSize['4xl'][1].lineHeight,
+			lineHeight: typography.fontSize['4xl'][1].lineHeight
 		},
 		h2: {
 			fontSize: typography.fontSize['3xl'][0],
 			fontWeight: typography.fontWeight.bold,
-			lineHeight: typography.fontSize['3xl'][1].lineHeight,
+			lineHeight: typography.fontSize['3xl'][1].lineHeight
 		},
 		h3: {
 			fontSize: typography.fontSize['2xl'][0],
 			fontWeight: typography.fontWeight.semibold,
-			lineHeight: typography.fontSize['2xl'][1].lineHeight,
+			lineHeight: typography.fontSize['2xl'][1].lineHeight
 		},
 		h4: {
 			fontSize: typography.fontSize.xl[0],
 			fontWeight: typography.fontWeight.semibold,
-			lineHeight: typography.fontSize.xl[1].lineHeight,
+			lineHeight: typography.fontSize.xl[1].lineHeight
 		},
 		h5: {
 			fontSize: typography.fontSize.lg[0],
 			fontWeight: typography.fontWeight.medium,
-			lineHeight: typography.fontSize.lg[1].lineHeight,
+			lineHeight: typography.fontSize.lg[1].lineHeight
 		},
 		h6: {
 			fontSize: typography.fontSize.base[0],
 			fontWeight: typography.fontWeight.medium,
-			lineHeight: typography.fontSize.base[1].lineHeight,
+			lineHeight: typography.fontSize.base[1].lineHeight
 		},
 		body1: {
 			fontSize: typography.fontSize.base[0],
 			fontWeight: typography.fontWeight.normal,
-			lineHeight: typography.fontSize.base[1].lineHeight,
+			lineHeight: typography.fontSize.base[1].lineHeight
 		},
 		body2: {
 			fontSize: typography.fontSize.sm[0],
 			fontWeight: typography.fontWeight.normal,
-			lineHeight: typography.fontSize.sm[1].lineHeight,
+			lineHeight: typography.fontSize.sm[1].lineHeight
 		},
 		caption: {
 			fontSize: typography.fontSize.xs[0],
 			fontWeight: typography.fontWeight.normal,
-			lineHeight: typography.fontSize.xs[1].lineHeight,
-		},
+			lineHeight: typography.fontSize.xs[1].lineHeight
+		}
 	},
 	shape: {
-		borderRadius: parseInt(borderRadius.md),
+		borderRadius: parseInt(borderRadius.md)
 	},
 	shadows: [
 		'none',
@@ -262,7 +262,7 @@ export const createMuiTokens = (mode: 'light' | 'dark') => ({
 		elevation.md,
 		elevation.lg,
 		elevation.xl,
-		elevation['2xl'],
+		elevation['2xl']
 		// Add more shadow levels as needed
 	],
 	transitions: {
@@ -270,15 +270,15 @@ export const createMuiTokens = (mode: 'light' | 'dark') => ({
 			shortest: parseInt(animation.duration.fast),
 			shorter: parseInt(animation.duration.normal),
 			short: parseInt(animation.duration.slow),
-			standard: parseInt(animation.duration.slower),
+			standard: parseInt(animation.duration.slower)
 		},
 		easing: {
 			easeInOut: animation.easing['ease-in-out'],
 			easeOut: animation.easing['ease-out'],
 			easeIn: animation.easing['ease-in'],
-			sharp: animation.easing.ease,
-		},
-	},
+			sharp: animation.easing.ease
+		}
+	}
 });
 
 // ===== UTILITY FUNCTIONS =====
@@ -312,7 +312,7 @@ export const responsive = {
 	md: (classes: string) => `md:${classes}`,
 	lg: (classes: string) => `lg:${classes}`,
 	xl: (classes: string) => `xl:${classes}`,
-	'2xl': (classes: string) => `2xl:${classes}`,
+	'2xl': (classes: string) => `2xl:${classes}`
 };
 
 /**
@@ -325,7 +325,7 @@ export const darkMode = (classes: string) => `dark:${classes}`;
  */
 export const focusStates = {
 	ring: 'focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-	outline: 'focus:outline-none focus:outline-2 focus:outline-primary-500 focus:outline-offset-2',
+	outline: 'focus:outline-none focus:outline-2 focus:outline-primary-500 focus:outline-offset-2'
 };
 
 /**
@@ -334,7 +334,7 @@ export const focusStates = {
 export const hoverStates = {
 	scale: 'hover:scale-105 transition-transform duration-200',
 	shadow: 'hover:shadow-lg transition-shadow duration-200',
-	brightness: 'hover:brightness-110 transition-all duration-200',
+	brightness: 'hover:brightness-110 transition-all duration-200'
 };
 
 /**
@@ -345,7 +345,7 @@ export const animations = {
 	slideUp: 'animate-slide-up',
 	bounce: 'animate-bounce',
 	pulse: 'animate-pulse',
-	spin: 'animate-spin',
+	spin: 'animate-spin'
 };
 
 // ===== COMPONENT CLASS BUILDERS =====
@@ -358,17 +358,18 @@ export const buttonClasses = {
 
 	variants: {
 		primary: 'bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-white focus:ring-primary-500',
-		secondary: 'bg-secondary-500 hover:bg-secondary-600 active:bg-secondary-700 text-white focus:ring-secondary-500',
+		secondary:
+			'bg-secondary-500 hover:bg-secondary-600 active:bg-secondary-700 text-white focus:ring-secondary-500',
 		outline: 'border border-primary-500 text-primary-500 hover:bg-primary-50 focus:ring-primary-500',
 		ghost: 'text-primary-500 hover:bg-primary-50 focus:ring-primary-500',
-		danger: 'bg-error-500 hover:bg-error-600 active:bg-error-700 text-white focus:ring-error-500',
+		danger: 'bg-error-500 hover:bg-error-600 active:bg-error-700 text-white focus:ring-error-500'
 	},
 
 	sizes: {
 		sm: 'px-3 py-1.5 text-sm rounded-md',
 		md: 'px-4 py-2 text-base rounded-md',
-		lg: 'px-6 py-3 text-lg rounded-lg',
-	},
+		lg: 'px-6 py-3 text-lg rounded-lg'
+	}
 };
 
 /**
@@ -379,15 +380,16 @@ export const cardClasses = {
 
 	variants: {
 		elevated: 'bg-white shadow-elevation-3 hover:shadow-elevation-4 dark:bg-neutral-800',
-		outlined: 'bg-white border border-neutral-200 hover:border-neutral-300 dark:bg-neutral-800 dark:border-neutral-700',
-		filled: 'bg-neutral-50 hover:bg-neutral-100 dark:bg-neutral-800 dark:hover:bg-neutral-700',
+		outlined:
+			'bg-white border border-neutral-200 hover:border-neutral-300 dark:bg-neutral-800 dark:border-neutral-700',
+		filled: 'bg-neutral-50 hover:bg-neutral-100 dark:bg-neutral-800 dark:hover:bg-neutral-700'
 	},
 
 	padding: {
 		sm: 'p-4',
 		md: 'p-6',
-		lg: 'p-8',
-	},
+		lg: 'p-8'
+	}
 };
 
 /**
@@ -399,14 +401,14 @@ export const inputClasses = {
 	variants: {
 		default: 'border-neutral-300 focus:border-primary-500 focus:ring-primary-500',
 		error: 'border-error-500 focus:border-error-500 focus:ring-error-500',
-		success: 'border-success-500 focus:border-success-500 focus:ring-success-500',
+		success: 'border-success-500 focus:border-success-500 focus:ring-success-500'
 	},
 
 	sizes: {
 		sm: 'px-3 py-1.5 text-sm',
 		md: 'px-3 py-2 text-base',
-		lg: 'px-4 py-3 text-lg',
-	},
+		lg: 'px-4 py-3 text-lg'
+	}
 };
 
 export default {
@@ -421,5 +423,5 @@ export default {
 	animations,
 	buttonClasses,
 	cardClasses,
-	inputClasses,
+	inputClasses
 };

@@ -43,9 +43,9 @@ const apiFetch = async (endpoint: string, options: FetchOptions = {}) => {
 		headers: {
 			...(method !== 'GET' && { 'Content-Type': 'application/json' }),
 			...globalHeaders,
-			...headers,
+			...headers
 		},
-		...restOptions,
+		...restOptions
 	};
 
 	try {

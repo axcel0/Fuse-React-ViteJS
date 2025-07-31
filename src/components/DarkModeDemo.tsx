@@ -13,7 +13,9 @@ function DarkModeDemo() {
 		<div className="p-6 space-y-6">
 			{/* Header */}
 			<div className="text-center">
-				<h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Tailwind CSS v4 Dark Mode Demo</h1>
+				<h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+					Tailwind CSS v4 Dark Mode Demo
+				</h1>
 				<p className="text-gray-600 dark:text-gray-400">
 					Current theme: <span className="font-semibold">{theme}</span>
 					{isSystem && <span> (resolved to {effectiveTheme})</span>}
@@ -23,7 +25,10 @@ function DarkModeDemo() {
 			{/* Theme Controls */}
 			<Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
 				<CardContent>
-					<Typography variant="h6" className="mb-4 text-gray-900 dark:text-gray-100">
+					<Typography
+						variant="h6"
+						className="mb-4 text-gray-900 dark:text-gray-100"
+					>
 						Theme Controls
 					</Typography>
 					<div className="flex gap-4 mb-4">
@@ -67,12 +72,17 @@ function DarkModeDemo() {
 				{/* Colors Demo */}
 				<Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
 					<CardContent>
-						<Typography variant="h6" className="mb-4 text-gray-900 dark:text-gray-100">
+						<Typography
+							variant="h6"
+							className="mb-4 text-gray-900 dark:text-gray-100"
+						>
 							Color Palette
 						</Typography>
 						<div className="space-y-3">
 							<div className="p-3 bg-fuse-primary text-white rounded">Primary Color (Fuse Custom)</div>
-							<div className="p-3 bg-fuse-secondary text-gray-900 rounded">Secondary Color (Fuse Custom)</div>
+							<div className="p-3 bg-fuse-secondary text-gray-900 rounded">
+								Secondary Color (Fuse Custom)
+							</div>
 							<div className="p-3 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded">
 								Background Surface
 							</div>
@@ -86,7 +96,10 @@ function DarkModeDemo() {
 				{/* Interactive Elements */}
 				<Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
 					<CardContent>
-						<Typography variant="h6" className="mb-4 text-gray-900 dark:text-gray-100">
+						<Typography
+							variant="h6"
+							className="mb-4 text-gray-900 dark:text-gray-100"
+						>
 							Interactive Elements
 						</Typography>
 						<div className="space-y-3">
@@ -110,7 +123,10 @@ function DarkModeDemo() {
 			{/* Advanced Features */}
 			<Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
 				<CardContent>
-					<Typography variant="h6" className="mb-4 text-gray-900 dark:text-gray-100">
+					<Typography
+						variant="h6"
+						className="mb-4 text-gray-900 dark:text-gray-100"
+					>
 						Advanced Dark Mode Features
 					</Typography>
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -119,21 +135,27 @@ function DarkModeDemo() {
 								<FuseSvgIcon className="text-white">heroicons-outline:sparkles</FuseSvgIcon>
 							</div>
 							<h3 className="font-semibold text-gray-900 dark:text-gray-100">CSS Variables</h3>
-							<p className="text-sm text-gray-600 dark:text-gray-400">Custom CSS variables for seamless theming</p>
+							<p className="text-sm text-gray-600 dark:text-gray-400">
+								Custom CSS variables for seamless theming
+							</p>
 						</div>
 						<div className="text-center">
 							<div className="w-16 h-16 mx-auto mb-2 bg-gradient-to-br from-green-500 to-emerald-600 dark:from-green-400 dark:to-emerald-500 rounded-full flex items-center justify-center">
 								<FuseSvgIcon className="text-white">heroicons-outline:device-phone-mobile</FuseSvgIcon>
 							</div>
 							<h3 className="font-semibold text-gray-900 dark:text-gray-100">System Detection</h3>
-							<p className="text-sm text-gray-600 dark:text-gray-400">Automatic system preference detection</p>
+							<p className="text-sm text-gray-600 dark:text-gray-400">
+								Automatic system preference detection
+							</p>
 						</div>
 						<div className="text-center">
 							<div className="w-16 h-16 mx-auto mb-2 bg-gradient-to-br from-orange-500 to-red-600 dark:from-orange-400 dark:to-red-500 rounded-full flex items-center justify-center">
 								<FuseSvgIcon className="text-white">heroicons-outline:bolt</FuseSvgIcon>
 							</div>
 							<h3 className="font-semibold text-gray-900 dark:text-gray-100">No FOUC</h3>
-							<p className="text-sm text-gray-600 dark:text-gray-400">Prevents flash of unstyled content</p>
+							<p className="text-sm text-gray-600 dark:text-gray-400">
+								Prevents flash of unstyled content
+							</p>
 						</div>
 					</div>
 				</CardContent>
@@ -142,7 +164,10 @@ function DarkModeDemo() {
 			{/* Code Example */}
 			<Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
 				<CardContent>
-					<Typography variant="h6" className="mb-4 text-gray-900 dark:text-gray-100">
+					<Typography
+						variant="h6"
+						className="mb-4 text-gray-900 dark:text-gray-100"
+					>
 						Usage Example
 					</Typography>
 					<pre className="bg-gray-100 dark:bg-gray-900 p-4 rounded text-sm overflow-x-auto">

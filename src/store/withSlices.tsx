@@ -6,7 +6,7 @@ import React from 'react';
 export default function withSlices(...slices: unknown[]) {
 	return function <T extends React.ComponentType<any>>(Component: T): T {
 		console.error(
-			'withSlices HOC is deprecated. Please remove this wrapper and migrate to React Context or TanStack Query.',
+			'withSlices HOC is deprecated. Please remove this wrapper and migrate to React Context or TanStack Query.'
 		);
 
 		const WrappedComponent = (props: any) => {

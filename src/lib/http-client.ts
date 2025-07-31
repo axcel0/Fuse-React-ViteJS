@@ -12,7 +12,7 @@ export const httpClient = ky.create({
 
 	// Default headers
 	headers: {
-		'Content-Type': 'application/json',
+		'Content-Type': 'application/json'
 	},
 
 	// Hooks for request/response interceptors
@@ -25,7 +25,7 @@ export const httpClient = ky.create({
 				if (token) {
 					request.headers.set('Authorization', `Bearer ${token}`);
 				}
-			},
+			}
 		],
 		beforeError: [
 			(error) => {
@@ -39,16 +39,16 @@ export const httpClient = ky.create({
 				}
 
 				return error;
-			},
-		],
+			}
+		]
 	},
 
 	// Retry configuration
 	retry: {
 		limit: 3,
 		methods: ['get', 'put', 'head', 'delete', 'options', 'trace'],
-		statusCodes: [408, 413, 429, 500, 502, 503, 504],
-	},
+		statusCodes: [408, 413, 429, 500, 502, 503, 504]
+	}
 });
 
 export default httpClient;

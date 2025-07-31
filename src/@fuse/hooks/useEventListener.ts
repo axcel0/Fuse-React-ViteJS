@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 function useEventListener<T extends Event>(
 	eventName: string,
 	handler: (event: T) => void,
-	element: HTMLElement | Window = window,
+	element: HTMLElement | Window = window
 ) {
 	// Create a mutable ref object to store the handler
 	const savedHandler = useRef<(event: T) => void>(undefined);

@@ -15,15 +15,15 @@ const Root = styled('div')(({ theme }) => ({
 	'& ::-webkit-scrollbar-thumb': {
 		boxShadow: `inset 0 0 0 20px ${'rgba(255, 255, 255, 0.24)'}`,
 		...theme.applyStyles('light', {
-			boxShadow: `inset 0 0 0 20px ${'rgba(0, 0, 0, 0.24)'}`,
-		}),
+			boxShadow: `inset 0 0 0 20px ${'rgba(0, 0, 0, 0.24)'}`
+		})
 	},
 	'& ::-webkit-scrollbar-thumb:active': {
 		boxShadow: `inset 0 0 0 20px ${'rgba(255, 255, 255, 0.37)'}`,
 		...theme.applyStyles('light', {
-			boxShadow: `inset 0 0 0 20px ${'rgba(0, 0, 0, 0.37)'}`,
-		}),
-	},
+			boxShadow: `inset 0 0 0 20px ${'rgba(0, 0, 0, 0.37)'}`
+		})
+	}
 }));
 
 const StyledContent = styled(FuseScrollbars)(() => ({
@@ -33,7 +33,7 @@ const StyledContent = styled(FuseScrollbars)(() => ({
 	WebkitOverflowScrolling: 'touch',
 	backgroundRepeat: 'no-repeat',
 	backgroundSize: '100% 40px, 100% 10px',
-	backgroundAttachment: 'local, scroll',
+	backgroundAttachment: 'local, scroll'
 }));
 
 type NavbarStyle2ContentProps = {

@@ -28,7 +28,7 @@ export const userKeys = {
 	list: (filters: Record<string, any>) => [...userKeys.lists(), { filters }] as const,
 	details: () => [...userKeys.all, 'detail'] as const,
 	detail: (id: string) => [...userKeys.details(), id] as const,
-	me: () => [...userKeys.all, 'me'] as const,
+	me: () => [...userKeys.all, 'me'] as const
 };
 
 // Get current user (replaces user reducer state)
@@ -50,7 +50,7 @@ export function useUser() {
 			}
 
 			return failureCount < 3;
-		},
+		}
 	});
 }
 
@@ -72,7 +72,7 @@ export function useUpdateUser() {
 		},
 		onError: (error) => {
 			console.error('Failed to update user:', error);
-		},
+		}
 	});
 }
 
@@ -83,13 +83,13 @@ export function useUpdateUserSettings() {
 	return useMutation({
 		mutationFn: async (settings: Record<string, any>): Promise<User> => {
 			const response = await httpClient.put('auth/me/settings', {
-				json: { settings },
+				json: { settings }
 			});
 			return response.json();
 		},
 		onSuccess: (updatedUser) => {
 			queryClient.setQueryData(userKeys.me(), updatedUser);
-		},
+		}
 	});
 }
 
@@ -102,7 +102,7 @@ export function useUsers(filters: Record<string, any> = {}) {
 			const response = await httpClient.get(`users?${searchParams.toString()}`);
 			return response.json();
 		},
-		enabled: Object.keys(filters).length > 0, // Only run if filters are provided
+		enabled: Object.keys(filters).length > 0 // Only run if filters are provided
 	});
 }
 
@@ -114,6 +114,6 @@ export function useUserById(userId: string) {
 			const response = await httpClient.get(`users/${userId}`);
 			return response.json();
 		},
-		enabled: !!userId,
+		enabled: !!userId
 	});
 }

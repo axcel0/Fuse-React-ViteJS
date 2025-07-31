@@ -36,7 +36,7 @@ export const resetNavbar = () => {
 export const selectFuseNavbar = (state: unknown) => ({
 	open: true,
 	mobileOpen: false,
-	foldedOpen: false,
+	foldedOpen: false
 });
 
 // Compatibility exports
@@ -47,9 +47,9 @@ export const navbarSlice = {
 		navbarCloseMobile,
 		navbarCloseFolded,
 		navbarOpenFolded,
-		resetNavbar,
+		resetNavbar
 	},
-	name: 'navbar',
+	name: 'navbar'
 };
 
 export default {}; // Empty reducer for compatibility

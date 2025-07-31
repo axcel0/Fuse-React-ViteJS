@@ -22,13 +22,29 @@ function RadioFormController(props: RadioFormControllerProps) {
 			name={name}
 			control={control}
 			render={({ field }) => (
-				<FormControl component="fieldset" className="FuseSettings-formControl">
-					<FormLabel component="legend" className="text-base">
+				<FormControl
+					component="fieldset"
+					className="FuseSettings-formControl"
+				>
+					<FormLabel
+						component="legend"
+						className="text-base"
+					>
 						{item.title}
 					</FormLabel>
-					<RadioGroup {...field} aria-label={item.title} className="FuseSettings-group" row={item?.options?.length < 4}>
+					<RadioGroup
+						{...field}
+						aria-label={item.title}
+						className="FuseSettings-group"
+						row={item?.options?.length < 4}
+					>
 						{item?.options?.map((opt: { value: string; name: string }) => (
-							<FormControlLabel key={opt.value} value={opt.value} control={<Radio />} label={opt.name} />
+							<FormControlLabel
+								key={opt.value}
+								value={opt.value}
+								control={<Radio />}
+								label={opt.name}
+							/>
 						))}
 					</RadioGroup>
 				</FormControl>

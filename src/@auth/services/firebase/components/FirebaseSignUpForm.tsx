@@ -22,18 +22,18 @@ const schema = z
 			.min(1, 'Please enter your password.')
 			.min(8, 'Password is too short - should be 8 chars minimum.'),
 		passwordConfirm: z.string().min(1, 'Password confirmation is required'),
-		acceptTermsConditions: z.boolean().refine((val) => val === true, 'The terms and conditions must be accepted.'),
+		acceptTermsConditions: z.boolean().refine((val) => val === true, 'The terms and conditions must be accepted.')
 	})
 	.refine((data) => data.password === data.passwordConfirm, {
 		message: 'Passwords must match',
-		path: ['passwordConfirm'],
+		path: ['passwordConfirm']
 	});
 
 const defaultValues = {
 	email: '',
 	password: '',
 	passwordConfirm: '',
-	acceptTermsConditions: false,
+	acceptTermsConditions: false
 };
 
 function FirebaseSignUpForm() {
@@ -42,7 +42,7 @@ function FirebaseSignUpForm() {
 	const { control, formState, handleSubmit, setError } = useForm({
 		mode: 'onChange',
 		defaultValues,
-		resolver: zodResolver(schema),
+		resolver: zodResolver(schema)
 	});
 
 	const { isValid, dirtyFields, errors } = formState;
@@ -51,7 +51,7 @@ function FirebaseSignUpForm() {
 		const { email, password } = formData;
 		signUp({
 			email,
-			password,
+			password
 		})
 			.then((_res) => {
 				// No need to do anything, registered user data will be set at app/auth/AuthRouteProvider
@@ -71,21 +71,21 @@ function FirebaseSignUpForm() {
 				if (emailErrorCodes.includes(error.code)) {
 					errors.push({
 						type: 'email',
-						message: error.message,
+						message: error.message
 					});
 				}
 
 				if (passwordErrorCodes.includes(error.code)) {
 					errors.push({
 						type: 'password',
-						message: error.message,
+						message: error.message
 					});
 				}
 
 				errors.forEach((err) => {
 					setError(err.type, {
 						type: 'manual',
-						message: err.message,
+						message: err.message
 					});
 				});
 			});
@@ -159,7 +159,12 @@ function FirebaseSignUpForm() {
 					<FormControl error={!!errors.acceptTermsConditions}>
 						<FormControlLabel
 							label="I agree with Terms and Privacy Policy"
-							control={<Checkbox size="small" {...field} />}
+							control={
+								<Checkbox
+									size="small"
+									{...field}
+								/>
+							}
 						/>
 						<FormHelperText>{errors?.acceptTermsConditions?.message}</FormHelperText>
 					</FormControl>

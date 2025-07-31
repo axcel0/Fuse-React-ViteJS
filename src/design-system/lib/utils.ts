@@ -25,7 +25,7 @@ export function focusElement(element: HTMLElement): void {
  */
 export function createFocusTrap(container: HTMLElement): () => void {
 	const focusableElements = container.querySelectorAll(
-		'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select',
+		'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
 	);
 
 	const firstElement = focusableElements[0] as HTMLElement;
@@ -64,7 +64,7 @@ export function createFocusTrap(container: HTMLElement): () => void {
 export function formatCurrency(value: number, currency = 'USD', locale = 'en-US'): string {
 	return new Intl.NumberFormat(locale, {
 		style: 'currency',
-		currency,
+		currency
 	}).format(value);
 }
 
@@ -80,8 +80,8 @@ export function formatDate(
 	options: Intl.DateTimeFormatOptions = {
 		year: 'numeric',
 		month: 'long',
-		day: 'numeric',
-	},
+		day: 'numeric'
+	}
 ): string {
 	const dateObj = typeof date === 'string' ? new Date(date) : date;
 	return new Intl.DateTimeFormat(locale, options).format(dateObj);

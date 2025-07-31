@@ -26,7 +26,7 @@ function FuseNavItemModel(data?: PartialDeep<FuseNavItemType>) {
 		exact: false,
 		end: false,
 		badge: null,
-		children: [],
+		children: []
 	});
 }
 

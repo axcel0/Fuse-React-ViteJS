@@ -60,7 +60,9 @@ function FuseShortcuts(props: FuseShortcutsProps) {
 		setSearchText(newSearchText);
 
 		if (newSearchText.length !== 0 && navigation) {
-			setSearchResults(navigation.filter((item) => item?.title?.toLowerCase()?.includes(newSearchText?.toLowerCase())));
+			setSearchResults(
+				navigation.filter((item) => item?.title?.toLowerCase()?.includes(newSearchText?.toLowerCase()))
+			);
 			return;
 		}
 
@@ -75,7 +77,7 @@ function FuseShortcuts(props: FuseShortcutsProps) {
 
 			onChange(newShortcuts);
 		},
-		[onChange, shortcuts],
+		[onChange, shortcuts]
 	);
 
 	return (
@@ -85,29 +87,48 @@ function FuseShortcuts(props: FuseShortcutsProps) {
 					<Box
 						className={clsx(
 							'flex flex-1 items-center border rounded-lg',
-							variant === 'vertical' ? 'flex-col' : 'max-h-9',
+							variant === 'vertical' ? 'flex-col' : 'max-h-9'
 						)}
 					>
 						{shortcutItems.map(
 							(_item) =>
 								_item && (
-									<Link to={_item.url} key={_item.id} role="button">
-										<Tooltip title={_item.title} placement={variant === 'horizontal' ? 'bottom' : 'left'}>
+									<Link
+										to={_item.url}
+										key={_item.id}
+										role="button"
+									>
+										<Tooltip
+											title={_item.title}
+											placement={variant === 'horizontal' ? 'bottom' : 'left'}
+										>
 											<IconButton className="h-9 w-9 p-0 rounded-none">
 												{_item.icon ? (
 													<FuseSvgIcon size={20}>{_item.icon}</FuseSvgIcon>
 												) : (
-													<span className="text-2xl font-semibold uppercase">{_item.title[0]}</span>
+													<span className="text-2xl font-semibold uppercase">
+														{_item.title[0]}
+													</span>
 												)}
 											</IconButton>
 										</Tooltip>
 									</Link>
-								),
+								)
 						)}
 
-						<Tooltip title="Click to add/remove shortcut" placement={variant === 'horizontal' ? 'bottom' : 'left'}>
-							<IconButton className="h-9 w-9 p-0 rounded-none" aria-haspopup="true" onClick={addMenuClick}>
-								<FuseSvgIcon size={20} sx={{ color: amber[600] }}>
+						<Tooltip
+							title="Click to add/remove shortcut"
+							placement={variant === 'horizontal' ? 'bottom' : 'left'}
+						>
+							<IconButton
+								className="h-9 w-9 p-0 rounded-none"
+								aria-haspopup="true"
+								onClick={addMenuClick}
+							>
+								<FuseSvgIcon
+									size={20}
+									sx={{ color: amber[600] }}
+								>
 									heroicons-solid:star
 								</FuseSvgIcon>
 							</IconButton>
@@ -122,7 +143,7 @@ function FuseShortcuts(props: FuseShortcutsProps) {
 				open={Boolean(addMenu)}
 				onClose={addMenuClose}
 				classes={{
-					paper: 'min-w-64',
+					paper: 'min-w-64'
 				}}
 				TransitionProps={{
 					onEntered: () => {
@@ -130,7 +151,7 @@ function FuseShortcuts(props: FuseShortcutsProps) {
 					},
 					onExited: () => {
 						setSearchText('');
-					},
+					}
 				}}
 			>
 				<div className="p-4 pt-2">
@@ -141,7 +162,7 @@ function FuseShortcuts(props: FuseShortcutsProps) {
 						placeholder="Search for an app or page"
 						fullWidth
 						inputProps={{
-							'aria-label': 'Search',
+							'aria-label': 'Search'
 						}}
 						disableUnderline
 					/>
@@ -165,7 +186,10 @@ function FuseShortcuts(props: FuseShortcutsProps) {
 				}, [searchText.length, searchResults, shortcuts, toggleInShortcuts])}
 
 				{searchText.length !== 0 && searchResults.length === 0 && (
-					<Typography color="text.secondary" className="p-4 pb-2">
+					<Typography
+						color="text.secondary"
+						className="p-4 pb-2"
+					>
 						No results..
 					</Typography>
 				)}
@@ -184,7 +208,7 @@ function FuseShortcuts(props: FuseShortcutsProps) {
 									item={_item}
 									onToggle={() => toggleInShortcuts(_item.id)}
 								/>
-							),
+							)
 					);
 				}, [searchText.length, shortcutItems, shortcuts, toggleInShortcuts])}
 			</Menu>
@@ -204,7 +228,10 @@ function ShortcutMenuItem(props: {
 	}
 
 	return (
-		<Link to={item.url || ''} role="button">
+		<Link
+			to={item.url || ''}
+			role="button"
+		>
 			<MenuItem key={item.id}>
 				<ListItemIcon className="min-w-9">
 					{item.icon ? (

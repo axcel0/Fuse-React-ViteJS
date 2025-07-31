@@ -30,7 +30,7 @@ function FusePageSimpleSidebar(props: FusePageSimpleSidebarProps) {
 	const [isOpen, setIsOpen] = useState(open);
 
 	useImperativeHandle(ref, () => ({
-		toggleSidebar: handleToggleDrawer,
+		toggleSidebar: handleToggleDrawer
 	}));
 
 	const handleToggleDrawer = useCallback((val: boolean) => {
@@ -57,21 +57,21 @@ function FusePageSimpleSidebar(props: FusePageSimpleSidebarProps) {
 							'FusePageSimple-sidebar',
 							variant,
 							position === 'left' ? 'FusePageSimple-leftSidebar' : 'FusePageSimple-rightSidebar',
-							'max-w-full',
-						),
+							'max-w-full'
+						)
 					}}
 					ModalProps={{
-						keepMounted: true, // Better open performance on mobile.
+						keepMounted: true // Better open performance on mobile.
 					}}
 					// container={rootRef.current}
 					BackdropProps={{
 						classes: {
-							root: 'FusePageSimple-backdrop',
-						},
+							root: 'FusePageSimple-backdrop'
+						}
 					}}
 					sx={{
 						position: 'absolute',
-						'& .MuiPaper-root': { width: `${props.width}px` },
+						'& .MuiPaper-root': { width: `${props.width}px` }
 					}}
 				>
 					<FusePageSimpleSidebarContent {...props} />
@@ -85,12 +85,12 @@ function FusePageSimpleSidebar(props: FusePageSimpleSidebarProps) {
 						'FusePageSimple-sidebarWrapper',
 						variant,
 						isOpen ? 'opened' : 'closed',
-						position === 'left' ? 'FusePageSimple-leftSidebar' : 'FusePageSimple-rightSidebar',
+						position === 'left' ? 'FusePageSimple-leftSidebar' : 'FusePageSimple-rightSidebar'
 					)}
 					open={isOpen}
 					onClose={onClose}
 					classes={{
-						paper: clsx('FusePageSimple-sidebar border-0', variant),
+						paper: clsx('FusePageSimple-sidebar border-0', variant)
 					}}
 					sx={{ '& .MuiPaper-root': { width: `${props.width}px` } }}
 				>

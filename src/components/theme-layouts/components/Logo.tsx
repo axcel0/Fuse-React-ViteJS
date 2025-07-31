@@ -6,15 +6,15 @@ const Root = styled('div')(({ theme }) => ({
 	'& > .logo-icon': {
 		transition: theme.transitions.create(['width', 'height'], {
 			duration: theme.transitions.duration.shortest,
-			easing: theme.transitions.easing.easeInOut,
-		}),
+			easing: theme.transitions.easing.easeInOut
+		})
 	},
 	'& > .badge': {
 		transition: theme.transitions.create('opacity', {
 			duration: theme.transitions.duration.shortest,
-			easing: theme.transitions.easing.easeInOut,
-		}),
-	},
+			easing: theme.transitions.easing.easeInOut
+		})
+	}
 }));
 
 // Modern P logo with circle background like F logo
@@ -32,11 +32,11 @@ const PLogoIcon = styled(Box)(({ theme }) => ({
 	fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
 	transition: theme.transitions.create(['background-color'], {
 		duration: theme.transitions.duration.shortest,
-		easing: theme.transitions.easing.easeInOut,
+		easing: theme.transitions.easing.easeInOut
 	}),
 	'&:hover': {
-		backgroundColor: theme.palette.mode === 'dark' ? '#f57c00' : '#e64a19', // Slightly different red on hover
-	},
+		backgroundColor: theme.palette.mode === 'dark' ? '#f57c00' : '#e64a19' // Slightly different red on hover
+	}
 }));
 
 /**

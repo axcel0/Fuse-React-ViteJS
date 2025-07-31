@@ -10,35 +10,35 @@ const StyledList = styled(List)(({ theme }) => ({
 		'&:hover': {
 			backgroundColor: 'rgba(0,0,0,.04)',
 			...theme.applyStyles('dark', {
-				backgroundColor: 'rgba(255, 255, 255, 0.05)',
-			}),
+				backgroundColor: 'rgba(255, 255, 255, 0.05)'
+			})
 		},
 		'&:focus:not(.active)': {
 			backgroundColor: 'rgba(0,0,0,.05)',
 			...theme.applyStyles('dark', {
-				backgroundColor: 'rgba(255, 255, 255, 0.06)',
-			}),
-		},
+				backgroundColor: 'rgba(255, 255, 255, 0.06)'
+			})
+		}
 	},
 	'& .fuse-list-item-text': {
-		margin: 0,
+		margin: 0
 	},
 	'& .fuse-list-item-text-primary': {
-		lineHeight: '20px',
+		lineHeight: '20px'
 	},
 	'&.active-square-list': {
 		'& .fuse-list-item, & .active.fuse-list-item': {
 			width: '100%',
-			borderRadius: '0',
-		},
+			borderRadius: '0'
+		}
 	},
 	'&.dense': {
 		'& .fuse-list-item': {
 			paddingTop: 0,
 			paddingBottom: 0,
-			height: 32,
-		},
-	},
+			height: 32
+		}
+	}
 }));
 
 /**
@@ -56,7 +56,12 @@ function FuseNavVerticalLayout1(props: FuseNavigationProps) {
 
 	return (
 		<StyledList
-			className={clsx('navigation whitespace-nowrap px-3 py-0', `active-${active}-list`, dense && 'dense', className)}
+			className={clsx(
+				'navigation whitespace-nowrap px-3 py-0',
+				`active-${active}-list`,
+				dense && 'dense',
+				className
+			)}
 		>
 			{navigation.map((_item) => (
 				<FuseNavItem

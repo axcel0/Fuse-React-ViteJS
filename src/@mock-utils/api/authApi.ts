@@ -20,7 +20,7 @@ const authApi = [
 
 			return HttpResponse.json(null, {
 				status: 200,
-				headers: { 'New-Access-Token': access_token },
+				headers: { 'New-Access-Token': access_token }
 			});
 		}
 
@@ -36,7 +36,7 @@ const authApi = [
 			const { access_token, user } = newTokenResponse;
 			return HttpResponse.json(user, {
 				status: 200,
-				headers: { 'New-Access-Token': access_token },
+				headers: { 'New-Access-Token': access_token }
 			});
 		}
 
@@ -59,14 +59,14 @@ const authApi = [
 		if (!user) {
 			error.push({
 				type: 'email',
-				message: 'Check your email address',
+				message: 'Check your email address'
 			});
 		}
 
 		if (user && password === '') {
 			error.push({
 				type: 'password',
-				message: 'Check your password',
+				message: 'Check your password'
 			});
 		}
 
@@ -77,7 +77,7 @@ const authApi = [
 
 			const response = {
 				user,
-				access_token,
+				access_token
 			};
 
 			return HttpResponse.json(response, { status: 200 });
@@ -100,7 +100,7 @@ const authApi = [
 		if (isEmailExists) {
 			error.push({
 				type: 'email',
-				message: 'The email address is already in use',
+				message: 'The email address is already in use'
 			});
 		}
 
@@ -111,7 +111,7 @@ const authApi = [
 				photoURL: '/assets/images/avatars/Abbott.jpg',
 				email,
 				shortcuts: [],
-				settings: {},
+				settings: {}
 			});
 
 			newUser.id = FuseUtils.generateGUID();
@@ -125,7 +125,7 @@ const authApi = [
 
 			const response = {
 				user,
-				access_token,
+				access_token
 			};
 
 			return HttpResponse.json(response, { status: 200 });
@@ -169,7 +169,7 @@ const authApi = [
 		delete (updatedUser as Partial<UserAuthType>).password;
 
 		return HttpResponse.json(updatedUser);
-	}),
+	})
 ];
 
 export default authApi;
@@ -202,7 +202,7 @@ function generateJWTToken(tokenPayload: { [key: string]: unknown }) {
 	// Define token header
 	const header = {
 		alg: 'HS256',
-		typ: 'JWT',
+		typ: 'JWT'
 	};
 
 	// Calculate the issued at and expiration dates
@@ -215,7 +215,7 @@ function generateJWTToken(tokenPayload: { [key: string]: unknown }) {
 		iat,
 		iss: 'Fuse',
 		exp,
-		...tokenPayload,
+		...tokenPayload
 	};
 
 	// Stringify and encode the header

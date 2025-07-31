@@ -42,7 +42,7 @@ export function useTheme() {
 		isSystemDarkMode: themeManager.isSystemDarkMode(),
 		isDark: effectiveTheme === 'dark',
 		isLight: effectiveTheme === 'light',
-		isSystem: theme === 'system',
+		isSystem: theme === 'system'
 	};
 }
 
@@ -56,7 +56,7 @@ export function useMuiThemeSync() {
 		// This can be used to trigger Material-UI theme updates
 		// when Tailwind theme changes
 		const event = new CustomEvent('tailwind-theme-change', {
-			detail: { theme: effectiveTheme },
+			detail: { theme: effectiveTheme }
 		});
 		window.dispatchEvent(event);
 	}, [effectiveTheme]);

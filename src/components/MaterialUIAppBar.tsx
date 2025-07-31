@@ -17,7 +17,7 @@ import {
 	useTheme,
 	alpha,
 	Breadcrumbs,
-	Link,
+	Link
 } from '@mui/material';
 import {
 	Search as SearchIcon,
@@ -29,7 +29,7 @@ import {
 	Person,
 	MoreVert,
 	Home,
-	ChevronRight,
+	ChevronRight
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { useLocation } from 'react-router-dom';
@@ -57,15 +57,15 @@ const Search = styled('div')(({ theme }) => ({
 	borderRadius: theme.shape.borderRadius,
 	backgroundColor: alpha(theme.palette.common.white, 0.15),
 	'&:hover': {
-		backgroundColor: alpha(theme.palette.common.white, 0.25),
+		backgroundColor: alpha(theme.palette.common.white, 0.25)
 	},
 	marginRight: theme.spacing(2),
 	marginLeft: 0,
 	width: '100%',
 	[theme.breakpoints.up('sm')]: {
 		marginLeft: theme.spacing(3),
-		width: 'auto',
-	},
+		width: 'auto'
+	}
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -75,7 +75,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 	pointerEvents: 'none',
 	display: 'flex',
 	alignItems: 'center',
-	justifyContent: 'center',
+	justifyContent: 'center'
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -87,9 +87,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 		transition: theme.transitions.create('width'),
 		width: '100%',
 		[theme.breakpoints.up('md')]: {
-			width: '20ch',
-		},
-	},
+			width: '20ch'
+		}
+	}
 }));
 
 // Styled AppBar with black/white theme colors
@@ -106,8 +106,8 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 	boxShadow: theme.shadows[1], // Shadow yang lebih minimal
 	borderBottom: `1px solid ${theme.palette.divider}`, // Border untuk definisi yang lebih jelas
 	transition: theme.transitions.create(['background-color', 'color'], {
-		duration: theme.transitions.duration.short,
-	}),
+		duration: theme.transitions.duration.short
+	})
 }));
 
 // Hide on scroll component
@@ -119,11 +119,15 @@ interface HideOnScrollProps {
 function HideOnScroll(props: HideOnScrollProps) {
 	const { children, window } = props;
 	const trigger = useScrollTrigger({
-		target: window ? window() : undefined,
+		target: window ? window() : undefined
 	});
 
 	return (
-		<Slide appear={false} direction="down" in={!trigger}>
+		<Slide
+			appear={false}
+			direction="down"
+			in={!trigger}
+		>
 			{children}
 		</Slide>
 	);
@@ -164,13 +168,13 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 		showUserMenu = true,
 		showNavbarToggle = false,
 		navbarPosition = 'left',
-		navbarStyle = 'style-1',
+		navbarStyle = 'style-1'
 	} = props;
 
-	const theme = useTheme();
+	const _theme = useTheme();
 	const location = useLocation();
 	const settings = useFuseLayoutSettings();
-	const config = settings.config as Layout1ConfigDefaultsType;
+	const _config = settings.config as Layout1ConfigDefaultsType;
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 	const { navbar } = useNavbar();
 	// Menggunakan Material-UI default theme, tidak perlu custom toolbar theme
@@ -180,7 +184,7 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 	const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 	const [anchorElNotifications, setAnchorElNotifications] = useState<null | HTMLElement>(null);
 	const [anchorElMore, setAnchorElMore] = useState<null | HTMLElement>(null);
-	const [notificationCount, setNotificationCount] = useState(3);
+	const [notificationCount, _setNotificationCount] = useState(3);
 	const [searchValue, setSearchValue] = useState('');
 
 	// Get page breadcrumbs from location
@@ -190,8 +194,13 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 			{
 				label: 'Home',
 				path: '/',
-				icon: <Home sx={{ mr: 0.5 }} fontSize="inherit" />,
-			},
+				icon: (
+					<Home
+						sx={{ mr: 0.5 }}
+						fontSize="inherit"
+					/>
+				)
+			}
 		];
 
 		pathnames.forEach((value, index) => {
@@ -200,7 +209,12 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 			breadcrumbs.push({
 				label,
 				path,
-				icon: <ChevronRight sx={{ mr: 0.5 }} fontSize="inherit" />,
+				icon: (
+					<ChevronRight
+						sx={{ mr: 0.5 }}
+						fontSize="inherit"
+					/>
+				)
 			});
 		});
 
@@ -280,8 +294,8 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 				...(variant === 'prominent' && {
 					flexDirection: 'column',
 					alignItems: 'flex-start',
-					py: 2,
-				}),
+					py: 2
+				})
 			}}
 		>
 			{/* Left Section - Navigation */}
@@ -292,14 +306,25 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 						{!isMobile && (
 							<>
 								{(navbarStyle === 'style-3' || navbarStyle === 'style-3-dense') && (
-									<NavbarToggleButton sx={{ mr: 1, width: 40, height: 40, p: 0 }} color="inherit" />
+									<NavbarToggleButton
+										sx={{ mr: 1, width: 40, height: 40, p: 0 }}
+										color="inherit"
+									/>
 								)}
 								{navbarStyle === 'style-1' && !navbar.open && (
-									<NavbarToggleButton sx={{ mr: 1, width: 40, height: 40, p: 0 }} color="inherit" />
+									<NavbarToggleButton
+										sx={{ mr: 1, width: 40, height: 40, p: 0 }}
+										color="inherit"
+									/>
 								)}
 							</>
 						)}
-						{isMobile && <NavbarToggleButton sx={{ mr: 1, width: 40, height: 40, p: 0 }} color="inherit" />}
+						{isMobile && (
+							<NavbarToggleButton
+								sx={{ mr: 1, width: 40, height: 40, p: 0 }}
+								color="inherit"
+							/>
+						)}
 					</>
 				)}
 
@@ -315,7 +340,7 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 						display: { xs: 'none', sm: 'block' },
 						fontWeight: 600,
 						color: 'inherit',
-						ml: showNavbarToggle ? 1 : 0,
+						ml: showNavbarToggle ? 1 : 0
 					}}
 				>
 					FUSE REACT
@@ -329,7 +354,7 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 						width: '100%',
 						mt: 2,
 						display: 'flex',
-						justifyContent: 'center',
+						justifyContent: 'center'
 					}}
 				>
 					<SimpleSearch />
@@ -368,7 +393,10 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 							onClick={handleNotificationsOpen}
 							aria-label={`show ${notificationCount} new notifications`}
 						>
-							<Badge badgeContent={notificationCount} color="error">
+							<Badge
+								badgeContent={notificationCount}
+								color="error"
+							>
 								<NotificationsIcon />
 							</Badge>
 						</IconButton>
@@ -381,7 +409,11 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 				{/* User Menu */}
 				{showUserMenu && (
 					<Tooltip title="Account settings">
-						<IconButton onClick={handleUserMenuOpen} color="inherit" aria-label="account menu">
+						<IconButton
+							onClick={handleUserMenuOpen}
+							color="inherit"
+							aria-label="account menu"
+						>
 							<Avatar sx={{ width: 32, height: 32 }}>
 								<AccountCircle />
 							</Avatar>
@@ -391,7 +423,11 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 
 				{/* More menu for mobile */}
 				{isMobile && (
-					<IconButton color="inherit" onClick={handleMoreMenuOpen} aria-label="more options">
+					<IconButton
+						color="inherit"
+						onClick={handleMoreMenuOpen}
+						aria-label="more options"
+					>
 						<MoreVert />
 					</IconButton>
 				)}
@@ -402,14 +438,25 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 						{!isMobile && (
 							<>
 								{(navbarStyle === 'style-3' || navbarStyle === 'style-3-dense') && (
-									<NavbarToggleButton sx={{ ml: 1, width: 40, height: 40, p: 0 }} color="inherit" />
+									<NavbarToggleButton
+										sx={{ ml: 1, width: 40, height: 40, p: 0 }}
+										color="inherit"
+									/>
 								)}
 								{navbarStyle === 'style-1' && !navbar.open && (
-									<NavbarToggleButton sx={{ ml: 1, width: 40, height: 40, p: 0 }} color="inherit" />
+									<NavbarToggleButton
+										sx={{ ml: 1, width: 40, height: 40, p: 0 }}
+										color="inherit"
+									/>
 								)}
 							</>
 						)}
-						{isMobile && <NavbarToggleButton sx={{ ml: 1, width: 40, height: 40, p: 0 }} color="inherit" />}
+						{isMobile && (
+							<NavbarToggleButton
+								sx={{ ml: 1, width: 40, height: 40, p: 0 }}
+								color="inherit"
+							/>
+						)}
 					</>
 				)}
 			</Box>
@@ -444,7 +491,7 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 										display: 'flex',
 										alignItems: 'center',
 										textDecoration: 'none',
-										'&:hover': { textDecoration: 'underline' },
+										'&:hover': { textDecoration: 'underline' }
 									}}
 								>
 									{breadcrumb.icon}
@@ -470,9 +517,9 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 						mt: 1.5,
 						minWidth: 200,
 						'& .MuiMenuItem-root': {
-							gap: 1.5,
-						},
-					},
+							gap: 1.5
+						}
+					}
 				}}
 			>
 				<MenuItem onClick={handleMenuClose}>
@@ -506,8 +553,8 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 					sx: {
 						mt: 1.5,
 						maxWidth: 360,
-						maxHeight: 400,
-					},
+						maxHeight: 400
+					}
 				}}
 			>
 				<Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
@@ -519,7 +566,10 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 					</Avatar>
 					<Box>
 						<Typography variant="body2">New user registered</Typography>
-						<Typography variant="caption" color="text.secondary">
+						<Typography
+							variant="caption"
+							color="text.secondary"
+						>
 							2 minutes ago
 						</Typography>
 					</Box>
@@ -530,7 +580,10 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 					</Avatar>
 					<Box>
 						<Typography variant="body2">System update available</Typography>
-						<Typography variant="caption" color="text.secondary">
+						<Typography
+							variant="caption"
+							color="text.secondary"
+						>
 							1 hour ago
 						</Typography>
 					</Box>
@@ -541,14 +594,23 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 					</Avatar>
 					<Box>
 						<Typography variant="body2">Maintenance scheduled</Typography>
-						<Typography variant="caption" color="text.secondary">
+						<Typography
+							variant="caption"
+							color="text.secondary"
+						>
 							3 hours ago
 						</Typography>
 					</Box>
 				</MenuItem>
 				<Divider />
-				<MenuItem onClick={handleMenuClose} sx={{ justifyContent: 'center' }}>
-					<Typography variant="body2" color="primary">
+				<MenuItem
+					onClick={handleMenuClose}
+					sx={{ justifyContent: 'center' }}
+				>
+					<Typography
+						variant="body2"
+						color="primary"
+					>
 						View all notifications
 					</Typography>
 				</MenuItem>

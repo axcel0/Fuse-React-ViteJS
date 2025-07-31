@@ -10,7 +10,7 @@ import {
 	Divider,
 	IconButton,
 	useTheme,
-	alpha,
+	alpha
 } from '@mui/material';
 import {
 	Home as HomeIcon,
@@ -20,7 +20,7 @@ import {
 	Facebook as FacebookIcon,
 	Twitter as TwitterIcon,
 	LinkedIn as LinkedInIcon,
-	GitHub as GitHubIcon,
+	GitHub as GitHubIcon
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 
@@ -30,27 +30,27 @@ const ModernBottomNavigation = styled(BottomNavigation)(({ theme }) => ({
 	borderTop: `1px solid ${theme.palette.divider}`,
 	minHeight: '64px',
 	transition: theme.transitions.create(['background-color'], {
-		duration: theme.transitions.duration.short,
-	}),
+		duration: theme.transitions.duration.short
+	})
 }));
 
 const FooterContent = styled(Box)(({ theme }) => ({
 	backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.grey[50],
 	borderTop: `1px solid ${theme.palette.divider}`,
-	padding: theme.spacing(3, 0),
+	padding: theme.spacing(3, 0)
 }));
 
 const SocialButton = styled(IconButton)(({ theme }) => ({
 	color:
 		theme.palette.mode === 'dark' ? alpha(theme.palette.common.white, 0.7) : alpha(theme.palette.common.black, 0.6),
 	transition: theme.transitions.create(['color', 'transform'], {
-		duration: theme.transitions.duration.short,
+		duration: theme.transitions.duration.short
 	}),
 
 	'&:hover': {
 		color: theme.palette.primary.main,
-		transform: 'translateY(-2px)',
-	},
+		transform: 'translateY(-2px)'
+	}
 }));
 
 // Main component props
@@ -76,7 +76,7 @@ function MaterialUIFooter(props: MaterialUIFooterProps) {
 		{ label: 'Home', icon: <HomeIcon />, href: '/' },
 		{ label: 'Dashboard', icon: <DashboardIcon />, href: '/dashboard' },
 		{ label: 'Search', icon: <SearchIcon />, href: '/search' },
-		{ label: 'Settings', icon: <SettingsIcon />, href: '/settings' },
+		{ label: 'Settings', icon: <SettingsIcon />, href: '/settings' }
 	];
 
 	// Footer links
@@ -85,20 +85,20 @@ function MaterialUIFooter(props: MaterialUIFooterProps) {
 			{ label: 'About Us', href: '/about' },
 			{ label: 'Our Team', href: '/team' },
 			{ label: 'Careers', href: '/careers' },
-			{ label: 'News', href: '/news' },
+			{ label: 'News', href: '/news' }
 		],
 		Support: [
 			{ label: 'Help Center', href: '/help' },
 			{ label: 'Contact Us', href: '/contact' },
 			{ label: 'Documentation', href: '/docs' },
-			{ label: 'API Reference', href: '/api' },
+			{ label: 'API Reference', href: '/api' }
 		],
 		Legal: [
 			{ label: 'Privacy Policy', href: '/privacy' },
 			{ label: 'Terms of Service', href: '/terms' },
 			{ label: 'Cookie Policy', href: '/cookies' },
-			{ label: 'GDPR', href: '/gdpr' },
-		],
+			{ label: 'GDPR', href: '/gdpr' }
+		]
 	};
 
 	// Social media links
@@ -106,7 +106,7 @@ function MaterialUIFooter(props: MaterialUIFooterProps) {
 		{ icon: <FacebookIcon />, href: 'https://facebook.com', label: 'Facebook' },
 		{ icon: <TwitterIcon />, href: 'https://twitter.com', label: 'Twitter' },
 		{ icon: <LinkedInIcon />, href: 'https://linkedin.com', label: 'LinkedIn' },
-		{ icon: <GitHubIcon />, href: 'https://github.com', label: 'GitHub' },
+		{ icon: <GitHubIcon />, href: 'https://github.com', label: 'GitHub' }
 	];
 
 	const handleNavChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -128,7 +128,8 @@ function MaterialUIFooter(props: MaterialUIFooterProps) {
 				sx={{
 					borderTop: 1,
 					borderColor: 'divider',
-					backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[900] : theme.palette.common.white,
+					backgroundColor:
+						theme.palette.mode === 'dark' ? theme.palette.grey[900] : theme.palette.common.white
 				}}
 			>
 				<Container maxWidth="lg">
@@ -139,10 +140,13 @@ function MaterialUIFooter(props: MaterialUIFooterProps) {
 							justifyContent: 'space-between',
 							alignItems: 'center',
 							flexWrap: 'wrap',
-							gap: 2,
+							gap: 2
 						}}
 					>
-						<Typography variant="body2" color="text.secondary">
+						<Typography
+							variant="body2"
+							color="text.secondary"
+						>
 							© 2025 FUSE React. All rights reserved.
 						</Typography>
 						{showSocial && (
@@ -168,10 +172,22 @@ function MaterialUIFooter(props: MaterialUIFooterProps) {
 	// Bottom navigation only variant
 	if (variant === 'bottom-navigation') {
 		return (
-			<Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1000 }} elevation={3} className={className}>
-				<ModernBottomNavigation value={navValue} onChange={handleNavChange} showLabels>
+			<Paper
+				sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1000 }}
+				elevation={3}
+				className={className}
+			>
+				<ModernBottomNavigation
+					value={navValue}
+					onChange={handleNavChange}
+					showLabels
+				>
 					{navigationItems.map((item, index) => (
-						<BottomNavigationAction key={index} label={item.label} icon={item.icon} />
+						<BottomNavigationAction
+							key={index}
+							label={item.label}
+							icon={item.icon}
+						/>
 					))}
 				</ModernBottomNavigation>
 			</Paper>
@@ -184,14 +200,22 @@ function MaterialUIFooter(props: MaterialUIFooterProps) {
 			elevation={0}
 			className={className}
 			sx={{
-				backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[900] : theme.palette.common.white,
+				backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[900] : theme.palette.common.white
 			}}
 		>
 			{/* Bottom Navigation */}
 			{showBottomNav && (
-				<ModernBottomNavigation value={navValue} onChange={handleNavChange} showLabels>
+				<ModernBottomNavigation
+					value={navValue}
+					onChange={handleNavChange}
+					showLabels
+				>
 					{navigationItems.map((item, index) => (
-						<BottomNavigationAction key={index} label={item.label} icon={item.icon} />
+						<BottomNavigationAction
+							key={index}
+							label={item.label}
+							icon={item.icon}
+						/>
 					))}
 				</ModernBottomNavigation>
 			)}
@@ -208,10 +232,10 @@ function MaterialUIFooter(props: MaterialUIFooterProps) {
 									gridTemplateColumns: {
 										xs: '1fr',
 										sm: 'repeat(2, 1fr)',
-										md: 'repeat(3, 1fr)',
+										md: 'repeat(3, 1fr)'
 									},
 									gap: 4,
-									mb: 4,
+									mb: 4
 								}}
 							>
 								{Object.entries(footerLinks).map(([category, links]) => (
@@ -224,7 +248,7 @@ function MaterialUIFooter(props: MaterialUIFooterProps) {
 												fontSize: '1rem',
 												fontWeight: 600,
 												color: 'text.primary',
-												mb: 2,
+												mb: 2
 											}}
 										>
 											{category}
@@ -240,8 +264,8 @@ function MaterialUIFooter(props: MaterialUIFooterProps) {
 														fontSize: '0.875rem',
 														transition: 'color 0.2s ease',
 														'&:hover': {
-															color: 'primary.main',
-														},
+															color: 'primary.main'
+														}
 													}}
 												>
 													{link.label}
@@ -263,14 +287,21 @@ function MaterialUIFooter(props: MaterialUIFooterProps) {
 							justifyContent: 'space-between',
 							alignItems: 'center',
 							flexWrap: 'wrap',
-							gap: 2,
+							gap: 2
 						}}
 					>
 						<Box>
-							<Typography variant="body2" color="text.secondary" gutterBottom>
+							<Typography
+								variant="body2"
+								color="text.secondary"
+								gutterBottom
+							>
 								© 2025 FUSE React. All rights reserved.
 							</Typography>
-							<Typography variant="body2" color="text.secondary">
+							<Typography
+								variant="body2"
+								color="text.secondary"
+							>
 								Built with ❤️ using Material-UI
 							</Typography>
 						</Box>

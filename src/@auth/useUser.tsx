@@ -61,7 +61,7 @@ function useUser(): useUser {
 		isGuest,
 		signOut: handleSignOut,
 		updateUser: handleUpdateUser,
-		updateUserSettings: handleUpdateUserSettings,
+		updateUserSettings: handleUpdateUserSettings
 	};
 }
 

@@ -13,7 +13,7 @@ const defaultAuthContext: AWSAuthContextType = {
 	isAuthenticated: false,
 	user: null,
 	updateUser: null,
-	signOut: null,
+	signOut: null
 };
 
 const AWSAuthContext = createContext<AWSAuthContextType>(defaultAuthContext);

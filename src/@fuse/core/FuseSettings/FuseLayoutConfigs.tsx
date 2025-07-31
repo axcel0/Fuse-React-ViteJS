@@ -14,7 +14,14 @@ function FuseLayoutConfigs(props: FuseSettingsControllersProps) {
 
 	return Object?.entries?.(value)?.map?.(([key, item]) => {
 		const name = prefix ? `${prefix}.${key}` : key;
-		return <FuseLayoutConfig key={key} name={name as keyof FuseSettingsConfigType} control={control} item={item} />;
+		return (
+			<FuseLayoutConfig
+				key={key}
+				name={name as keyof FuseSettingsConfigType}
+				control={control}
+				item={item}
+			/>
+		);
 	});
 }
 

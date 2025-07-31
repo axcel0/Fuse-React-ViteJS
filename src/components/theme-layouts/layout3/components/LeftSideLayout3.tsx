@@ -9,7 +9,10 @@ function LeftSideLayout3() {
 	return (
 		<FuseSidePanel className="flex flex-col justify-star items-center py-3 space-y-2">
 			<div>
-				<NavigationShortcuts className="flex shrink" variant="vertical" />
+				<NavigationShortcuts
+					className="flex shrink"
+					variant="vertical"
+				/>
 			</div>
 		</FuseSidePanel>
 	);

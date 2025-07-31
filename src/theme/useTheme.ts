@@ -60,6 +60,6 @@ export function useTheme(): UseThemeReturn {
 		resolvedTheme,
 		setMode,
 		toggleMode,
-		isSystemMode: mode === 'system',
+		isSystemMode: mode === 'system'
 	};
 }

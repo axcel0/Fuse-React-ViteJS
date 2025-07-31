@@ -5,7 +5,12 @@ import type { ComponentType } from 'react';
 
 type StyledTabProps = TabProps;
 
-const FuseTab: ComponentType<TabProps> = styled((props: StyledTabProps) => <Tab disableRipple {...props} />)(() => ({
+const FuseTab: ComponentType<TabProps> = styled((props: StyledTabProps) => (
+	<Tab
+		disableRipple
+		{...props}
+	/>
+))(() => ({
 	height: 36,
 	maxHeight: 36,
 	minHeight: 'auto!important',
@@ -15,9 +20,9 @@ const FuseTab: ComponentType<TabProps> = styled((props: StyledTabProps) => <Tab 
 	borderRadius: 8,
 	fontWeight: 'semibold',
 	'&:hover': {
-		opacity: 0.8,
+		opacity: 0.8
 	},
-	'&.Mui-selected': {},
+	'&.Mui-selected': {}
 }));
 
 export default FuseTab;

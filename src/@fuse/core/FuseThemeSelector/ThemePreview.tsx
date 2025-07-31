@@ -31,12 +31,12 @@ function ThemePreview(props: ThemePreviewProps) {
 					'flex p-0 h-40 relative w-full cursor-pointer overflow-hidden rounded-sm text-left font-medium shadow-sm transition-all hover:shadow-lg items-stretch hover:scale-105 duration-200 ease-in-out',
 					{
 						'bg-white': id === 'default',
-						'bg-gray-700': id !== 'default',
-					},
+						'bg-gray-700': id !== 'default'
+					}
 				)}
 				style={{
 					backgroundColor: main.palette.background.default,
-					color: main.palette.text.primary,
+					color: main.palette.text.primary
 				}}
 				onClick={() => {
 					onSelect(theme);
@@ -47,7 +47,7 @@ function ThemePreview(props: ThemePreviewProps) {
 					className="flex flex-col w-1/3 min-h-full p-1 border-r-1 border-gray-700"
 					style={{
 						backgroundColor: navbar.palette.background.default,
-						color: navbar.palette.text.primary,
+						color: navbar.palette.text.primary
 					}}
 				>
 					<span className="text-sm">Navbar</span>
@@ -58,7 +58,7 @@ function ThemePreview(props: ThemePreviewProps) {
 						className="w-full px-1 py-1 border-b-1 border-gray-700"
 						style={{
 							backgroundColor: toolbar.palette.background.default,
-							color: toolbar.palette.text.primary,
+							color: toolbar.palette.text.primary
 						}}
 					>
 						<span className="text-sm">Toolbar</span>
@@ -69,7 +69,7 @@ function ThemePreview(props: ThemePreviewProps) {
 							className="relative h-11 w-full px-1"
 							style={{
 								backgroundColor: main.palette.primary.main,
-								color: main.palette.primary.contrastText,
+								color: main.palette.primary.contrastText
 							}}
 						>
 							<span className="text-sm">Header</span>
@@ -78,7 +78,7 @@ function ThemePreview(props: ThemePreviewProps) {
 								className="absolute bottom-0 right-0 mb-2.5 mr-2 flex h-6 w-6 items-center justify-center rounded-full text-xs shadow-1 z-10"
 								style={{
 									backgroundColor: main.palette.secondary.main,
-									color: main.palette.secondary.contrastText,
+									color: main.palette.secondary.contrastText
 								}}
 							>
 								<span className="">S</span>
@@ -90,7 +90,7 @@ function ThemePreview(props: ThemePreviewProps) {
 								className="relative w-full h-full rounded-sm p-1 shadow-1"
 								style={{
 									backgroundColor: main.palette.background.paper,
-									color: main.palette.text.primary,
+									color: main.palette.text.primary
 								}}
 							>
 								<span className="text-sm">Paper</span>
@@ -106,7 +106,7 @@ function ThemePreview(props: ThemePreviewProps) {
 						className="w-full px-2 py-1 border-t-1 border-gray-700"
 						style={{
 							backgroundColor: footer.palette.background.default,
-							color: footer.palette.text.primary,
+							color: footer.palette.text.primary
 						}}
 					>
 						<span className="text-sm">Footer</span>

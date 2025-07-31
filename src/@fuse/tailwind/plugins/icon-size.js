@@ -17,23 +17,23 @@ const iconSize = plugin(({ addUtilities, theme, matchUtilities }) => {
 		lineHeight: value,
 		svg: {
 			width: value,
-			height: value,
-		},
+			height: value
+		}
 	});
 
 	// Standard spacing scale utilities
 	addUtilities(
 		Object.entries(spacingScale).map(([key, value]) => ({
-			[`.icon-size-${key}`]: createIconStyles(value),
-		})),
+			[`.icon-size-${key}`]: createIconStyles(value)
+		}))
 	);
 
 	// Arbitrary value support
 	matchUtilities(
 		{
-			'icon-size': (value) => createIconStyles(value),
+			'icon-size': (value) => createIconStyles(value)
 		},
-		{ values: spacingScale },
+		{ values: spacingScale }
 	);
 });
 

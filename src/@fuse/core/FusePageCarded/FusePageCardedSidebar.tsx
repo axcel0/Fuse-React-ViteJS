@@ -34,7 +34,7 @@ function FusePageCardedSidebar(props: FusePageCardedSidebarProps) {
 	}, []);
 
 	useImperativeHandle(ref, () => ({
-		toggleSidebar: handleToggleDrawer,
+		toggleSidebar: handleToggleDrawer
 	}));
 
 	useEffect(() => {
@@ -56,20 +56,20 @@ function FusePageCardedSidebar(props: FusePageCardedSidebarProps) {
 						paper: clsx(
 							'FusePageCarded-sidebar',
 							variant,
-							position === 'left' ? 'FusePageCarded-leftSidebar' : 'FusePageCarded-rightSidebar',
-						),
+							position === 'left' ? 'FusePageCarded-leftSidebar' : 'FusePageCarded-rightSidebar'
+						)
 					}}
 					ModalProps={{
-						keepMounted: true, // Better open performance on mobile.
+						keepMounted: true // Better open performance on mobile.
 					}}
 					BackdropProps={{
 						classes: {
-							root: 'FusePageCarded-backdrop',
-						},
+							root: 'FusePageCarded-backdrop'
+						}
 					}}
 					sx={{
 						position: 'absolute',
-						'& .MuiPaper-root': { width: `${props.width}px` },
+						'& .MuiPaper-root': { width: `${props.width}px` }
 					}}
 				>
 					<FusePageCardedSidebarContent {...props} />
@@ -83,12 +83,12 @@ function FusePageCardedSidebar(props: FusePageCardedSidebarProps) {
 						'FusePageCarded-sidebarWrapper',
 						variant,
 						isOpen ? 'opened' : 'closed',
-						position === 'left' ? 'FusePageCarded-leftSidebar' : 'FusePageCarded-rightSidebar',
+						position === 'left' ? 'FusePageCarded-leftSidebar' : 'FusePageCarded-rightSidebar'
 					)}
 					open={isOpen}
 					onClose={onClose}
 					classes={{
-						paper: clsx('FusePageCarded-sidebar', variant),
+						paper: clsx('FusePageCarded-sidebar', variant)
 					}}
 					sx={{ '& .MuiPaper-root': { width: `${props.width}px` } }}
 				>

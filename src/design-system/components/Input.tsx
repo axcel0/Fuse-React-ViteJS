@@ -9,18 +9,18 @@ const inputVariants = cva(inputClasses.base, {
 		variant: {
 			default: inputClasses.variants.default,
 			error: inputClasses.variants.error,
-			success: inputClasses.variants.success,
+			success: inputClasses.variants.success
 		},
 		size: {
 			sm: inputClasses.sizes.sm,
 			md: inputClasses.sizes.md,
-			lg: inputClasses.sizes.lg,
-		},
+			lg: inputClasses.sizes.lg
+		}
 	},
 	defaultVariants: {
 		variant: 'default',
-		size: 'md',
-	},
+		size: 'md'
+	}
 });
 
 // ===== INPUT INTERFACES =====
@@ -57,7 +57,7 @@ export interface InputProps
 const Input = forwardRef<HTMLInputElement, InputProps>(
 	(
 		{ className, variant, size, label, helperText, error, startIcon, endIcon, fullWidth = false, id, ...props },
-		ref,
+		ref
 	) => {
 		const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
 		const hasError = Boolean(error);
@@ -67,7 +67,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 			<div className={cn('space-y-1', fullWidth && 'w-full')}>
 				{/* Label */}
 				{label && (
-					<label htmlFor={inputId} className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+					<label
+						htmlFor={inputId}
+						className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+					>
 						{label}
 					</label>
 				)}
@@ -90,7 +93,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 							startIcon && 'pl-10',
 							endIcon && 'pr-10',
 							fullWidth && 'w-full',
-							className,
+							className
 						)}
 						{...props}
 					/>
@@ -108,7 +111,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 					<p
 						className={cn(
 							'text-sm',
-							hasError ? 'text-error-600 dark:text-error-400' : 'text-gray-600 dark:text-gray-400',
+							hasError ? 'text-error-600 dark:text-error-400' : 'text-gray-600 dark:text-gray-400'
 						)}
 					>
 						{error || helperText}
@@ -116,7 +119,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 				)}
 			</div>
 		);
-	},
+	}
 );
 
 Input.displayName = 'Input';
@@ -157,7 +160,10 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 			<div className={cn('space-y-1', fullWidth && 'w-full')}>
 				{/* Label */}
 				{label && (
-					<label htmlFor={textareaId} className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+					<label
+						htmlFor={textareaId}
+						className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+					>
 						{label}
 					</label>
 				)}
@@ -171,7 +177,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 						inputVariants({ variant: actualVariant, size: 'md' }),
 						fullWidth && 'w-full',
 						'resize-y',
-						className,
+						className
 					)}
 					{...props}
 				/>
@@ -181,7 +187,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 					<p
 						className={cn(
 							'text-sm',
-							hasError ? 'text-error-600 dark:text-error-400' : 'text-gray-600 dark:text-gray-400',
+							hasError ? 'text-error-600 dark:text-error-400' : 'text-gray-600 dark:text-gray-400'
 						)}
 					>
 						{error || helperText}
@@ -189,7 +195,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 				)}
 			</div>
 		);
-	},
+	}
 );
 
 Textarea.displayName = 'Textarea';
@@ -244,7 +250,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
 			id,
 			...props
 		},
-		ref,
+		ref
 	) => {
 		const selectId = id || `select-${Math.random().toString(36).substr(2, 9)}`;
 		const hasError = Boolean(error);
@@ -254,7 +260,10 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
 			<div className={cn('space-y-1', fullWidth && 'w-full')}>
 				{/* Label */}
 				{label && (
-					<label htmlFor={selectId} className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+					<label
+						htmlFor={selectId}
+						className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+					>
 						{label}
 					</label>
 				)}
@@ -267,18 +276,25 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
 						inputVariants({ variant: actualVariant, size }),
 						fullWidth && 'w-full',
 						'cursor-pointer',
-						className,
+						className
 					)}
 					{...props}
 				>
 					{placeholder && (
-						<option value="" disabled>
+						<option
+							value=""
+							disabled
+						>
 							{placeholder}
 						</option>
 					)}
 
 					{options.map((option) => (
-						<option key={option.value} value={option.value} disabled={option.disabled}>
+						<option
+							key={option.value}
+							value={option.value}
+							disabled={option.disabled}
+						>
 							{option.label}
 						</option>
 					))}
@@ -291,7 +307,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
 					<p
 						className={cn(
 							'text-sm',
-							hasError ? 'text-error-600 dark:text-error-400' : 'text-gray-600 dark:text-gray-400',
+							hasError ? 'text-error-600 dark:text-error-400' : 'text-gray-600 dark:text-gray-400'
 						)}
 					>
 						{error || helperText}
@@ -299,7 +315,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
 				)}
 			</div>
 		);
-	},
+	}
 );
 
 Select.displayName = 'Select';

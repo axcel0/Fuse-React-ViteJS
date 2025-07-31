@@ -26,11 +26,11 @@ export const queryClient = new QueryClient({
 			// Refetch on window focus
 			refetchOnWindowFocus: false,
 			// Refetch on reconnect
-			refetchOnReconnect: true,
+			refetchOnReconnect: true
 		},
 		mutations: {
 			// Retry failed mutations
-			retry: false,
-		},
-	},
+			retry: false
+		}
+	}
 });

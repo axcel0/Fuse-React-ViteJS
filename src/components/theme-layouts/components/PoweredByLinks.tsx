@@ -10,14 +10,14 @@ function PoweredByLinks() {
 	const container = {
 		show: {
 			transition: {
-				staggerChildren: 0.04,
-			},
-		},
+				staggerChildren: 0.04
+			}
+		}
 	};
 
 	const item = {
 		hidden: { opacity: 0, scale: 0.6 },
-		show: { opacity: 1, scale: 1 },
+		show: { opacity: 1, scale: 1 }
 	};
 
 	return (
@@ -28,10 +28,13 @@ function PoweredByLinks() {
 			animate="show"
 			className="flex items-center rounded-lg overflow-hidden"
 			sx={(theme) => ({
-				border: `1px solid ${theme.palette.divider}!important`,
+				border: `1px solid ${theme.palette.divider}!important`
 			})}
 		>
-			<Tooltip title="React" placement="top">
+			<Tooltip
+				title="React"
+				placement="top"
+			>
 				<IconButton
 					className="min-h-10 w-11 flex justify-center items-center rounded-none"
 					component={motion.a}
@@ -48,7 +51,10 @@ function PoweredByLinks() {
 					/>
 				</IconButton>
 			</Tooltip>
-			<Tooltip title="Redux Toolkit" placement="top">
+			<Tooltip
+				title="Redux Toolkit"
+				placement="top"
+			>
 				<IconButton
 					className="min-h-10 w-11 flex justify-center items-center rounded-none"
 					component={motion.a}
@@ -65,7 +71,10 @@ function PoweredByLinks() {
 					/>
 				</IconButton>
 			</Tooltip>
-			<Tooltip title="Material UI" placement="top">
+			<Tooltip
+				title="Material UI"
+				placement="top"
+			>
 				<IconButton
 					className="min-h-10 w-11 flex justify-center items-center rounded-none"
 					component={motion.a}
@@ -82,7 +91,10 @@ function PoweredByLinks() {
 					/>
 				</IconButton>
 			</Tooltip>
-			<Tooltip title="Tailwind" placement="top">
+			<Tooltip
+				title="Tailwind"
+				placement="top"
+			>
 				<IconButton
 					className="min-h-10 w-11 flex justify-center items-center rounded-none"
 					component={motion.a}
@@ -104,12 +116,15 @@ function PoweredByLinks() {
                                       </defs>
                                     </svg>
                                     <svg class='w-full block' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><path d='M13.5 11.1C15.3 3.9 19.8.3 27 .3c10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 27.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z' transform='translate(5 16)' fill='url(#logoGradient)' fill-rule='evenodd'></path></svg>
-                                    `,
+                                    `
 						}}
 					/>
 				</IconButton>
 			</Tooltip>
-			<Tooltip title="ViteJs" placement="top">
+			<Tooltip
+				title="ViteJs"
+				placement="top"
+			>
 				<IconButton
 					className="min-h-10 w-11 flex justify-center items-center rounded-none"
 					component={motion.a}
@@ -119,10 +134,17 @@ function PoweredByLinks() {
 					rel="noreferrer noopener"
 					role="button"
 				>
-					<img src="/assets/images/logo/vite.svg" alt="vite" className="min-w-0 w-7" />
+					<img
+						src="/assets/images/logo/vite.svg"
+						alt="vite"
+						className="min-w-0 w-7"
+					/>
 				</IconButton>
 			</Tooltip>
-			<Tooltip title="Mock Service Worker" placement="top">
+			<Tooltip
+				title="Mock Service Worker"
+				placement="top"
+			>
 				<IconButton
 					className="min-h-10 w-11 flex justify-center items-center rounded-none"
 					component={motion.a}
@@ -132,10 +154,17 @@ function PoweredByLinks() {
 					rel="noreferrer noopener"
 					role="button"
 				>
-					<img src="/assets/images/logo/msw.svg" alt="Mock Service Worker" className="min-w-0 w-7" />
+					<img
+						src="/assets/images/logo/msw.svg"
+						alt="Mock Service Worker"
+						className="min-w-0 w-7"
+					/>
 				</IconButton>
 			</Tooltip>
-			<Tooltip title="TypeScript" placement="top">
+			<Tooltip
+				title="TypeScript"
+				placement="top"
+			>
 				<IconButton
 					className="min-h-10 w-11 flex justify-center items-center rounded-none"
 					component={motion.a}
@@ -149,7 +178,7 @@ function PoweredByLinks() {
 						className="min-w-7 w-7 h-7 rounded-2 px-1 py-0.25 flex items-end justify-end"
 						sx={{
 							backgroundColor: '#2e79c7!important',
-							color: '#ffffff!important',
+							color: '#ffffff!important'
 						}}
 					>
 						<span className="react-text text-sm font-semibold">TS</span>

@@ -24,8 +24,16 @@ function TitleReferenceLink(props: TitleReferenceLinkProps) {
 	}
 
 	return (
-		<Tooltip title="Copied!" open={open} slotProps={{ popper: { placement: 'top' } }} arrow>
-			<Box component="span" id={id}>
+		<Tooltip
+			title="Copied!"
+			open={open}
+			slotProps={{ popper: { placement: 'top' } }}
+			arrow
+		>
+			<Box
+				component="span"
+				id={id}
+			>
 				<Typography
 					component={Link}
 					to={href}

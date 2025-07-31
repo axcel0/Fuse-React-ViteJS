@@ -11,21 +11,21 @@ const buttonVariants = cva(buttonClasses.base, {
 			secondary: buttonClasses.variants.secondary,
 			outline: buttonClasses.variants.outline,
 			ghost: buttonClasses.variants.ghost,
-			danger: buttonClasses.variants.danger,
+			danger: buttonClasses.variants.danger
 		},
 		size: {
 			sm: buttonClasses.sizes.sm,
 			md: buttonClasses.sizes.md,
-			lg: buttonClasses.sizes.lg,
+			lg: buttonClasses.sizes.lg
 		},
 		fullWidth: {
-			true: 'w-full',
-		},
+			true: 'w-full'
+		}
 	},
 	defaultVariants: {
 		variant: 'primary',
-		size: 'md',
-	},
+		size: 'md'
+	}
 });
 
 // ===== BUTTON COMPONENT =====
@@ -41,7 +41,7 @@ export interface ButtonProps
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 	(
 		{ className, variant, size, fullWidth, loading = false, leftIcon, rightIcon, children, disabled, ...props },
-		ref,
+		ref
 	) => {
 		return (
 			<button
@@ -51,8 +51,20 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 				{...props}
 			>
 				{loading && (
-					<svg className="mr-2 h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-						<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+					<svg
+						className="mr-2 h-4 w-4 animate-spin"
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+					>
+						<circle
+							className="opacity-25"
+							cx="12"
+							cy="12"
+							r="10"
+							stroke="currentColor"
+							strokeWidth="4"
+						/>
 						<path
 							className="opacity-75"
 							fill="currentColor"
@@ -65,7 +77,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 				{!loading && rightIcon && <span className="ml-2">{rightIcon}</span>}
 			</button>
 		);
-	},
+	}
 );
 
 Button.displayName = 'Button';

@@ -20,18 +20,46 @@ function FuseLayoutConfig(props: FuseSettingsControllerProps) {
 
 	switch (item.type) {
 		case 'radio':
-			return <RadioFormController name={name} control={control} item={item} />;
+			return (
+				<RadioFormController
+					name={name}
+					control={control}
+					item={item}
+				/>
+			);
 		case 'switch':
-			return <SwitchFormController name={name} control={control} item={item} />;
+			return (
+				<SwitchFormController
+					name={name}
+					control={control}
+					item={item}
+				/>
+			);
 		case 'number':
-			return <NumberFormController name={name} control={control} item={item} />;
+			return (
+				<NumberFormController
+					name={name}
+					control={control}
+					item={item}
+				/>
+			);
 		case 'group':
 			return (
-				<div key={name} className="FuseSettings-formGroup">
-					<Typography className="FuseSettings-formGroupTitle" color="text.secondary">
+				<div
+					key={name}
+					className="FuseSettings-formGroup"
+				>
+					<Typography
+						className="FuseSettings-formGroupTitle"
+						color="text.secondary"
+					>
 						{item.title}
 					</Typography>
-					<FuseLayoutConfigs value={item.children} prefix={name} control={control} />
+					<FuseLayoutConfigs
+						value={item.children}
+						prefix={name}
+						control={control}
+					/>
 				</div>
 			);
 		default:

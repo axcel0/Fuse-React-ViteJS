@@ -40,15 +40,15 @@ export const resetNavigation = () => {
 };
 
 // Legacy selectors (now return static data for compatibility)
-export const selectNavigationAll = (state?: any) => initialNavigation;
-export const selectNavigationIds = (state?: any) => initialNavigation.map((item: FuseFlatNavItemType) => item.id);
-export const selectNavigationItemById = (state?: any, id?: string) =>
+export const selectNavigationAll = (_state?: unknown) => initialNavigation;
+export const selectNavigationIds = (_state?: unknown) => initialNavigation.map((item: FuseFlatNavItemType) => item.id);
+export const selectNavigationItemById = (_state?: unknown, id?: string) =>
 	initialNavigation.find((item: FuseFlatNavItemType) => item.id === id);
 
 // Compatibility exports
 export const navigationSlice = {
 	actions: { setNavigation, resetNavigation },
-	name: 'navigation',
+	name: 'navigation'
 };
 
 export type navigationSliceType = typeof navigationSlice;

@@ -9,23 +9,23 @@ const Layout2Config = {
 		navbar: {
 			display: true,
 			style: 'fixed',
-			folded: true,
+			folded: true
 		},
 		toolbar: {
 			display: true,
 			style: 'static',
-			position: 'below',
+			position: 'below'
 		},
 		footer: {
 			display: true,
-			style: 'fixed',
+			style: 'fixed'
 		},
 		leftSidePanel: {
-			display: true,
+			display: true
 		},
 		rightSidePanel: {
-			display: true,
-		},
+			display: true
+		}
 	},
 	form: {
 		mode: {
@@ -34,22 +34,22 @@ const Layout2Config = {
 			options: [
 				{
 					name: 'Boxed',
-					value: 'boxed',
+					value: 'boxed'
 				},
 				{
 					name: 'Full Width',
-					value: 'fullwidth',
+					value: 'fullwidth'
 				},
 				{
 					name: 'Container',
-					value: 'container',
-				},
-			],
+					value: 'container'
+				}
+			]
 		},
 		containerWidth: {
 			title: 'Container Width (px)',
 			type: 'number',
-			min: 1024,
+			min: 1024
 		},
 		navbar: {
 			type: 'group',
@@ -57,7 +57,7 @@ const Layout2Config = {
 			children: {
 				display: {
 					title: 'Display',
-					type: 'switch',
+					type: 'switch'
 				},
 				style: {
 					title: 'Style',
@@ -65,15 +65,15 @@ const Layout2Config = {
 					options: [
 						{
 							name: 'Fixed',
-							value: 'fixed',
+							value: 'fixed'
 						},
 						{
 							name: 'Static',
-							value: 'static',
-						},
-					],
-				},
-			},
+							value: 'static'
+						}
+					]
+				}
+			}
 		},
 		toolbar: {
 			type: 'group',
@@ -81,7 +81,7 @@ const Layout2Config = {
 			children: {
 				display: {
 					title: 'Display',
-					type: 'switch',
+					type: 'switch'
 				},
 				position: {
 					title: 'Position',
@@ -89,13 +89,13 @@ const Layout2Config = {
 					options: [
 						{
 							name: 'Above',
-							value: 'above',
+							value: 'above'
 						},
 						{
 							name: 'Below',
-							value: 'below',
-						},
-					],
+							value: 'below'
+						}
+					]
 				},
 				style: {
 					title: 'Style',
@@ -103,15 +103,15 @@ const Layout2Config = {
 					options: [
 						{
 							name: 'Fixed',
-							value: 'fixed',
+							value: 'fixed'
 						},
 						{
 							name: 'Static',
-							value: 'static',
-						},
-					],
-				},
-			},
+							value: 'static'
+						}
+					]
+				}
+			}
 		},
 		footer: {
 			type: 'group',
@@ -119,7 +119,7 @@ const Layout2Config = {
 			children: {
 				display: {
 					title: 'Display',
-					type: 'switch',
+					type: 'switch'
 				},
 				style: {
 					title: 'Style',
@@ -127,17 +127,17 @@ const Layout2Config = {
 					options: [
 						{
 							name: 'Fixed',
-							value: 'fixed',
+							value: 'fixed'
 						},
 						{
 							name: 'Static',
-							value: 'static',
-						},
-					],
-				},
-			},
-		},
-	},
+							value: 'static'
+						}
+					]
+				}
+			}
+		}
+	}
 };
 
 export type Layout2ConfigDefaultsType = (typeof Layout2Config)['defaults'];

@@ -51,7 +51,7 @@ const spacingProperties = [
 	'left', // positioning
 	'translate-x',
 	'translate-y', // translate
-	'icon-size', // icon-size
+	'icon-size' // icon-size
 ];
 
 // Create the full replacement mapping
@@ -66,7 +66,7 @@ spacingProperties.forEach((prop) => {
 			// Convert the numeric value by dividing by 4
 			const newValue = (parseFloat(value) / 4).toString();
 			return `${prop}-${newValue}`;
-		},
+		}
 	};
 });
 
@@ -162,7 +162,7 @@ const tailwindV4Replacements = {
 	'font-600': 'font-semibold',
 	'font-700': 'font-bold',
 	'font-800': 'font-extrabold',
-	'font-900': 'font-black',
+	'font-900': 'font-black'
 };
 
 function replaceClassesInFile(filePath) {
@@ -184,8 +184,7 @@ function replaceClassesInFile(filePath) {
 		const opacityPatterns = [
 			{
 				type: 'bg',
-				regex:
-					/bg-((?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|white|black)(?:-\d+)?)\s+(?:group-hover:)?bg-opacity-(\d+)|group-hover:bg-opacity-(\d+)/g,
+				regex: /bg-((?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|white|black)(?:-\d+)?)\s+(?:group-hover:)?bg-opacity-(\d+)|group-hover:bg-opacity-(\d+)/g,
 				replacement: (match, color, opacity1, opacity2) => {
 					if (!color) {
 						// Handle standalone group-hover:bg-opacity case
@@ -193,38 +192,33 @@ function replaceClassesInFile(filePath) {
 					}
 					const hover = match.includes('group-hover:') ? 'group-hover:' : '';
 					return `${hover}bg-${color}/${opacity1}`;
-				},
+				}
 			},
 			{
 				type: 'text',
-				regex:
-					/text-((?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|white|black)(?:-\d+)?)\s+text-opacity-(\d+)/g,
-				replacement: 'text-$1/$2',
+				regex: /text-((?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|white|black)(?:-\d+)?)\s+text-opacity-(\d+)/g,
+				replacement: 'text-$1/$2'
 			},
 			{
 				type: 'border',
-				regex:
-					/border-((?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|white|black)(?:-\d+)?)\s+border-opacity-(\d+)/g,
-				replacement: 'border-$1/$2',
+				regex: /border-((?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|white|black)(?:-\d+)?)\s+border-opacity-(\d+)/g,
+				replacement: 'border-$1/$2'
 			},
 			{
 				type: 'divide',
-				regex:
-					/divide-((?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|white|black)(?:-\d+)?)\s+divide-opacity-(\d+)/g,
-				replacement: 'divide-$1/$2',
+				regex: /divide-((?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|white|black)(?:-\d+)?)\s+divide-opacity-(\d+)/g,
+				replacement: 'divide-$1/$2'
 			},
 			{
 				type: 'ring',
-				regex:
-					/ring-((?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|white|black)(?:-\d+)?)\s+ring-opacity-(\d+)/g,
-				replacement: 'ring-$1/$2',
+				regex: /ring-((?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|white|black)(?:-\d+)?)\s+ring-opacity-(\d+)/g,
+				replacement: 'ring-$1/$2'
 			},
 			{
 				type: 'placeholder',
-				regex:
-					/placeholder-((?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|white|black)(?:-\d+)?)\s+placeholder-opacity-(\d+)/g,
-				replacement: 'placeholder-$1/$2',
-			},
+				regex: /placeholder-((?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|white|black)(?:-\d+)?)\s+placeholder-opacity-(\d+)/g,
+				replacement: 'placeholder-$1/$2'
+			}
 		];
 
 		// Apply opacity patterns
@@ -235,7 +229,7 @@ function replaceClassesInFile(filePath) {
 		// Combine all replacements into a single object
 		const allReplacements = {
 			...tailwindV4Replacements,
-			...spacingReplacements,
+			...spacingReplacements
 		};
 
 		// Find all className attributes and clsx/cn function calls
@@ -244,7 +238,7 @@ function replaceClassesInFile(filePath) {
 			/className={["']([^"']+)["']}/g,
 			/className={`([^`]+)`}/g,
 			/(?:clsx|cn)\(([\s\S]*?)\)/g,
-			/classes=\{?\{[^}]*[\w]+:\s*["']([^"']+)["'][^}]*\}?\}/g,
+			/classes=\{?\{[^}]*[\w]+:\s*["']([^"']+)["'][^}]*\}?\}/g
 		];
 
 		classPatterns.forEach((pattern) => {
@@ -278,7 +272,9 @@ function replaceClassesInFile(filePath) {
 												break;
 											}
 											// Handle negative values
-											const negMatch = baseClass.match(new RegExp(`^-${prop}-(\\d+(?:\\.\\d+)?)$`));
+											const negMatch = baseClass.match(
+												new RegExp(`^-${prop}-(\\d+(?:\\.\\d+)?)$`)
+											);
 											if (negMatch) {
 												const newValue = (parseFloat(negMatch[1]) / 4).toString();
 												replaced = `${prefix}-${prop}-${newValue}`;
@@ -300,7 +296,9 @@ function replaceClassesInFile(filePath) {
 												break;
 											}
 											// Handle negative values
-											const negMatch = replaced.match(new RegExp(`^-${prop}-(\\d+(?:\\.\\d+)?)$`));
+											const negMatch = replaced.match(
+												new RegExp(`^-${prop}-(\\d+(?:\\.\\d+)?)$`)
+											);
 											if (negMatch) {
 												const newValue = (parseFloat(negMatch[1]) / 4).toString();
 												replaced = `-${prop}-${newValue}`;

@@ -99,7 +99,7 @@ export const iconMappings = {
 	AdjustmentsHorizontalIcon: 'Settings2',
 	FunnelIcon: 'Filter',
 	MagnifyingGlassPlusIcon: 'ZoomIn',
-	MagnifyingGlassMinusIcon: 'ZoomOut',
+	MagnifyingGlassMinusIcon: 'ZoomOut'
 };
 
 /**
@@ -118,7 +118,7 @@ export const iconSizes = {
 	md: 20,
 	lg: 24,
 	xl: 32,
-	'2xl': 48,
+	'2xl': 48
 } as const;
 
 /**
@@ -127,6 +127,6 @@ export const iconSizes = {
 export function getIconProps(size: keyof typeof iconSizes = 'md', className?: string) {
 	return {
 		size: iconSizes[size],
-		className: className || '',
+		className: className || ''
 	};
 }

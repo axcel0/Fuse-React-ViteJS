@@ -11,22 +11,22 @@ const Layout1Config = {
 			style: 'style-1',
 			folded: false,
 			position: 'left',
-			open: true,
+			open: true
 		},
 		toolbar: {
 			display: true,
-			style: 'fixed',
+			style: 'fixed'
 		},
 		footer: {
 			display: true,
-			style: 'fixed',
+			style: 'fixed'
 		},
 		leftSidePanel: {
-			display: true,
+			display: true
 		},
 		rightSidePanel: {
-			display: true,
-		},
+			display: true
+		}
 	},
 	form: {
 		mode: {
@@ -35,22 +35,22 @@ const Layout1Config = {
 			options: [
 				{
 					name: 'Boxed',
-					value: 'boxed',
+					value: 'boxed'
 				},
 				{
 					name: 'Full Width',
-					value: 'fullwidth',
+					value: 'fullwidth'
 				},
 				{
 					name: 'Container',
-					value: 'container',
-				},
-			],
+					value: 'container'
+				}
+			]
 		},
 		containerWidth: {
 			title: 'Container Width (px)',
 			type: 'number',
-			min: 1024,
+			min: 1024
 		},
 
 		navbar: {
@@ -59,7 +59,7 @@ const Layout1Config = {
 			children: {
 				display: {
 					title: 'Display',
-					type: 'switch',
+					type: 'switch'
 				},
 				position: {
 					title: 'Position',
@@ -67,13 +67,13 @@ const Layout1Config = {
 					options: [
 						{
 							name: 'Left',
-							value: 'left',
+							value: 'left'
 						},
 						{
 							name: 'Right',
-							value: 'right',
-						},
-					],
+							value: 'right'
+						}
+					]
 				},
 				style: {
 					title: 'Style',
@@ -81,27 +81,27 @@ const Layout1Config = {
 					options: [
 						{
 							name: 'Slide (style-1)',
-							value: 'style-1',
+							value: 'style-1'
 						},
 						{
 							name: 'Folded (style-2)',
-							value: 'style-2',
+							value: 'style-2'
 						},
 						{
 							name: 'Tabbed (style-3)',
-							value: 'style-3',
+							value: 'style-3'
 						},
 						{
 							name: 'Tabbed Dense (style-3-dense)',
-							value: 'style-3-dense',
-						},
-					],
+							value: 'style-3-dense'
+						}
+					]
 				},
 				folded: {
 					title: 'Folded (style-2, style-3)',
-					type: 'switch',
-				},
-			},
+					type: 'switch'
+				}
+			}
 		},
 		toolbar: {
 			type: 'group',
@@ -109,7 +109,7 @@ const Layout1Config = {
 			children: {
 				display: {
 					title: 'Display',
-					type: 'switch',
+					type: 'switch'
 				},
 				style: {
 					title: 'Style',
@@ -117,15 +117,15 @@ const Layout1Config = {
 					options: [
 						{
 							name: 'Fixed',
-							value: 'fixed',
+							value: 'fixed'
 						},
 						{
 							name: 'Static',
-							value: 'static',
-						},
-					],
-				},
-			},
+							value: 'static'
+						}
+					]
+				}
+			}
 		},
 		footer: {
 			type: 'group',
@@ -133,7 +133,7 @@ const Layout1Config = {
 			children: {
 				display: {
 					title: 'Display',
-					type: 'switch',
+					type: 'switch'
 				},
 				style: {
 					title: 'Style',
@@ -141,17 +141,17 @@ const Layout1Config = {
 					options: [
 						{
 							name: 'Fixed',
-							value: 'fixed',
+							value: 'fixed'
 						},
 						{
 							name: 'Static',
-							value: 'static',
-						},
-					],
-				},
-			},
-		},
-	},
+							value: 'static'
+						}
+					]
+				}
+			}
+		}
+	}
 };
 
 export type Layout1ConfigDefaultsType = (typeof Layout1Config)['defaults'];

@@ -21,7 +21,7 @@ export const productKeys = {
 	lists: () => [...productKeys.all, 'list'] as const,
 	list: (filters: Record<string, any>) => [...productKeys.lists(), { filters }] as const,
 	details: () => [...productKeys.all, 'detail'] as const,
-	detail: (id: string) => [...productKeys.details(), id] as const,
+	detail: (id: string) => [...productKeys.details(), id] as const
 };
 
 // Get products list
@@ -32,7 +32,7 @@ export function useProducts(filters: Record<string, any> = {}) {
 			const searchParams = new URLSearchParams(filters);
 			const response = await httpClient.get(`products?${searchParams.toString()}`);
 			return response.json();
-		},
+		}
 	});
 }
 
@@ -44,7 +44,7 @@ export function useProduct(id: string) {
 			const response = await httpClient.get(`products/${id}`);
 			return response.json();
 		},
-		enabled: !!id,
+		enabled: !!id
 	});
 }
 
@@ -60,7 +60,7 @@ export function useCreateProduct() {
 		onSuccess: () => {
 			// Invalidate products list to refetch with new data
 			queryClient.invalidateQueries({ queryKey: productKeys.lists() });
-		},
+		}
 	});
 }
 
@@ -71,7 +71,7 @@ export function useUpdateProduct() {
 	return useMutation({
 		mutationFn: async ({ id, ...productData }: Partial<Product> & { id: string }): Promise<Product> => {
 			const response = await httpClient.put(`products/${id}`, {
-				json: productData,
+				json: productData
 			});
 			return response.json();
 		},
@@ -80,7 +80,7 @@ export function useUpdateProduct() {
 			queryClient.setQueryData(productKeys.detail(updatedProduct.id), updatedProduct);
 			// Invalidate lists to refresh
 			queryClient.invalidateQueries({ queryKey: productKeys.lists() });
-		},
+		}
 	});
 }
 
@@ -97,7 +97,7 @@ export function useDeleteProduct() {
 			queryClient.removeQueries({ queryKey: productKeys.detail(deletedId) });
 			// Invalidate lists
 			queryClient.invalidateQueries({ queryKey: productKeys.lists() });
-		},
+		}
 	});
 }
 
@@ -117,6 +117,6 @@ export function useDashboardStats() {
 			return response.json();
 		},
 		staleTime: 2 * 60 * 1000, // 2 minutes
-		refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes
+		refetchInterval: 5 * 60 * 1000 // Refetch every 5 minutes
 	});
 }

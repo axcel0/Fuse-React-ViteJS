@@ -10,14 +10,18 @@ function FuseSplashScreen() {
 	return (
 		<div id="fuse-splash-screen">
 			<div className="logo">
-				<img width="128" src="/assets/images/logo/logo.svg" alt="logo" />
+				<img
+					width="128"
+					src="/assets/images/logo/logo.svg"
+					alt="logo"
+				/>
 			</div>
 			<Box
 				id="spinner"
 				sx={{
 					'& > div': {
-						backgroundColor: 'palette.secondary.main',
-					},
+						backgroundColor: 'palette.secondary.main'
+					}
 				}}
 			>
 				<div className="bounce1" />

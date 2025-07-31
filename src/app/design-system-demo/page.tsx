@@ -5,7 +5,7 @@ import Card, {
 	CardTitle,
 	CardDescription,
 	CardContent,
-	CardFooter,
+	CardFooter
 } from '../../design-system/components/Card';
 import Input, { Textarea, Select } from '../../design-system/components/Input';
 import ModernNavbar from '../../components/ModernNavbar';
@@ -29,7 +29,9 @@ const DesignSystemDemo: React.FC = () => {
 					{/* Header */}
 					<div className="flex justify-between items-center">
 						<div>
-							<h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">Design System Demo</h1>
+							<h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+								Design System Demo
+							</h1>
 							<p className="text-neutral-600 dark:text-neutral-400 mt-2">
 								Current theme: {theme} {isSystem && `(${effectiveTheme})`}
 							</p>
@@ -73,7 +75,9 @@ const DesignSystemDemo: React.FC = () => {
 									<p className="text-neutral-600 dark:text-neutral-400">{theme}</p>
 								</div>
 								<div>
-									<h3 className="font-semibold text-neutral-900 dark:text-neutral-100">Effective Theme</h3>
+									<h3 className="font-semibold text-neutral-900 dark:text-neutral-100">
+										Effective Theme
+									</h3>
 									<p className="text-neutral-600 dark:text-neutral-400">{effectiveTheme}</p>
 								</div>
 								<div>
@@ -96,18 +100,32 @@ const DesignSystemDemo: React.FC = () => {
 							<div className="space-y-4">
 								{/* Primary Buttons */}
 								<div>
-									<h4 className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">Primary Buttons</h4>
+									<h4 className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+										Primary Buttons
+									</h4>
 									<div className="flex flex-wrap gap-2">
-										<Button variant="primary" size="sm">
+										<Button
+											variant="primary"
+											size="sm"
+										>
 											Small
 										</Button>
-										<Button variant="primary" size="md">
+										<Button
+											variant="primary"
+											size="md"
+										>
 											Medium
 										</Button>
-										<Button variant="primary" size="lg">
+										<Button
+											variant="primary"
+											size="lg"
+										>
 											Large
 										</Button>
-										<Button variant="primary" disabled>
+										<Button
+											variant="primary"
+											disabled
+										>
 											Disabled
 										</Button>
 									</div>
@@ -115,7 +133,9 @@ const DesignSystemDemo: React.FC = () => {
 
 								{/* Secondary Buttons */}
 								<div>
-									<h4 className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">Secondary Buttons</h4>
+									<h4 className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+										Secondary Buttons
+									</h4>
 									<div className="flex flex-wrap gap-2">
 										<Button variant="secondary">Secondary</Button>
 										<Button variant="outline">Outline</Button>
@@ -130,13 +150,23 @@ const DesignSystemDemo: React.FC = () => {
 										Buttons with Icons
 									</h4>
 									<div className="flex flex-wrap gap-2">
-										<Button variant="primary" leftIcon="📄">
+										<Button
+											variant="primary"
+											leftIcon="📄"
+										>
 											New Document
 										</Button>
-										<Button variant="outline" rightIcon="📤">
+										<Button
+											variant="outline"
+											rightIcon="📤"
+										>
 											Export
 										</Button>
-										<Button variant="ghost" leftIcon="⚙️" rightIcon="🔽">
+										<Button
+											variant="ghost"
+											leftIcon="⚙️"
+											rightIcon="🔽"
+										>
 											Settings
 										</Button>
 									</div>
@@ -154,7 +184,10 @@ const DesignSystemDemo: React.FC = () => {
 						<CardContent>
 							<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 								{/* Elevated Card */}
-								<Card variant="elevated" padding="md">
+								<Card
+									variant="elevated"
+									padding="md"
+								>
 									<CardHeader>
 										<CardTitle>Elevated Card</CardTitle>
 										<CardDescription>This card has elevation shadow</CardDescription>
@@ -165,14 +198,20 @@ const DesignSystemDemo: React.FC = () => {
 										</p>
 									</CardContent>
 									<CardFooter>
-										<Button variant="primary" size="sm">
+										<Button
+											variant="primary"
+											size="sm"
+										>
 											Action
 										</Button>
 									</CardFooter>
 								</Card>
 
 								{/* Outlined Card */}
-								<Card variant="outlined" padding="md">
+								<Card
+									variant="outlined"
+									padding="md"
+								>
 									<CardHeader>
 										<CardTitle>Outlined Card</CardTitle>
 										<CardDescription>This card has a border</CardDescription>
@@ -183,25 +222,35 @@ const DesignSystemDemo: React.FC = () => {
 										</p>
 									</CardContent>
 									<CardFooter>
-										<Button variant="outline" size="sm">
+										<Button
+											variant="outline"
+											size="sm"
+										>
 											Action
 										</Button>
 									</CardFooter>
 								</Card>
 
 								{/* Filled Card */}
-								<Card variant="filled" padding="md">
+								<Card
+									variant="filled"
+									padding="md"
+								>
 									<CardHeader>
 										<CardTitle>Filled Card</CardTitle>
 										<CardDescription>This card has a filled background</CardDescription>
 									</CardHeader>
 									<CardContent>
 										<p className="text-sm text-neutral-600 dark:text-neutral-400">
-											Card content goes here. This demonstrates the filled variant with background.
+											Card content goes here. This demonstrates the filled variant with
+											background.
 										</p>
 									</CardContent>
 									<CardFooter>
-										<Button variant="ghost" size="sm">
+										<Button
+											variant="ghost"
+											size="sm"
+										>
 											Action
 										</Button>
 									</CardFooter>
@@ -214,7 +263,9 @@ const DesignSystemDemo: React.FC = () => {
 					<Card>
 						<CardHeader>
 							<CardTitle>Form Components</CardTitle>
-							<CardDescription>Input, textarea, and select components with various states</CardDescription>
+							<CardDescription>
+								Input, textarea, and select components with various states
+							</CardDescription>
 						</CardHeader>
 						<CardContent>
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -228,7 +279,13 @@ const DesignSystemDemo: React.FC = () => {
 										fullWidth
 									/>
 
-									<Input label="Password" type="password" placeholder="Enter your password" startIcon="🔒" fullWidth />
+									<Input
+										label="Password"
+										type="password"
+										placeholder="Enter your password"
+										startIcon="🔒"
+										fullWidth
+									/>
 
 									<Input
 										label="Search"
@@ -258,7 +315,7 @@ const DesignSystemDemo: React.FC = () => {
 											{ value: 'us', label: 'United States' },
 											{ value: 'ca', label: 'Canada' },
 											{ value: 'uk', label: 'United Kingdom' },
-											{ value: 'au', label: 'Australia' },
+											{ value: 'au', label: 'Australia' }
 										]}
 									/>
 
@@ -271,8 +328,18 @@ const DesignSystemDemo: React.FC = () => {
 									/>
 
 									<div className="grid grid-cols-2 gap-2">
-										<Input label="Size Small" size="sm" placeholder="Small input" fullWidth />
-										<Input label="Size Large" size="lg" placeholder="Large input" fullWidth />
+										<Input
+											label="Size Small"
+											size="sm"
+											placeholder="Small input"
+											fullWidth
+										/>
+										<Input
+											label="Size Large"
+											size="lg"
+											placeholder="Large input"
+											fullWidth
+										/>
 									</div>
 								</div>
 							</div>
@@ -286,10 +353,16 @@ const DesignSystemDemo: React.FC = () => {
 					</Card>
 
 					{/* Interactive Card */}
-					<Card interactive variant="outlined" onClick={() => alert('Card clicked!')}>
+					<Card
+						interactive
+						variant="outlined"
+						onClick={() => alert('Card clicked!')}
+					>
 						<CardContent>
 							<div className="text-center py-8">
-								<h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-2">Interactive Card</h3>
+								<h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
+									Interactive Card
+								</h3>
 								<p className="text-neutral-600 dark:text-neutral-400">
 									Click anywhere on this card to trigger an action
 								</p>

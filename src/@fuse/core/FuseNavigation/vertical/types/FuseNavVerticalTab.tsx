@@ -26,7 +26,7 @@ const Root = styled(Box)(({ theme }) => ({
 		'&.dense': {
 			minHeight: 52,
 			height: 52,
-			width: 52,
+			width: 52
 		},
 		'&.type-divider': {
 			padding: 0,
@@ -34,30 +34,30 @@ const Root = styled(Box)(({ theme }) => ({
 			minHeight: 2,
 			margin: '12px 0',
 			backgroundColor: theme.palette.divider,
-			pointerEvents: 'none',
+			pointerEvents: 'none'
 		},
 		'&:hover': {
-			color: theme.palette.text.primary,
+			color: theme.palette.text.primary
 		},
 		'&.active': {
 			color: theme.palette.text.primary,
 			backgroundColor: 'rgba(255, 255, 255, .1)!important',
 			transition: 'border-radius .15s cubic-bezier(0.4,0.0,0.2,1)',
 			'& .fuse-list-item-text-primary': {
-				color: 'inherit',
+				color: 'inherit'
 			},
 			'& .fuse-list-item-icon': {
-				color: 'inherit',
+				color: 'inherit'
 			},
 			...theme.applyStyles('light', {
-				backgroundColor: 'rgba(0, 0, 0, .05)!important',
-			}),
+				backgroundColor: 'rgba(0, 0, 0, .05)!important'
+			})
 		},
 		'& .fuse-list-item-icon': {
-			color: 'inherit',
+			color: 'inherit'
 		},
-		'& .fuse-list-item-text': {},
-	},
+		'& .fuse-list-item-text': {}
+	}
 }));
 
 export type FuseNavVerticalTabProps = Omit<FuseNavigationProps, 'navigation'> & FuseNavItemComponentProps;
@@ -77,10 +77,10 @@ function FuseNavVerticalTab(props: FuseNavVerticalTabProps) {
 				disabled: item.disabled,
 				to: item.url,
 				end: item.end,
-				role: 'button',
-			}),
+				role: 'button'
+			})
 		}),
-		[item, component],
+		[item, component]
 	);
 
 	const memoizedContent = useMemo(
@@ -92,16 +92,22 @@ function FuseNavVerticalTab(props: FuseNavVerticalTabProps) {
 						`type-${item.type}`,
 						dense && 'dense',
 						selectedId === item.id && 'active',
-						'fuse-list-item flex flex-col items-center justify-center p-3',
+						'fuse-list-item flex flex-col items-center justify-center p-3'
 					)}
 					onClick={() => onItemClick && onItemClick(item)}
 					{...itemProps}
 				>
 					{dense ? (
-						<Tooltip title={item.title || ''} placement="right">
+						<Tooltip
+							title={item.title || ''}
+							placement="right"
+						>
 							<div className="relative flex h-8 min-h-8 w-8 items-center justify-center">
 								{item.icon ? (
-									<FuseSvgIcon className={clsx('fuse-list-item-icon', item.iconClass)} color="action">
+									<FuseSvgIcon
+										className={clsx('fuse-list-item-icon', item.iconClass)}
+										color="action"
+									>
 										{item.icon}
 									</FuseSvgIcon>
 								) : (
@@ -119,11 +125,17 @@ function FuseNavVerticalTab(props: FuseNavVerticalTabProps) {
 						<>
 							<div className="relative mb-2 flex h-8 min-h-8 w-8 items-center justify-center">
 								{item.icon ? (
-									<FuseSvgIcon size={32} className={clsx('fuse-list-item-icon', item.iconClass)} color="action">
+									<FuseSvgIcon
+										size={32}
+										className={clsx('fuse-list-item-icon', item.iconClass)}
+										color="action"
+									>
 										{item.icon}
 									</FuseSvgIcon>
 								) : (
-									item.title && <Typography className="text-2xl font-bold">{item.title[0]}</Typography>
+									item.title && (
+										<Typography className="text-2xl font-bold">{item.title[0]}</Typography>
+									)
 								)}
 								{item.badge && (
 									<FuseNavBadge
@@ -137,7 +149,8 @@ function FuseNavVerticalTab(props: FuseNavVerticalTabProps) {
 								className="fuse-list-item-text w-full grow-0 px-2"
 								primary={item.title}
 								classes={{
-									primary: 'text-md font-medium fuse-list-item-text-primary truncate text-center truncate',
+									primary:
+										'text-md font-medium fuse-list-item-text-primary truncate text-center truncate'
 								}}
 							/>
 						</>
@@ -159,7 +172,7 @@ function FuseNavVerticalTab(props: FuseNavVerticalTabProps) {
 					))}
 			</Root>
 		),
-		[item, component, dense, selectedId, itemProps, firstLevel, onItemClick, checkPermission],
+		[item, component, dense, selectedId, itemProps, firstLevel, onItemClick, checkPermission]
 	);
 
 	if (checkPermission && !item?.hasPermission) {

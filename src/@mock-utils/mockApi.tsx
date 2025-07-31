@@ -101,12 +101,12 @@ const mockApi = (tableName: string) => ({
 					}
 
 					return itemVal === value;
-				}),
+				})
 			);
 		}
 
 		return table;
-	},
+	}
 });
 
 export default mockApi;

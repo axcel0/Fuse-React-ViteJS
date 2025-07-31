@@ -9,7 +9,7 @@ const Frame = styled('iframe')(({ theme }) => ({
 	flexGrow: 1,
 	height: 400,
 	border: 0,
-	boxShadow: theme.shadows[1],
+	boxShadow: theme.shadows[1]
 }));
 
 type DemoFrameProps = {
@@ -50,7 +50,12 @@ function DemoFrame(props: DemoFrameProps) {
 
 	return (
 		<>
-			<Frame onLoad={onLoad} ref={frameRef} title={title} {...other} />
+			<Frame
+				onLoad={onLoad}
+				ref={frameRef}
+				title={title}
+				{...other}
+			/>
 			{iframeLoaded !== false
 				? ReactDOM.createPortal(<FramedDemo document={document}>{children}</FramedDemo>, document.body)
 				: null}

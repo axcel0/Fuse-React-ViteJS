@@ -20,7 +20,7 @@ export { useFuseDialog, selectFuseDialogState, selectFuseDialogProps };
 // Compatibility exports
 export const fuseDialogSlice = {
 	actions: { openDialog, closeDialog },
-	name: 'fuseDialog',
+	name: 'fuseDialog'
 };
 
 export type dialogSliceType = typeof fuseDialogSlice;

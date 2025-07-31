@@ -9,19 +9,19 @@ const cardVariants = cva(cardClasses.base, {
 		variant: {
 			elevated: cardClasses.variants.elevated,
 			outlined: cardClasses.variants.outlined,
-			filled: cardClasses.variants.filled,
+			filled: cardClasses.variants.filled
 		},
 		padding: {
 			none: 'p-0',
 			sm: cardClasses.padding.sm,
 			md: cardClasses.padding.md,
-			lg: cardClasses.padding.lg,
-		},
+			lg: cardClasses.padding.lg
+		}
 	},
 	defaultVariants: {
 		variant: 'elevated',
-		padding: 'md',
-	},
+		padding: 'md'
+	}
 });
 
 // ===== CARD INTERFACES =====
@@ -76,12 +76,12 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
 			onClick,
 			...props
 		},
-		ref,
+		ref
 	) => {
 		const cardClasses = cn(
 			cardVariants({ variant, padding }),
 			interactive && 'cursor-pointer hover:shadow-md transition-shadow',
-			className,
+			className
 		);
 
 		return (
@@ -111,7 +111,11 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
 					<div className="card-header mb-4 last:mb-0">
 						{header || (
 							<div>
-								{title && <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">{title}</h3>}
+								{title && (
+									<h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">
+										{title}
+									</h3>
+								)}
 								{subtitle && <p className="text-sm text-gray-600 dark:text-gray-400">{subtitle}</p>}
 							</div>
 						)}
@@ -132,44 +136,68 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
 				)}
 			</div>
 		);
-	},
+	}
 );
 
 Card.displayName = 'Card';
 
 // ===== CARD HEADER COMPONENT =====
 export const CardHeader = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-	({ className, ...props }, ref) => <div ref={ref} className={cn('card-header space-y-1.5', className)} {...props} />,
+	({ className, ...props }, ref) => (
+		<div
+			ref={ref}
+			className={cn('card-header space-y-1.5', className)}
+			{...props}
+		/>
+	)
 );
 CardHeader.displayName = 'CardHeader';
 
 // ===== CARD TITLE COMPONENT =====
 export const CardTitle = forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(
 	({ className, ...props }, ref) => (
-		<h3 ref={ref} className={cn('text-lg font-semibold leading-none tracking-tight', className)} {...props} />
-	),
+		<h3
+			ref={ref}
+			className={cn('text-lg font-semibold leading-none tracking-tight', className)}
+			{...props}
+		/>
+	)
 );
 CardTitle.displayName = 'CardTitle';
 
 // ===== CARD DESCRIPTION COMPONENT =====
 export const CardDescription = forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
 	({ className, ...props }, ref) => (
-		<p ref={ref} className={cn('text-sm text-gray-600 dark:text-gray-400', className)} {...props} />
-	),
+		<p
+			ref={ref}
+			className={cn('text-sm text-gray-600 dark:text-gray-400', className)}
+			{...props}
+		/>
+	)
 );
 CardDescription.displayName = 'CardDescription';
 
 // ===== CARD CONTENT COMPONENT =====
 export const CardContent = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-	({ className, ...props }, ref) => <div ref={ref} className={cn('card-content', className)} {...props} />,
+	({ className, ...props }, ref) => (
+		<div
+			ref={ref}
+			className={cn('card-content', className)}
+			{...props}
+		/>
+	)
 );
 CardContent.displayName = 'CardContent';
 
 // ===== CARD FOOTER COMPONENT =====
 export const CardFooter = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
 	({ className, ...props }, ref) => (
-		<div ref={ref} className={cn('card-footer flex items-center', className)} {...props} />
-	),
+		<div
+			ref={ref}
+			className={cn('card-footer flex items-center', className)}
+			{...props}
+		/>
+	)
 );
 CardFooter.displayName = 'CardFooter';
 

@@ -65,7 +65,7 @@ export const lightTheme: Theme = {
 			error: 'oklch(0.637 0.237 25.331)', // Red 500
 			warning: 'oklch(0.795 0.184 86.047)', // Yellow 500
 			success: 'oklch(0.723 0.219 149.579)', // Green 500
-			info: 'oklch(0.685 0.169 237.323)', // Sky 500
+			info: 'oklch(0.685 0.169 237.323)' // Sky 500
 		},
 		spacing: {
 			xs: '0.5rem', // 8px
@@ -74,22 +74,22 @@ export const lightTheme: Theme = {
 			lg: '1.5rem', // 24px
 			xl: '2rem', // 32px
 			'2xl': '3rem', // 48px
-			'3xl': '4rem', // 64px
+			'3xl': '4rem' // 64px
 		},
 		radius: {
 			sm: '0.25rem', // 4px
 			md: '0.375rem', // 6px
 			lg: '0.5rem', // 8px
 			xl: '0.75rem', // 12px
-			'2xl': '1rem', // 16px
+			'2xl': '1rem' // 16px
 		},
 		shadows: {
 			sm: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
 			md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
 			lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
-			xl: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
-		},
-	},
+			xl: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)'
+		}
+	}
 };
 
 // Dark theme tokens
@@ -108,7 +108,7 @@ export const darkTheme: Theme = {
 			error: 'oklch(0.704 0.191 22.216)', // Red 400
 			warning: 'oklch(0.852 0.199 91.936)', // Yellow 400
 			success: 'oklch(0.792 0.209 151.711)', // Green 400
-			info: 'oklch(0.746 0.16 232.661)', // Sky 400
+			info: 'oklch(0.746 0.16 232.661)' // Sky 400
 		},
 		spacing: {
 			xs: '0.5rem', // 8px
@@ -117,27 +117,27 @@ export const darkTheme: Theme = {
 			lg: '1.5rem', // 24px
 			xl: '2rem', // 32px
 			'2xl': '3rem', // 48px
-			'3xl': '4rem', // 64px
+			'3xl': '4rem' // 64px
 		},
 		radius: {
 			sm: '0.25rem', // 4px
 			md: '0.375rem', // 6px
 			lg: '0.5rem', // 8px
 			xl: '0.75rem', // 12px
-			'2xl': '1rem', // 16px
+			'2xl': '1rem' // 16px
 		},
 		shadows: {
 			sm: '0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3)',
 			md: '0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3)',
 			lg: '0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3)',
-			xl: '0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3)',
-		},
-	},
+			xl: '0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3)'
+		}
+	}
 };
 
 export const themes = {
 	light: lightTheme,
-	dark: darkTheme,
+	dark: darkTheme
 };
 
 /**

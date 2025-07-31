@@ -22,32 +22,32 @@ import { FuseFlatNavItemType } from '../FuseNavigation/types/FuseNavItemType';
 
 const Root = styled('div')(({ theme }) => ({
 	'& .FuseSearch-container': {
-		position: 'relative',
+		position: 'relative'
 	},
 	'& .FuseSearch-suggestionsContainerOpen': {
 		position: 'absolute',
 		zIndex: 1,
 		marginTop: theme.spacing(),
 		left: 0,
-		right: 0,
+		right: 0
 	},
 	'& .FuseSearch-suggestion': {
-		display: 'block',
+		display: 'block'
 	},
 	'& .FuseSearch-suggestionsList': {
 		margin: 0,
 		padding: 0,
-		listStyleType: 'none',
+		listStyleType: 'none'
 	},
 	'& .FuseSearch-input': {
 		transition: theme.transitions.create(['background-color'], {
 			easing: theme.transitions.easing.easeInOut,
-			duration: theme.transitions.duration.short,
+			duration: theme.transitions.duration.short
 		}),
 		'&:focus': {
-			backgroundColor: theme.palette.background.paper,
-		},
-	},
+			backgroundColor: theme.palette.background.paper
+		}
+	}
 }));
 
 type RenderInputComponentType = {
@@ -60,7 +60,10 @@ type RenderInputComponentType = {
 function renderInputComponent(props: RenderInputComponentProps) {
 	const { variant, ref, inputRef = () => {}, key, ...other } = props as RenderInputComponentType;
 	return (
-		<div className="relative w-full" key={key}>
+		<div
+			className="relative w-full"
+			key={key}
+		>
 			{variant === 'basic' ? (
 				// Outlined
 				<>
@@ -76,8 +79,8 @@ function renderInputComponent(props: RenderInputComponentProps) {
 							},
 							classes: {
 								input: 'FuseSearch-input py-0 px-4 h-9 md:h-9 ltr:pr-9 rtl:pl-9',
-								notchedOutline: 'rounded-lg',
-							},
+								notchedOutline: 'rounded-lg'
+							}
 						}}
 						variant="outlined"
 						{...other}
@@ -101,8 +104,8 @@ function renderInputComponent(props: RenderInputComponentProps) {
 							inputRef(node);
 						},
 						classes: {
-							input: 'FuseSearch-input py-0 px-4 h-9',
-						},
+							input: 'FuseSearch-input py-0 px-4 h-9'
+						}
 					}}
 					variant="standard"
 					{...other}
@@ -117,7 +120,10 @@ function renderSuggestion(suggestion: FuseFlatNavItemType, { query, isHighlighte
 	const parts = parse(suggestion.title, matches);
 
 	return (
-		<MenuItem selected={Boolean(isHighlighted)} component="div">
+		<MenuItem
+			selected={Boolean(isHighlighted)}
+			component="div"
+		>
 			<ListItemIcon className="min-w-9">
 				{suggestion.icon ? (
 					<FuseSvgIcon>{suggestion.icon}</FuseSvgIcon>
@@ -128,14 +134,20 @@ function renderSuggestion(suggestion: FuseFlatNavItemType, { query, isHighlighte
 			<ListItemText
 				primary={parts?.map((part: { text: string; highlight?: boolean }, index: number) =>
 					part.highlight ? (
-						<span key={index} style={{ fontWeight: 600 }}>
+						<span
+							key={index}
+							style={{ fontWeight: 600 }}
+						>
 							{part.text}
 						</span>
 					) : (
-						<strong key={index} style={{ fontWeight: 300 }}>
+						<strong
+							key={index}
+							style={{ fontWeight: 300 }}
+						>
 							{part.text}
 						</strong>
-					),
+					)
 				)}
 			/>
 		</MenuItem>
@@ -181,7 +193,7 @@ const initialState: StateType = {
 	navigation: [],
 	suggestions: [],
 	noSuggestions: false,
-	opened: false,
+	opened: false
 };
 
 type ActionType =
@@ -197,26 +209,26 @@ function reducer(state: StateType, action: ActionType): StateType {
 		case 'open': {
 			return {
 				...state,
-				opened: true,
+				opened: true
 			};
 		}
 		case 'close': {
 			return {
 				...state,
 				opened: false,
-				searchText: '',
+				searchText: ''
 			};
 		}
 		case 'setSearchText': {
 			return {
 				...state,
-				searchText: action.value,
+				searchText: action.value
 			};
 		}
 		case 'setNavigation': {
 			return {
 				...state,
-				navigation: action.data,
+				navigation: action.data
 			};
 		}
 		case 'updateSuggestions': {
@@ -227,14 +239,14 @@ function reducer(state: StateType, action: ActionType): StateType {
 			return {
 				...state,
 				suggestions,
-				noSuggestions,
+				noSuggestions
 			};
 		}
 		case 'clearSuggestions': {
 			return {
 				...state,
 				suggestions: [],
-				noSuggestions: false,
+				noSuggestions: false
 			};
 		}
 		default: {
@@ -269,7 +281,7 @@ function FuseSearch(props: FuseSearchProps) {
 			<IconButton className="border border-divider">
 				<FuseSvgIcon size={20}>heroicons-outline:magnifying-glass</FuseSvgIcon>
 			</IconButton>
-		),
+		)
 	} = props;
 	const navigate = useNavigate();
 
@@ -282,7 +294,7 @@ function FuseSearch(props: FuseSearchProps) {
 	useEffect(() => {
 		dispatch({
 			type: 'setNavigation',
-			data: navigation,
+			data: navigation
 		});
 	}, [navigation]);
 
@@ -305,13 +317,13 @@ function FuseSearch(props: FuseSearchProps) {
 	function handleSuggestionsFetchRequested({ value }: { value: string }) {
 		dispatch({
 			type: 'updateSuggestions',
-			value,
+			value
 		});
 	}
 
 	function handleSuggestionSelected(
 		event: React.FormEvent<unknown>,
-		{ suggestion }: { suggestion: FuseFlatNavItemType },
+		{ suggestion }: { suggestion: FuseFlatNavItemType }
 	) {
 		event.preventDefault();
 		event.stopPropagation();
@@ -327,21 +339,22 @@ function FuseSearch(props: FuseSearchProps) {
 
 	function handleSuggestionsClearRequested() {
 		dispatch({
-			type: 'clearSuggestions',
+			type: 'clearSuggestions'
 		});
 	}
 
 	function handleChange(_event: React.FormEvent<HTMLElement>, { newValue }: ChangeEvent) {
 		dispatch({
 			type: 'setSearchText',
-			value: newValue,
+			value: newValue
 		});
 	}
 
 	function handleClickAway(event: MouseEvent | TouchEvent) {
 		if (
 			state.opened &&
-			(!suggestionsNode.current || !(event.target instanceof Node && suggestionsNode.current.contains(event.target)))
+			(!suggestionsNode.current ||
+				!(event.target instanceof Node && suggestionsNode.current.contains(event.target)))
 		) {
 			hideSearch();
 		}
@@ -350,7 +363,10 @@ function FuseSearch(props: FuseSearchProps) {
 	switch (variant) {
 		case 'basic': {
 			return (
-				<div className={clsx('flex w-full items-center', className)} ref={popperNode}>
+				<div
+					className={clsx('flex w-full items-center', className)}
+					ref={popperNode}
+				>
 					<Autosuggest
 						renderInputComponent={renderInputComponent}
 						highlightFirstSuggestion
@@ -370,14 +386,14 @@ function FuseSearch(props: FuseSearchProps) {
 							onChange: handleChange,
 							onFocus: showSearch,
 							InputLabelProps: {
-								shrink: true,
+								shrink: true
 							},
-							autoFocus: false,
+							autoFocus: false
 						}}
 						theme={{
 							container: 'flex flex-1 w-full',
 							suggestionsList: 'FuseSearch-suggestionsList',
-							suggestion: 'FuseSearch-suggestion',
+							suggestion: 'FuseSearch-suggestion'
 						}}
 						renderSuggestionsContainer={(options) => {
 							const { containerProps } = options;
@@ -394,12 +410,14 @@ function FuseSearch(props: FuseSearchProps) {
 											key={key}
 											{...restContainerProps}
 											style={{
-												width: popperNode.current ? popperNode.current.clientWidth : '',
+												width: popperNode.current ? popperNode.current.clientWidth : ''
 											}}
 											className="overflow-hidden rounded-lg shadow-lg"
 										>
 											{options.children}
-											{state.noSuggestions && <Typography className="px-4 py-3">{noResults}</Typography>}
+											{state.noSuggestions && (
+												<Typography className="px-4 py-3">{noResults}</Typography>
+											)}
 										</Paper>
 									</div>
 								</Popper>
@@ -412,16 +430,31 @@ function FuseSearch(props: FuseSearchProps) {
 		case 'full': {
 			return (
 				<Root className={clsx('flex', className)}>
-					<Tooltip title="Click to search" placement="bottom">
-						<div onClick={showSearch} onKeyDown={showSearch} role="button" tabIndex={0} ref={buttonNode}>
+					<Tooltip
+						title="Click to search"
+						placement="bottom"
+					>
+						<div
+							onClick={showSearch}
+							onKeyDown={showSearch}
+							role="button"
+							tabIndex={0}
+							ref={buttonNode}
+						>
 							{trigger}
 						</div>
 					</Tooltip>
 
 					{state.opened && (
 						<ClickAwayListener onClickAway={handleClickAway}>
-							<Paper className="absolute inset-x-0 top-0 z-9999 h-full shadow-0" square>
-								<div className="flex h-full w-full items-center" ref={popperNode}>
+							<Paper
+								className="absolute inset-x-0 top-0 z-9999 h-full shadow-0"
+								square
+							>
+								<div
+									className="flex h-full w-full items-center"
+									ref={popperNode}
+								>
 									<Autosuggest
 										renderInputComponent={renderInputComponent}
 										highlightFirstSuggestion
@@ -438,14 +471,14 @@ function FuseSearch(props: FuseSearchProps) {
 											// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 											// @ts-ignore
 											InputLabelProps: {
-												shrink: true,
+												shrink: true
 											},
-											autoFocus: true,
+											autoFocus: true
 										}}
 										theme={{
 											container: 'flex flex-1 w-full',
 											suggestionsList: 'FuseSearch-suggestionsList',
-											suggestion: 'FuseSearch-suggestion',
+											suggestion: 'FuseSearch-suggestion'
 										}}
 										renderSuggestionsContainer={(options) => {
 											const { containerProps } = options;
@@ -464,18 +497,28 @@ function FuseSearch(props: FuseSearchProps) {
 															{...restContainerProps}
 															className="shadow-lg"
 															style={{
-																width: popperNode.current ? popperNode.current.clientWidth : 'auto',
+																width: popperNode.current
+																	? popperNode.current.clientWidth
+																	: 'auto'
 															}}
 														>
 															{options.children}
-															{state.noSuggestions && <Typography className="px-4 py-3">{noResults}</Typography>}
+															{state.noSuggestions && (
+																<Typography className="px-4 py-3">
+																	{noResults}
+																</Typography>
+															)}
 														</Paper>
 													</div>
 												</Popper>
 											);
 										}}
 									/>
-									<IconButton onClick={hideSearch} className="mx-2" size="large">
+									<IconButton
+										onClick={hideSearch}
+										className="mx-2"
+										size="large"
+									>
 										<FuseSvgIcon>heroicons-outline:x-mark</FuseSvgIcon>
 									</IconButton>
 								</div>

@@ -16,7 +16,12 @@ function GoToDocBox(props: GoToDocBoxProps) {
 			sx={{ backgroundColor: 'background.paper', borderColor: 'divider' }}
 		>
 			<Typography className="truncate">Need assistance to get started?</Typography>
-			<Typography className="flex items-center gap-1 truncate" component={Link} to="/documentation" color="secondary">
+			<Typography
+				className="flex items-center gap-1 truncate"
+				component={Link}
+				to="/documentation"
+				color="secondary"
+			>
 				View documentation <FuseSvgIcon size={16}>heroicons-outline:arrow-right</FuseSvgIcon>
 			</Typography>
 		</Box>

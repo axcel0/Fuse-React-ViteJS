@@ -23,7 +23,7 @@ function FuseCountdown(props: FuseCountdownProps) {
 		days: 0,
 		hours: 0,
 		minutes: 0,
-		seconds: 0,
+		seconds: 0
 	});
 	const intervalRef = useRef<number | null>(null);
 
@@ -52,7 +52,7 @@ function FuseCountdown(props: FuseCountdownProps) {
 			days: Number(timeLeft.asDays().toFixed(0)),
 			hours: timeLeft.hours(),
 			minutes: timeLeft.minutes(),
-			seconds: timeLeft.seconds(),
+			seconds: timeLeft.seconds()
 		});
 	}, [complete, endDateVal]);
 
@@ -69,34 +69,58 @@ function FuseCountdown(props: FuseCountdownProps) {
 	return (
 		<div className={clsx('flex items-center', className)}>
 			<div className="flex flex-col items-center justify-center px-3">
-				<Typography variant="h4" className="mb-1">
+				<Typography
+					variant="h4"
+					className="mb-1"
+				>
 					{countdown.days}
 				</Typography>
-				<Typography variant="caption" color="text.secondary">
+				<Typography
+					variant="caption"
+					color="text.secondary"
+				>
 					days
 				</Typography>
 			</div>
 			<div className="flex flex-col items-center justify-center px-3">
-				<Typography variant="h4" className="mb-1">
+				<Typography
+					variant="h4"
+					className="mb-1"
+				>
 					{countdown.hours}
 				</Typography>
-				<Typography variant="caption" color="text.secondary">
+				<Typography
+					variant="caption"
+					color="text.secondary"
+				>
 					hours
 				</Typography>
 			</div>
 			<div className="flex flex-col items-center justify-center px-3">
-				<Typography variant="h4" className="mb-1">
+				<Typography
+					variant="h4"
+					className="mb-1"
+				>
 					{countdown.minutes}
 				</Typography>
-				<Typography variant="caption" color="text.secondary">
+				<Typography
+					variant="caption"
+					color="text.secondary"
+				>
 					minutes
 				</Typography>
 			</div>
 			<div className="flex flex-col items-center justify-center px-3">
-				<Typography variant="h4" className="mb-1">
+				<Typography
+					variant="h4"
+					className="mb-1"
+				>
 					{countdown.seconds}
 				</Typography>
-				<Typography variant="caption" color="text.secondary">
+				<Typography
+					variant="caption"
+					color="text.secondary"
+				>
 					seconds
 				</Typography>
 			</div>

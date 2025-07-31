@@ -2,12 +2,12 @@
  * Enhanced Theme System using Tailwind CSS v4 @theme directive
  * Supports dynamic theme switching with CSS variables
  */
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /**
  * All other imports
  */
-@import "./app.css";
+@import './app.css';
 @import url('/assets/fonts/geist/geist.css');
 @import url('/assets/fonts/inter/inter.css');
 @import './app-base.css';
@@ -20,116 +20,159 @@
  * Using CSS custom properties approach for better linter compatibility
  */
 :root {
-  /* Dynamic color tokens - will be overridden by JavaScript */
-  --color-primary: oklch(0.56 0.20 240);
-  --color-secondary: oklch(0.48 0.18 300);
-  --color-accent: oklch(0.705 0.213 47.604);
-  --color-background: oklch(1 0 0);
-  --color-surface: oklch(0.985 0.002 247.839);
-  --color-text: oklch(0.21 0.034 264.665);
-  --color-text-secondary: oklch(0.446 0.03 256.802);
-  --color-border: oklch(0.872 0.01 258.338);
-  --color-error: oklch(0.637 0.237 25.331);
-  --color-warning: oklch(0.795 0.184 86.047);
-  --color-success: oklch(0.723 0.219 149.579);
-  --color-info: oklch(0.685 0.169 237.323);
-  
-  /* Dynamic spacing tokens */
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 0.75rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
-  --spacing-3xl: 4rem;
-  
-  /* Dynamic radius tokens */
-  --radius-xs: 0.125rem;
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-2xl: 1rem;
-  
-  /* Dynamic shadow tokens */
-  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+	/* Dynamic color tokens - will be overridden by JavaScript */
+	--color-primary: oklch(0.56 0.2 240);
+	--color-secondary: oklch(0.48 0.18 300);
+	--color-accent: oklch(0.705 0.213 47.604);
+	--color-background: oklch(1 0 0);
+	--color-surface: oklch(0.985 0.002 247.839);
+	--color-text: oklch(0.21 0.034 264.665);
+	--color-text-secondary: oklch(0.446 0.03 256.802);
+	--color-border: oklch(0.872 0.01 258.338);
+	--color-error: oklch(0.637 0.237 25.331);
+	--color-warning: oklch(0.795 0.184 86.047);
+	--color-success: oklch(0.723 0.219 149.579);
+	--color-info: oklch(0.685 0.169 237.323);
+
+	/* Dynamic spacing tokens */
+	--spacing-xs: 0.5rem;
+	--spacing-sm: 0.75rem;
+	--spacing-md: 1rem;
+	--spacing-lg: 1.5rem;
+	--spacing-xl: 2rem;
+	--spacing-2xl: 3rem;
+	--spacing-3xl: 4rem;
+
+	/* Dynamic radius tokens */
+	--radius-xs: 0.125rem;
+	--radius-sm: 0.25rem;
+	--radius-md: 0.375rem;
+	--radius-lg: 0.5rem;
+	--radius-xl: 0.75rem;
+	--radius-2xl: 1rem;
+
+	/* Dynamic shadow tokens */
+	--shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+	--shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+	--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+	--shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+	--shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
 @layer base, mui, theme, components, utilities;
 
 @layer base {
-  /* Prevent flash of unstyled content during theme switching */
-  html {
-    color-scheme: light dark;
-  }
-  
-  /* Support for smooth theme transitions */
-  * {
-    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
-  }
-  
-  /* Disable transitions during theme switching for better performance */
-  .theme-switching * {
-    transition: none !important;
-  }
+	/* Prevent flash of unstyled content during theme switching */
+	html {
+		color-scheme: light dark;
+	}
+
+	/* Support for smooth theme transitions */
+	* {
+		transition:
+			background-color 0.2s ease-in-out,
+			border-color 0.2s ease-in-out,
+			color 0.2s ease-in-out;
+	}
+
+	/* Disable transitions during theme switching for better performance */
+	.theme-switching * {
+		transition: none !important;
+	}
 }
 
 @layer utilities {
-  /* RTL space utilities */
-  [dir="rtl"] [class*="space-x-"] > :not([hidden]) ~ :not([hidden]) {
-    --tw-space-x-reverse: 1;
-  }
-  
-  /* Theme-aware utilities using our custom variables */
-  .bg-theme-primary { background-color: var(--color-primary); }
-  .bg-theme-secondary { background-color: var(--color-secondary); }
-  .bg-theme-accent { background-color: var(--color-accent); }
-  .bg-theme-background { background-color: var(--color-background); }
-  .bg-theme-surface { background-color: var(--color-surface); }
-  
-  .text-theme-primary { color: var(--color-primary); }
-  .text-theme-secondary { color: var(--color-secondary); }
-  .text-theme-accent { color: var(--color-accent); }
-  .text-theme-text { color: var(--color-text); }
-  .text-theme-text-secondary { color: var(--color-text-secondary); }
-  
-  .border-theme-primary { border-color: var(--color-primary); }
-  .border-theme-border { border-color: var(--color-border); }
-  
-  .shadow-theme-sm { box-shadow: var(--shadow-sm); }
-  .shadow-theme-md { box-shadow: var(--shadow-md); }
-  .shadow-theme-lg { box-shadow: var(--shadow-lg); }
-  .shadow-theme-xl { box-shadow: var(--shadow-xl); }
-  
-  .rounded-theme-sm { border-radius: var(--radius-sm); }
-  .rounded-theme-md { border-radius: var(--radius-md); }
-  .rounded-theme-lg { border-radius: var(--radius-lg); }
-  .rounded-theme-xl { border-radius: var(--radius-xl); }
+	/* RTL space utilities */
+	[dir='rtl'] [class*='space-x-'] > :not([hidden]) ~ :not([hidden]) {
+		--tw-space-x-reverse: 1;
+	}
+
+	/* Theme-aware utilities using our custom variables */
+	.bg-theme-primary {
+		background-color: var(--color-primary);
+	}
+	.bg-theme-secondary {
+		background-color: var(--color-secondary);
+	}
+	.bg-theme-accent {
+		background-color: var(--color-accent);
+	}
+	.bg-theme-background {
+		background-color: var(--color-background);
+	}
+	.bg-theme-surface {
+		background-color: var(--color-surface);
+	}
+
+	.text-theme-primary {
+		color: var(--color-primary);
+	}
+	.text-theme-secondary {
+		color: var(--color-secondary);
+	}
+	.text-theme-accent {
+		color: var(--color-accent);
+	}
+	.text-theme-text {
+		color: var(--color-text);
+	}
+	.text-theme-text-secondary {
+		color: var(--color-text-secondary);
+	}
+
+	.border-theme-primary {
+		border-color: var(--color-primary);
+	}
+	.border-theme-border {
+		border-color: var(--color-border);
+	}
+
+	.shadow-theme-sm {
+		box-shadow: var(--shadow-sm);
+	}
+	.shadow-theme-md {
+		box-shadow: var(--shadow-md);
+	}
+	.shadow-theme-lg {
+		box-shadow: var(--shadow-lg);
+	}
+	.shadow-theme-xl {
+		box-shadow: var(--shadow-xl);
+	}
+
+	.rounded-theme-sm {
+		border-radius: var(--radius-sm);
+	}
+	.rounded-theme-md {
+		border-radius: var(--radius-md);
+	}
+	.rounded-theme-lg {
+		border-radius: var(--radius-lg);
+	}
+	.rounded-theme-xl {
+		border-radius: var(--radius-xl);
+	}
 }
 
 /* Enhanced dark mode support */
 @media (prefers-color-scheme: dark) {
-  html:not(.light) {
-    color-scheme: dark;
-  }
+	html:not(.light) {
+		color-scheme: dark;
+	}
 }
 
 /* Animation for theme system loading */
 @keyframes theme-fade-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
+	0% {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
 }
 
 .theme-loaded {
-  animation: theme-fade-in 0.3s ease-out;
+	animation: theme-fade-in 0.3s ease-out;
 }

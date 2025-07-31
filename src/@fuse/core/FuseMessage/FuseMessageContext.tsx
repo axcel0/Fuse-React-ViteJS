@@ -27,7 +27,7 @@ const defaultOptions: MessageOptions = {
 	variant: 'info',
 	anchorOrigin: { vertical: 'top', horizontal: 'center' },
 	autoHideDuration: 2000,
-	message: 'Hi',
+	message: 'Hi'
 };
 
 const FuseMessageContext = createContext<MessageContextType | undefined>(undefined);
@@ -35,13 +35,13 @@ const FuseMessageContext = createContext<MessageContextType | undefined>(undefin
 export const FuseMessageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 	const [messageState, setMessageState] = useState<MessageState>({
 		state: false,
-		options: defaultOptions,
+		options: defaultOptions
 	});
 
 	const showMessage = (options: Partial<MessageOptions>) => {
 		setMessageState({
 			state: true,
-			options: { ...defaultOptions, ...options },
+			options: { ...defaultOptions, ...options }
 		});
 	};
 
