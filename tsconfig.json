@@ -29,8 +29,8 @@
     "target": "esnext",
     "lib": [
       "dom",
-      "dom.iterable",
-      "es2020",
+      "dom.iterable", 
+      "es2024",
       "scripthost"
     ],
     "plugins": [{ "name": "typescript-plugin-css-modules" }],
@@ -53,6 +53,8 @@
   "exclude": [
     "src/app/(public)/documentation/material-ui-components/components/**/*",
     "src/app/(public)/documentation/material-ui-components/doc/**/*",
+    "**/*.ipynb",
+    "public/mockServiceWorker.js",
     "node_modules"
   ],
   "include": [
