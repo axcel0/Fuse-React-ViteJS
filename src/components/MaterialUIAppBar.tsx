@@ -17,7 +17,14 @@ import {
 	useTheme,
 	alpha,
 	Breadcrumbs,
-	Link
+	Link,
+	Dialog,
+	DialogTitle,
+	DialogContent,
+	DialogContentText,
+	DialogActions,
+	Button,
+	CircularProgress
 } from '@mui/material';
 import {
 	Search as SearchIcon,
@@ -32,7 +39,7 @@ import {
 	ChevronRight
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 
 // Import components yang sudah ada
@@ -44,12 +51,14 @@ import LanguageSwitcher from 'src/components/theme-layouts/components/LanguageSw
 import NavigationShortcuts from 'src/components/theme-layouts/components/navigation/NavigationShortcuts';
 import QuickPanelToggleButton from 'src/components/theme-layouts/components/quickPanel/QuickPanelToggleButton';
 import useFuseLayoutSettings from '@fuse/core/FuseLayout/useFuseLayoutSettings';
+import useUser from '@auth/useUser';
 // Hapus import untuk menggunakan Material-UI default theme
 // import { useToolbarTheme } from '@fuse/core/FuseSettings/hooks/fuseThemeHooks';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import { Layout1ConfigDefaultsType } from '@/components/theme-layouts/layout1/Layout1Config';
 import themeOptions from 'src/configs/themeOptions';
 import _ from 'lodash';
+import { getUserDisplayData } from '@/types/user';
 
 // Simple Material-UI Search Component - No fancy effects, just works
 const Search = styled('div')(({ theme }) => ({
@@ -173,10 +182,15 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 
 	const _theme = useTheme();
 	const location = useLocation();
+	const navigate = useNavigate();
 	const settings = useFuseLayoutSettings();
 	const _config = settings.config as Layout1ConfigDefaultsType;
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 	const { navbar } = useNavbar();
+	const user = useUser();
+	
+	// Safe access to user data with proper typing using helper function
+	const { displayName, email, photoURL, isGuest, initials } = getUserDisplayData(user);
 	// Menggunakan Material-UI default theme, tidak perlu custom toolbar theme
 	// const toolbarTheme = useToolbarTheme();
 
@@ -186,6 +200,8 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 	const [anchorElMore, setAnchorElMore] = useState<null | HTMLElement>(null);
 	const [notificationCount, _setNotificationCount] = useState(3);
 	const [searchValue, setSearchValue] = useState('');
+	const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
+	const [isLoggingOut, setIsLoggingOut] = useState(false);
 
 	// Get page breadcrumbs from location
 	const getBreadcrumbs = () => {
@@ -251,6 +267,33 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 			// TODO: Implement search logic here
 			// console.error('Search:', searchValue);
 		}
+	};
+
+	const handleLogout = async () => {
+		try {
+			setIsLoggingOut(true);
+			if (user?.signOut) {
+				await user.signOut();
+			}
+			// Navigation akan ditangani otomatis oleh AuthProvider
+			// Tapi kita bisa menambahkan navigation manual jika diperlukan
+			navigate('/sign-out');
+		} catch (error) {
+			console.error('Logout failed:', error);
+		} finally {
+			setIsLoggingOut(false);
+			setLogoutDialogOpen(false);
+		}
+		handleMenuClose();
+	};
+
+	const handleLogoutClick = () => {
+		setLogoutDialogOpen(true);
+		handleMenuClose();
+	};
+
+	const handleLogoutCancel = () => {
+		setLogoutDialogOpen(false);
 	};
 
 	// Simple Material-UI Search Component
@@ -407,15 +450,22 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 				<QuickPanelToggleButton />
 
 				{/* User Menu */}
-				{showUserMenu && (
+				{showUserMenu && !isGuest && (
 					<Tooltip title="Account settings">
 						<IconButton
 							onClick={handleUserMenuOpen}
 							color="inherit"
 							aria-label="account menu"
 						>
-							<Avatar sx={{ width: 32, height: 32 }}>
-								<AccountCircle />
+							<Avatar 
+								sx={{ width: 32, height: 32 }}
+								src={photoURL || undefined}
+								alt={displayName || 'User'}
+							>
+								{displayName 
+									? initials
+									: <AccountCircle />
+								}
 							</Avatar>
 						</IconButton>
 					</Tooltip>
@@ -522,23 +572,64 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 					}
 				}}
 			>
-				<MenuItem onClick={handleMenuClose}>
-					<Avatar sx={{ width: 24, height: 24 }} />
-					Profile
-				</MenuItem>
-				<MenuItem onClick={handleMenuClose}>
-					<Dashboard sx={{ width: 24, height: 24 }} />
-					Dashboard
-				</MenuItem>
-				<MenuItem onClick={handleMenuClose}>
-					<SettingsIcon sx={{ width: 24, height: 24 }} />
-					Settings
-				</MenuItem>
-				<Divider />
-				<MenuItem onClick={handleMenuClose}>
-					<Logout sx={{ width: 24, height: 24 }} />
-					Logout
-				</MenuItem>
+				{!isGuest ? [
+					<MenuItem key="profile" onClick={handleMenuClose}>
+						<Avatar 
+							sx={{ width: 24, height: 24 }} 
+							src={photoURL || undefined}
+						>
+							{displayName 
+								? initials
+								: <AccountCircle />
+							}
+						</Avatar>
+						{displayName || 'Profile'}
+					</MenuItem>,
+					<MenuItem key="dashboard" onClick={handleMenuClose}>
+						<Dashboard sx={{ width: 24, height: 24 }} />
+						Dashboard
+					</MenuItem>,
+					<MenuItem key="settings" onClick={handleMenuClose}>
+						<SettingsIcon sx={{ width: 24, height: 24 }} />
+						Settings
+					</MenuItem>,
+					<Divider key="divider" />,
+					<MenuItem 
+						key="logout"
+						onClick={handleLogoutClick}
+						disabled={isLoggingOut}
+						sx={{ 
+							color: 'error.main',
+							'&:hover': {
+								backgroundColor: (theme) => alpha(theme.palette.error.main, 0.08)
+							}
+						}}
+					>
+						<Logout sx={{ width: 24, height: 24 }} />
+						{isLoggingOut ? "Logging out..." : "Logout"}
+					</MenuItem>
+				] : [
+					<MenuItem 
+						key="signin"
+						onClick={() => {
+							navigate('/sign-in');
+							handleMenuClose();
+						}}
+					>
+						<AccountCircle sx={{ width: 24, height: 24 }} />
+						Sign In
+					</MenuItem>,
+					<MenuItem 
+						key="signup"
+						onClick={() => {
+							navigate('/sign-up');
+							handleMenuClose();
+						}}
+					>
+						<Person sx={{ width: 24, height: 24 }} />
+						Sign Up
+					</MenuItem>
+				]}
 			</Menu>
 
 			{/* Notifications Menu */}
@@ -637,6 +728,43 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 					Settings
 				</MenuItem>
 			</Menu>
+
+			{/* Logout Confirmation Dialog */}
+			<Dialog
+				open={logoutDialogOpen}
+				onClose={handleLogoutCancel}
+				aria-labelledby="logout-dialog-title"
+				aria-describedby="logout-dialog-description"
+				maxWidth="sm"
+				fullWidth
+			>
+				<DialogTitle id="logout-dialog-title">
+					Confirm Logout
+				</DialogTitle>
+				<DialogContent>
+					<DialogContentText id="logout-dialog-description">
+						Are you sure you want to log out? You will need to sign in again to access your account.
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button 
+						onClick={handleLogoutCancel} 
+						color="primary"
+						disabled={isLoggingOut}
+					>
+						Cancel
+					</Button>
+					<Button 
+						onClick={handleLogout} 
+						color="error" 
+						variant="contained"
+						disabled={isLoggingOut}
+						startIcon={isLoggingOut ? <CircularProgress size={20} /> : <Logout />}
+					>
+						{isLoggingOut ? 'Logging out...' : 'Logout'}
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</>
 	);
 

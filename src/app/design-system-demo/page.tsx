@@ -8,7 +8,6 @@ import Card, {
 	CardFooter
 } from '../../design-system/components/Card';
 import Input, { Textarea, Select } from '../../design-system/components/Input';
-import ModernNavbar from '../../components/ModernNavbar';
 import { useTheme } from '../../hooks/useTheme';
 
 const DesignSystemDemo: React.FC = () => {
@@ -23,12 +22,11 @@ const DesignSystemDemo: React.FC = () => {
 	};
 
 	return (
-		<ModernNavbar>
-			<div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 transition-colors duration-300">
-				<div className="container mx-auto p-2 space-y-2">
-					{/* Header */}
-					<div className="flex justify-between items-center">
-						<div>
+		<div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 transition-colors duration-300">
+			<div className="container mx-auto p-2 space-y-2">
+				{/* Header */}
+				<div className="flex justify-between items-center">
+					<div>
 							<h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
 								Design System Demo
 							</h1>
@@ -371,7 +369,6 @@ const DesignSystemDemo: React.FC = () => {
 					</Card>
 				</div>
 			</div>
-		</ModernNavbar>
 	);
 };
 

@@ -8,9 +8,12 @@ import { useState } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import CardContent from '@mui/material/CardContent';
+import { useTheme, useMediaQuery, Container, Card, Chip, IconButton, Grid } from '@mui/material';
+import { Brightness4, Brightness7, LoginRounded, ArrowForward } from '@mui/icons-material';
 import _ from 'lodash';
-import { lighten } from '@mui/material/styles';
-import JwtLoginTab from './tabs/JwtSignInTab';
+import { lighten, alpha } from '@mui/material/styles';
+import { useTheme as useTailwindTheme } from 'src/hooks/useTheme';
+import JwtSignInTab from './tabs/JwtSignInTab';
 import FirebaseSignInTab from './tabs/FirebaseSignInTab';
 import AwsSignInTab from './tabs/AwsSignInTab';
 
@@ -36,188 +39,237 @@ const tabs = [
 ];
 
 /**
- * The sign in page.
+ * The sign in page with responsive design, dark mode support, and modern UI.
+ * Implements Material Design principles with excellent ergonomics and accessibility.
+ * Auto-detects system theme preferences for seamless dark/light mode switching.
  */
 function SignInPage() {
 	const [selectedTabId, setSelectedTabId] = useState(tabs[0].id);
+	const theme = useTheme();
+	const { effectiveTheme, isDark } = useTailwindTheme();
+	const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+	const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
 
 	function handleSelectTab(id: string) {
 		setSelectedTabId(id);
 	}
 
 	return (
-		<div className="flex min-w-0 flex-1 flex-col items-center sm:flex-row sm:justify-center md:items-start md:justify-start">
-			<Paper className="h-full w-full px-1 py-0.5 ltr:border-r-1 rtl:border-l-1 sm:h-auto sm:w-auto sm:rounded-xl sm:p-3 sm:shadow-xs md:flex md:h-full md:w-1/2 md:items-center md:justify-end md:rounded-none md:p-4 md:shadow-none">
-				<CardContent className="mx-auto w-full max-w-20 sm:mx-0 sm:w-20">
-					<img
-						className="w-3"
-						src="/assets/images/logo/logo.svg"
-						alt="logo"
-					/>
+		<Box
+			className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300"
+			sx={{
+				position: 'relative',
+				overflow: 'hidden'
+			}}
+		>
+			{/* Background Pattern */}
+			<div className="absolute inset-0 opacity-10 dark:opacity-5">
+				<div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2760%27 height=%2760%27 viewBox=%270 0 60 60%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cg fill=%27none%27 fill-rule=%27evenodd%27%3E%3Cg fill=%27%23ffffff%27 fill-opacity=%270.4%27%3E%3Cpath d=%27M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] dark:bg-[url('data:image/svg+xml,%3Csvg width=%2760%27 height=%2760%27 viewBox=%270 0 60 60%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cg fill=%27none%27 fill-rule=%27evenodd%27%3E%3Cg fill=%27%23111827%27 fill-opacity=%270.3%27%3E%3Cpath d=%27M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+			</div>
 
-					<Typography className="mt-2 text-4xl font-extrabold leading-[1.25] tracking-tight">
-						Sign in
-					</Typography>
-					<div className="mt-0.125 flex items-baseline font-medium">
-						<Typography>Don't have an account?</Typography>
-						<Link
-							className="ml-0.25"
-							to="/sign-up"
+			<Container maxWidth="xl" className="relative z-10">
+				<Grid container spacing={0} sx={{ minHeight: '100vh', alignItems: 'center', justifyContent: 'center' }}>
+					{/* Left Side - Sign In Form */}
+					<Grid size={{ xs: 12, md: 6, lg: 5 }}>
+						<Box
+							className="flex flex-col items-center justify-center min-h-screen md:min-h-0 p-6"
 						>
-							Sign up
-						</Link>
-					</div>
+							<div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-2xl dark:shadow-gray-900/50 backdrop-blur-sm bg-opacity-95 dark:bg-opacity-95 border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300">
+								{/* Header Section */}
+								<div className="text-center pt-8 pb-6 px-6">
+									{/* Logo */}
+									<div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 dark:from-blue-400 dark:to-purple-500 mb-6 shadow-lg">
+										<LoginRounded 
+											sx={{ 
+												fontSize: 40, 
+												color: 'white',
+											}} 
+										/>
+									</div>
 
-					<Box
-						className="mt-1.5 text-md leading-[1.625] rounded-lg py-0.5 px-1"
-						sx={{
-							backgroundColor: (theme) => lighten(theme.palette.primary.main, 0.8),
-							color: 'primary.dark'
-						}}
-					>
-						You are browsing <b>Fuse React Demo</b>. Click on the "Sign in" button to access the Demo and
-						Documentation.
-					</Box>
+									{/* Title */}
+									<h1 className="text-3xl sm:text-4xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+										Welcome Back
+									</h1>
 
-					<Tabs
-						value={_.findIndex(tabs, { id: selectedTabId })}
-						variant="fullWidth"
-						className="w-full mt-1.5 mb-2"
-						classes={{
-							indicator: 'flex justify-center bg-transparent w-full h-full'
-						}}
-						slotProps={{
-							indicator: {
-								children: (
-									<Box
-										sx={{
-											borderColor: (theme) => theme.palette.secondary.main
-										}}
-										className="border-1 border-solid w-full h-full rounded-lg"
-									/>
-								)
-							}
-						}}
-					>
-						{tabs.map((item) => (
-							<Tab
-								disableRipple
-								onClick={() => handleSelectTab(item.id)}
-								key={item.id}
-								icon={
-									<img
-										className={item.logoClass}
-										src={item.logo}
-										alt={item.title}
-									/>
-								}
-								className="min-w-0"
-								label={item.title}
-							/>
-						))}
-					</Tabs>
+									{/* Subtitle */}
+									<p className="text-gray-600 dark:text-gray-400 text-lg font-medium mb-4">
+										Sign in to continue to your dashboard
+									</p>
 
-					{selectedTabId === 'jwt' && <JwtLoginTab />}
-					{selectedTabId === 'firebase' && <FirebaseSignInTab />}
-					{selectedTabId === 'aws' && <AwsSignInTab />}
-				</CardContent>
-			</Paper>
+									{/* Sign Up Link */}
+									<div className="flex items-center justify-center gap-2 text-sm">
+										<span className="text-gray-500 dark:text-gray-400">
+											Don't have an account?
+										</span>
+										<Link
+											to="/sign-up"
+											className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold flex items-center gap-1 transition-colors duration-200"
+										>
+											Sign up
+											<ArrowForward sx={{ fontSize: 16 }} />
+										</Link>
+									</div>
+								</div>
 
-			<Box
-				className="relative hidden h-full flex-auto items-center justify-center overflow-hidden p-4 md:flex lg:px-7"
-				sx={{ backgroundColor: 'primary.dark', color: 'primary.contrastText' }}
-			>
-				<svg
-					className="pointer-events-none absolute inset-0"
-					viewBox="0 0 960 540"
-					width="100%"
-					height="100%"
-					preserveAspectRatio="xMidYMax slice"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<Box
-						component="g"
-						className="opacity-5"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="100"
-					>
-						<circle
-							r="234"
-							cx="196"
-							cy="23"
-						/>
-						<circle
-							r="234"
-							cx="790"
-							cy="491"
-						/>
-					</Box>
-				</svg>
-				<Box
-					component="svg"
-					className="absolute -right-4 -top-4 opacity-20"
-					sx={{ color: 'primary.light' }}
-					viewBox="0 0 220 192"
-					width="220px"
-					height="192px"
-					fill="none"
-				>
-					<defs>
-						<pattern
-							id="837c3e70-6c3a-44e6-8854-cc48c737b659"
-							x="0"
-							y="0"
-							width="20"
-							height="20"
-							patternUnits="userSpaceOnUse"
-						>
-							<rect
-								x="0"
-								y="0"
-								width="4"
-								height="4"
-								fill="currentColor"
-							/>
-						</pattern>
-					</defs>
-					<rect
-						width="220"
-						height="192"
-						fill="url(#837c3e70-6c3a-44e6-8854-cc48c737b659)"
-					/>
-				</Box>
+								<div className="px-6 pb-8">
+									{/* Demo Info Banner */}
+									<div className="mb-6 p-3 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+										<p className="text-blue-700 dark:text-blue-300 text-center font-medium text-sm">
+											🚀 You are browsing <strong>Fuse React Demo</strong>. Click "Sign in" to access the Demo and Documentation.
+										</p>
+									</div>
 
-				<div className="relative z-10 w-full max-w-6xl">
-					<div className="text-7xl font-bold leading-none text-gray-100">
-						<div>Welcome to</div>
-						<div>our community</div>
-					</div>
-					<div className="mt-1.5 text-lg leading-6 tracking-tight text-gray-400">
-						Fuse helps developers to build organized and well coded dashboards full of beautiful and rich
-						modules. Join us and start building your application today.
-					</div>
-					<div className="mt-2 flex items-center">
-						<AvatarGroup
-							sx={{
-								'& .MuiAvatar-root': {
-									borderColor: 'primary.main'
-								}
-							}}
-						>
-							<Avatar src="/assets/images/avatars/female-18.jpg" />
-							<Avatar src="/assets/images/avatars/female-11.jpg" />
-							<Avatar src="/assets/images/avatars/male-09.jpg" />
-							<Avatar src="/assets/images/avatars/male-16.jpg" />
-						</AvatarGroup>
+									{/* Authentication Method Tabs */}
+									<div className="mb-6">
+										<p className="text-gray-600 dark:text-gray-400 text-center font-medium mb-4 text-sm">
+											Choose your authentication method
+										</p>
+										
+										<Tabs
+											value={_.findIndex(tabs, { id: selectedTabId })}
+											variant="fullWidth"
+											className="bg-gray-50 dark:bg-gray-700 rounded-xl"
+											sx={{
+												minHeight: 48,
+												'& .MuiTabs-indicator': {
+													height: 3,
+													borderRadius: 1.5,
+													background: `linear-gradient(90deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+												},
+												'& .MuiTab-root': {
+													textTransform: 'none',
+													fontWeight: 600,
+													fontSize: '0.875rem',
+													minHeight: 48,
+													transition: 'all 0.2s ease-in-out',
+													color: isDark ? '#E5E7EB' : '#6B7280',
+													'&:hover': {
+														backgroundColor: alpha(theme.palette.primary.main, 0.04),
+														color: isDark ? '#F3F4F6' : '#374151',
+													},
+													'&.Mui-selected': {
+														color: theme.palette.primary.main,
+													}
+												}
+											}}
+										>
+											{tabs.map((item) => (
+												<Tab
+													disableRipple
+													onClick={() => handleSelectTab(item.id)}
+													key={item.id}
+													icon={
+														<div className={`flex items-center justify-center w-8 h-8 rounded-lg mb-1 transition-all duration-200 ${
+															selectedTabId === item.id 
+																? 'bg-blue-100 dark:bg-blue-900/30' 
+																: 'bg-transparent'
+														}`}>
+															<img
+																src={item.logo}
+																alt={item.title}
+																className={`w-6 h-6 transition-all duration-200 ${
+																	selectedTabId === item.id 
+																		? 'filter-none' 
+																		: isDark 
+																			? 'brightness-75' 
+																			: 'brightness-50'
+																}`}
+															/>
+														</div>
+													}
+													label={item.title}
+													iconPosition="top"
+												/>
+											))}
+										</Tabs>
+									</div>
 
-						<div className="ml-1 font-medium tracking-tight text-gray-400">
-							More than 17k people joined us, it's your turn
+									{/* Form Content */}
+									<div className="relative">
+										{selectedTabId === 'jwt' && <JwtSignInTab />}
+										{selectedTabId === 'firebase' && <FirebaseSignInTab />}
+										{selectedTabId === 'aws' && <AwsSignInTab />}
+									</div>
+								</div>
+							</div>
+						</Box>
+					</Grid>
+
+					{/* Right Side - Welcome Section */}
+					<Grid size={{ xs: 12, md: 6, lg: 7 }}>
+						<div className="hidden md:flex flex-col items-center justify-center min-h-screen p-8 text-center relative">
+							{/* Decorative Elements */}
+							<div className="absolute top-[10%] right-[10%] w-24 h-24 bg-gradient-to-br from-blue-400/20 to-purple-400/20 dark:from-blue-500/10 dark:to-purple-500/10 rounded-full blur-2xl"></div>
+							<div className="absolute bottom-[20%] left-[15%] w-32 h-32 bg-gradient-to-br from-purple-400/20 to-pink-400/20 dark:from-purple-500/10 dark:to-pink-500/10 rounded-full blur-3xl"></div>
+
+							{/* Main Content */}
+							<div className="relative z-10 max-w-2xl">
+								{/* Welcome Text */}
+								<h2 className="text-4xl lg:text-6xl font-extrabold mb-6 leading-tight">
+									<span className="text-gray-900 dark:text-white">Welcome to our</span>
+									<br />
+									<span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+										Community
+									</span>
+								</h2>
+
+								{/* Description */}
+								<p className="text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed font-medium">
+									Fuse helps developers build organized and well-coded dashboards full of beautiful and rich modules. Join us and start building your application today.
+								</p>
+
+								{/* Community Stats */}
+								<div className="mb-8">
+									<div className="flex items-center justify-center gap-4 mb-4">
+										<AvatarGroup
+											max={5}
+											sx={{
+												'& .MuiAvatar-root': {
+													borderColor: isDark ? '#374151' : 'white',
+													borderWidth: 3,
+													width: { md: 56, lg: 64 },
+													height: { md: 56, lg: 64 },
+													boxShadow: isDark 
+														? '0 8px 32px rgba(0,0,0,0.5)' 
+														: '0 8px 32px rgba(0,0,0,0.15)',
+												}
+											}}
+										>
+											<Avatar src="/assets/images/avatars/female-18.jpg" />
+											<Avatar src="/assets/images/avatars/female-11.jpg" />
+											<Avatar src="/assets/images/avatars/male-09.jpg" />
+											<Avatar src="/assets/images/avatars/male-16.jpg" />
+											<Avatar 
+												className="bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold"
+											>
+												+
+											</Avatar>
+										</AvatarGroup>
+									</div>
+
+									<p className="text-xl text-gray-700 dark:text-gray-200 font-semibold">
+										More than <strong className="text-blue-600 dark:text-blue-400">17k+ developers</strong> joined us, it's your turn
+									</p>
+								</div>
+
+								{/* Feature Chips */}
+								<div className="flex gap-3 justify-center flex-wrap">
+									{['Modern UI', 'Dark Mode', 'Responsive', 'TypeScript'].map((feature) => (
+										<span
+											key={feature}
+											className="px-4 py-2 bg-white/20 dark:bg-gray-800/50 text-gray-800 dark:text-gray-200 font-semibold text-sm rounded-full border border-gray-300/30 dark:border-gray-600/30 backdrop-blur-sm transition-all duration-200 hover:bg-white/30 dark:hover:bg-gray-700/50"
+										>
+											{feature}
+										</span>
+									))}
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-			</Box>
-		</div>
+					</Grid>
+				</Grid>
+			</Container>
+		</Box>
 	);
 }
 

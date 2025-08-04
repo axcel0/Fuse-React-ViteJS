@@ -9,10 +9,13 @@ import { User } from '@auth/user';
 import { http, HttpResponse } from 'msw';
 import mockApi from '../mockApi';
 
+// Get API_BASE_URL from environment
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+
 type UserAuthType = User & { password: string };
 
 const authApi = [
-	http.post('/api/mock/auth/refresh', async ({ request }) => {
+	http.post(`${API_BASE_URL}/api/mock/auth/refresh`, async ({ request }) => {
 		const newTokenResponse = await generateAccessToken(request);
 
 		if (newTokenResponse) {
@@ -29,7 +32,7 @@ const authApi = [
 		return HttpResponse.json({ error }, { status: 401 });
 	}),
 
-	http.get('/api/mock/auth/sign-in-with-token', async ({ request }) => {
+	http.get(`${API_BASE_URL}/api/mock/auth/sign-in-with-token`, async ({ request }) => {
 		const newTokenResponse = await generateAccessToken(request);
 
 		if (newTokenResponse) {
@@ -45,7 +48,7 @@ const authApi = [
 		return HttpResponse.json({ error }, { status: 401 });
 	}),
 
-	http.post('/api/mock/auth/sign-in', async ({ request }) => {
+	http.post(`${API_BASE_URL}/api/mock/auth/sign-in`, async ({ request }) => {
 		const api = mockApi('users');
 
 		const data = (await request.json()) as { email: string; password: string };
@@ -86,7 +89,7 @@ const authApi = [
 		return HttpResponse.json(error, { status: 404 });
 	}),
 
-	http.post('/api/mock/auth/sign-up', async ({ request }) => {
+	http.post(`${API_BASE_URL}/api/mock/auth/sign-up`, async ({ request }) => {
 		const api = mockApi('users');
 		const data = (await request.json()) as {
 			displayName: string;
@@ -134,7 +137,7 @@ const authApi = [
 		return HttpResponse.json(error, { status: 404 });
 	}),
 
-	http.get('/api/mock/auth/user/:id', async ({ params }) => {
+	http.get(`${API_BASE_URL}/api/mock/auth/user/:id`, async ({ params }) => {
 		const api = mockApi('users');
 		const { id } = params as Record<string, string>;
 		const item = await api.find(id);
@@ -146,7 +149,7 @@ const authApi = [
 		return HttpResponse.json(item);
 	}),
 
-	http.get('/api/mock/auth/user-by-email/:email', async ({ params }) => {
+	http.get(`${API_BASE_URL}/api/mock/auth/user-by-email/:email`, async ({ params }) => {
 		const api = mockApi('users');
 		const { email } = params as Record<string, string>;
 		const item = await api.find({ email });
@@ -158,7 +161,7 @@ const authApi = [
 		return HttpResponse.json(item);
 	}),
 
-	http.put('/api/mock/auth/user/:id', async ({ params, request }) => {
+	http.put(`${API_BASE_URL}/api/mock/auth/user/:id`, async ({ params, request }) => {
 		const api = mockApi('users');
 		const { id } = params as Record<string, string>;
 

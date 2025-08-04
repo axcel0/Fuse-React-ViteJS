@@ -28,6 +28,8 @@ import {
 } from '@mui/icons-material';
 import { useNavbar } from '../navbar/NavbarContext';
 import { useLocation, useNavigate } from 'react-router-dom';
+import useUser from '@auth/useUser';
+import { getUserDisplayData } from '@/types/user';
 
 interface NavigationItem {
 	id: string;
@@ -83,6 +85,10 @@ const MaterialNavbar: React.FC<MaterialNavbarProps> = ({ className: _className }
 	const { navbar, navbarToggle, navbarToggleMobile: _navbarToggleMobile, navbarCloseMobile } = useNavbar();
 	const location = useLocation();
 	const navigate = useNavigate();
+	const user = useUser(); // Menggunakan authentication context
+	
+	// Safe access to user data with proper typing using helper function
+	const { displayName, email, photoURL, isGuest, initials } = getUserDisplayData(user);
 
 	const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
 
@@ -259,27 +265,37 @@ const MaterialNavbar: React.FC<MaterialNavbarProps> = ({ className: _className }
 			>
 				{isMobile || navbar.open ? (
 					<Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-						<Avatar sx={{ width: 32, height: 32 }}>U</Avatar>
+						<Avatar 
+							sx={{ width: 32, height: 32 }}
+							src={photoURL || undefined}
+						>
+							{initials}
+						</Avatar>
 						<Box sx={{ flexGrow: 1, minWidth: 0 }}>
 							<Typography
 								variant="body2"
 								sx={{ fontWeight: 600 }}
 								noWrap
 							>
-								John Doe
+								{displayName || (isGuest ? 'Guest User' : 'User')}
 							</Typography>
 							<Typography
 								variant="caption"
 								color="text.secondary"
 								noWrap
 							>
-								john@example.com
+								{email || 'Not signed in'}
 							</Typography>
 						</Box>
 					</Box>
 				) : (
 					<Box sx={{ display: 'flex', justifyContent: 'center' }}>
-						<Avatar sx={{ width: 32, height: 32 }}>U</Avatar>
+						<Avatar 
+							sx={{ width: 32, height: 32 }}
+							src={photoURL || undefined}
+						>
+							{initials}
+						</Avatar>
 					</Box>
 				)}
 			</Box>

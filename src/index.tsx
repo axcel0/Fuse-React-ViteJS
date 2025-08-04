@@ -1,5 +1,6 @@
 import '@i18n/i18n';
 import './styles/index.css';
+import './styles/dark-mode-fixes.css';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import routes from '@/configs/routesConfig';
@@ -7,10 +8,12 @@ import { worker } from '@mock-utils/mswMockAdapter';
 import { API_BASE_URL } from '@/utils/apiFetch';
 
 async function mockSetup() {
+	console.log('🚀 Starting MSW with API_BASE_URL:', API_BASE_URL);
+	
 	return worker.start({
 		onUnhandledRequest: 'bypass',
 		serviceWorker: {
-			url: `${API_BASE_URL}/mockServiceWorker.js`
+			url: '/mockServiceWorker.js'
 		}
 	});
 }
