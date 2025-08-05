@@ -8,14 +8,20 @@ import { worker } from '@mock-utils/mswMockAdapter';
 import { API_BASE_URL } from '@/utils/apiFetch';
 
 async function mockSetup() {
-	console.log('🚀 Starting MSW with API_BASE_URL:', API_BASE_URL);
-	
-	return worker.start({
-		onUnhandledRequest: 'bypass',
-		serviceWorker: {
-			url: '/mockServiceWorker.js'
-		}
-	});
+	// Only run MSW if it's enabled via environment variable
+	if (import.meta.env.VITE_ENABLE_MSW === 'true') {
+		console.log('🚀 Starting MSW with API_BASE_URL:', API_BASE_URL);
+		
+		return worker.start({
+			onUnhandledRequest: 'bypass',
+			serviceWorker: {
+				url: '/mockServiceWorker.js'
+			}
+		});
+	} else {
+		console.log('🔒 MSW disabled - using real authentication');
+		return Promise.resolve();
+	}
 }
 
 /**

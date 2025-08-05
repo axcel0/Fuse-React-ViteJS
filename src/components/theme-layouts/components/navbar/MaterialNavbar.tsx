@@ -18,9 +18,6 @@ import {
 import {
 	Dashboard as DashboardIcon,
 	Analytics as AnalyticsIcon,
-	People as PeopleIcon,
-	Settings as SettingsIcon,
-	Palette as PaletteIcon,
 	ChevronLeft as ChevronLeftIcon,
 	ChevronRight as ChevronRightIcon,
 	ExpandLess,
@@ -44,31 +41,13 @@ const navigationItems: NavigationItem[] = [
 		id: 'dashboard',
 		title: 'Dashboard',
 		icon: <DashboardIcon />,
-		url: '/'
+		url: '/dashboard'
 	},
 	{
-		id: 'analytics',
-		title: 'Analytics',
+		id: 'example',
+		title: 'Example',
 		icon: <AnalyticsIcon />,
-		url: '/analytics'
-	},
-	{
-		id: 'users',
-		title: 'Users',
-		icon: <PeopleIcon />,
-		url: '/users'
-	},
-	{
-		id: 'design-system',
-		title: 'Design System',
-		icon: <PaletteIcon />,
-		url: '/design-system-demo'
-	},
-	{
-		id: 'settings',
-		title: 'Settings',
-		icon: <SettingsIcon />,
-		url: '/settings'
+		url: '/example'
 	}
 ];
 
@@ -119,6 +98,11 @@ const MaterialNavbar: React.FC<MaterialNavbarProps> = ({ className: _className }
 
 	const isActiveRoute = (url?: string) => {
 		if (!url) return false;
+
+		// Special handling for dashboard
+		if (url === '/dashboard' && location.pathname === '/') {
+			return true;
+		}
 
 		return location.pathname === url || (url !== '/' && location.pathname.startsWith(url));
 	};

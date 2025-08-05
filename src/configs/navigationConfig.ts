@@ -13,12 +13,53 @@ i18n.addResourceBundle('ar', 'navigation', ar);
  */
 const navigationConfig: FuseNavItemType[] = [
 	{
+		id: 'dashboard',
+		title: 'Dashboard',
+		translate: 'DASHBOARD',
+		type: 'item',
+		icon: 'heroicons-outline:home',
+		url: 'dashboard'
+	},
+	{
 		id: 'example-component',
 		title: 'Example',
 		translate: 'EXAMPLE',
 		type: 'item',
 		icon: 'heroicons-outline:star',
 		url: 'example'
+	},
+	{
+		id: 'material-ui-demo',
+		title: 'Material UI Demo',
+		translate: 'MATERIAL_UI_DEMO',
+		type: 'item',
+		icon: 'heroicons-outline:code',
+		url: 'material-ui-appbar-demo'
+	},
+	{
+		id: 'apps',
+		title: 'Applications',
+		translate: 'APPLICATIONS',
+		type: 'group',
+		icon: 'heroicons-outline:folder',
+		children: [
+			{
+				id: 'container',
+				title: 'Container',
+				translate: 'CONTAINER',
+				type: 'item',
+				icon: 'heroicons-outline:cube',
+				url: 'container'
+			},
+			{
+				id: 'status-motor',
+				title: 'Status Motor',
+				translate: 'STATUS_MOTOR',
+				type: 'item',
+				icon: 'heroicons-outline:cog',
+				url: 'statusmotor'
+			}
+		]
 	}
 ];
 

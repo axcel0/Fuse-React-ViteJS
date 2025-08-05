@@ -16,8 +16,15 @@ import { useTheme as useTailwindTheme } from 'src/hooks/useTheme';
 import JwtSignInTab from './tabs/JwtSignInTab';
 import FirebaseSignInTab from './tabs/FirebaseSignInTab';
 import AwsSignInTab from './tabs/AwsSignInTab';
+import KeycloakSignInTab from './tabs/KeycloakSignInTab';
 
 const tabs = [
+	{
+		id: 'keycloak',
+		title: 'Keycloak',
+		logo: '/assets/images/logo/keycloak.svg',
+		logoClass: 'h-9'
+	},
 	{
 		id: 'jwt',
 		title: 'JWT',
@@ -187,6 +194,7 @@ function SignInPage() {
 
 									{/* Form Content */}
 									<div className="relative">
+										{selectedTabId === 'keycloak' && <KeycloakSignInTab />}
 										{selectedTabId === 'jwt' && <JwtSignInTab />}
 										{selectedTabId === 'firebase' && <FirebaseSignInTab />}
 										{selectedTabId === 'aws' && <AwsSignInTab />}
