@@ -5,7 +5,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
-import Link from '@fuse/core/Link';
 import { LanguageType } from '@i18n/I18nContext';
 import useI18n from '@i18n/useI18n';
 
@@ -86,15 +85,6 @@ function LanguageSwitcher() {
 						<ListItemText primary={lng.title} />
 					</MenuItem>
 				))}
-
-				<MenuItem
-					component={Link}
-					to="/documentation/configuration/multi-language"
-					onClick={langMenuClose}
-					role="button"
-				>
-					<ListItemText primary="Learn More" />
-				</MenuItem>
 			</Popover>
 		</>
 	);

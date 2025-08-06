@@ -1,20 +1,20 @@
 const locale = {
-	TITLE: 'Kontrol Panel',
-	WELCOME: 'Selamat datang kembali',
+	TITLE: 'Kontrol Paneli',
+	WELCOME: 'Tekrar hoş geldiniz',
 	STATS: {
-		TOTAL_USERS: 'Total Pengguna',
-		ACTIVE_PROJECTS: 'Proyek Aktif',
-		REVENUE: 'Pendapatan', 
-		PERFORMANCE: 'Performa'
+		TOTAL_USERS: 'Toplam Kullanıcılar',
+		ACTIVE_PROJECTS: 'Aktif Projeler',
+		REVENUE: 'Gelir', 
+		PERFORMANCE: 'Performans'
 	},
 	ACTIVITY: {
-		TITLE: 'Ringkasan Aktivitas',
-		SYSTEM_PERFORMANCE: 'Performa Sistem',
-		MEMORY_USAGE: 'Penggunaan Memori',
-		NETWORK_ACTIVITY: 'Aktivitas Jaringan'
+		TITLE: 'Etkinlik Genel Bakış',
+		SYSTEM_PERFORMANCE: 'Sistem Performansı',
+		MEMORY_USAGE: 'Bellek Kullanımı',
+		NETWORK_ACTIVITY: 'Ağ Etkinliği'
 	},
-	QUICK_ACTIONS: 'Aksi Cepat',
-	USER_INFO: 'Informasi Pengguna'
+	QUICK_ACTIONS: 'Hızlı İşlemler',
+	USER_INFO: 'Kullanıcı Bilgileri'
 };
 
 export default locale;

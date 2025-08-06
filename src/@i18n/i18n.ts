@@ -9,6 +9,21 @@ const resources = {
 		translation: {
 			'Welcome to React': 'Welcome to React and react-i18next'
 		}
+	},
+	id: {
+		translation: {
+			'Welcome to React': 'Selamat datang di React dan react-i18next'
+		}
+	},
+	tr: {
+		translation: {
+			'Welcome to React': 'React ve react-i18next\'e hoş geldiniz'
+		}
+	},
+	ar: {
+		translation: {
+			'Welcome to React': 'مرحبا بك في React و react-i18next'
+		}
 	}
 };
 
