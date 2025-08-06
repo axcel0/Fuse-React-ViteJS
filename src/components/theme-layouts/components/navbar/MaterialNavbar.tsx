@@ -18,6 +18,7 @@ import {
 import {
 	Dashboard as DashboardIcon,
 	Analytics as AnalyticsIcon,
+	ViewInAr as ContainerIcon,
 	ChevronLeft as ChevronLeftIcon,
 	ChevronRight as ChevronRightIcon,
 	ExpandLess,
@@ -42,6 +43,12 @@ const navigationItems: NavigationItem[] = [
 		title: 'Dashboard',
 		icon: <DashboardIcon />,
 		url: '/dashboard'
+	},
+	{
+		id: 'container',
+		title: 'Container Status',
+		icon: <ContainerIcon />,
+		url: '/container'
 	},
 	{
 		id: 'example',

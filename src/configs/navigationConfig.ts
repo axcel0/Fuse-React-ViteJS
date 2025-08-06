@@ -45,7 +45,7 @@ const navigationConfig: FuseNavItemType[] = [
 		children: [
 			{
 				id: 'container',
-				title: 'Container',
+				title: 'Container Status',
 				translate: 'CONTAINER',
 				type: 'item',
 				icon: 'heroicons-outline:cube',
