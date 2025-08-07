@@ -1,6 +1,6 @@
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { useTranslation } from 'react-i18next';
-import { styled, alpha } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import {
 	Card,
 	CardContent,
@@ -23,17 +23,9 @@ import {
 	Fade,
 	Avatar,
 	Stack,
-	Divider,
-	ButtonGroup,
-	Table,
-	TableBody,
-	TableCell,
-	TableContainer,
-	TableHead,
-	TableRow,
-	TablePagination,
-	TableSortLabel
+	ButtonGroup
 } from '@mui/material';
+import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid';
 import {
 	Search as SearchIcon,
 	Refresh as RefreshIcon,
@@ -121,7 +113,6 @@ const CONTAINER_NAMES = [
 
 // Optimized constants for CSV export
 const CSV_HEADERS = ['no', 'container', 'kafkaConnection', 'version', 'containerStatus'];
-const PAGINATION_OPTIONS = [10, 25, 50, 100];
 
 function Container() {
 	const { t } = useTranslation('navigation');
@@ -133,23 +124,6 @@ function Container() {
 	const [detailDialogOpen, setDetailDialogOpen] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const [statusFilter, setStatusFilter] = useState<string>('all');
-	
-	// Table pagination and sorting state
-	const [page, setPage] = useState(0);
-	const [rowsPerPage, setRowsPerPage] = useState(25);
-	const [orderBy, setOrderBy] = useState<keyof ContainerStatus>('containerName');
-	const [order, setOrder] = useState<'asc' | 'desc'>('asc');
-
-	// Define sortable fields only (excluding complex types)
-	type SortableFields = 'containerName' | 'status' | 'kafkaConnection' | 'version' | 'containerStatus';
-	
-	// Table header configuration with proper typing
-	interface HeadCell {
-		id: SortableFields | 'no' | 'actions';
-		label: string;
-		sortable: boolean;
-		width: number;
-	}
 
 	// Container stats for dashboard overview - memoized
 	const containerStats = useMemo(() => ({
@@ -329,132 +303,242 @@ function Container() {
 		}
 
 		setFilteredData(filtered);
-		setPage(0); // Reset page when filters change
 	}, [searchTerm, statusFilter, containerData]);
 
-	// Sorting helper functions
-	const handleRequestSort = (property: SortableFields) => {
-		const isAsc = orderBy === property && order === 'asc';
-		setOrder(isAsc ? 'desc' : 'asc');
-		setOrderBy(property);
-	};
-
-	const createSortHandler = (property: SortableFields) => () => {
-		handleRequestSort(property);
-	};
-
-	// Comparator function for sorting - only handle sortable fields
-	function descendingComparator(a: ContainerStatus, b: ContainerStatus, orderBy: SortableFields) {
-		let aValue: string | number;
-		let bValue: string | number;
-
-		// Get comparable values for each field
-		switch (orderBy) {
-			case 'containerName':
-				aValue = a.containerName;
-				bValue = b.containerName;
-				break;
-			case 'status':
-				aValue = a.status;
-				bValue = b.status;
-				break;
-			case 'kafkaConnection':
-				aValue = a.kafkaConnection || '';
-				bValue = b.kafkaConnection || '';
-				break;
-			case 'version':
-				aValue = a.version;
-				bValue = b.version;
-				break;
-			case 'containerStatus':
-				aValue = a.containerStatus;
-				bValue = b.containerStatus;
-				break;
-			default:
-				aValue = '';
-				bValue = '';
+	// Define columns for DataGrid
+	const columns: GridColDef[] = useMemo(() => [
+		{
+			field: 'no',
+			headerName: 'No',
+			width: 70,
+			sortable: false,
+			renderCell: (params) => {
+				const allRows = params.api.getAllRowIds();
+				const currentRowIndex = allRows.indexOf(params.id);
+				return currentRowIndex + 1;
+			}
+		},
+		{
+			field: 'containerName',
+			headerName: 'Container',
+			width: 200,
+			sortable: true
+		},
+		{
+			field: 'kafkaConnection',
+			headerName: 'Kafka Connection',
+			width: 200,
+			sortable: true,
+			renderCell: (params) => {
+				if (!params.value) {
+					return (
+						<Chip 
+							label="N/A" 
+							size="small" 
+							variant="outlined" 
+							sx={getChipStyles('default')}
+						/>
+					);
+				}
+				const chipColor = getKafkaChipColor(params.value);
+				return (
+					<Chip
+						label={params.value}
+						size="small"
+						variant="filled"
+						sx={getChipStyles(chipColor)}
+					/>
+				);
+			}
+		},
+		{
+			field: 'version',
+			headerName: 'Version',
+			width: 120,
+			sortable: true,
+			renderCell: (params) => (
+				<Chip
+					label={params.value || 'N/A'}
+					size="small"
+					variant="outlined"
+					sx={getChipStyles('info')}
+				/>
+			)
+		},
+		{
+			field: 'containerStatus',
+			headerName: 'Container Status',
+			width: 180,
+			sortable: true,
+			renderCell: (params) => {
+				const chipColor = getStatusChipColor(params.value);
+				return (
+					<Chip
+						label={params.value}
+						size="small"
+						variant="filled"
+						sx={{
+							...getChipStyles(chipColor),
+							textTransform: 'capitalize'
+						}}
+					/>
+				);
+			}
+		},
+		{
+			field: 'actions',
+			headerName: 'Actions',
+			width: 140,
+			sortable: false,
+			renderCell: (params) => (
+				<IconButton
+					onClick={() => {
+						setSelectedContainer(params.row);
+						setDetailDialogOpen(true);
+					}}
+					size="medium"
+					sx={{
+						borderRadius: 2,
+						padding: 1.5,
+						backgroundColor: (theme) => theme.palette.mode === 'dark' 
+							? 'rgba(59, 130, 246, 0.1)' 
+							: 'rgba(59, 130, 246, 0.05)',
+						border: (theme) => `1px solid ${theme.palette.mode === 'dark' 
+							? 'rgba(59, 130, 246, 0.3)' 
+							: 'rgba(59, 130, 246, 0.2)'}`,
+						'&:hover': {
+							backgroundColor: (theme) => theme.palette.mode === 'dark'
+								? 'rgba(59, 130, 246, 0.2)'
+								: 'rgba(59, 130, 246, 0.1)',
+							transform: 'scale(1.05)',
+							boxShadow: (theme) => theme.palette.mode === 'dark'
+								? '0 4px 12px rgba(59, 130, 246, 0.2)'
+								: '0 4px 12px rgba(59, 130, 246, 0.15)',
+							'& .MuiSvgIcon-root': {
+								color: (theme) => theme.palette.mode === 'dark' 
+									? 'rgba(96, 165, 250, 1)' 
+									: 'rgba(29, 78, 216, 1)'
+							}
+						},
+						transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+					}}
+				>
+					<ViewIcon sx={{
+						color: (theme) => theme.palette.mode === 'dark' 
+							? 'rgba(96, 165, 250, 0.8)' 
+							: 'rgba(29, 78, 216, 0.8)',
+						fontSize: 20,
+						transition: 'all 0.2s ease'
+					}} />
+				</IconButton>
+			)
 		}
+	], []);
 
-		if (bValue < aValue) {
-			return -1;
-		}
-		if (bValue > aValue) {
-			return 1;
-		}
-		return 0;
-	}
+	// Prepare rows for DataGrid with unique IDs
+	const rows: GridRowsProp = useMemo(() => 
+		filteredData.map((container, index) => ({
+			id: container.containerName, // Use containerName as unique ID
+			no: index + 1,
+			...container
+		})), [filteredData]);
 
-	function getComparator(
-		order: 'asc' | 'desc',
-		orderBy: SortableFields,
-	): (a: ContainerStatus, b: ContainerStatus) => number {
-		return order === 'desc'
-			? (a, b) => descendingComparator(a, b, orderBy)
-			: (a, b) => -descendingComparator(a, b, orderBy);
-	}
 
-	// Get sorted data for current page - memoized
-	const { sortedData, paginatedData } = useMemo(() => {
-		const sorted = filteredData.slice().sort(getComparator(order, orderBy as SortableFields));
-		const paginated = sorted.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-		return { sortedData: sorted, paginatedData: paginated };
-	}, [filteredData, order, orderBy, page, rowsPerPage]);
 
-	// Memoized helper functions
-	const getStatusColor = useCallback((status: string) => {
-		switch (status.toLowerCase()) {
-			case 'ok':
-				return 'success';
-			case 'failed':
-			case 'failed opensearch':
-				return 'error';
-			case 'request timeout':
-				return 'warning';
-			case 'unknown':
-			default:
-				return 'default';
-		}
-	}, []);
+	// Helper function untuk styling Chip berdasarkan status
+	const getChipStyles = useCallback((status: 'success' | 'error' | 'warning' | 'info' | 'default') => {
+		const styles = {
+			fontSize: '0.75rem',
+			fontWeight: status === 'info' ? 500 : 600,
+			...(status === 'info' && { fontFamily: 'monospace' })
+		};
 
-	const getKafkaStatusColor = useCallback((status: string) => {
 		switch (status) {
-			case 'connected':
-				return 'success';
-			case 'unconnected':
-				return 'error';
+			case 'success':
+				return {
+					...styles,
+					backgroundColor: (theme: any) => theme.palette.mode === 'dark' 
+						? 'rgba(34, 197, 94, 0.2)' 
+						: 'rgba(34, 197, 94, 0.1)',
+					color: (theme: any) => theme.palette.mode === 'dark' 
+						? 'rgba(74, 222, 128, 0.9)' 
+						: 'rgba(21, 128, 61, 0.9)',
+					border: (theme: any) => `1px solid ${theme.palette.mode === 'dark' 
+						? 'rgba(34, 197, 94, 0.3)' 
+						: 'rgba(34, 197, 94, 0.2)'}`
+				};
+			case 'error':
+				return {
+					...styles,
+					backgroundColor: (theme: any) => theme.palette.mode === 'dark' 
+						? 'rgba(239, 68, 68, 0.2)' 
+						: 'rgba(239, 68, 68, 0.1)',
+					color: (theme: any) => theme.palette.mode === 'dark' 
+						? 'rgba(248, 113, 113, 0.9)' 
+						: 'rgba(185, 28, 28, 0.9)',
+					border: (theme: any) => `1px solid ${theme.palette.mode === 'dark' 
+						? 'rgba(239, 68, 68, 0.3)' 
+						: 'rgba(239, 68, 68, 0.2)'}`
+				};
+			case 'warning':
+				return {
+					...styles,
+					backgroundColor: (theme: any) => theme.palette.mode === 'dark' 
+						? 'rgba(245, 158, 11, 0.2)' 
+						: 'rgba(245, 158, 11, 0.1)',
+					color: (theme: any) => theme.palette.mode === 'dark' 
+						? 'rgba(251, 191, 36, 0.9)' 
+						: 'rgba(146, 64, 14, 0.9)',
+					border: (theme: any) => `1px solid ${theme.palette.mode === 'dark' 
+						? 'rgba(245, 158, 11, 0.3)' 
+						: 'rgba(245, 158, 11, 0.2)'}`
+				};
+			case 'info':
+				return {
+					...styles,
+					backgroundColor: (theme: any) => theme.palette.mode === 'dark' 
+						? 'rgba(59, 130, 246, 0.1)' 
+						: 'rgba(59, 130, 246, 0.05)',
+					color: (theme: any) => theme.palette.mode === 'dark' 
+						? 'rgba(96, 165, 250, 0.9)' 
+						: 'rgba(29, 78, 216, 0.9)',
+					border: (theme: any) => `1px solid ${theme.palette.mode === 'dark' 
+						? 'rgba(59, 130, 246, 0.3)' 
+						: 'rgba(59, 130, 246, 0.2)'}`
+				};
 			default:
-				return 'default';
+				return {
+					...styles,
+					borderColor: (theme: any) => theme.palette.mode === 'dark' 
+						? 'rgba(148, 163, 184, 0.4)' 
+						: 'rgba(148, 163, 184, 0.6)',
+					color: (theme: any) => theme.palette.mode === 'dark' 
+						? 'rgba(148, 163, 184, 0.8)' 
+						: 'rgba(100, 116, 139, 0.8)'
+				};
 		}
 	}, []);
 
-	const getStatusIcon = useCallback((status: string) => {
-		switch (status.toLowerCase()) {
-			case 'ok':
-				return <SuccessIcon fontSize="small" />;
-			case 'failed':
-			case 'failed opensearch':
-				return <ErrorIcon fontSize="small" />;
-			case 'request timeout':
-				return <WarningIcon fontSize="small" />;
-			default:
-				return <PendingIcon fontSize="small" />;
-		}
+	// Helper function untuk menentukan warna status
+	const getStatusChipColor = useCallback((status: string): 'success' | 'error' | 'warning' | 'default' => {
+		const lowerStatus = status?.toLowerCase();
+		if (lowerStatus === 'ok') return 'success';
+		if (lowerStatus?.includes('failed')) return 'error';
+		if (lowerStatus?.includes('timeout')) return 'warning';
+		return 'default';
+	}, []);
+
+	// Helper function untuk menentukan warna Kafka connection
+	const getKafkaChipColor = useCallback((connection: string): 'success' | 'error' | 'default' => {
+		if (connection === 'connected') return 'success';
+		if (connection === 'unconnected') return 'error';
+		return 'default';
 	}, []);
 
 	// Initial data fetch
 	useEffect(() => {
 		fetchContainerData();
 	}, [fetchContainerData]);
-
-	// Pagination handlers
-	const handleChangePage = (event: unknown, newPage: number) => {
-		setPage(newPage);
-	};
-
-	const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setRowsPerPage(parseInt(event.target.value, 10));
-		setPage(0);
-	};
 
 	// Export to CSV function matching the required format - optimized
 	const exportToCSV = useCallback(() => {
@@ -484,16 +568,6 @@ function Container() {
 		document.body.removeChild(link);
 		URL.revokeObjectURL(url); // Clean up memory
 	}, [filteredData]);
-
-	// Table header configuration - memoized
-	const headCells: HeadCell[] = useMemo(() => [
-		{ id: 'no' as const, label: 'No', sortable: false, width: 80 },
-		{ id: 'containerName' as const, label: 'Container', sortable: true, width: 220 },
-		{ id: 'kafkaConnection' as const, label: 'Kafka Connection', sortable: true, width: 170 },
-		{ id: 'version' as const, label: 'Version', sortable: true, width: 120 },
-		{ id: 'containerStatus' as const, label: 'Container Status', sortable: true, width: 180 },
-		{ id: 'actions' as const, label: 'Actions', sortable: false, width: 100 }
-	], []);
 
 	return (
 		<Root
@@ -677,9 +751,9 @@ function Container() {
 					<Card sx={{ 
 						mb: 3, 
 						borderRadius: 0,
-						bgcolor: (theme) => theme.palette.mode === 'dark' ? '#0f172a' : '#1e293b',
-						border: (theme) => theme.palette.mode === 'dark' ? '1px solid' : 'none',
-						borderColor: '#334155'
+						bgcolor: (theme) => theme.palette.mode === 'dark' ? '#0f172a' : '#ffffff',
+						border: (theme) => theme.palette.mode === 'dark' ? '1px solid' : '1px solid',
+						borderColor: (theme) => theme.palette.mode === 'dark' ? '#334155' : '#e2e8f0'
 					}}>
 						<CardContent sx={{ px: 3, py: 2 }}>
 							<Stack direction={{ xs: 'column', md: 'row' }} spacing={2} alignItems="center">
@@ -687,27 +761,37 @@ function Container() {
 									placeholder="Search containers, status, or version..."
 									value={searchTerm}
 									onChange={(e) => setSearchTerm(e.target.value)}
-									InputProps={{
-										startAdornment: (
-											<InputAdornment position="start">
-												<SearchIcon sx={{ 
-													color: 'rgba(255, 255, 255, 0.7)'
-												}} />
-											</InputAdornment>
-										),
-										sx: {
-											color: '#ffffff',
-											'& .MuiOutlinedInput-notchedOutline': {
-												borderColor: 'rgba(255, 255, 255, 0.3)'
-											},
-											'&:hover .MuiOutlinedInput-notchedOutline': {
-												borderColor: 'rgba(255, 255, 255, 0.6)'
-											},
-											'&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-												borderColor: '#ffffff'
-											},
-											'& input::placeholder': {
-												color: 'rgba(255, 255, 255, 0.6)'
+									slotProps={{
+										input: {
+											startAdornment: (
+												<InputAdornment position="start">
+													<SearchIcon sx={{ 
+														color: (theme) => theme.palette.mode === 'dark' 
+															? 'rgba(255, 255, 255, 0.7)'
+															: 'rgba(30, 41, 59, 0.7)'
+													}} />
+												</InputAdornment>
+											),
+											sx: {
+												color: (theme) => theme.palette.mode === 'dark' ? '#ffffff' : '#1e293b',
+												'& .MuiOutlinedInput-notchedOutline': {
+													borderColor: (theme) => theme.palette.mode === 'dark' 
+														? 'rgba(255, 255, 255, 0.3)'
+														: 'rgba(30, 41, 59, 0.3)'
+												},
+												'&:hover .MuiOutlinedInput-notchedOutline': {
+													borderColor: (theme) => theme.palette.mode === 'dark' 
+														? 'rgba(255, 255, 255, 0.6)'
+														: 'rgba(30, 41, 59, 0.6)'
+												},
+												'&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+													borderColor: (theme) => theme.palette.mode === 'dark' ? '#ffffff' : '#3b82f6'
+												},
+												'& input::placeholder': {
+													color: (theme) => theme.palette.mode === 'dark' 
+														? 'rgba(255, 255, 255, 0.6)'
+														: 'rgba(30, 41, 59, 0.6)'
+												}
 											}
 										}
 									}}
@@ -723,18 +807,24 @@ function Container() {
 											variant={statusFilter === 'all' ? 'contained' : 'outlined'}
 											sx={{
 												color: (theme) => statusFilter === 'all' 
-													? '#1e293b' 
-													: '#ffffff',
-												borderColor: 'rgba(255, 255, 255, 0.3)',
+													? (theme.palette.mode === 'dark' ? '#1e293b' : '#ffffff')
+													: (theme.palette.mode === 'dark' ? '#ffffff' : '#1e293b'),
+												borderColor: (theme) => theme.palette.mode === 'dark' 
+													? 'rgba(255, 255, 255, 0.3)'
+													: 'rgba(30, 41, 59, 0.3)',
 												'&:hover': {
-													borderColor: 'rgba(255, 255, 255, 0.6)',
-													backgroundColor: statusFilter !== 'all' ? 'rgba(255, 255, 255, 0.1)' : undefined
+													borderColor: (theme) => theme.palette.mode === 'dark' 
+														? 'rgba(255, 255, 255, 0.6)'
+														: 'rgba(30, 41, 59, 0.6)',
+													backgroundColor: statusFilter !== 'all' ? (theme) => theme.palette.mode === 'dark' 
+														? 'rgba(255, 255, 255, 0.1)'
+														: 'rgba(30, 41, 59, 0.1)' : undefined
 												},
 												'&.MuiButton-contained': {
-													backgroundColor: '#ffffff',
-													color: '#1e293b',
+													backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#ffffff' : '#3b82f6',
+													color: (theme) => theme.palette.mode === 'dark' ? '#1e293b' : '#ffffff',
 													'&:hover': {
-														backgroundColor: '#f1f5f9'
+														backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#f1f5f9' : '#2563eb'
 													}
 												}
 											}}
@@ -746,18 +836,24 @@ function Container() {
 											variant={statusFilter === 'connected' ? 'contained' : 'outlined'}
 											sx={{
 												color: (theme) => statusFilter === 'connected' 
-													? '#1e293b' 
-													: '#ffffff',
-												borderColor: 'rgba(255, 255, 255, 0.3)',
+													? (theme.palette.mode === 'dark' ? '#1e293b' : '#ffffff')
+													: (theme.palette.mode === 'dark' ? '#ffffff' : '#1e293b'),
+												borderColor: (theme) => theme.palette.mode === 'dark' 
+													? 'rgba(255, 255, 255, 0.3)'
+													: 'rgba(30, 41, 59, 0.3)',
 												'&:hover': {
-													borderColor: 'rgba(255, 255, 255, 0.6)',
-													backgroundColor: statusFilter !== 'connected' ? 'rgba(255, 255, 255, 0.1)' : undefined
+													borderColor: (theme) => theme.palette.mode === 'dark' 
+														? 'rgba(255, 255, 255, 0.6)'
+														: 'rgba(30, 41, 59, 0.6)',
+													backgroundColor: statusFilter !== 'connected' ? (theme) => theme.palette.mode === 'dark' 
+														? 'rgba(255, 255, 255, 0.1)'
+														: 'rgba(30, 41, 59, 0.1)' : undefined
 												},
 												'&.MuiButton-contained': {
-													backgroundColor: '#ffffff',
-													color: '#1e293b',
+													backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#ffffff' : '#10b981',
+													color: (theme) => theme.palette.mode === 'dark' ? '#1e293b' : '#ffffff',
 													'&:hover': {
-														backgroundColor: '#f1f5f9'
+														backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#f1f5f9' : '#059669'
 													}
 												}
 											}}
@@ -769,18 +865,24 @@ function Container() {
 											variant={statusFilter === 'ok' ? 'contained' : 'outlined'}
 											sx={{
 												color: (theme) => statusFilter === 'ok' 
-													? '#1e293b' 
-													: '#ffffff',
-												borderColor: 'rgba(255, 255, 255, 0.3)',
+													? (theme.palette.mode === 'dark' ? '#1e293b' : '#ffffff')
+													: (theme.palette.mode === 'dark' ? '#ffffff' : '#1e293b'),
+												borderColor: (theme) => theme.palette.mode === 'dark' 
+													? 'rgba(255, 255, 255, 0.3)'
+													: 'rgba(30, 41, 59, 0.3)',
 												'&:hover': {
-													borderColor: 'rgba(255, 255, 255, 0.6)',
-													backgroundColor: statusFilter !== 'ok' ? 'rgba(255, 255, 255, 0.1)' : undefined
+													borderColor: (theme) => theme.palette.mode === 'dark' 
+														? 'rgba(255, 255, 255, 0.6)'
+														: 'rgba(30, 41, 59, 0.6)',
+													backgroundColor: statusFilter !== 'ok' ? (theme) => theme.palette.mode === 'dark' 
+														? 'rgba(255, 255, 255, 0.1)'
+														: 'rgba(30, 41, 59, 0.1)' : undefined
 												},
 												'&.MuiButton-contained': {
-													backgroundColor: '#ffffff',
-													color: '#1e293b',
+													backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#ffffff' : '#10b981',
+													color: (theme) => theme.palette.mode === 'dark' ? '#1e293b' : '#ffffff',
 													'&:hover': {
-														backgroundColor: '#f1f5f9'
+														backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#f1f5f9' : '#059669'
 													}
 												}
 											}}
@@ -792,18 +894,24 @@ function Container() {
 											variant={statusFilter === 'failed' ? 'contained' : 'outlined'}
 											sx={{
 												color: (theme) => statusFilter === 'failed' 
-													? '#1e293b' 
-													: '#ffffff',
-												borderColor: 'rgba(255, 255, 255, 0.3)',
+													? (theme.palette.mode === 'dark' ? '#1e293b' : '#ffffff')
+													: (theme.palette.mode === 'dark' ? '#ffffff' : '#1e293b'),
+												borderColor: (theme) => theme.palette.mode === 'dark' 
+													? 'rgba(255, 255, 255, 0.3)'
+													: 'rgba(30, 41, 59, 0.3)',
 												'&:hover': {
-													borderColor: 'rgba(255, 255, 255, 0.6)',
-													backgroundColor: statusFilter !== 'failed' ? 'rgba(255, 255, 255, 0.1)' : undefined
+													borderColor: (theme) => theme.palette.mode === 'dark' 
+														? 'rgba(255, 255, 255, 0.6)'
+														: 'rgba(30, 41, 59, 0.6)',
+													backgroundColor: statusFilter !== 'failed' ? (theme) => theme.palette.mode === 'dark' 
+														? 'rgba(255, 255, 255, 0.1)'
+														: 'rgba(30, 41, 59, 0.1)' : undefined
 												},
 												'&.MuiButton-contained': {
-													backgroundColor: '#ffffff',
-													color: '#1e293b',
+													backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#ffffff' : '#ef4444',
+													color: (theme) => theme.palette.mode === 'dark' ? '#1e293b' : '#ffffff',
 													'&:hover': {
-														backgroundColor: '#f1f5f9'
+														backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#f1f5f9' : '#dc2626'
 													}
 												}
 											}}
@@ -815,7 +923,9 @@ function Container() {
 									<Typography 
 										variant="body2" 
 										sx={{ 
-											color: 'rgba(255, 255, 255, 0.8)'
+											color: (theme) => theme.palette.mode === 'dark' 
+												? 'rgba(255, 255, 255, 0.8)'
+												: 'rgba(30, 41, 59, 0.8)'
 										}}
 									>
 										{filteredData.length} of {containerData.length} containers
@@ -825,243 +935,260 @@ function Container() {
 						</CardContent>
 					</Card>
 
-					{/* MUI Table - Edge to Edge Full Width */}
+					{/* MUI X Data Grid - Modern and Feature-rich */}
 					<Card sx={{ 
-						borderRadius: 0, 
+						borderRadius: 4, 
 						border: 'none',
-						bgcolor: (theme) => theme.palette.mode === 'dark' ? '#0f172a' : '#1e293b'
+						background: (theme) => theme.palette.mode === 'dark' 
+							? 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)'
+							: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #e2e8f0 100%)',
+						boxShadow: (theme) => theme.palette.mode === 'dark'
+							? '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(51, 65, 85, 0.3)'
+							: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(226, 232, 240, 0.5)',
+						overflow: 'hidden',
+						position: 'relative',
+						'&::before': {
+							content: '""',
+							position: 'absolute',
+							top: 0,
+							left: 0,
+							right: 0,
+							bottom: 0,
+							background: 'linear-gradient(45deg, rgba(255,255,255,0.05) 0%, transparent 100%)',
+							pointerEvents: 'none',
+							zIndex: 1
+						}
 					}}>
-						<CardContent sx={{ p: 0, '&:last-child': { pb: 0 } }}>
-							<TableContainer>
-								<Table sx={{ minWidth: 750 }} size="medium">
-									<TableHead>
-										<TableRow>
-											{headCells.map((headCell) => (
-												<TableCell
-													key={headCell.id}
-													sortDirection={orderBy === headCell.id ? order : false}
-													sx={{
-														width: headCell.width,
-														minWidth: headCell.width,
-														borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
-														backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'grey.900' : 'grey.50',
-														fontSize: '0.875rem',
-														fontWeight: 600,
-														color: (theme) => theme.palette.mode === 'dark' ? 'grey.200' : 'text.primary',
-														padding: '12px 16px'
-													}}
-												>
-													{headCell.sortable && (headCell.id as SortableFields) ? (
-														<TableSortLabel
-															active={orderBy === headCell.id}
-															direction={orderBy === headCell.id ? order : 'asc'}
-															onClick={createSortHandler(headCell.id as SortableFields)}
-															sx={{
-																color: (theme) => theme.palette.mode === 'dark' ? 'grey.200' : 'text.primary',
-																'&.Mui-active': {
-																	color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'primary.main'
-																},
-																'& .MuiTableSortLabel-icon': {
-																	color: (theme) => theme.palette.mode === 'dark' ? 'grey.300' : 'primary.main'
-																}
-															}}
-														>
-															{headCell.label}
-														</TableSortLabel>
-													) : (
-														headCell.label
-													)}
-												</TableCell>
-											))}
-										</TableRow>
-									</TableHead>
-									<TableBody>
-										{loading ? (
-											<TableRow>
-												<TableCell 
-													colSpan={6} 
-													align="center" 
-													sx={{ 
-														py: 8,
-														color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary'
-													}}
-												>
-													<CircularProgress size={40} />
-													<Typography variant="body2" sx={{ mt: 2 }}>
-														Loading container data...
-													</Typography>
-												</TableCell>
-											</TableRow>
-										) : paginatedData.length === 0 ? (
-											<TableRow>
-												<TableCell 
-													colSpan={6} 
-													align="center" 
-													sx={{ 
-														py: 8,
-														color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary'
-													}}
-												>
-													<Typography variant="body2" color="text.secondary">
-														No containers found matching your criteria
-													</Typography>
-												</TableCell>
-											</TableRow>
-										) : (
-											paginatedData.map((container, index) => (
-												<TableRow
-													key={container.containerName}
-													hover
-													sx={{
-														'&:hover': {
-															backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.04)
-														}
-													}}
-												>
-													{/* No */}
-													<TableCell 
-														sx={{ 
-															borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
-															padding: '12px 16px',
-															color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary'
-														}}
-													>
-														{page * rowsPerPage + index + 1}
-													</TableCell>
-
-													{/* Container Name */}
-													<TableCell 
-														sx={{ 
-															borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
-															padding: '12px 16px',
-															color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary',
-															fontWeight: 500
-														}}
-													>
-														{container.containerName}
-													</TableCell>
-
-													{/* Kafka Connection */}
-													<TableCell 
-														sx={{ 
-															borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
-															padding: '12px 16px'
-														}}
-													>
-														{!container.kafkaConnection ? (
-															<Chip label="N/A" size="small" variant="outlined" color="default" />
-														) : (
-															<Chip
-																label={container.kafkaConnection}
-																size="small"
-																variant="filled"
-																color={container.kafkaConnection === 'connected' ? 'success' : 'error'}
-															/>
-														)}
-													</TableCell>
-
-													{/* Version */}
-													<TableCell 
-														sx={{ 
-															borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
-															padding: '12px 16px'
-														}}
-													>
-														<Chip
-															label={container.version || 'N/A'}
-															size="small"
-															variant="outlined"
-															color="info"
-														/>
-													</TableCell>
-
-													{/* Container Status */}
-													<TableCell 
-														sx={{ 
-															borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
-															padding: '12px 16px'
-														}}
-													>
-														<Chip
-															label={container.containerStatus}
-															size="small"
-															variant="filled"
-															color={
-																container.containerStatus?.toLowerCase() === 'ok' ? 'success' :
-																container.containerStatus?.toLowerCase().includes('failed') ? 'error' :
-																container.containerStatus?.toLowerCase().includes('timeout') ? 'warning' : 'default'
-															}
-														/>
-													</TableCell>
-
-													{/* Actions */}
-													<TableCell 
-														sx={{ 
-															borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
-															padding: '12px 16px'
-														}}
-													>
-														<IconButton
-															onClick={() => {
-																setSelectedContainer(container);
-																setDetailDialogOpen(true);
-															}}
-															size="medium"
-															color="primary"
-															sx={{
-																borderRadius: 2,
-																padding: 1.5,
-																'&:hover': {
-																	backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.1),
-																	transform: 'scale(1.05)'
-																},
-																transition: 'all 0.2s ease-in-out'
-															}}
-														>
-															<ViewIcon sx={{ 
-																fontSize: 20,
-																color: (theme) => theme.palette.mode === 'dark' ? 'grey.300' : 'primary.main'
-															}} />
-														</IconButton>
-													</TableCell>
-												</TableRow>
-											))
-										)}
-									</TableBody>
-								</Table>
-							</TableContainer>
-							
-							{/* Table Pagination */}
-							<TablePagination
-								rowsPerPageOptions={PAGINATION_OPTIONS}
-								component="div"
-								count={filteredData.length}
-								rowsPerPage={rowsPerPage}
-								page={page}
-								onPageChange={handleChangePage}
-								onRowsPerPageChange={handleChangeRowsPerPage}
+						<Box sx={{ height: 600, width: '100%' }}>
+							<DataGrid
+								rows={rows}
+								columns={columns}
+								loading={loading}
+								disableRowSelectionOnClick
+								pageSizeOptions={[10, 25, 50, 100]}
+								initialState={{
+									pagination: {
+										paginationModel: { pageSize: 25, page: 0 }
+									}
+								}}
 								sx={{
-									borderTop: '1px solid',
-									borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
-									minHeight: 56,
-									backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'grey.900' : 'background.paper',
-									color: (theme) => theme.palette.mode === 'dark' ? 'grey.300' : 'text.primary',
-									'& .MuiTablePagination-toolbar': {
-										paddingLeft: 2,
-										paddingRight: 2
+									border: 'none',
+									borderRadius: 4,
+									overflow: 'hidden',
+									position: 'relative',
+									zIndex: 2,
+									
+									// Root styling untuk konsistensi dengan glassmorphism modal
+									'& .MuiDataGrid-root': {
+										borderRadius: 4,
+										backgroundColor: 'transparent'
 									},
+									
+									// Header styling dengan gradient yang matching modal
+									'& .MuiDataGrid-columnHeaders': {
+										background: (theme) => theme.palette.mode === 'dark'
+											? 'linear-gradient(135deg, #1e293b 0%, #334155 100%)'
+											: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+										color: (theme) => theme.palette.mode === 'dark' ? '#ffffff' : '#1e293b',
+										borderBottom: (theme) => theme.palette.mode === 'dark' 
+											? '2px solid rgba(255, 255, 255, 0.2)'
+											: '2px solid rgba(30, 41, 59, 0.1)',
+										fontWeight: 600,
+										fontSize: '0.875rem',
+										textTransform: 'uppercase',
+										letterSpacing: '0.05em',
+										position: 'relative',
+										boxShadow: (theme) => theme.palette.mode === 'dark'
+											? '0 4px 20px rgba(0, 0, 0, 0.15)'
+											: '0 2px 10px rgba(0, 0, 0, 0.08)',
+										'&::before': {
+											content: '""',
+											position: 'absolute',
+											top: 0,
+											left: 0,
+											right: 0,
+											bottom: 0,
+											background: 'linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 100%)',
+											pointerEvents: 'none'
+										}
+									},
+									
+									// Column header individual  
+									'& .MuiDataGrid-columnHeader': {
+										fontSize: '0.875rem',
+										padding: '16px',
+										position: 'relative',
+										zIndex: 1,
+										'&:focus': {
+											outline: 'none'
+										},
+										'&:focus-within': {
+											outline: `2px solid rgba(255, 255, 255, 0.4)`,
+											outlineOffset: '-2px'
+										}
+									},
+									
+									// Cell styling dengan glassmorphism theme
+									'& .MuiDataGrid-cell': {
+										borderBottom: (theme) => `1px solid ${theme.palette.mode === 'dark' 
+											? 'rgba(71, 85, 105, 0.2)' 
+											: 'rgba(226, 232, 240, 0.3)'}`,
+										color: (theme) => theme.palette.mode === 'dark' 
+											? 'rgba(248, 250, 252, 0.95)' 
+											: 'rgba(15, 23, 42, 0.9)',
+										padding: '12px 16px',
+										fontSize: '0.875rem',
+										lineHeight: 1.5,
+										backgroundColor: 'transparent',
+										'&:focus': {
+											outline: `2px solid ${(theme) => theme.palette.mode === 'dark' 
+												? 'rgba(139, 92, 246, 0.6)'
+												: 'rgba(102, 126, 234, 0.6)'}`,
+											outlineOffset: '-2px',
+											backgroundColor: (theme) => theme.palette.mode === 'dark'
+												? 'rgba(139, 92, 246, 0.1)'
+												: 'rgba(102, 126, 234, 0.05)'
+										}
+									},
+									
+									// Row styling dengan glassmorphism effect
+									'& .MuiDataGrid-row': {
+										backgroundColor: 'transparent',
+										backdropFilter: 'blur(5px)',
+										'&:nth-of-type(even)': {
+											backgroundColor: (theme) => theme.palette.mode === 'dark' 
+												? 'rgba(51, 65, 85, 0.15)' 
+												: 'rgba(248, 250, 252, 0.6)'
+										},
+										'&:hover': {
+											backgroundColor: (theme) => theme.palette.mode === 'dark'
+												? 'rgba(139, 92, 246, 0.1)'
+												: 'rgba(102, 126, 234, 0.08)',
+											transform: 'translateY(-1px)',
+											backdropFilter: 'blur(10px)',
+											boxShadow: (theme) => theme.palette.mode === 'dark'
+												? '0 4px 12px rgba(0, 0, 0, 0.3)'
+												: '0 4px 12px rgba(0, 0, 0, 0.1)',
+											transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+										},
+										'&.Mui-selected': {
+											backgroundColor: (theme) => theme.palette.mode === 'dark'
+												? 'rgba(59, 130, 246, 0.12)'
+												: 'rgba(59, 130, 246, 0.08)',
+											'&:hover': {
+												backgroundColor: (theme) => theme.palette.mode === 'dark'
+													? 'rgba(59, 130, 246, 0.16)'
+													: 'rgba(59, 130, 246, 0.12)'
+											}
+										}
+									},
+									
+									// Footer/Pagination styling dengan glassmorphism
+									'& .MuiDataGrid-footerContainer': {
+										borderTop: (theme) => `1px solid ${theme.palette.mode === 'dark' 
+											? 'rgba(71, 85, 105, 0.3)' 
+											: 'rgba(226, 232, 240, 0.5)'}`,
+										background: (theme) => theme.palette.mode === 'dark'
+											? 'linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(51, 65, 85, 0.6) 100%)'
+											: 'linear-gradient(135deg, rgba(248, 250, 252, 0.9) 0%, rgba(241, 245, 249, 0.8) 100%)',
+										backdropFilter: 'blur(10px)',
+										color: (theme) => theme.palette.mode === 'dark' 
+											? 'rgba(248, 250, 252, 0.9)' 
+											: 'rgba(30, 41, 59, 0.8)',
+										minHeight: 56,
+										padding: '8px 16px'
+									},
+									
+									// Pagination controls
+									'& .MuiTablePagination-root': {
+										color: (theme) => theme.palette.mode === 'dark' 
+											? 'rgba(203, 213, 225, 0.9)' 
+											: 'rgba(71, 85, 105, 0.8)'
+									},
+									
 									'& .MuiTablePagination-selectIcon': {
-										color: (theme) => theme.palette.mode === 'dark' ? 'grey.400' : 'text.secondary'
+										color: (theme) => theme.palette.mode === 'dark' 
+											? 'rgba(148, 163, 184, 0.8)' 
+											: 'rgba(100, 116, 139, 0.7)'
 									},
-									'& .MuiTablePagination-select': {
-										color: (theme) => theme.palette.mode === 'dark' ? 'grey.300' : 'text.primary'
+									
+									'& .MuiIconButton-root': {
+										color: (theme) => theme.palette.mode === 'dark' 
+											? 'rgba(148, 163, 184, 0.8)' 
+											: 'rgba(100, 116, 139, 0.7)',
+										'&:hover': {
+											backgroundColor: (theme) => theme.palette.mode === 'dark'
+												? 'rgba(59, 130, 246, 0.1)'
+												: 'rgba(59, 130, 246, 0.05)',
+											color: (theme) => theme.palette.primary.main
+										},
+										'&.Mui-disabled': {
+											color: (theme) => theme.palette.mode === 'dark' 
+												? 'rgba(148, 163, 184, 0.4)' 
+												: 'rgba(148, 163, 184, 0.5)'
+										}
 									},
-									'& .MuiTablePagination-actions': {
-										color: (theme) => theme.palette.mode === 'dark' ? 'grey.300' : 'text.primary'
+									
+									// Scrollbar styling
+									'& .MuiDataGrid-virtualScroller': {
+										backgroundColor: (theme) => theme.palette.mode === 'dark' 
+											? 'rgba(15, 23, 42, 0.95)' 
+											: 'rgba(255, 255, 255, 0.98)',
+										'&::-webkit-scrollbar': {
+											width: 8,
+											height: 8
+										},
+										'&::-webkit-scrollbar-track': {
+											backgroundColor: (theme) => theme.palette.mode === 'dark' 
+												? 'rgba(71, 85, 105, 0.2)' 
+												: 'rgba(226, 232, 240, 0.5)'
+										},
+										'&::-webkit-scrollbar-thumb': {
+											backgroundColor: (theme) => theme.palette.mode === 'dark' 
+												? 'rgba(148, 163, 184, 0.4)' 
+												: 'rgba(148, 163, 184, 0.6)',
+											borderRadius: 4,
+											'&:hover': {
+												backgroundColor: (theme) => theme.palette.mode === 'dark' 
+													? 'rgba(148, 163, 184, 0.6)' 
+													: 'rgba(100, 116, 139, 0.7)'
+											}
+										}
+									},
+									
+									// Loading overlay
+									'& .MuiDataGrid-overlay': {
+										backgroundColor: (theme) => theme.palette.mode === 'dark' 
+											? 'rgba(15, 23, 42, 0.9)' 
+											: 'rgba(255, 255, 255, 0.9)',
+										backdropFilter: 'blur(4px)',
+										color: (theme) => theme.palette.mode === 'dark' 
+											? 'rgba(241, 245, 249, 0.9)' 
+											: 'rgba(30, 41, 59, 0.8)'
+									},
+									
+									// Sort icon styling
+									'& .MuiDataGrid-sortIcon': {
+										color: (theme) => theme.palette.mode === 'dark' 
+											? 'rgba(148, 163, 184, 0.8)' 
+											: 'rgba(100, 116, 139, 0.7)',
+										'&.MuiDataGrid-sortIcon--active': {
+											color: (theme) => theme.palette.primary.main
+										}
+									},
+									
+									// Menu styling
+									'& .MuiDataGrid-menuIcon': {
+										color: (theme) => theme.palette.mode === 'dark' 
+											? 'rgba(148, 163, 184, 0.8)' 
+											: 'rgba(100, 116, 139, 0.7)',
+										'&:hover': {
+											color: (theme) => theme.palette.primary.main
+										}
 									}
 								}}
 							/>
-						</CardContent>
+						</Box>
 					</Card>
 
 					{/* Enhanced Detail Dialog - Modern Design */}
@@ -1070,28 +1197,32 @@ function Container() {
 						onClose={() => setDetailDialogOpen(false)}
 						maxWidth="lg"
 						fullWidth
-						TransitionComponent={Fade}
-						TransitionProps={{ timeout: 300 }}
-						BackdropComponent={Backdrop}
-						BackdropProps={{
-							sx: {
-								background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.8) 100%)',
-								backdropFilter: 'blur(12px)'
-							}
+						slots={{
+							transition: Fade,
+							backdrop: Backdrop
 						}}
-						PaperProps={{
-							sx: {
-								borderRadius: 4,
-								maxHeight: '85vh',
-								m: { xs: 1, sm: 2 },
-								background: (theme) => theme.palette.mode === 'dark' 
-									? 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)'
-									: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #e2e8f0 100%)',
-								boxShadow: (theme) => theme.palette.mode === 'dark'
-									? '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(51, 65, 85, 0.3)'
-									: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(226, 232, 240, 0.5)',
-								overflow: 'hidden',
-								position: 'relative'
+						slotProps={{
+							transition: { timeout: 300 },
+							backdrop: {
+								sx: {
+									background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.8) 100%)',
+									backdropFilter: 'blur(12px)'
+								}
+							},
+							paper: {
+								sx: {
+									borderRadius: 4,
+									maxHeight: '85vh',
+									m: { xs: 1, sm: 2 },
+									background: (theme) => theme.palette.mode === 'dark' 
+										? 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)'
+										: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #e2e8f0 100%)',
+									boxShadow: (theme) => theme.palette.mode === 'dark'
+										? '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(51, 65, 85, 0.3)'
+										: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(226, 232, 240, 0.5)',
+									overflow: 'hidden',
+									position: 'relative'
+								}
 							}
 						}}
 					>
@@ -1167,7 +1298,12 @@ function Container() {
 										minWidth: 'fit-content'
 									}}>
 										<Chip
-											icon={getStatusIcon(selectedContainer?.containerStatus || '')}
+											icon={
+												selectedContainer?.containerStatus?.toLowerCase() === 'ok' ? <SuccessIcon fontSize="small" /> :
+												selectedContainer?.containerStatus?.toLowerCase().includes('failed') ? <ErrorIcon fontSize="small" /> :
+												selectedContainer?.containerStatus?.toLowerCase().includes('timeout') ? <WarningIcon fontSize="small" /> : 
+												<PendingIcon fontSize="small" />
+											}
 											label={selectedContainer?.containerStatus}
 											sx={{ 
 												fontWeight: '700',
