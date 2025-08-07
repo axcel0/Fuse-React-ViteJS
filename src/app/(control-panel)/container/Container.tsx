@@ -46,7 +46,8 @@ import {
 	CheckCircle as SuccessIcon,
 	Error as ErrorIcon,
 	Warning as WarningIcon,
-	Schedule as PendingIcon
+	Schedule as PendingIcon,
+	AccessTime as AccessTimeIcon
 } from '@mui/icons-material';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import apiFetch from 'src/utils/apiFetch';
@@ -1063,323 +1064,444 @@ function Container() {
 						</CardContent>
 					</Card>
 
-					{/* Enhanced Detail Dialog - IMK & Ergonomic Optimized */}
+					{/* Enhanced Detail Dialog - Modern Design */}
 					<Dialog
 						open={detailDialogOpen}
 						onClose={() => setDetailDialogOpen(false)}
-						maxWidth="xl"
+						maxWidth="lg"
 						fullWidth
-						scroll="body"
 						TransitionComponent={Fade}
+						TransitionProps={{ timeout: 300 }}
 						BackdropComponent={Backdrop}
 						BackdropProps={{
 							sx: {
-								background: (theme) => alpha(theme.palette.mode === 'dark' ? '#000' : '#000', 0.6),
-								backdropFilter: 'blur(4px)'
+								background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.8) 100%)',
+								backdropFilter: 'blur(12px)'
 							}
 						}}
 						PaperProps={{
 							sx: {
-								borderRadius: 3,
-								maxHeight: '90vh',
+								borderRadius: 4,
+								maxHeight: '85vh',
 								m: { xs: 1, sm: 2 },
-								bgcolor: (theme) => theme.palette.mode === 'dark' ? 'grey.900' : 'background.paper',
-								color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary',
-								boxShadow: (theme) => theme.palette.mode === 'dark' 
-									? '0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.20)'
-									: '0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.20)'
+								background: (theme) => theme.palette.mode === 'dark' 
+									? 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)'
+									: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #e2e8f0 100%)',
+								boxShadow: (theme) => theme.palette.mode === 'dark'
+									? '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(51, 65, 85, 0.3)'
+									: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(226, 232, 240, 0.5)',
+								overflow: 'hidden',
+								position: 'relative'
 							}
 						}}
 					>
+						{/* Modern Header with Gradient */}
 						<DialogTitle sx={{ 
-							pb: 2, 
-							px: { xs: 2, sm: 3, md: 4 }, 
-							pt: { xs: 2, sm: 3, md: 4 },
-							borderBottom: '1px solid',
-							borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
-							bgcolor: (theme) => theme.palette.mode === 'dark' ? 'grey.800' : 'background.paper'
+							p: 0,
+							background: (theme) => theme.palette.mode === 'dark'
+								? 'linear-gradient(135deg, #1e293b 0%, #334155 100%)'
+								: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+							color: '#ffffff',
+							position: 'relative',
+							overflow: 'hidden',
+							'&::before': {
+								content: '""',
+								position: 'absolute',
+								top: 0,
+								left: 0,
+								right: 0,
+								bottom: 0,
+								background: 'linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 100%)',
+								pointerEvents: 'none'
+							}
 						}}>
-							<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
-								<Box sx={{ display: 'flex', alignItems: 'center', gap: 2.5, minWidth: 0 }}>
-									<Avatar sx={{ 
-										bgcolor: 'primary.main', 
-										width: { xs: 48, sm: 56 }, 
-										height: { xs: 48, sm: 56 },
-										boxShadow: 2
-									}}>
-										<ContainerIcon sx={{ 
-											fontSize: { xs: 24, sm: 28 },
-											color: '#ffffff'
-										}} />
-									</Avatar>
-									<Box sx={{ minWidth: 0 }}>
-										<Typography 
-											variant="h5" 
-											fontWeight="600"
-											sx={{ 
-												fontSize: { xs: '1.25rem', sm: '1.5rem' },
-												color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary',
-												wordBreak: 'break-word'
-											}}
-										>
-											{selectedContainer?.containerName}
-										</Typography>
-										<Typography 
-											variant="body2" 
-											sx={{ 
-												fontSize: { xs: '0.875rem', sm: '1rem' },
-												mt: 0.5,
-												color: (theme) => theme.palette.mode === 'dark' ? 'grey.400' : 'text.secondary'
-											}}
-										>
-											Container Details & Response Body
-										</Typography>
+							<Box sx={{ p: { xs: 3, sm: 4 }, position: 'relative', zIndex: 1 }}>
+								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 3 }}>
+									<Box sx={{ display: 'flex', alignItems: 'center', gap: 3, minWidth: 0, flex: 1 }}>
+										<Avatar sx={{ 
+											bgcolor: 'rgba(255, 255, 255, 0.2)',
+											backdropFilter: 'blur(10px)',
+											border: '2px solid rgba(255, 255, 255, 0.3)',
+											width: { xs: 56, sm: 64 }, 
+											height: { xs: 56, sm: 64 },
+											boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+										}}>
+											<ContainerIcon sx={{ 
+												fontSize: { xs: 28, sm: 32 },
+												color: '#ffffff'
+											}} />
+										</Avatar>
+										<Box sx={{ minWidth: 0, flex: 1 }}>
+											<Typography 
+												variant="h4" 
+												fontWeight="700"
+												sx={{ 
+													fontSize: { xs: '1.5rem', sm: '2rem' },
+													color: '#ffffff',
+													wordBreak: 'break-word',
+													textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+													mb: 1
+												}}
+											>
+												{selectedContainer?.containerName}
+											</Typography>
+											<Typography 
+												variant="body1" 
+												sx={{ 
+													fontSize: { xs: '1rem', sm: '1.125rem' },
+													color: 'rgba(255, 255, 255, 0.9)',
+													fontWeight: 500
+												}}
+											>
+												Container Details & System Information
+											</Typography>
+										</Box>
 									</Box>
-								</Box>
-								<Box sx={{ 
-									display: 'flex', 
-									gap: 1.5, 
-									flexWrap: 'wrap',
-									justifyContent: { xs: 'flex-start', sm: 'flex-end' }
-								}}>
-									<Chip
-										icon={getStatusIcon(selectedContainer?.containerStatus || '')}
-										label={selectedContainer?.containerStatus}
-										color={getStatusColor(selectedContainer?.containerStatus || '') as any}
-										variant="filled"
-										sx={{ 
-											fontWeight: '600',
-											fontSize: { xs: '0.75rem', sm: '0.875rem' },
-											height: { xs: 28, sm: 32 },
-											'& .MuiChip-icon': {
-												fontSize: { xs: 16, sm: 18 }
-											}
-										}}
-									/>
-									{selectedContainer?.kafkaConnection && (
+									
+									{/* Status Badges - Redesigned */}
+									<Box sx={{ 
+										display: 'flex', 
+										flexDirection: 'column',
+										gap: 1.5, 
+										alignItems: 'flex-end',
+										minWidth: 'fit-content'
+									}}>
 										<Chip
-											icon={selectedContainer.kafkaConnection === 'connected' ? 
-												<CloudIcon sx={{ color: '#ffffff' }} fontSize="small" /> : 
-												<DatabaseIcon sx={{ color: '#ffffff' }} fontSize="small" />
-											}
-											label={`Kafka: ${selectedContainer.kafkaConnection}`}
-											color={getKafkaStatusColor(selectedContainer.kafkaConnection) as any}
-											variant="outlined"
+											icon={getStatusIcon(selectedContainer?.containerStatus || '')}
+											label={selectedContainer?.containerStatus}
 											sx={{ 
-												fontWeight: '500',
-												fontSize: { xs: '0.75rem', sm: '0.875rem' },
-												height: { xs: 28, sm: 32 },
-												color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary',
-												borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.600' : 'divider',
+												fontWeight: '700',
+												fontSize: { xs: '0.875rem', sm: '1rem' },
+												height: { xs: 32, sm: 36 },
+												px: 2,
+												background: selectedContainer?.containerStatus?.toLowerCase() === 'ok' 
+													? 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
+													: selectedContainer?.containerStatus?.toLowerCase().includes('failed')
+													? 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'
+													: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+												color: '#ffffff',
+												border: '1px solid rgba(255, 255, 255, 0.3)',
+												boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
 												'& .MuiChip-icon': {
-													fontSize: { xs: 16, sm: 18 }
+													fontSize: { xs: 18, sm: 20 },
+													color: '#ffffff'
 												}
 											}}
 										/>
-									)}
+										{selectedContainer?.kafkaConnection && (
+											<Chip
+												icon={selectedContainer.kafkaConnection === 'connected' ? 
+													<CloudIcon sx={{ color: '#ffffff' }} fontSize="small" /> : 
+													<DatabaseIcon sx={{ color: '#ffffff' }} fontSize="small" />
+												}
+												label={`Kafka: ${selectedContainer.kafkaConnection}`}
+												sx={{ 
+													fontWeight: '600',
+													fontSize: { xs: '0.75rem', sm: '0.875rem' },
+													height: { xs: 28, sm: 32 },
+													px: 1.5,
+													background: selectedContainer.kafkaConnection === 'connected'
+														? 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)'
+														: 'linear-gradient(135deg, #64748b 0%, #475569 100%)',
+													color: '#ffffff',
+													border: '1px solid rgba(255, 255, 255, 0.3)',
+													boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+													'& .MuiChip-icon': {
+														fontSize: { xs: 16, sm: 18 },
+														color: '#ffffff'
+													}
+												}}
+											/>
+										)}
+									</Box>
 								</Box>
 							</Box>
 						</DialogTitle>
 						
-						<DialogContent sx={{ 
-							px: { xs: 2, sm: 3, md: 4 }, 
-							py: { xs: 2, sm: 3 },
-							maxHeight: 'calc(90vh - 200px)',
-							overflow: 'auto'
-						}}>
+						{/* Modern Content Layout */}
+						<DialogContent sx={{ p: { xs: 3, sm: 4 } }}>
 							{selectedContainer && (
 								<Box>
-									<Grid container spacing={{ xs: 2, sm: 3, md: 4 }}>
-										{/* Container Information */}
+									<Grid container spacing={{ xs: 3, sm: 4 }}>
+										{/* Container Information Card */}
 										<Grid size={{ xs: 12, lg: 6 }}>
 											<Card sx={{ 
 												height: 'fit-content',
-												bgcolor: (theme) => theme.palette.mode === 'dark' ? 'grey.800' : 'background.paper',
-												boxShadow: (theme) => theme.palette.mode === 'dark' ? 1 : 2,
-												border: (theme) => theme.palette.mode === 'dark' ? '1px solid' : 'none',
-												borderColor: 'grey.700'
+												background: (theme) => theme.palette.mode === 'dark'
+													? 'linear-gradient(135deg, #1e293b 0%, #334155 100%)'
+													: 'linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%)',
+												border: (theme) => theme.palette.mode === 'dark' 
+													? '1px solid rgba(51, 65, 85, 0.5)'
+													: '1px solid rgba(226, 232, 240, 0.8)',
+												borderRadius: 3,
+												boxShadow: (theme) => theme.palette.mode === 'dark'
+													? '0 10px 25px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3)'
+													: '0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+												overflow: 'hidden',
+												transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+												'&:hover': {
+													transform: 'translateY(-2px)',
+													boxShadow: (theme) => theme.palette.mode === 'dark'
+														? '0 20px 35px -3px rgba(0, 0, 0, 0.5), 0 8px 12px -2px rgba(0, 0, 0, 0.4)'
+														: '0 20px 35px -3px rgba(0, 0, 0, 0.15), 0 8px 12px -2px rgba(0, 0, 0, 0.1)'
+												}
 											}}>
-												<CardContent sx={{ p: { xs: 2, sm: 3 } }}>
-													<Typography 
-														variant="h6" 
-														gutterBottom 
-														sx={{ 
-															display: 'flex', 
-															alignItems: 'center', 
-															gap: 1.5,
-															fontSize: { xs: '1rem', sm: '1.25rem' },
-															fontWeight: 600,
-															color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary'
-														}}
-													>
-														<ContainerIcon sx={{ 
-															color: 'primary.main',
-															fontSize: { xs: 20, sm: 24 }
-														}} />
-														Container Information
-													</Typography>
-													<Divider sx={{ 
-														mb: { xs: 2, sm: 3 },
-														borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider'
-													}} />
-													<Stack spacing={{ xs: 2, sm: 2.5 }}>
-														<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
-															<Typography 
-																variant="body2" 
+												<CardContent sx={{ p: { xs: 3, sm: 4 } }}>
+													{/* Card Header */}
+													<Box sx={{ 
+														display: 'flex', 
+														alignItems: 'center', 
+														gap: 2,
+														mb: 3,
+														pb: 2,
+														borderBottom: '2px solid',
+														borderColor: (theme) => theme.palette.mode === 'dark' 
+															? 'rgba(51, 65, 85, 0.6)' 
+															: 'rgba(226, 232, 240, 0.8)'
+													}}>
+														<Avatar sx={{
+															background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+															width: 40,
+															height: 40,
+															boxShadow: '0 4px 12px rgba(102, 126, 234, 0.4)'
+														}}>
+															<ContainerIcon sx={{ fontSize: 20, color: '#ffffff' }} />
+														</Avatar>
+														<Typography 
+															variant="h6" 
+															sx={{ 
+																fontSize: { xs: '1.125rem', sm: '1.25rem' },
+																fontWeight: 700,
+																color: (theme) => theme.palette.mode === 'dark' ? '#ffffff' : 'text.primary',
+																textShadow: (theme) => theme.palette.mode === 'dark' 
+																	? '0 1px 2px rgba(0, 0, 0, 0.3)' 
+																	: 'none'
+															}}
+														>
+															Container Information
+														</Typography>
+													</Box>
+
+													{/* Information Grid */}
+													<Stack spacing={3}>
+														{[
+															{ label: 'Container Name', value: selectedContainer.containerName, type: 'text' },
+															{ label: 'Version', value: selectedContainer.version, type: 'chip' },
+															{ label: 'Port', value: selectedContainer.port || 'N/A', type: 'code' },
+															{ label: 'Last Activity', value: format(new Date(selectedContainer.lastActivity), 'dd MMM yyyy, HH:mm:ss', { locale: localeId }), type: 'text' }
+														].map((item, index) => (
+															<Box 
+																key={index}
 																sx={{ 
-																	fontSize: { xs: '0.875rem', sm: '1rem' },
-																	fontWeight: 500,
-																	minWidth: 'fit-content',
-																	color: (theme) => theme.palette.mode === 'dark' ? 'grey.400' : 'text.secondary'
+																	display: 'flex', 
+																	justifyContent: 'space-between', 
+																	alignItems: 'center', 
+																	gap: 2,
+																	p: 2,
+																	borderRadius: 2,
+																	background: (theme) => theme.palette.mode === 'dark'
+																		? 'rgba(51, 65, 85, 0.3)'
+																		: 'rgba(248, 250, 252, 0.8)',
+																	border: '1px solid',
+																	borderColor: (theme) => theme.palette.mode === 'dark'
+																		? 'rgba(51, 65, 85, 0.5)'
+																		: 'rgba(226, 232, 240, 0.6)',
+																	transition: 'all 0.2s ease-in-out',
+																	'&:hover': {
+																		background: (theme) => theme.palette.mode === 'dark'
+																			? 'rgba(51, 65, 85, 0.4)'
+																			: 'rgba(248, 250, 252, 1)',
+																		transform: 'translateX(4px)'
+																	}
 																}}
 															>
-																Container:
-															</Typography>
-															<Typography 
-																variant="body1" 
-																fontWeight="600"
-																sx={{ 
-																	fontSize: { xs: '0.875rem', sm: '1rem' },
-																	color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary',
-																	textAlign: 'right',
-																	wordBreak: 'break-word'
-																}}
-															>
-																{selectedContainer.containerName}
-															</Typography>
-														</Box>
-														<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
-															<Typography 
-																variant="body2" 
-																sx={{ 
-																	fontSize: { xs: '0.875rem', sm: '1rem' },
-																	fontWeight: 500,
-																	color: (theme) => theme.palette.mode === 'dark' ? 'grey.400' : 'text.secondary'
-																}}
-															>
-																Version:
-															</Typography>
-															<Chip 
-																label={selectedContainer.version} 
-																size="small" 
-																variant="outlined" 
-																color="info" 
-																sx={{ 
-																	fontWeight: 600,
-																	fontSize: { xs: '0.75rem', sm: '0.875rem' }
-																}}
-															/>
-														</Box>
-														<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
-															<Typography 
-																variant="body2" 
-																sx={{ 
-																	fontSize: { xs: '0.875rem', sm: '1rem' },
-																	fontWeight: 500,
-																	color: (theme) => theme.palette.mode === 'dark' ? 'grey.400' : 'text.secondary'
-																}}
-															>
-																Port:
-															</Typography>
-															<Typography 
-																variant="body1" 
-																fontWeight="600" 
-																sx={{ 
-																	fontFamily: 'Monaco, "Cascadia Code", "Roboto Mono", monospace',
-																	fontSize: { xs: '0.875rem', sm: '1rem' },
-																	color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary',
-																	bgcolor: (theme) => alpha(theme.palette.primary.main, 0.1),
-																	px: 1,
-																	py: 0.5,
-																	borderRadius: 1
-																}}
-															>
-																{selectedContainer.port || 'N/A'}
-															</Typography>
-														</Box>
-														<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
-															<Typography 
-																variant="body2" 
-																sx={{ 
-																	fontSize: { xs: '0.875rem', sm: '1rem' },
-																	fontWeight: 500,
-																	color: (theme) => theme.palette.mode === 'dark' ? 'grey.400' : 'text.secondary'
-																}}
-															>
-																Last Activity:
-															</Typography>
-															<Typography 
-																variant="body1" 
-																fontWeight="600"
-																sx={{ 
-																	fontSize: { xs: '0.875rem', sm: '1rem' },
-																	color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary',
-																	textAlign: 'right'
-																}}
-															>
-																{format(new Date(selectedContainer.lastActivity), 'dd/MM/yyyy HH:mm:ss', { locale: localeId })}
-															</Typography>
-														</Box>
+																<Typography 
+																	variant="body2" 
+																	sx={{ 
+																		fontSize: { xs: '0.875rem', sm: '1rem' },
+																		fontWeight: 600,
+																		color: (theme) => theme.palette.mode === 'dark' ? 'rgba(226, 232, 240, 0.9)' : 'text.secondary'
+																	}}
+																>
+																	{item.label}:
+																</Typography>
+																
+																{item.type === 'chip' ? (
+																	<Chip 
+																		label={item.value} 
+																		size="small" 
+																		sx={{ 
+																			fontWeight: 700,
+																			fontSize: '0.75rem',
+																			background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
+																			color: '#ffffff',
+																			border: '1px solid rgba(255, 255, 255, 0.2)'
+																		}}
+																	/>
+																) : item.type === 'code' ? (
+																	<Typography 
+																		variant="body1" 
+																		sx={{ 
+																			fontFamily: 'Monaco, "Cascadia Code", "Roboto Mono", monospace',
+																			fontSize: { xs: '0.875rem', sm: '1rem' },
+																			fontWeight: 700,
+																			color: (theme) => theme.palette.mode === 'dark' ? '#60a5fa' : '#1d4ed8',
+																			background: (theme) => theme.palette.mode === 'dark'
+																				? 'rgba(96, 165, 250, 0.1)'
+																				: 'rgba(29, 78, 216, 0.1)',
+																			px: 2,
+																			py: 1,
+																			borderRadius: 1.5,
+																			border: '1px solid',
+																			borderColor: (theme) => theme.palette.mode === 'dark'
+																				? 'rgba(96, 165, 250, 0.3)'
+																				: 'rgba(29, 78, 216, 0.2)'
+																		}}
+																	>
+																		{item.value}
+																	</Typography>
+																) : (
+																	<Typography 
+																		variant="body1" 
+																		sx={{ 
+																			fontSize: { xs: '0.875rem', sm: '1rem' },
+																			fontWeight: 600,
+																			color: (theme) => theme.palette.mode === 'dark' ? '#ffffff' : 'text.primary',
+																			textAlign: 'right',
+																			wordBreak: 'break-word'
+																		}}
+																	>
+																		{item.value}
+																	</Typography>
+																)}
+															</Box>
+														))}
 													</Stack>
 												</CardContent>
 											</Card>
 										</Grid>
 
-										{/* Activity Logs Summary */}
+										{/* Activity Logs Card */}
 										<Grid size={{ xs: 12, lg: 6 }}>
 											<Card sx={{ 
 												height: 'fit-content',
-												bgcolor: (theme) => theme.palette.mode === 'dark' ? 'grey.800' : 'background.paper',
-												boxShadow: (theme) => theme.palette.mode === 'dark' ? 1 : 2,
-												border: (theme) => theme.palette.mode === 'dark' ? '1px solid' : 'none',
-												borderColor: 'grey.700'
+												background: (theme) => theme.palette.mode === 'dark'
+													? 'linear-gradient(135deg, #1e293b 0%, #334155 100%)'
+													: 'linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%)',
+												border: (theme) => theme.palette.mode === 'dark' 
+													? '1px solid rgba(51, 65, 85, 0.5)'
+													: '1px solid rgba(226, 232, 240, 0.8)',
+												borderRadius: 3,
+												boxShadow: (theme) => theme.palette.mode === 'dark'
+													? '0 10px 25px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3)'
+													: '0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+												overflow: 'hidden',
+												transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+												'&:hover': {
+													transform: 'translateY(-2px)',
+													boxShadow: (theme) => theme.palette.mode === 'dark'
+														? '0 20px 35px -3px rgba(0, 0, 0, 0.5), 0 8px 12px -2px rgba(0, 0, 0, 0.4)'
+														: '0 20px 35px -3px rgba(0, 0, 0, 0.15), 0 8px 12px -2px rgba(0, 0, 0, 0.1)'
+												}
 											}}>
-												<CardContent sx={{ p: { xs: 2, sm: 3 } }}>
-													<Typography 
-														variant="h6" 
-														gutterBottom 
-														sx={{ 
-															display: 'flex', 
-															alignItems: 'center', 
-															gap: 1.5,
-															fontSize: { xs: '1rem', sm: '1.25rem' },
-															fontWeight: 600,
-															color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary'
-														}}
-													>
-														<ActivityIcon sx={{ 
-															color: 'primary.main',
-															fontSize: { xs: 20, sm: 24 }
-														}} />
-														Activity Logs ({selectedContainer.totalLogs})
-													</Typography>
-													<Divider sx={{ 
-														mb: { xs: 2, sm: 3 },
-														borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider'
-													}} />
+												<CardContent sx={{ p: { xs: 3, sm: 4 } }}>
+													{/* Card Header */}
+													<Box sx={{ 
+														display: 'flex', 
+														alignItems: 'center', 
+														gap: 2,
+														mb: 3,
+														pb: 2,
+														borderBottom: '2px solid',
+														borderColor: (theme) => theme.palette.mode === 'dark' 
+															? 'rgba(51, 65, 85, 0.6)' 
+															: 'rgba(226, 232, 240, 0.8)'
+													}}>
+														<Avatar sx={{
+															background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+															width: 40,
+															height: 40,
+															boxShadow: '0 4px 12px rgba(16, 185, 129, 0.4)'
+														}}>
+															<ActivityIcon sx={{ fontSize: 20, color: '#ffffff' }} />
+														</Avatar>
+														<Box sx={{ flex: 1 }}>
+															<Typography 
+																variant="h6" 
+																sx={{ 
+																	fontSize: { xs: '1.125rem', sm: '1.25rem' },
+																	fontWeight: 700,
+																	color: (theme) => theme.palette.mode === 'dark' ? '#ffffff' : 'text.primary',
+																	textShadow: (theme) => theme.palette.mode === 'dark' 
+																		? '0 1px 2px rgba(0, 0, 0, 0.3)' 
+																		: 'none'
+																}}
+															>
+																Activity Logs
+															</Typography>
+															<Chip 
+																label={`${selectedContainer.totalLogs} entries`}
+																size="small"
+																sx={{
+																	mt: 0.5,
+																	background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+																	color: '#ffffff',
+																	fontSize: '0.75rem',
+																	fontWeight: 600,
+																	border: '1px solid rgba(255, 255, 255, 0.2)'
+																}}
+															/>
+														</Box>
+													</Box>
+
+													{/* Activity Logs Content */}
 													{selectedContainer.activityLogs.length > 0 ? (
-														<Stack spacing={{ xs: 1.5, sm: 2 }}>
+														<Stack spacing={2}>
 															{selectedContainer.activityLogs.slice(0, 3).map((log, index) => (
 																<Box 
 																	key={log.id} 
 																	sx={{ 
-																		p: { xs: 1.5, sm: 2 }, 
-																		bgcolor: (theme) => theme.palette.mode === 'dark' 
-																			? alpha(theme.palette.grey[700], 0.3)
-																			: alpha(theme.palette.text.primary, 0.04), 
-																		borderRadius: 2,
+																		p: 3,
+																		borderRadius: 3,
+																		background: (theme) => theme.palette.mode === 'dark'
+																			? 'linear-gradient(135deg, rgba(51, 65, 85, 0.4) 0%, rgba(71, 85, 105, 0.4) 100%)'
+																			: 'linear-gradient(135deg, rgba(248, 250, 252, 0.9) 0%, rgba(241, 245, 249, 0.9) 100%)',
 																		border: '1px solid',
-																		borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.600' : 'divider'
+																		borderColor: (theme) => theme.palette.mode === 'dark'
+																			? 'rgba(51, 65, 85, 0.6)'
+																			: 'rgba(226, 232, 240, 0.7)',
+																		transition: 'all 0.3s ease-in-out',
+																		position: 'relative',
+																		overflow: 'hidden',
+																		'&:hover': {
+																			background: (theme) => theme.palette.mode === 'dark'
+																				? 'linear-gradient(135deg, rgba(51, 65, 85, 0.6) 0%, rgba(71, 85, 105, 0.6) 100%)'
+																				: 'linear-gradient(135deg, rgba(248, 250, 252, 1) 0%, rgba(241, 245, 249, 1) 100%)',
+																			transform: 'translateX(4px)',
+																			boxShadow: (theme) => theme.palette.mode === 'dark'
+																				? '0 4px 12px rgba(0, 0, 0, 0.3)'
+																				: '0 4px 12px rgba(0, 0, 0, 0.1)'
+																		},
+																		'&::before': {
+																			content: '""',
+																			position: 'absolute',
+																			left: 0,
+																			top: 0,
+																			bottom: 0,
+																			width: 4,
+																			background: `linear-gradient(135deg, ${index === 0 ? '#ef4444' : index === 1 ? '#f59e0b' : '#10b981'} 0%, ${index === 0 ? '#dc2626' : index === 1 ? '#d97706' : '#059669'} 100%)`
+																		}
 																	}}
 																>
 																	<Typography 
 																		variant="body2" 
-																		fontWeight="600" 
+																		fontWeight="700" 
 																		gutterBottom
 																		sx={{ 
 																			fontSize: { xs: '0.875rem', sm: '1rem' },
-																			color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary',
-																			lineHeight: 1.4
+																			color: (theme) => theme.palette.mode === 'dark' ? '#ffffff' : 'text.primary',
+																			lineHeight: 1.4,
+																			mb: 1.5
 																		}}
 																	>
 																		{log.description}
@@ -1389,103 +1511,190 @@ function Container() {
 																		sx={{ 
 																			fontSize: { xs: '0.75rem', sm: '0.875rem' },
 																			fontWeight: 500,
-																			color: (theme) => theme.palette.mode === 'dark' ? 'grey.400' : 'text.secondary'
+																			color: (theme) => theme.palette.mode === 'dark' ? 'rgba(226, 232, 240, 0.7)' : 'text.secondary',
+																			display: 'flex',
+																			alignItems: 'center',
+																			gap: 1
 																		}}
 																	>
-																		{format(new Date(log.createdAt), 'dd/MM HH:mm', { locale: localeId })}
+																		<AccessTimeIcon sx={{ fontSize: 14, opacity: 0.7 }} />
+																		{format(new Date(log.createdAt), 'dd MMM yyyy, HH:mm', { locale: localeId })}
 																	</Typography>
 																</Box>
 															))}
 															{selectedContainer.activityLogs.length > 3 && (
-																<Typography 
-																	variant="caption" 
-																	color="text.secondary" 
-																	textAlign="center"
-																	sx={{ 
-																		fontSize: { xs: '0.75rem', sm: '0.875rem' },
-																		fontStyle: 'italic',
-																		py: 1
-																	}}
-																>
-																	... and {selectedContainer.activityLogs.length - 3} more logs
-																</Typography>
+																<Box sx={{
+																	textAlign: 'center',
+																	py: 2,
+																	px: 3,
+																	borderRadius: 2,
+																	background: (theme) => theme.palette.mode === 'dark'
+																		? 'rgba(51, 65, 85, 0.3)'
+																		: 'rgba(248, 250, 252, 0.8)',
+																	border: '1px dashed',
+																	borderColor: (theme) => theme.palette.mode === 'dark'
+																		? 'rgba(51, 65, 85, 0.6)'
+																		: 'rgba(226, 232, 240, 0.8)'
+																}}>
+																	<Typography 
+																		variant="caption" 
+																		sx={{ 
+																			fontSize: { xs: '0.75rem', sm: '0.875rem' },
+																			fontStyle: 'italic',
+																			fontWeight: 500,
+																			color: (theme) => theme.palette.mode === 'dark' ? 'rgba(226, 232, 240, 0.6)' : 'text.secondary'
+																		}}
+																	>
+																		... and {selectedContainer.activityLogs.length - 3} more logs
+																	</Typography>
+																</Box>
 															)}
 														</Stack>
 													) : (
-														<Typography 
-															variant="body2" 
-															fontStyle="italic"
-															sx={{ 
-																fontSize: { xs: '0.875rem', sm: '1rem' },
-																textAlign: 'center',
-																py: 3,
-																color: (theme) => theme.palette.mode === 'dark' ? 'grey.500' : 'text.secondary'
-															}}
-														>
-															No activity logs available
-														</Typography>
+														<Box sx={{ 
+															textAlign: 'center', 
+															py: 6,
+															color: (theme) => theme.palette.mode === 'dark' ? 'rgba(226, 232, 240, 0.6)' : 'text.secondary'
+														}}>
+															<ActivityIcon sx={{ 
+																fontSize: 48, 
+																opacity: 0.3,
+																mb: 2,
+																color: 'inherit'
+															}} />
+															<Typography variant="body1" sx={{ fontWeight: 500, opacity: 0.7 }}>
+																No activity logs available
+															</Typography>
+														</Box>
 													)}
 												</CardContent>
 											</Card>
 										</Grid>
 
-										{/* Response Body */}
+										{/* Response Body Card */}
 										<Grid size={{ xs: 12 }}>
 											<Card sx={{ 
-												mt: { xs: 1, sm: 2 },
-												bgcolor: (theme) => theme.palette.mode === 'dark' ? 'grey.800' : 'background.paper',
-												boxShadow: (theme) => theme.palette.mode === 'dark' ? 1 : 2,
-												border: (theme) => theme.palette.mode === 'dark' ? '1px solid' : 'none',
-												borderColor: 'grey.700'
+												mt: { xs: 2, sm: 3 },
+												background: (theme) => theme.palette.mode === 'dark'
+													? 'linear-gradient(135deg, #1e293b 0%, #334155 100%)'
+													: 'linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%)',
+												border: (theme) => theme.palette.mode === 'dark' 
+													? '1px solid rgba(51, 65, 85, 0.5)'
+													: '1px solid rgba(226, 232, 240, 0.8)',
+												borderRadius: 3,
+												boxShadow: (theme) => theme.palette.mode === 'dark'
+													? '0 10px 25px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3)'
+													: '0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+												overflow: 'hidden',
+												transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+												'&:hover': {
+													transform: 'translateY(-2px)',
+													boxShadow: (theme) => theme.palette.mode === 'dark'
+														? '0 20px 35px -3px rgba(0, 0, 0, 0.5), 0 8px 12px -2px rgba(0, 0, 0, 0.4)'
+														: '0 20px 35px -3px rgba(0, 0, 0, 0.15), 0 8px 12px -2px rgba(0, 0, 0, 0.1)'
+												}
 											}}>
-												<CardContent sx={{ p: { xs: 2, sm: 3 } }}>
-													<Typography 
-														variant="h6" 
-														gutterBottom 
-														sx={{ 
-															display: 'flex', 
-															alignItems: 'center', 
-															gap: 1.5,
-															fontSize: { xs: '1rem', sm: '1.25rem' },
-															fontWeight: 600,
-															color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary'
-														}}
-													>
-														<DatabaseIcon sx={{ 
-															color: 'primary.main',
-															fontSize: { xs: 20, sm: 24 }
-														}} />
-														Response Body (JSON)
-													</Typography>
-													<Divider sx={{ 
-														mb: { xs: 2, sm: 3 },
-														borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider'
-													}} />
+												<CardContent sx={{ p: { xs: 3, sm: 4 } }}>
+													{/* Card Header */}
+													<Box sx={{ 
+														display: 'flex', 
+														alignItems: 'center', 
+														gap: 2,
+														mb: 3,
+														pb: 2,
+														borderBottom: '2px solid',
+														borderColor: (theme) => theme.palette.mode === 'dark' 
+															? 'rgba(51, 65, 85, 0.6)' 
+															: 'rgba(226, 232, 240, 0.8)'
+													}}>
+														<Avatar sx={{
+															background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
+															width: 40,
+															height: 40,
+															boxShadow: '0 4px 12px rgba(139, 92, 246, 0.4)'
+														}}>
+															<DatabaseIcon sx={{ fontSize: 20, color: '#ffffff' }} />
+														</Avatar>
+														<Typography 
+															variant="h6" 
+															sx={{ 
+																fontSize: { xs: '1.125rem', sm: '1.25rem' },
+																fontWeight: 700,
+																color: (theme) => theme.palette.mode === 'dark' ? '#ffffff' : 'text.primary',
+																textShadow: (theme) => theme.palette.mode === 'dark' 
+																	? '0 1px 2px rgba(0, 0, 0, 0.3)' 
+																	: 'none'
+															}}
+														>
+															Response Body (JSON)
+														</Typography>
+													</Box>
+
+													{/* JSON Content */}
 													<Paper
 														sx={{
-															p: { xs: 1.5, sm: 2 },
-															bgcolor: (theme) => theme.palette.mode === 'dark' 
-																? alpha(theme.palette.grey[900], 0.8)
-																: 'grey.50',
-															borderRadius: 2,
-															maxHeight: { xs: 300, sm: 400 },
+															p: { xs: 2, sm: 3 },
+															background: (theme) => theme.palette.mode === 'dark' 
+																? 'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.9) 100%)'
+																: 'linear-gradient(135deg, rgba(248, 250, 252, 0.9) 0%, rgba(241, 245, 249, 0.9) 100%)',
+															borderRadius: 3,
+															maxHeight: { xs: 350, sm: 450 },
 															overflow: 'auto',
 															border: '1px solid',
-															borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.600' : 'divider',
-															'& pre': {
-																color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary'
+															borderColor: (theme) => theme.palette.mode === 'dark' 
+																? 'rgba(51, 65, 85, 0.6)' 
+																: 'rgba(226, 232, 240, 0.8)',
+															boxShadow: (theme) => theme.palette.mode === 'dark'
+																? 'inset 0 2px 8px rgba(0, 0, 0, 0.3)'
+																: 'inset 0 2px 8px rgba(0, 0, 0, 0.06)',
+															position: 'relative',
+															'&::-webkit-scrollbar': {
+																width: 8
+															},
+															'&::-webkit-scrollbar-track': {
+																background: (theme) => theme.palette.mode === 'dark' 
+																	? 'rgba(51, 65, 85, 0.3)'
+																	: 'rgba(226, 232, 240, 0.3)',
+																borderRadius: 4
+															},
+															'&::-webkit-scrollbar-thumb': {
+																background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+																borderRadius: 4,
+																'&:hover': {
+																	background: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)'
+																}
+															},
+															'&::before': {
+																content: '""',
+																position: 'absolute',
+																top: 0,
+																left: 0,
+																right: 0,
+																height: 1,
+																background: 'linear-gradient(90deg, transparent 0%, rgba(139, 92, 246, 0.3) 50%, transparent 100%)',
+																zIndex: 1
 															}
 														}}
 													>
 														<pre style={{ 
 															margin: 0, 
-															fontSize: '0.75rem', 
+															fontSize: '0.875rem', 
 															fontFamily: 'Monaco, "Cascadia Code", "Roboto Mono", monospace',
-															lineHeight: 1.6,
+															lineHeight: 1.8,
 															wordBreak: 'break-word',
-															whiteSpace: 'pre-wrap'
+															whiteSpace: 'pre-wrap',
+															color: 'inherit'
 														}}>
+															<code style={{
+																color: 'inherit',
+																background: 'none',
+																padding: 0,
+																borderRadius: 0,
+																fontSize: 'inherit',
+																fontFamily: 'inherit'
+															}}>
 															{JSON.stringify(selectedContainer.responseBody, null, 2)}
+															</code>
 														</pre>
 													</Paper>
 												</CardContent>
@@ -1496,69 +1705,27 @@ function Container() {
 							)}
 						</DialogContent>
 						
-						<DialogActions sx={{ 
-							px: { xs: 2, sm: 3, md: 4 }, 
-							py: { xs: 2, sm: 3 },
-							borderTop: '1px solid',
-							borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
-							backgroundColor: (theme) => theme.palette.mode === 'dark' 
-								? alpha(theme.palette.grey[800], 0.9)
-								: alpha(theme.palette.background.paper, 0.8),
-							backdropFilter: 'blur(8px)',
-							gap: 2,
-							justifyContent: 'space-between',
-							flexWrap: 'wrap'
-						}}>
-							<Typography 
-								variant="caption" 
-								sx={{ 
-									fontSize: { xs: '0.75rem', sm: '0.875rem' },
-									fontWeight: 500,
-									color: (theme) => theme.palette.mode === 'dark' ? 'grey.400' : 'text.secondary'
+						{/* Dialog Actions */}
+						<DialogActions>
+							<Button onClick={() => setDetailDialogOpen(false)} color="primary">
+								Close
+							</Button>
+							<Button 
+								variant="contained" 
+								color="primary"
+								onClick={() => {
+									// Copy response body to clipboard
+									navigator.clipboard.writeText(JSON.stringify(selectedContainer?.responseBody, null, 2));
 								}}
 							>
-								Last updated: {selectedContainer && format(new Date(selectedContainer.lastActivity), 'HH:mm:ss', { locale: localeId })}
-							</Typography>
-							<Box sx={{ display: 'flex', gap: 2 }}>
-								<Button 
-									onClick={() => setDetailDialogOpen(false)} 
-									variant="outlined" 
-									size="large"
-									sx={{ 
-										minWidth: { xs: 100, sm: 120 },
-										fontSize: { xs: '0.875rem', sm: '1rem' },
-										fontWeight: 600,
-										borderRadius: 2,
-										textTransform: 'none'
-									}}
-								>
-									Close
-								</Button>
-								<Button 
-									variant="contained" 
-									size="large"
-									onClick={() => {
-										// Copy response body to clipboard
-										navigator.clipboard.writeText(JSON.stringify(selectedContainer?.responseBody, null, 2));
-									}}
-									sx={{ 
-										minWidth: { xs: 120, sm: 140 },
-										fontSize: { xs: '0.875rem', sm: '1rem' },
-										fontWeight: 600,
-										borderRadius: 2,
-										textTransform: 'none',
-										boxShadow: 2
-									}}
-								>
-									Copy JSON
-								</Button>
-							</Box>
+								Copy JSON
+							</Button>
 						</DialogActions>
-				</Dialog>
-			</Box>
-		}
-	/>
-);
+					</Dialog>
+				</Box>
+			}
+		/>
+	);
 }
 
 export default Container;
