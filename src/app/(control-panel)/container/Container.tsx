@@ -24,7 +24,15 @@ import {
 	Avatar,
 	Stack,
 	Divider,
-	ButtonGroup
+	ButtonGroup,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+	TablePagination,
+	TableSortLabel
 } from '@mui/material';
 import {
 	Search as SearchIcon,
@@ -40,8 +48,7 @@ import {
 	Warning as WarningIcon,
 	Schedule as PendingIcon
 } from '@mui/icons-material';
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import apiFetch from 'src/utils/apiFetch';
 import { format } from 'date-fns';
 import { id as localeId } from 'date-fns/locale';
@@ -89,6 +96,7 @@ interface ContainerStatus {
 	responseBody?: any;
 }
 
+// Constants moved outside component for better performance
 const CONTAINER_NAMES = [
 	'ev-lock',
 	'consumer',
@@ -110,6 +118,10 @@ const CONTAINER_NAMES = [
 	'ev-rest-gateway-aes'
 ];
 
+// Optimized constants for CSV export
+const CSV_HEADERS = ['no', 'container', 'kafkaConnection', 'version', 'containerStatus'];
+const PAGINATION_OPTIONS = [10, 25, 50, 100];
+
 function Container() {
 	const { t } = useTranslation('navigation');
 	const [loading, setLoading] = useState(false);
@@ -120,14 +132,31 @@ function Container() {
 	const [detailDialogOpen, setDetailDialogOpen] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const [statusFilter, setStatusFilter] = useState<string>('all');
+	
+	// Table pagination and sorting state
+	const [page, setPage] = useState(0);
+	const [rowsPerPage, setRowsPerPage] = useState(25);
+	const [orderBy, setOrderBy] = useState<keyof ContainerStatus>('containerName');
+	const [order, setOrder] = useState<'asc' | 'desc'>('asc');
 
-	// Container stats for dashboard overview
-	const containerStats = {
+	// Define sortable fields only (excluding complex types)
+	type SortableFields = 'containerName' | 'status' | 'kafkaConnection' | 'version' | 'containerStatus';
+	
+	// Table header configuration with proper typing
+	interface HeadCell {
+		id: SortableFields | 'no' | 'actions';
+		label: string;
+		sortable: boolean;
+		width: number;
+	}
+
+	// Container stats for dashboard overview - memoized
+	const containerStats = useMemo(() => ({
 		total: containerData.length,
 		connected: containerData.filter(c => c.kafkaConnection === 'connected').length,
 		ok: containerData.filter(c => c.status === 'ok').length,
 		failed: containerData.filter(c => c.status === 'failed' || c.status === 'request timeout').length
-	};
+	}), [containerData]);
 
 	// Fetch container status data with webhook notification API
 	const fetchContainerData = useCallback(async () => {
@@ -299,44 +328,79 @@ function Container() {
 		}
 
 		setFilteredData(filtered);
+		setPage(0); // Reset page when filters change
 	}, [searchTerm, statusFilter, containerData]);
 
-	// Initial data fetch
-	useEffect(() => {
-		fetchContainerData();
-	}, [fetchContainerData]);
-
-	// Export to CSV function matching the required format
-	const exportToCSV = () => {
-		const timestamp = format(new Date(), 'yyyy-MM-dd-HH-mm-ss', { locale: localeId });
-		const csvHeaders = ['no', 'container', 'kafkaConnection', 'version', 'containerStatus'];
-
-		const csvData = filteredData.map((container, index) => [
-			(index + 1).toString(),
-			container.containerName,
-			container.kafkaConnection,
-			container.version,
-			container.containerStatus
-		]);
-
-		const csvContent = [
-			csvHeaders.map(header => `"${header}"`).join(','),
-			...csvData.map(row => row.map(cell => `"${cell}"`).join(','))
-		].join('\n');
-
-		const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-		const link = document.createElement('a');
-		const url = URL.createObjectURL(blob);
-		link.setAttribute('href', url);
-		link.setAttribute('download', `container-status-${timestamp}.csv`);
-		link.style.visibility = 'hidden';
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
+	// Sorting helper functions
+	const handleRequestSort = (property: SortableFields) => {
+		const isAsc = orderBy === property && order === 'asc';
+		setOrder(isAsc ? 'desc' : 'asc');
+		setOrderBy(property);
 	};
 
-	// Enhanced status color mapping
-	const getStatusColor = (status: string) => {
+	const createSortHandler = (property: SortableFields) => () => {
+		handleRequestSort(property);
+	};
+
+	// Comparator function for sorting - only handle sortable fields
+	function descendingComparator(a: ContainerStatus, b: ContainerStatus, orderBy: SortableFields) {
+		let aValue: string | number;
+		let bValue: string | number;
+
+		// Get comparable values for each field
+		switch (orderBy) {
+			case 'containerName':
+				aValue = a.containerName;
+				bValue = b.containerName;
+				break;
+			case 'status':
+				aValue = a.status;
+				bValue = b.status;
+				break;
+			case 'kafkaConnection':
+				aValue = a.kafkaConnection || '';
+				bValue = b.kafkaConnection || '';
+				break;
+			case 'version':
+				aValue = a.version;
+				bValue = b.version;
+				break;
+			case 'containerStatus':
+				aValue = a.containerStatus;
+				bValue = b.containerStatus;
+				break;
+			default:
+				aValue = '';
+				bValue = '';
+		}
+
+		if (bValue < aValue) {
+			return -1;
+		}
+		if (bValue > aValue) {
+			return 1;
+		}
+		return 0;
+	}
+
+	function getComparator(
+		order: 'asc' | 'desc',
+		orderBy: SortableFields,
+	): (a: ContainerStatus, b: ContainerStatus) => number {
+		return order === 'desc'
+			? (a, b) => descendingComparator(a, b, orderBy)
+			: (a, b) => -descendingComparator(a, b, orderBy);
+	}
+
+	// Get sorted data for current page - memoized
+	const { sortedData, paginatedData } = useMemo(() => {
+		const sorted = filteredData.slice().sort(getComparator(order, orderBy as SortableFields));
+		const paginated = sorted.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+		return { sortedData: sorted, paginatedData: paginated };
+	}, [filteredData, order, orderBy, page, rowsPerPage]);
+
+	// Memoized helper functions
+	const getStatusColor = useCallback((status: string) => {
 		switch (status.toLowerCase()) {
 			case 'ok':
 				return 'success';
@@ -349,10 +413,9 @@ function Container() {
 			default:
 				return 'default';
 		}
-	};
+	}, []);
 
-	// Kafka connection status color
-	const getKafkaStatusColor = (status: string) => {
+	const getKafkaStatusColor = useCallback((status: string) => {
 		switch (status) {
 			case 'connected':
 				return 'success';
@@ -361,10 +424,9 @@ function Container() {
 			default:
 				return 'default';
 		}
-	};
+	}, []);
 
-	// Get status icon
-	const getStatusIcon = (status: string) => {
+	const getStatusIcon = useCallback((status: string) => {
 		switch (status.toLowerCase()) {
 			case 'ok':
 				return <SuccessIcon fontSize="small" />;
@@ -376,105 +438,61 @@ function Container() {
 			default:
 				return <PendingIcon fontSize="small" />;
 		}
+	}, []);
+
+	// Initial data fetch
+	useEffect(() => {
+		fetchContainerData();
+	}, [fetchContainerData]);
+
+	// Pagination handlers
+	const handleChangePage = (event: unknown, newPage: number) => {
+		setPage(newPage);
 	};
 
-	// DataGrid columns
-	const columns: GridColDef<ContainerStatus>[] = [
-		{
-			field: 'no',
-			headerName: 'No',
-			width: 80,
-			renderCell: (params) => {
-				const index = filteredData.findIndex(row => row.containerName === params.row.containerName);
-				return index + 1;
-			}
-		},
-		{
-			field: 'containerName',
-			headerName: 'Container',
-			flex: 1.5,
-			minWidth: 220
-		},
-		{
-			field: 'kafkaConnection',
-			headerName: 'Kafka Connection',
-			width: 170,
-			renderCell: (params: GridRenderCellParams<ContainerStatus>) => {
-				if (!params.value) {
-					return <Chip label="N/A" size="small" variant="outlined" color="default" />;
-				}
-				return (
-					<Chip
-						label={params.value}
-						size="small"
-						variant="filled"
-						color={params.value === 'connected' ? 'success' : 'error'}
-					/>
-				);
-			}
-		},
-		{
-			field: 'version',
-			headerName: 'Version',
-			width: 120,
-			renderCell: (params: GridRenderCellParams<ContainerStatus>) => (
-				<Chip
-					label={params.value || 'N/A'}
-					size="small"
-					variant="outlined"
-					color="info"
-				/>
-			)
-		},
-		{
-			field: 'containerStatus',
-			headerName: 'Container Status',
-			width: 180,
-			renderCell: (params: GridRenderCellParams<ContainerStatus>) => (
-				<Chip
-					label={params.value}
-					size="small"
-					variant="filled"
-					color={
-						params.value?.toLowerCase() === 'ok' ? 'success' :
-						params.value?.toLowerCase().includes('failed') ? 'error' :
-						params.value?.toLowerCase().includes('timeout') ? 'warning' : 'default'
-					}
-				/>
-			)
-		},
-		{
-			field: 'actions',
-			headerName: 'Actions',
-			width: 100,
-			sortable: false,
-			filterable: false,
-			renderCell: (params: GridRenderCellParams<ContainerStatus>) => (
-				<IconButton
-					onClick={() => {
-						setSelectedContainer(params.row);
-						setDetailDialogOpen(true);
-					}}
-					size="medium"
-					color="primary"
-					sx={{
-						borderRadius: 2,
-						padding: 1.5,
-						'&:hover': {
-							backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.1),
-							transform: 'scale(1.05)'
-						},
-						transition: 'all 0.2s ease-in-out'
-					}}
-				>
-					<ViewIcon sx={{ 
-						fontSize: 20,
-						color: (theme) => theme.palette.mode === 'dark' ? 'grey.300' : 'primary.main'
-					}} />
-				</IconButton>
-			)
-		}
-	];
+	const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setRowsPerPage(parseInt(event.target.value, 10));
+		setPage(0);
+	};
+
+	// Export to CSV function matching the required format - optimized
+	const exportToCSV = useCallback(() => {
+		const timestamp = format(new Date(), 'yyyy-MM-dd-HH-mm-ss', { locale: localeId });
+
+		const csvData = filteredData.map((container, index) => [
+			(index + 1).toString(),
+			container.containerName,
+			container.kafkaConnection,
+			container.version,
+			container.containerStatus
+		]);
+
+		const csvContent = [
+			CSV_HEADERS.map(header => `"${header}"`).join(','),
+			...csvData.map(row => row.map(cell => `"${cell}"`).join(','))
+		].join('\n');
+
+		const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+		const link = document.createElement('a');
+		const url = URL.createObjectURL(blob);
+		link.setAttribute('href', url);
+		link.setAttribute('download', `container-status-${timestamp}.csv`);
+		link.style.visibility = 'hidden';
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+		URL.revokeObjectURL(url); // Clean up memory
+	}, [filteredData]);
+
+	// Table header configuration - memoized
+	const headCells: HeadCell[] = useMemo(() => [
+		{ id: 'no' as const, label: 'No', sortable: false, width: 80 },
+		{ id: 'containerName' as const, label: 'Container', sortable: true, width: 220 },
+		{ id: 'kafkaConnection' as const, label: 'Kafka Connection', sortable: true, width: 170 },
+		{ id: 'version' as const, label: 'Version', sortable: true, width: 120 },
+		{ id: 'containerStatus' as const, label: 'Container Status', sortable: true, width: 180 },
+		{ id: 'actions' as const, label: 'Actions', sortable: false, width: 100 }
+	], []);
 
 	return (
 		<Root
@@ -806,67 +824,238 @@ function Container() {
 						</CardContent>
 					</Card>
 
-					{/* Data Grid - Edge to Edge Full Width */}
+					{/* MUI Table - Edge to Edge Full Width */}
 					<Card sx={{ 
 						borderRadius: 0, 
 						border: 'none',
 						bgcolor: (theme) => theme.palette.mode === 'dark' ? '#0f172a' : '#1e293b'
 					}}>
 						<CardContent sx={{ p: 0, '&:last-child': { pb: 0 } }}>
-							<DataGrid
-								rows={filteredData}
-								columns={columns}
-								loading={loading}
-								pageSizeOptions={[10, 25, 50]}
-								initialState={{
-									pagination: { paginationModel: { pageSize: 25 } }
-								}}
-								getRowId={(row) => row.containerName}
-								disableRowSelectionOnClick
-								autoHeight
+							<TableContainer>
+								<Table sx={{ minWidth: 750 }} size="medium">
+									<TableHead>
+										<TableRow>
+											{headCells.map((headCell) => (
+												<TableCell
+													key={headCell.id}
+													sortDirection={orderBy === headCell.id ? order : false}
+													sx={{
+														width: headCell.width,
+														minWidth: headCell.width,
+														borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
+														backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'grey.900' : 'grey.50',
+														fontSize: '0.875rem',
+														fontWeight: 600,
+														color: (theme) => theme.palette.mode === 'dark' ? 'grey.200' : 'text.primary',
+														padding: '12px 16px'
+													}}
+												>
+													{headCell.sortable && (headCell.id as SortableFields) ? (
+														<TableSortLabel
+															active={orderBy === headCell.id}
+															direction={orderBy === headCell.id ? order : 'asc'}
+															onClick={createSortHandler(headCell.id as SortableFields)}
+															sx={{
+																color: (theme) => theme.palette.mode === 'dark' ? 'grey.200' : 'text.primary',
+																'&.Mui-active': {
+																	color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'primary.main'
+																},
+																'& .MuiTableSortLabel-icon': {
+																	color: (theme) => theme.palette.mode === 'dark' ? 'grey.300' : 'primary.main'
+																}
+															}}
+														>
+															{headCell.label}
+														</TableSortLabel>
+													) : (
+														headCell.label
+													)}
+												</TableCell>
+											))}
+										</TableRow>
+									</TableHead>
+									<TableBody>
+										{loading ? (
+											<TableRow>
+												<TableCell 
+													colSpan={6} 
+													align="center" 
+													sx={{ 
+														py: 8,
+														color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary'
+													}}
+												>
+													<CircularProgress size={40} />
+													<Typography variant="body2" sx={{ mt: 2 }}>
+														Loading container data...
+													</Typography>
+												</TableCell>
+											</TableRow>
+										) : paginatedData.length === 0 ? (
+											<TableRow>
+												<TableCell 
+													colSpan={6} 
+													align="center" 
+													sx={{ 
+														py: 8,
+														color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary'
+													}}
+												>
+													<Typography variant="body2" color="text.secondary">
+														No containers found matching your criteria
+													</Typography>
+												</TableCell>
+											</TableRow>
+										) : (
+											paginatedData.map((container, index) => (
+												<TableRow
+													key={container.containerName}
+													hover
+													sx={{
+														'&:hover': {
+															backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.04)
+														}
+													}}
+												>
+													{/* No */}
+													<TableCell 
+														sx={{ 
+															borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
+															padding: '12px 16px',
+															color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary'
+														}}
+													>
+														{page * rowsPerPage + index + 1}
+													</TableCell>
+
+													{/* Container Name */}
+													<TableCell 
+														sx={{ 
+															borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
+															padding: '12px 16px',
+															color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary',
+															fontWeight: 500
+														}}
+													>
+														{container.containerName}
+													</TableCell>
+
+													{/* Kafka Connection */}
+													<TableCell 
+														sx={{ 
+															borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
+															padding: '12px 16px'
+														}}
+													>
+														{!container.kafkaConnection ? (
+															<Chip label="N/A" size="small" variant="outlined" color="default" />
+														) : (
+															<Chip
+																label={container.kafkaConnection}
+																size="small"
+																variant="filled"
+																color={container.kafkaConnection === 'connected' ? 'success' : 'error'}
+															/>
+														)}
+													</TableCell>
+
+													{/* Version */}
+													<TableCell 
+														sx={{ 
+															borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
+															padding: '12px 16px'
+														}}
+													>
+														<Chip
+															label={container.version || 'N/A'}
+															size="small"
+															variant="outlined"
+															color="info"
+														/>
+													</TableCell>
+
+													{/* Container Status */}
+													<TableCell 
+														sx={{ 
+															borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
+															padding: '12px 16px'
+														}}
+													>
+														<Chip
+															label={container.containerStatus}
+															size="small"
+															variant="filled"
+															color={
+																container.containerStatus?.toLowerCase() === 'ok' ? 'success' :
+																container.containerStatus?.toLowerCase().includes('failed') ? 'error' :
+																container.containerStatus?.toLowerCase().includes('timeout') ? 'warning' : 'default'
+															}
+														/>
+													</TableCell>
+
+													{/* Actions */}
+													<TableCell 
+														sx={{ 
+															borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
+															padding: '12px 16px'
+														}}
+													>
+														<IconButton
+															onClick={() => {
+																setSelectedContainer(container);
+																setDetailDialogOpen(true);
+															}}
+															size="medium"
+															color="primary"
+															sx={{
+																borderRadius: 2,
+																padding: 1.5,
+																'&:hover': {
+																	backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.1),
+																	transform: 'scale(1.05)'
+																},
+																transition: 'all 0.2s ease-in-out'
+															}}
+														>
+															<ViewIcon sx={{ 
+																fontSize: 20,
+																color: (theme) => theme.palette.mode === 'dark' ? 'grey.300' : 'primary.main'
+															}} />
+														</IconButton>
+													</TableCell>
+												</TableRow>
+											))
+										)}
+									</TableBody>
+								</Table>
+							</TableContainer>
+							
+							{/* Table Pagination */}
+							<TablePagination
+								rowsPerPageOptions={PAGINATION_OPTIONS}
+								component="div"
+								count={filteredData.length}
+								rowsPerPage={rowsPerPage}
+								page={page}
+								onPageChange={handleChangePage}
+								onRowsPerPageChange={handleChangeRowsPerPage}
 								sx={{
-									border: 'none',
-									minHeight: 500,
-									width: '100%',
-									color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary',
-									'& .MuiDataGrid-main': {
-										overflow: 'visible'
-									},
-									'& .MuiDataGrid-cell': {
-										borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
-										padding: '12px 16px',
-										color: (theme) => theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary'
-									},
-									'& .MuiDataGrid-columnHeaders': {
-										borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
-										backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'grey.900' : 'grey.50',
-										fontSize: '0.875rem',
-										fontWeight: 600,
-										color: (theme) => theme.palette.mode === 'dark' ? 'grey.200' : 'text.primary'
-									},
-									'& .MuiDataGrid-columnHeaderTitle': {
-										fontWeight: 600,
-										color: (theme) => theme.palette.mode === 'dark' ? 'grey.200' : 'text.primary'
-									},
-									'& .MuiDataGrid-footerContainer': {
-										borderTop: '1px solid',
-										borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
-										minHeight: 56,
-										backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'grey.900' : 'background.paper',
-										color: (theme) => theme.palette.mode === 'dark' ? 'grey.300' : 'text.primary'
-									},
-									'& .MuiDataGrid-row': {
-										'&:hover': {
-											backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.04)
-										}
-									},
-									'& .MuiTablePagination-root': {
-										color: (theme) => theme.palette.mode === 'dark' ? 'grey.300' : 'text.primary'
+									borderTop: '1px solid',
+									borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.700' : 'divider',
+									minHeight: 56,
+									backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'grey.900' : 'background.paper',
+									color: (theme) => theme.palette.mode === 'dark' ? 'grey.300' : 'text.primary',
+									'& .MuiTablePagination-toolbar': {
+										paddingLeft: 2,
+										paddingRight: 2
 									},
 									'& .MuiTablePagination-selectIcon': {
 										color: (theme) => theme.palette.mode === 'dark' ? 'grey.400' : 'text.secondary'
 									},
-									'& .MuiDataGrid-toolbarContainer': {
+									'& .MuiTablePagination-select': {
+										color: (theme) => theme.palette.mode === 'dark' ? 'grey.300' : 'text.primary'
+									},
+									'& .MuiTablePagination-actions': {
 										color: (theme) => theme.palette.mode === 'dark' ? 'grey.300' : 'text.primary'
 									}
 								}}
