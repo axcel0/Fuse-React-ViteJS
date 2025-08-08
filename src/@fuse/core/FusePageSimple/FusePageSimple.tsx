@@ -1,7 +1,7 @@
 import FuseScrollbars from '@fuse/core/FuseScrollbars';
 import { styled } from '@mui/material/styles';
 import clsx from 'clsx';
-import { memo, ReactNode, RefObject, useImperativeHandle, useRef } from 'react';
+import React, { memo, ReactNode, RefObject, useImperativeHandle, useRef } from 'react';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { SystemStyleObject, Theme } from '@mui/system';
 import FusePageSimpleHeader from './FusePageSimpleHeader';
@@ -302,11 +302,11 @@ function FusePageSimple(props: FusePageSimpleProps) {
 						)}
 					</div>
 				</div>
-			</Root>
-		</>
-	);
+		</Root>
+	</>
+);
 }
 
-const StyledFusePageSimple = memo(styled(FusePageSimple)``);
+const StyledFusePageSimple: React.ComponentType<FusePageSimpleProps> = memo(styled(FusePageSimple)``);
 
 export default StyledFusePageSimple;

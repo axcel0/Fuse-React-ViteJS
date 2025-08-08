@@ -1,7 +1,7 @@
 import FuseScrollbars from '@fuse/core/FuseScrollbars';
 import { styled } from '@mui/material/styles';
 import clsx from 'clsx';
-import { memo, ReactNode, useImperativeHandle, useRef, RefObject } from 'react';
+import React, { memo, ReactNode, useImperativeHandle, useRef, RefObject } from 'react';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { SystemStyleObject, Theme } from '@mui/system';
 import FusePageCardedSidebar from './FusePageCardedSidebar';
@@ -287,10 +287,10 @@ function FusePageCarded(props: FusePageCardedProps) {
 					</div>
 				</div>
 			</Root>
-		</>
-	);
+	</>
+);
 }
 
-const StyledFusePageCarded = memo(styled(FusePageCarded)``);
+const StyledFusePageCarded: React.ComponentType<FusePageCardedProps> = memo(styled(FusePageCarded)``);
 
 export default StyledFusePageCarded;

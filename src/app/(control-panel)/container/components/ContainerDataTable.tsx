@@ -34,7 +34,7 @@ export default function ContainerDataTable({
 					<Typography
 						variant="body2"
 						sx={{
-							fontWeight: 600,
+							fontWeight: 500,
 							color: (theme) => theme.palette.mode === 'dark' ? '#60a5fa' : '#3b82f6'
 						}}
 					>
@@ -84,7 +84,7 @@ export default function ContainerDataTable({
 								: (theme) => theme.palette.mode === 'dark' 
 									? 'rgba(255, 255, 255, 0.8)' 
 									: 'rgba(71, 85, 105, 0.9)',
-							fontWeight: 600,
+							fontWeight: 500,
 							textTransform: 'capitalize',
 							border: '1px solid',
 							borderColor: isConnected
@@ -172,7 +172,7 @@ export default function ContainerDataTable({
 						sx={{
 							backgroundColor: config.bgColor,
 							color: config.textColor,
-							fontWeight: 600,
+							fontWeight: 500,
 							textTransform: 'capitalize',
 							border: '1px solid',
 							borderColor: config.borderColor,
@@ -237,7 +237,7 @@ export default function ContainerDataTable({
 								? 'rgba(56, 189, 248, 0.05)' 
 								: 'rgba(59, 130, 246, 0.05)',
 							backdropFilter: 'blur(8px)',
-							fontWeight: 600,
+							fontWeight: 500,
 							boxShadow: (theme) => theme.palette.mode === 'dark' 
 								? '0 2px 8px rgba(56, 189, 248, 0.1)' 
 								: '0 2px 8px rgba(59, 130, 246, 0.1)',
@@ -463,7 +463,7 @@ export default function ContainerDataTable({
 								}
 							},
 							'& .MuiDataGrid-columnHeader': {
-								fontWeight: 700,
+								fontWeight: 600,
 								fontSize: '0.9rem',
 								color: (theme) => theme.palette.mode === 'dark' 
 									? 'rgba(255, 255, 255, 0.95)' 
@@ -476,7 +476,7 @@ export default function ContainerDataTable({
 								color: (theme) => theme.palette.mode === 'dark' 
 									? 'rgba(255, 255, 255, 0.95)' 
 									: 'rgba(30, 58, 88, 0.9)',
-								fontWeight: 700
+								fontWeight: 600
 							},
 							// Enhanced elegant row styling - NO MORE TRANSPARENT!
 							'& .MuiDataGrid-row': {

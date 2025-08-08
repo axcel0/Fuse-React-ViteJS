@@ -273,11 +273,11 @@ export default function ContainerFilters({
 								<Typography 
 									variant="body2" 
 									sx={{ 
+										fontSize: '0.875rem',
 										color: (theme) => theme.palette.mode === 'dark' 
-											? 'rgba(255, 255, 255, 0.8)'
-											: 'rgba(30, 41, 59, 0.8)',
-										fontStyle: 'italic',
-										'& strong': {
+											? 'rgba(156, 163, 175, 0.9)' 
+											: 'rgba(107, 114, 128, 0.9)',
+										'& .search-term': {
 											color: (theme) => theme.palette.mode === 'dark'
 												? '#60a5fa'
 												: '#3b82f6',
@@ -285,7 +285,7 @@ export default function ContainerFilters({
 										}
 									}}
 								>
-									🔎 Searching for: <strong>"{searchTerm}"</strong> - Found {filteredDataLength} matching containers
+									🔎 Searching for: <span className="search-term">"{searchTerm}"</span> - Found {filteredDataLength} matching containers
 								</Typography>
 							</Box>
 						)}

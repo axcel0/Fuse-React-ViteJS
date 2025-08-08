@@ -361,7 +361,7 @@ function Dashboard() {
 											<Typography color="rgba(255, 255, 255, 0.7)" variant="body2">
 												Total Containers
 											</Typography>
-											<Typography variant="h3" sx={{ fontWeight: 'bold', color: '#ffffff', mb: 1 }}>
+											<Typography variant="h3" sx={{ fontWeight: 600, color: '#ffffff', mb: 1 }}>
 												{containerStats.total}
 											</Typography>
 											<Chip 
@@ -397,7 +397,7 @@ function Dashboard() {
 											<Typography color="rgba(255, 255, 255, 0.7)" variant="body2">
 												Healthy Containers
 											</Typography>
-											<Typography variant="h3" sx={{ fontWeight: 'bold', color: '#ffffff', mb: 1 }}>
+											<Typography variant="h3" sx={{ fontWeight: 600, color: '#ffffff', mb: 1 }}>
 												{containerStats.healthy}
 											</Typography>
 											<Chip 
@@ -433,7 +433,7 @@ function Dashboard() {
 											<Typography color="rgba(255, 255, 255, 0.7)" variant="body2">
 												Kafka Connected
 											</Typography>
-											<Typography variant="h3" sx={{ fontWeight: 'bold', color: '#ffffff', mb: 1 }}>
+											<Typography variant="h3" sx={{ fontWeight: 600, color: '#ffffff', mb: 1 }}>
 												{containerStats.connected}
 											</Typography>
 											<Chip 
@@ -469,7 +469,7 @@ function Dashboard() {
 											<Typography color="rgba(255, 255, 255, 0.7)" variant="body2">
 												Failed/Issues
 											</Typography>
-											<Typography variant="h3" sx={{ fontWeight: 'bold', color: '#ffffff', mb: 1 }}>
+											<Typography variant="h3" sx={{ fontWeight: 600, color: '#ffffff', mb: 1 }}>
 												{containerStats.failed}
 											</Typography>
 											<Chip 

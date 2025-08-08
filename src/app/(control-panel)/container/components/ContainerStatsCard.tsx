@@ -101,7 +101,7 @@ export default function ContainerStatsCard({ containerData }: ContainerStatsCard
 									<Typography 
 										variant="h4" 
 										sx={{ 
-											fontWeight: 'bold',
+											fontWeight: 600,
 											mb: 0.5,
 											color: (theme) => theme.palette.mode === 'dark' ? '#f1f5f9' : '#1e293b'
 										}}
