@@ -21,6 +21,7 @@ import { usePageTitle } from 'src/contexts/PageTitleContext';
 // Import components and types
 import { ContainerStatus, ActivityLog, ContainerStats } from './types';
 import { useExportCSV } from './hooks/useExportCSV';
+import { useAutoRefresh } from './hooks/useAutoRefresh';
 import ContainerStatsCard from './components/ContainerStatsCard';
 import ContainerFilters from './components/ContainerFilters';
 import ContainerDataTable from './components/ContainerDataTable';
@@ -235,6 +236,21 @@ function Container() {
 		}
 	}, []);
 
+	// Use auto refresh hook
+	const {
+		isAutoRefreshEnabled,
+		setIsAutoRefreshEnabled,
+		refreshInterval,
+		setRefreshInterval,
+		isRefreshing,
+		lastRefreshTime,
+		triggerManualRefresh
+	} = useAutoRefresh({
+		onRefresh: fetchContainerData,
+		defaultInterval: 10,
+		defaultEnabled: false
+	});
+
 	// Filter data based on search term and status filter
 	useEffect(() => {
 		let filtered = containerData;
@@ -315,55 +331,25 @@ function Container() {
 							{/* Statistics Cards */}
 							<ContainerStatsCard containerData={containerData} />
 
-							{/* Action Buttons */}
-							<Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-								<Button
-									variant="contained"
-									startIcon={<RefreshIcon />}
-									onClick={fetchContainerData}
-									disabled={loading}
-									sx={{
-										backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#3b82f6' : '#3b82f6',
-										color: '#ffffff',
-										'&:hover': {
-											backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#2563eb' : '#2563eb'
-										}
-									}}
-								>
-									Refresh All
-								</Button>
-								<Button
-									variant="outlined"
-									startIcon={<ExportIcon />}
-									onClick={handleDownloadCSV}
-									sx={{
-										color: (theme) => theme.palette.mode === 'dark' ? '#ffffff' : '#1e293b',
-										borderColor: (theme) => theme.palette.mode === 'dark' 
-											? 'rgba(255, 255, 255, 0.3)'
-											: 'rgba(30, 41, 59, 0.3)',
-										'&:hover': {
-											borderColor: (theme) => theme.palette.mode === 'dark' 
-												? 'rgba(255, 255, 255, 0.6)'
-												: 'rgba(30, 41, 59, 0.6)',
-											backgroundColor: (theme) => theme.palette.mode === 'dark' 
-												? 'rgba(255, 255, 255, 0.1)' 
-												: 'rgba(30, 41, 59, 0.1)'
-										}
-									}}
-								>
-									Export CSV
-								</Button>
-							</Box>
+												{/* Export CSV button moved to filter bar via ContainerFilters props */}
 
 							{/* Filters - Now with working integration */}
-							<ContainerFilters
-								searchTerm={searchTerm}
-								setSearchTerm={setSearchTerm}
-								statusFilter={statusFilter}
-								setStatusFilter={setStatusFilter}
-								filteredDataLength={filteredData.length}
-								totalDataLength={containerData.length}
-							/>
+												<ContainerFilters
+													searchTerm={searchTerm}
+													setSearchTerm={setSearchTerm}
+													statusFilter={statusFilter}
+													setStatusFilter={setStatusFilter}
+													filteredDataLength={filteredData.length}
+													totalDataLength={containerData.length}
+													isAutoRefreshEnabled={isAutoRefreshEnabled}
+													setIsAutoRefreshEnabled={setIsAutoRefreshEnabled}
+													refreshInterval={refreshInterval}
+													setRefreshInterval={setRefreshInterval}
+													onManualRefresh={triggerManualRefresh}
+													isRefreshing={loading || isRefreshing}
+													lastRefreshTime={lastRefreshTime}
+													onExportCSV={handleDownloadCSV}
+												/>
 
 							{/* Data Table */}
 							<ContainerDataTable
