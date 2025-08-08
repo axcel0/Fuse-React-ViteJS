@@ -65,39 +65,62 @@ export default function ContainerDataTable({
 			sortable: true,
 			renderCell: (params: GridRenderCellParams) => {
 				const connection = params.value || 'unconnected';
-				const isConnected = connection === 'connected';
+				const getConnectionConfig = (status: string) => {
+					switch (status.toLowerCase()) {
+						case 'connected':
+							return {
+								color: 'success' as const,
+								bgColor: 'rgba(34, 197, 94, 0.9)',
+								textColor: 'white',
+								borderColor: 'rgba(34, 197, 94, 0.4)',
+								shadowColor: 'rgba(34, 197, 94, 0.3)'
+							};
+						case 'disconnected':
+						case 'unconnected':
+							return {
+								color: 'default' as const,
+								bgColor: 'rgba(100, 116, 139, 0.3)',
+								textColor: 'rgba(255, 255, 255, 0.8)',
+								borderColor: 'rgba(100, 116, 139, 0.2)',
+								shadowColor: 'rgba(0, 0, 0, 0.2)'
+							};
+						case 'error':
+						case 'failed':
+							return {
+								color: 'error' as const,
+								bgColor: 'rgba(239, 68, 68, 0.9)',
+								textColor: 'white',
+								borderColor: 'rgba(239, 68, 68, 0.4)',
+								shadowColor: 'rgba(239, 68, 68, 0.3)'
+							};
+						default:
+							return {
+								color: 'default' as const,
+								bgColor: 'rgba(100, 116, 139, 0.3)',
+								textColor: 'rgba(255, 255, 255, 0.8)',
+								borderColor: 'rgba(100, 116, 139, 0.2)',
+								shadowColor: 'rgba(0, 0, 0, 0.2)'
+							};
+					}
+				};
+
+				const config = getConnectionConfig(connection);
 				
 				return (
 					<Chip
 						label={connection}
-						color={isConnected ? 'success' : 'default'}
+						color={config.color}
 						variant="filled"
 						size="small"
 						sx={{
-							backgroundColor: isConnected 
-								? 'rgba(34, 197, 94, 0.9)'
-								: (theme) => theme.palette.mode === 'dark' 
-									? 'rgba(100, 116, 139, 0.3)' 
-									: 'rgba(148, 163, 184, 0.3)',
-							color: isConnected 
-								? 'white'
-								: (theme) => theme.palette.mode === 'dark' 
-									? 'rgba(255, 255, 255, 0.8)' 
-									: 'rgba(71, 85, 105, 0.9)',
+							backgroundColor: config.bgColor,
+							color: config.textColor,
 							fontWeight: 500,
 							textTransform: 'capitalize',
 							border: '1px solid',
-							borderColor: isConnected
-								? 'rgba(34, 197, 94, 0.4)'
-								: (theme) => theme.palette.mode === 'dark' 
-									? 'rgba(100, 116, 139, 0.2)' 
-									: 'rgba(148, 163, 184, 0.3)',
+							borderColor: config.borderColor,
 							backdropFilter: 'blur(8px)',
-							boxShadow: isConnected
-								? '0 2px 8px rgba(34, 197, 94, 0.3)'
-								: (theme) => theme.palette.mode === 'dark' 
-									? '0 2px 8px rgba(0, 0, 0, 0.2)' 
-									: '0 2px 8px rgba(0, 0, 0, 0.08)'
+							boxShadow: `0 2px 8px ${config.shadowColor}`
 						}}
 					/>
 				);

@@ -23,7 +23,7 @@ export interface ContainerStatus {
 	imageName: string;
 	containerName: string;
 	status: 'ok' | 'failed' | 'request timeout' | 'unknown' | 'connected';
-	kafkaConnection: 'connected' | 'unconnected' | '';
+	kafkaConnection: 'connected' | 'unconnected' | 'disconnected' | 'error' | '';
 	version: string;
 	containerStatus: string;
 	lastActivity: string;
@@ -31,7 +31,15 @@ export interface ContainerStatus {
 	activityLogs: ActivityLog[];
 	totalLogs: number;
 	port?: string;
-	responseBody?: any;
+	responseBody?: {
+		kafkaStatus?: string;
+		details?: {
+			kafka?: {
+				status?: string;
+			};
+		};
+		[key: string]: any;
+	};
 }
 
 export interface ContainerStats {

@@ -155,20 +155,39 @@ function Container() {
 				let status: ContainerStatus['status'] = 'ok'; // Default to ok instead of unknown
 				let kafkaConnection: ContainerStatus['kafkaConnection'] = 'unconnected';
 				
-				// Simulate some variety in status for demonstration
+				// Get kafka connection status from response body
+				// Field dapat berupa kafkaStatus atau details.kafka.status sesuai API response
+				if (webhookUrl?.body) {
+					// Try to get kafkaStatus from response body
+					const kafkaStatus = webhookUrl.body.kafkaStatus || 
+									   webhookUrl.body.details?.kafka?.status;
+					
+					if (kafkaStatus) {
+						kafkaConnection = kafkaStatus.toLowerCase() === 'connected' ? 'connected' : 'unconnected';
+					}
+				}
+				
+				// Container yang memiliki status connected: ev lock, consumer, ev vehicle report, nearme, ev sse app
+				const connectedContainers = [
+					'ev lock', 'consumer', 'ev vehicle report', 'nearme', 'ev sse app'
+				];
+				const isConnectedContainer = connectedContainers.some(connectedName => 
+					containerName.toLowerCase().includes(connectedName.toLowerCase())
+				);
+				
+				// If no kafka status in response but it's a connected container type, mark as connected
+				if (!webhookUrl?.body?.kafkaStatus && !webhookUrl?.body?.details?.kafka?.status && 
+					isConnectedContainer && hasRunningConsumer) {
+					kafkaConnection = 'connected';
+				}
+				
+				// Determine container status
 				if (index % 5 === 0) {
 					status = 'failed';
 				} else if (index % 3 === 0) {
 					status = 'ok';
 				} else {
 					status = 'ok';
-				}
-
-				// Set kafka connection with some variety
-				if (index % 4 === 0 || hasRunningConsumer) {
-					kafkaConnection = 'connected';
-				} else {
-					kafkaConnection = 'unconnected';
 				}
 
 				// Override with actual data if available
