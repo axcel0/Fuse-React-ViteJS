@@ -10,15 +10,15 @@ type FooterLayout3Props = {
  * The footer layout 3 with modern Material-UI BottomNavigation
  */
 function FooterLayout3(props: FooterLayout3Props) {
-	const { className, variant = 'bottom-navigation' } = props;
+	const { className, variant = 'full' } = props;
 
 	return (
 		<MaterialUIFooter
 			variant={variant}
 			className={className}
 			showSocial={true}
-			showLinks={variant === 'full'}
-			showBottomNav={true}
+			showLinks={true}
+			showBottomNav={false}
 		/>
 	);
 }

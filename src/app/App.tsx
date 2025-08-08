@@ -11,6 +11,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import ErrorBoundary from '@fuse/utils/ErrorBoundary';
 import Authentication from '@auth/Authentication';
 import MainThemeProvider from '../contexts/MainThemeProvider';
+import { PageTitleProvider } from '../contexts/PageTitleContext';
 import { queryClient } from '@/lib/react-query';
 import routes from '@/configs/routesConfig';
 import AppContext from '@/contexts/AppContext';
@@ -55,11 +56,13 @@ function App() {
 										>
 											<FuseMessageProvider>
 												<FuseDialogProvider>
-													<QuickPanelProvider>
-														<NavbarProvider>
-															<FuseLayout layouts={themeLayouts} />
-														</NavbarProvider>
-													</QuickPanelProvider>
+													<PageTitleProvider>
+														<QuickPanelProvider>
+															<NavbarProvider>
+																<FuseLayout layouts={themeLayouts} />
+															</NavbarProvider>
+														</QuickPanelProvider>
+													</PageTitleProvider>
 												</FuseDialogProvider>
 											</FuseMessageProvider>
 										</SnackbarProvider>

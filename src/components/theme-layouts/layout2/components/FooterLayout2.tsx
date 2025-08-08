@@ -18,7 +18,7 @@ function FooterLayout2(props: FooterLayout2Props) {
 			className={className}
 			showSocial={true}
 			showLinks={true}
-			showBottomNav={variant === 'full' || variant === 'bottom-navigation'}
+			showBottomNav={false}
 		/>
 	);
 }

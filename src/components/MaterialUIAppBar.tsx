@@ -34,10 +34,12 @@ import {
 	Logout,
 	Dashboard,
 	Person,
-	MoreVert,
 	Home,
+	Menu as MenuIcon,
+	Close as CloseIcon,
 	ChevronRight
 } from '@mui/icons-material';
+import { usePageTitle } from 'src/contexts/PageTitleContext';
 import { styled } from '@mui/material/styles';
 import { useLocation, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
@@ -48,7 +50,6 @@ import NavbarToggleButton from 'src/components/theme-layouts/components/navbar/N
 import LightDarkModeToggle from 'src/components/LightDarkModeToggle';
 import FullScreenToggle from 'src/components/theme-layouts/components/FullScreenToggle';
 import LanguageSwitcher from 'src/components/theme-layouts/components/LanguageSwitcher';
-import NavigationShortcuts from 'src/components/theme-layouts/components/navigation/NavigationShortcuts';
 import QuickPanelToggleButton from 'src/components/theme-layouts/components/quickPanel/QuickPanelToggleButton';
 import useFuseLayoutSettings from '@fuse/core/FuseLayout/useFuseLayoutSettings';
 import useUser from '@auth/useUser';
@@ -60,63 +61,67 @@ import themeOptions from 'src/configs/themeOptions';
 import _ from 'lodash';
 import { getUserDisplayData } from '@/types/user';
 
-// Simple Material-UI Search Component - No fancy effects, just works
-const Search = styled('div')(({ theme }) => ({
-	position: 'relative',
-	borderRadius: theme.shape.borderRadius,
-	backgroundColor: alpha(theme.palette.common.white, 0.15),
-	'&:hover': {
-		backgroundColor: alpha(theme.palette.common.white, 0.25)
-	},
-	marginRight: theme.spacing(2),
-	marginLeft: 0,
-	width: '100%',
-	[theme.breakpoints.up('sm')]: {
-		marginLeft: theme.spacing(3),
-		width: 'auto'
-	}
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-	padding: theme.spacing(0, 2),
-	height: '100%',
-	position: 'absolute',
-	pointerEvents: 'none',
-	display: 'flex',
-	alignItems: 'center',
-	justifyContent: 'center'
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-	color: 'inherit',
-	'& .MuiInputBase-input': {
-		padding: theme.spacing(1, 1, 1, 0),
-		// vertical padding + font size from searchIcon
-		paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-		transition: theme.transitions.create('width'),
-		width: '100%',
-		[theme.breakpoints.up('md')]: {
-			width: '20ch'
-		}
-	}
-}));
-
-// Styled AppBar with black/white theme colors
+// Enhanced Sticky AppBar with footer-matching design
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-	// Menggunakan warna hitam/putih sesuai theme
-	backgroundColor:
-		theme.palette.mode === 'dark'
-			? theme.palette.grey[900] // Hitam untuk dark mode
-			: theme.palette.common.white, // Putih untuk light mode
-	color:
-		theme.palette.mode === 'dark'
-			? theme.palette.common.white // Putih text untuk dark mode
-			: theme.palette.grey[900], // Hitam text untuk light mode
-	boxShadow: theme.shadows[1], // Shadow yang lebih minimal
-	borderBottom: `1px solid ${theme.palette.divider}`, // Border untuk definisi yang lebih jelas
-	transition: theme.transitions.create(['background-color', 'color'], {
-		duration: theme.transitions.duration.short
-	})
+	// Consistent color scheme with footer
+	background: theme.palette.mode === 'dark' 
+		? `linear-gradient(135deg, 
+			rgba(15, 23, 42, 0.95) 0%, 
+			rgba(30, 41, 59, 0.9) 50%, 
+			rgba(51, 65, 85, 0.85) 100%
+		)`
+		: `linear-gradient(135deg, 
+			rgba(66, 110, 154, 0.95) 0%, 
+			rgba(90, 130, 170, 0.9) 50%, 
+			rgba(115, 150, 185, 0.85) 100%
+		)`,
+	color: theme.palette.common.white,
+	
+	// Enhanced shadow for sticky positioning
+	boxShadow: theme.palette.mode === 'dark'
+		? '0 4px 20px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.2)'
+		: '0 4px 20px rgba(66, 110, 154, 0.2), 0 1px 8px rgba(66, 110, 154, 0.15)',
+	
+	// Glassmorphism effect for modern look
+	backdropFilter: 'blur(12px)',
+	WebkitBackdropFilter: 'blur(12px)', // Safari support
+	
+	// Subtle border for definition
+	borderBottom: theme.palette.mode === 'dark'
+		? '1px solid rgba(255, 255, 255, 0.1)'
+		: '1px solid rgba(255, 255, 255, 0.2)',
+	
+	// Smooth transitions for interactions
+	transition: theme.transitions.create([
+		'background', 
+		'box-shadow', 
+		'border-color'
+	], {
+		duration: theme.transitions.duration.standard,
+		easing: theme.transitions.easing.easeInOut
+	}),
+	
+	// Subtle hover effects for interactive elements
+	'&:hover': {
+		boxShadow: theme.palette.mode === 'dark'
+			? '0 6px 25px rgba(0, 0, 0, 0.4), 0 2px 12px rgba(0, 0, 0, 0.25)'
+			: '0 6px 25px rgba(66, 110, 154, 0.25), 0 2px 12px rgba(66, 110, 154, 0.2)',
+		borderBottomColor: theme.palette.mode === 'dark'
+			? 'rgba(255, 255, 255, 0.15)'
+			: 'rgba(255, 255, 255, 0.3)',
+	},
+	
+	// Ensure proper layering
+	zIndex: theme.zIndex.appBar + 1,
+	
+	// Full width sticky positioning
+	width: '100%',
+	position: 'sticky',
+	top: 0,
+	
+	// No margins for sticky layout
+	margin: 0,
+	borderRadius: 0
 }));
 
 // Hide on scroll component
@@ -141,6 +146,84 @@ function HideOnScroll(props: HideOnScrollProps) {
 		</Slide>
 	);
 }
+
+// Enhanced Mobile Menu component for luxury design
+const EnhancedMobileMenu = styled(Menu)(({ theme }) => ({
+	'& .MuiPaper-root': {
+		background: 'linear-gradient(135deg, rgba(66, 110, 154, 0.95) 0%, rgba(255, 163, 163, 0.95) 100%)',
+		backdropFilter: 'blur(20px)',
+		border: '1px solid rgba(255, 255, 255, 0.2)',
+		borderRadius: theme.spacing(2),
+		marginTop: theme.spacing(1),
+		minWidth: 280,
+		boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3), 0 5px 15px rgba(0, 0, 0, 0.2)',
+		'&::before': {
+			content: '""',
+			position: 'absolute',
+			top: -8,
+			right: 20,
+			width: 16,
+			height: 16,
+			background: 'linear-gradient(135deg, #426e9a 0%, #ffa3a3 100%)',
+			transform: 'rotate(45deg)',
+			border: '1px solid rgba(255, 255, 255, 0.2)',
+			borderBottomColor: 'transparent',
+			borderRightColor: 'transparent'
+		}
+	},
+	'& .MuiMenuItem-root': {
+		color: 'white',
+		padding: theme.spacing(1.5, 2),
+		margin: theme.spacing(0.5, 1),
+		borderRadius: theme.spacing(1),
+		fontSize: '0.95rem',
+		fontWeight: 400,
+		transition: theme.transitions.create(['background-color', 'color', 'transform'], {
+			duration: theme.transitions.duration.short
+		}),
+		'&:hover': {
+			backgroundColor: 'rgba(255, 255, 255, 0.15)',
+			color: 'white',
+			transform: 'translateX(4px)'
+		},
+		'& .MuiListItemIcon-root': {
+			color: 'rgba(255, 255, 255, 0.8)',
+			minWidth: 40,
+			'& .MuiSvgIcon-root': {
+				fontSize: '1.25rem'
+			}
+		},
+		'&:first-of-type': {
+			marginTop: theme.spacing(1)
+		},
+		'&:last-of-type': {
+			marginBottom: theme.spacing(1)
+		}
+	}
+}));
+
+// Mobile menu button with luxury styling
+const MobileMenuButton = styled(IconButton)(({ theme }) => ({
+	color: 'rgba(255, 255, 255, 0.9)',
+	backgroundColor: 'rgba(255, 255, 255, 0.1)',
+	backdropFilter: 'blur(10px)',
+	border: '1px solid rgba(255, 255, 255, 0.2)',
+	borderRadius: theme.spacing(1.5),
+	padding: theme.spacing(1),
+	marginLeft: theme.spacing(1),
+	transition: theme.transitions.create(['background-color', 'transform', 'box-shadow'], {
+		duration: theme.transitions.duration.short
+	}),
+	'&:hover': {
+		backgroundColor: 'rgba(255, 255, 255, 0.2)',
+		transform: 'translateY(-2px)',
+		boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)',
+		color: 'white'
+	},
+	[theme.breakpoints.up('md')]: {
+		display: 'none'
+	}
+}));
 
 // Main component props
 interface MaterialUIAppBarProps {
@@ -182,6 +265,7 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 
 	const _theme = useTheme();
 	const location = useLocation();
+	const { pageTitle } = usePageTitle();
 	const navigate = useNavigate();
 	const settings = useFuseLayoutSettings();
 	const _config = settings.config as Layout1ConfigDefaultsType;
@@ -197,9 +281,8 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 	// State management
 	const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 	const [anchorElNotifications, setAnchorElNotifications] = useState<null | HTMLElement>(null);
-	const [anchorElMore, setAnchorElMore] = useState<null | HTMLElement>(null);
+	const [anchorElMobile, setAnchorElMobile] = useState<null | HTMLElement>(null);
 	const [notificationCount, _setNotificationCount] = useState(3);
-	const [searchValue, setSearchValue] = useState('');
 	const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
 	const [isLoggingOut, setIsLoggingOut] = useState(false);
 
@@ -246,27 +329,14 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 		setAnchorElNotifications(event.currentTarget);
 	};
 
-	const handleMoreMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorElMore(event.currentTarget);
+	const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorElMobile(event.currentTarget);
 	};
 
 	const handleMenuClose = () => {
 		setAnchorElUser(null);
 		setAnchorElNotifications(null);
-		setAnchorElMore(null);
-	};
-
-	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setSearchValue(event.target.value);
-	};
-
-	const handleSearchSubmit = (event: React.FormEvent) => {
-		event.preventDefault();
-
-		if (searchValue.trim()) {
-			// TODO: Implement search logic here
-			// console.error('Search:', searchValue);
-		}
+		setAnchorElMobile(null);
 	};
 
 	const handleLogout = async () => {
@@ -296,35 +366,20 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 		setLogoutDialogOpen(false);
 	};
 
-	// Simple Material-UI Search Component
-	const SimpleSearch = () => (
-		<Search>
-			<SearchIconWrapper>
-				<SearchIcon />
-			</SearchIconWrapper>
-			<StyledInputBase
-				placeholder="Search…"
-				inputProps={{ 'aria-label': 'search' }}
-				value={searchValue}
-				onChange={handleSearchChange}
-				onKeyPress={(e) => {
-					if (e.key === 'Enter') {
-						handleSearchSubmit(e);
-					}
-				}}
-			/>
-		</Search>
-	);
+	// Enhanced Search Component with global search integration
+	const SimpleSearch = () => {
+		return null; // Search removed from header
+	};
 
-	// Toolbar variants
+	// Enhanced Toolbar variants with luxury spacing and typography
 	const getToolbarHeight = () => {
 		switch (variant) {
 			case 'dense':
-				return 48;
+				return 56; // Slightly larger than default for better touch targets
 			case 'prominent':
-				return 128;
+				return 140; // More spacious for premium feel
 			default:
-				return 64;
+				return 72; // Enhanced standard height
 		}
 	};
 
@@ -333,183 +388,272 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 			variant={variant === 'dense' ? 'dense' : 'regular'}
 			sx={{
 				minHeight: getToolbarHeight(),
-				px: { xs: 1, sm: 2, md: 3 },
+				px: { xs: 2, sm: 3, md: 4 }, // Enhanced responsive padding
+				py: variant === 'prominent' ? 2 : 1,
 				...(variant === 'prominent' && {
 					flexDirection: 'column',
-					alignItems: 'flex-start',
-					py: 2
+					alignItems: 'stretch', // Allow full width usage
+					gap: 2 // Better spacing between sections
 				})
 			}}
 		>
-			{/* Left Section - Navigation */}
-			<Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
-				{/* Navbar Toggle Button */}
-				{showNavbarToggle && navbarPosition === 'left' && (
-					<>
-						{!isMobile && (
-							<>
-								{(navbarStyle === 'style-3' || navbarStyle === 'style-3-dense') && (
-									<NavbarToggleButton
-										sx={{ mr: 1, width: 40, height: 40, p: 0 }}
-										color="inherit"
-									/>
-								)}
-								{navbarStyle === 'style-1' && !navbar.open && (
-									<NavbarToggleButton
-										sx={{ mr: 1, width: 40, height: 40, p: 0 }}
-										color="inherit"
-									/>
-								)}
-							</>
-						)}
-						{isMobile && (
-							<NavbarToggleButton
-								sx={{ mr: 1, width: 40, height: 40, p: 0 }}
-								color="inherit"
-							/>
-						)}
-					</>
-				)}
+			{/* Top Row for Prominent Variant or Main Row for Others */}
+			<Box sx={{
+				display: 'flex',
+				alignItems: 'center',
+				width: '100%',
+				...(variant === 'prominent' && {
+					justifyContent: 'space-between' // Space between left and right sections
+				})
+			}}>
+				{/* Left Section - Navigation with enhanced layout */}
+				<Box sx={{ 
+					display: 'flex', 
+					alignItems: 'center', 
+					gap: { xs: 1, sm: 2 } // Responsive gap
+				}}>
+					{/* Navbar Toggle Button */}
+					{showNavbarToggle && navbarPosition === 'left' && (
+						<>
+							{!isMobile && (
+								<>
+									{(navbarStyle === 'style-3' || navbarStyle === 'style-3-dense') && (
+										<NavbarToggleButton
+											sx={{ mr: 1, width: 40, height: 40, p: 0 }}
+											color="inherit"
+										/>
+									)}
+									{navbarStyle === 'style-1' && !navbar.open && (
+										<NavbarToggleButton
+											sx={{ mr: 1, width: 40, height: 40, p: 0 }}
+											color="inherit"
+										/>
+									)}
+								</>
+							)}
+							{isMobile && (
+								<NavbarToggleButton
+									sx={{ mr: 1, width: 40, height: 40, p: 0 }}
+									color="inherit"
+								/>
+							)}
+						</>
+					)}
 
-				{/* Navigation Shortcuts */}
-				{!isMobile && <NavigationShortcuts />}
-
-				{/* Logo/Brand */}
-				<Typography
-					variant="h6"
-					noWrap
-					component="div"
-					sx={{
-						display: { xs: 'none', sm: 'block' },
-						fontWeight: 600,
-						color: 'inherit',
-						ml: showNavbarToggle ? 1 : 0
-					}}
-				>
-					FUSE REACT
-				</Typography>
-			</Box>
-
-			{/* Center Section - Search (in prominent mode) */}
-			{variant === 'prominent' && showSearch && (
-				<Box
-					sx={{
-						width: '100%',
-						mt: 2,
-						display: 'flex',
-						justifyContent: 'center'
-					}}
-				>
-					<SimpleSearch />
-				</Box>
-			)}
-
-			{/* Spacer */}
-			<Box sx={{ flexGrow: 1 }} />
-
-			{/* Right Section - Actions */}
-			<Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-				{/* Simple Search for non-prominent modes */}
-				{variant !== 'prominent' && showSearch && !isMobile && (
-					<Box sx={{ mr: 1 }}>
-						<SimpleSearch />
-					</Box>
-				)}
-
-				{/* Language Switcher */}
-				<LanguageSwitcher />
-
-				{/* Fullscreen Toggle */}
-				<FullScreenToggle />
-
-				{/* Light/Dark Mode Toggle */}
-				<LightDarkModeToggle
-					lightTheme={_.find(themeOptions, { id: 'Default' })}
-					darkTheme={_.find(themeOptions, { id: 'Default Dark' })}
-				/>
-
-				{/* Notifications */}
-				{showNotifications && (
-					<Tooltip title="Notifications">
-						<IconButton
-							color="inherit"
-							onClick={handleNotificationsOpen}
-							aria-label={`show ${notificationCount} new notifications`}
-						>
-							<Badge
-								badgeContent={notificationCount}
-								color="error"
-							>
-								<NotificationsIcon />
-							</Badge>
-						</IconButton>
-					</Tooltip>
-				)}
-
-				{/* Quick Panel */}
-				<QuickPanelToggleButton />
-
-				{/* User Menu */}
-				{showUserMenu && !isGuest && (
-					<Tooltip title="Account settings">
-						<IconButton
-							onClick={handleUserMenuOpen}
-							color="inherit"
-							aria-label="account menu"
-						>
-							<Avatar 
-								sx={{ width: 32, height: 32 }}
-								src={photoURL || undefined}
-								alt={displayName || 'User'}
-							>
-								{displayName 
-									? initials
-									: <AccountCircle />
-								}
-							</Avatar>
-						</IconButton>
-					</Tooltip>
-				)}
-
-				{/* More menu for mobile */}
-				{isMobile && (
-					<IconButton
-						color="inherit"
-						onClick={handleMoreMenuOpen}
-						aria-label="more options"
+					{/* Enhanced Logo/Brand with consistent white text */}
+					<Typography
+						variant={variant === 'prominent' ? 'h4' : 'h5'}
+						noWrap
+						component="div"
+						sx={{
+							display: { xs: variant === 'prominent' ? 'block' : 'none', sm: 'block' },
+							fontWeight: variant === 'prominent' ? 700 : 600,
+							color: 'rgba(255, 255, 255, 0.95)',
+							textShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
+							letterSpacing: variant === 'prominent' ? '0.5px' : '0.3px',
+							ml: showNavbarToggle ? { xs: 0.5, sm: 1 } : 0,
+							transition: _theme.transitions.create([
+								'font-size', 
+								'letter-spacing', 
+								'color', 
+								'text-shadow'
+							], {
+								duration: _theme.transitions.duration.short
+							}),
+							'&:hover': {
+								color: 'white',
+								textShadow: '0 4px 12px rgba(0, 0, 0, 0.4)'
+							}
+						}}
 					>
-						<MoreVert />
-					</IconButton>
-				)}
+						{pageTitle}
+					</Typography>
+				</Box>
 
-				{/* Navbar Toggle Button for Right Position */}
-				{showNavbarToggle && navbarPosition === 'right' && (
-					<>
-						{!isMobile && (
-							<>
-								{(navbarStyle === 'style-3' || navbarStyle === 'style-3-dense') && (
+				{/* Spacer for non-prominent variants */}
+				{variant !== 'prominent' && <Box sx={{ flexGrow: 1 }} />}
+
+				{/* Right Section - All Action Buttons in Top Right Corner */}
+				<Box sx={{ 
+					display: 'flex', 
+					alignItems: 'center', 
+					gap: { xs: 0.5, sm: 1 }, // Responsive gap
+					justifyContent: 'flex-end' // Ensure items stay to the right
+				}}>
+					{/* Enhanced Search for non-prominent modes - REMOVED */}
+
+					{/* Enhanced Action Buttons with premium styling */}
+					<Box sx={{ 
+						display: 'flex', 
+						alignItems: 'center', 
+						gap: { xs: 0.5, sm: 1 },
+						'& .MuiIconButton-root': {
+							color: 'rgba(255, 255, 255, 0.9)',
+							transition: _theme.transitions.create(['color', 'transform', 'background-color'], {
+								duration: _theme.transitions.duration.short
+							}),
+							'&:hover': {
+								color: 'white',
+								backgroundColor: 'rgba(255, 255, 255, 0.1)',
+								transform: 'scale(1.05)'
+							}
+						}
+					}}>
+						{/* Language Switcher */}
+						<LanguageSwitcher />
+
+						{/* Fullscreen Toggle */}
+						<FullScreenToggle />
+
+						{/* Light/Dark Mode Toggle */}
+						<LightDarkModeToggle
+							lightTheme={_.find(themeOptions, { id: 'Default' })}
+							darkTheme={_.find(themeOptions, { id: 'Default Dark' })}
+						/>
+
+						{/* Enhanced Notifications with consistent tooltip */}
+						{showNotifications && (
+							<Tooltip 
+								title="Notifications" 
+								arrow
+								sx={{
+									'& .MuiTooltip-tooltip': {
+										backgroundColor: 'rgba(0, 0, 0, 0.8)',
+										backdropFilter: 'blur(10px)',
+										border: '1px solid rgba(255, 255, 255, 0.1)'
+									}
+								}}
+							>
+								<IconButton
+									color="inherit"
+									onClick={handleNotificationsOpen}
+									aria-label={`show ${notificationCount} new notifications`}
+									sx={{
+										position: 'relative',
+										'&:hover': {
+											backgroundColor: 'rgba(255, 255, 255, 0.1)',
+											transform: 'scale(1.05)'
+										}
+									}}
+								>
+									<Badge
+										badgeContent={notificationCount}
+										color="error"
+										sx={{
+											'& .MuiBadge-badge': {
+												backgroundColor: '#ef4444',
+												color: 'white',
+												fontWeight: 600,
+												fontSize: '0.75rem',
+												boxShadow: '0 2px 8px rgba(239, 68, 68, 0.4)',
+												border: '2px solid rgba(66, 110, 154, 0.8)'
+											}
+										}}
+									>
+										<NotificationsIcon sx={{ fontSize: '1.4rem' }} />
+									</Badge>
+								</IconButton>
+							</Tooltip>
+						)}
+
+						{/* Quick Panel */}
+						<QuickPanelToggleButton />
+
+						{/* Enhanced User Menu with consistent styling */}
+						{showUserMenu && !isGuest && (
+							<Tooltip 
+								title="Account settings"
+								arrow
+								sx={{
+									'& .MuiTooltip-tooltip': {
+										backgroundColor: 'rgba(0, 0, 0, 0.8)',
+										backdropFilter: 'blur(10px)',
+										border: '1px solid rgba(255, 255, 255, 0.1)'
+									}
+								}}
+							>
+								<IconButton
+									onClick={handleUserMenuOpen}
+									color="inherit"
+									aria-label="account menu"
+									sx={{
+										p: 0.5,
+										ml: 1,
+										'&:hover': {
+											backgroundColor: 'rgba(255, 255, 255, 0.1)',
+											transform: 'scale(1.05)'
+										}
+									}}
+								>
+									<Avatar 
+										sx={{ 
+											width: { xs: 36, sm: 40 }, 
+											height: { xs: 36, sm: 40 },
+											border: '2px solid rgba(255, 255, 255, 0.3)',
+											boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+											transition: _theme.transitions.create(['border-color', 'box-shadow'], {
+												duration: _theme.transitions.duration.short
+											}),
+											'&:hover': {
+												borderColor: 'rgba(255, 255, 255, 0.5)',
+												boxShadow: '0 6px 16px rgba(0, 0, 0, 0.2)'
+											}
+										}}
+										src={photoURL || undefined}
+										alt={displayName || 'User'}
+									>
+										{displayName 
+											? initials
+											: <AccountCircle sx={{ fontSize: '1.5rem' }} />
+										}
+									</Avatar>
+								</IconButton>
+							</Tooltip>
+						)}
+					</Box>
+
+					{/* Navbar Toggle Button for Right Position */}
+					{showNavbarToggle && navbarPosition === 'right' && (
+						<>
+							{!isMobile && (
+								<>
+									{(navbarStyle === 'style-3' || navbarStyle === 'style-3-dense') && (
+										<NavbarToggleButton
+											sx={{ ml: 1, width: 40, height: 40, p: 0 }}
+											color="inherit"
+										/>
+									)}
+									{navbarStyle === 'style-1' && !navbar.open && (
+										<NavbarToggleButton
+											sx={{ ml: 1, width: 40, height: 40, p: 0 }}
+											color="inherit"
+										/>
+									)}
+								</>
+							)}
+							{isMobile && (
+								<>
+									{/* Mobile Menu Button */}
+									<MobileMenuButton
+										onClick={handleMobileMenuOpen}
+										aria-label="open mobile menu"
+										sx={{ display: { xs: 'flex', md: 'none' } }}
+									>
+										<MenuIcon />
+									</MobileMenuButton>
+									
 									<NavbarToggleButton
 										sx={{ ml: 1, width: 40, height: 40, p: 0 }}
 										color="inherit"
 									/>
-								)}
-								{navbarStyle === 'style-1' && !navbar.open && (
-									<NavbarToggleButton
-										sx={{ ml: 1, width: 40, height: 40, p: 0 }}
-										color="inherit"
-									/>
-								)}
-							</>
-						)}
-						{isMobile && (
-							<NavbarToggleButton
-								sx={{ ml: 1, width: 40, height: 40, p: 0 }}
-								color="inherit"
-							/>
-						)}
-					</>
-				)}
+								</>
+							)}
+						</>
+					)}
+				</Box>
 			</Box>
+
+			{/* Center Section - Enhanced Search for prominent mode - REMOVED */}
 		</Toolbar>
 	);
 
@@ -524,13 +668,27 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 			>
 				{toolbarContent}
 
-				{/* Breadcrumbs */}
+				{/* Enhanced Breadcrumbs with luxury styling */}
 				{showBreadcrumbs && variant !== 'dense' && (
-					<Box sx={{ px: 3, pb: 1 }}>
+					<Box sx={{ px: { xs: 2, sm: 3, md: 4 }, pb: 1.5 }}>
 						<Breadcrumbs
 							aria-label="breadcrumb"
-							separator={<ChevronRight fontSize="small" />}
-							sx={{ fontSize: '0.875rem' }}
+							separator={
+								<ChevronRight 
+									fontSize="small" 
+									sx={{ 
+										color: 'rgba(255, 255, 255, 0.6)',
+										transition: 'color 0.2s ease'
+									}} 
+								/>
+							}
+							sx={{ 
+								fontSize: '0.9rem',
+								'& .MuiBreadcrumbs-separator': {
+									color: 'rgba(255, 255, 255, 0.6)',
+									mx: 1
+								}
+							}}
 						>
 							{getBreadcrumbs().map((breadcrumb, _index) => (
 								<Link
@@ -541,7 +699,23 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 										display: 'flex',
 										alignItems: 'center',
 										textDecoration: 'none',
-										'&:hover': { textDecoration: 'underline' }
+										color: 'rgba(255, 255, 255, 0.8)',
+										fontWeight: 400,
+										padding: _theme.spacing(0.5, 1),
+										borderRadius: _theme.spacing(1),
+										transition: _theme.transitions.create(['color', 'background-color', 'transform'], {
+											duration: _theme.transitions.duration.short
+										}),
+										'&:hover': { 
+											color: 'white',
+											backgroundColor: 'rgba(255, 255, 255, 0.1)',
+											transform: 'translateY(-1px)',
+											textDecoration: 'none'
+										},
+										'&:last-child': {
+											color: 'white',
+											fontWeight: 500
+										}
 									}}
 								>
 									{breadcrumb.icon}
@@ -561,13 +735,15 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 				onClick={handleMenuClose}
 				transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 				anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-				PaperProps={{
-					elevation: 3,
-					sx: {
-						mt: 1.5,
-						minWidth: 200,
-						'& .MuiMenuItem-root': {
-							gap: 1.5
+				slotProps={{
+					paper: {
+						elevation: 3,
+						sx: {
+							mt: 1.5,
+							minWidth: 200,
+							'& .MuiMenuItem-root': {
+								gap: 1.5
+							}
 						}
 					}
 				}}
@@ -639,12 +815,14 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 				onClose={handleMenuClose}
 				transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 				anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-				PaperProps={{
-					elevation: 3,
-					sx: {
-						mt: 1.5,
-						maxWidth: 360,
-						maxHeight: 400
+				slotProps={{
+					paper: {
+						elevation: 3,
+						sx: {
+							mt: 1.5,
+							maxWidth: 360,
+							maxHeight: 400
+						}
 					}
 				}}
 			>
@@ -707,27 +885,47 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 				</MenuItem>
 			</Menu>
 
-			{/* Mobile More Menu */}
-			<Menu
-				anchorEl={anchorElMore}
-				open={Boolean(anchorElMore)}
+			{/* Enhanced Mobile Menu */}
+			<EnhancedMobileMenu
+				anchorEl={anchorElMobile}
+				open={Boolean(anchorElMobile)}
 				onClose={handleMenuClose}
 				transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 				anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
 			>
+				<MenuItem 
+					onClick={() => {
+						// Navigate to dashboard
+						navigate('/dashboard');
+						handleMenuClose();
+					}}
+				>
+					<Dashboard sx={{ mr: 1.5, width: 20, height: 20 }} />
+					Dashboard
+				</MenuItem>
+				<MenuItem 
+					onClick={() => {
+						// Navigate to profile
+						navigate('/profile');
+						handleMenuClose();
+					}}
+				>
+					<Person sx={{ mr: 1.5, width: 20, height: 20 }} />
+					Profile
+				</MenuItem>
 				<MenuItem onClick={handleMenuClose}>
-					<SearchIcon sx={{ mr: 1 }} />
+					<SearchIcon sx={{ mr: 1.5, width: 20, height: 20 }} />
 					Search
 				</MenuItem>
 				<MenuItem onClick={handleMenuClose}>
-					<NotificationsIcon sx={{ mr: 1 }} />
+					<NotificationsIcon sx={{ mr: 1.5, width: 20, height: 20 }} />
 					Notifications
 				</MenuItem>
 				<MenuItem onClick={handleMenuClose}>
-					<SettingsIcon sx={{ mr: 1 }} />
+					<SettingsIcon sx={{ mr: 1.5, width: 20, height: 20 }} />
 					Settings
 				</MenuItem>
-			</Menu>
+			</EnhancedMobileMenu>
 
 			{/* Logout Confirmation Dialog */}
 			<Dialog

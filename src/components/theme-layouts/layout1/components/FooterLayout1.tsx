@@ -10,15 +10,15 @@ type FooterLayout1Props = {
  * The footer layout 1 with modern Material-UI design.
  */
 function FooterLayout1(props: FooterLayout1Props) {
-	const { className, variant = 'minimal' } = props;
+	const { className, variant = 'full' } = props;
 
 	return (
 		<MaterialUIFooter
 			variant={variant}
 			className={className}
 			showSocial={true}
-			showLinks={variant === 'full'}
-			showBottomNav={variant === 'full' || variant === 'bottom-navigation'}
+			showLinks={true}
+			showBottomNav={false}
 		/>
 	);
 }

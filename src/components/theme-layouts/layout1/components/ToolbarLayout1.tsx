@@ -20,8 +20,8 @@ function ToolbarLayout1(props: ToolbarLayout1Props) {
 		<MaterialUIAppBar
 			className={className}
 			position="static"
-			variant="regular"
-			elevation={0}
+			variant="prominent"
+			elevation={1}
 			hideOnScroll={false}
 			enableColorOnDark={true}
 			showBreadcrumbs={true}

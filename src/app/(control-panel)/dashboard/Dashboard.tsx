@@ -46,6 +46,7 @@ import apiFetch from 'src/utils/apiFetch';
 import { format } from 'date-fns';
 import { id as localeId } from 'date-fns/locale';
 import { useNavigate } from 'react-router-dom';
+import { usePageTitle } from 'src/contexts/PageTitleContext';
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
 	'& .FusePageSimple-header': {
@@ -106,8 +107,14 @@ interface SystemMetrics {
 
 function Dashboard() {
 	const { t } = useTranslation('navigation');
+	const { setPageTitle } = usePageTitle();
 	const user = useUser();
 	const navigate = useNavigate();
+	
+	// Set page title when component mounts
+	useEffect(() => {
+		setPageTitle('DASHBOARD');
+	}, [setPageTitle]);
 	
 	// State management
 	const [loading, setLoading] = useState(true);
@@ -293,63 +300,57 @@ function Dashboard() {
 
 	return (
 		<Root
-			header={
-				<Box sx={{ p: 3 }}>
+			content={
+				<Box sx={{ 
+					px: { xs: 1, sm: 2 }, 
+					py: 1, 
+					width: '100%', 
+					maxWidth: '100%',
+					margin: 0
+				}}>
+					{/* Welcome Section - Compact */}
 					<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-						<Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-							<DashboardIcon sx={{ fontSize: 32, color: '#ffffff' }} />
-							<Box>
-								<Typography variant="h4" sx={{ fontWeight: 'bold', color: '#ffffff' }}>
-									Control Panel Dashboard
-								</Typography>
-								<Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-									Real-time system monitoring & container status
-								</Typography>
-							</Box>
-						</Box>
-						<Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-							<Chip 
-								label={`Welcome, ${user.data?.displayName || 'User'}`} 
-								sx={{ 
-									bgcolor: 'rgba(255, 255, 255, 0.2)',
-									color: '#ffffff',
-									border: '1px solid rgba(255, 255, 255, 0.3)'
-								}}
-							/>
-							<IconButton
-								onClick={fetchDashboardData}
-								disabled={loading}
-								sx={{
-									color: '#ffffff',
-									bgcolor: 'rgba(255, 255, 255, 0.1)',
-									'&:hover': {
-										bgcolor: 'rgba(255, 255, 255, 0.2)'
-									}
-								}}
-							>
-								{loading ? <CircularProgress size={20} color="inherit" /> : <RefreshIcon />}
-							</IconButton>
-						</Box>
+						<Chip 
+							label={`Welcome, ${user.data?.displayName || 'User'}`} 
+							sx={{ 
+								bgcolor: (theme) => theme.palette.mode === 'dark' 
+									? 'rgba(59, 130, 246, 0.2)' 
+									: 'rgba(59, 130, 246, 0.1)',
+								color: (theme) => theme.palette.mode === 'dark' ? '#60a5fa' : '#3b82f6',
+								border: (theme) => theme.palette.mode === 'dark' 
+									? '1px solid rgba(59, 130, 246, 0.3)'
+									: '1px solid rgba(59, 130, 246, 0.2)',
+								fontWeight: 600
+							}}
+						/>
+						<IconButton
+							onClick={fetchDashboardData}
+							disabled={loading}
+							sx={{
+								color: (theme) => theme.palette.mode === 'dark' ? '#60a5fa' : '#3b82f6',
+								bgcolor: (theme) => theme.palette.mode === 'dark' 
+									? 'rgba(59, 130, 246, 0.1)' 
+									: 'rgba(59, 130, 246, 0.05)',
+								'&:hover': {
+									bgcolor: (theme) => theme.palette.mode === 'dark' 
+										? 'rgba(59, 130, 246, 0.2)' 
+										: 'rgba(59, 130, 246, 0.1)'
+								}
+							}}
+						>
+							{loading ? <CircularProgress size={20} color="inherit" /> : <RefreshIcon />}
+						</IconButton>
 					</Box>
 					
 					{error && (
 						<Alert 
 							severity="error" 
-							sx={{ 
-								mb: 2,
-								bgcolor: 'rgba(244, 67, 54, 0.1)',
-								color: '#ffffff',
-								border: '1px solid rgba(244, 67, 54, 0.3)'
-							}} 
+							sx={{ mb: 2 }} 
 							onClose={() => setError(null)}
 						>
 							{error}
 						</Alert>
 					)}
-				</Box>
-			}
-			content={
-				<Box sx={{ p: 3 }}>
 					{/* Container Status Overview */}
 					<Grid container spacing={3} sx={{ mb: 4 }}>
 						<Grid size={{ xs: 12, sm: 6, md: 3 }}>
