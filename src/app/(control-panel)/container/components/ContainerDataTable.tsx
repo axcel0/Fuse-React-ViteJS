@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { VisibilityRounded } from '@mui/icons-material';
 import { ContainerStatus } from '../types';
+import { useMemo } from 'react';
 
 interface ContainerDataTableProps {
 	filteredData: ContainerStatus[];
@@ -21,27 +22,34 @@ export default function ContainerDataTable({
 	onViewLogs,
 	isLoading
 }: ContainerDataTableProps) {
+	// Memoize the rows with stable IDs to prevent infinite re-renders
+	const memoizedRows = useMemo(() => {
+		return filteredData.map((item, index) => ({
+			...item,
+			rowNumber: index + 1,
+			// Ensure we have a stable ID
+			stableId: item.id || `${item.imageName}-${item.containerName}-${index}`
+		}));
+	}, [filteredData]);
+
 	// Define columns for the data grid
-	const columns: GridColDef[] = [
+	const columns: GridColDef[] = useMemo(() => [
 		{
-			field: 'no',
+			field: 'rowNumber',
 			headerName: 'No',
 			width: 80,
 			sortable: true,
-			renderCell: (params: GridRenderCellParams) => {
-				const index = filteredData.findIndex(item => item.id === params.row.id);
-				return (
-					<Typography
-						variant="body2"
-						sx={{
-							fontWeight: 500,
-							color: (theme) => theme.palette.mode === 'dark' ? '#60a5fa' : '#3b82f6'
-						}}
-					>
-						{index + 1}
-					</Typography>
-				);
-			}
+			renderCell: (params: GridRenderCellParams) => (
+				<Typography
+					variant="body2"
+					sx={{
+						fontWeight: 500,
+						color: (theme) => theme.palette.mode === 'dark' ? '#60a5fa' : '#3b82f6'
+					}}
+				>
+					{params.value}
+				</Typography>
+			)
 		},
 		{
 			field: 'containerName',
@@ -285,7 +293,7 @@ export default function ContainerDataTable({
 				</Box>
 			)
 		}
-	];
+	], [onViewLogs]);
 
 	return (
 		<Card sx={{ 
@@ -402,7 +410,7 @@ export default function ContainerDataTable({
 			<CardContent sx={{ p: 0, '&:last-child': { pb: 0 }, position: 'relative', zIndex: 2 }}>
 				<Box sx={{ width: '100%' }}>
 					<DataGrid
-						rows={filteredData}
+						rows={memoizedRows}
 						columns={columns}
 						loading={isLoading}
 						disableRowSelectionOnClick
@@ -417,7 +425,7 @@ export default function ContainerDataTable({
 						disableColumnResize
 						disableColumnMenu
 						hideFooterSelectedRowCount
-						getRowId={(row) => `${row.imageName}-${row.containerName}`}
+						getRowId={(row) => row.stableId}
 						sx={{
 							border: 'none',
 							overflow: 'hidden',

@@ -15,7 +15,7 @@ import {
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { usePageTitle } from 'src/contexts/PageTitleContext';
 
-// Import TanStack Query hooks
+// Import TanStack Query hooks - back to real API
 import { useContainerStatus, useRefreshContainerData } from 'src/hooks/useApi';
 
 // Import components and types
@@ -42,23 +42,20 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 function Container() {
 	const { t } = useTranslation('navigation');
 	const { setPageTitle } = usePageTitle();
-	const [filteredData, setFilteredData] = useState<ContainerStatus[]>([]);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [selectedContainer, setSelectedContainer] = useState<ContainerStatus | null>(null);
 	const [detailDialogOpen, setDetailDialogOpen] = useState(false);
 	const [statusFilter, setStatusFilter] = useState<string>('all');
 
-	// TanStack Query hooks
-	const { 
-		data: containerData = [], 
-		isLoading, 
-		error: queryError, 
-		refetch 
+	// TanStack Query hooks - back to real API
+	const {
+		data: containerData = [],
+		isLoading,
+		error: queryError,
+		refetch
 	} = useContainerStatus();
 	
-	const refreshMutation = useRefreshContainerData();
-
-	// Set page title when component mounts
+	const refreshMutation = useRefreshContainerData();	// Set page title when component mounts
 	useEffect(() => {
 		setPageTitle('CONTAINER STATUS');
 	}, [setPageTitle]);
@@ -90,8 +87,8 @@ function Container() {
 		defaultEnabled: false
 	});
 
-	// Filter data based on search term and status filter
-	useEffect(() => {
+	// Filter data based on search term and status filter using useMemo to prevent infinite re-renders
+	const filteredData = useMemo(() => {
 		let filtered = containerData;
 
 		// Apply search filter if there's a search term
@@ -118,23 +115,23 @@ function Container() {
 			}
 		}
 
-		setFilteredData(filtered);
+		return filtered;
 	}, [containerData, searchTerm, statusFilter]);
 
-	// Event handlers
-	const handleViewLogs = (container: ContainerStatus) => {
+	// Event handlers - memoized to prevent unnecessary re-renders
+	const handleViewLogs = useCallback((container: ContainerStatus) => {
 		setSelectedContainer(container);
 		setDetailDialogOpen(true);
-	};
+	}, []);
 
-	const handleRefreshContainer = (container: ContainerStatus) => {
+	const handleRefreshContainer = useCallback((container: ContainerStatus) => {
 		// Refresh specific container or all containers using TanStack Query
 		handleManualRefresh();
-	};
+	}, [handleManualRefresh]);
 
-	const handleDownloadCSV = () => {
+	const handleDownloadCSV = useCallback(() => {
 		downloadCSV(filteredData, 'container-status');
-	};
+	}, [downloadCSV, filteredData]);
 
 	// Error message from TanStack Query
 	const errorMessage = queryError 

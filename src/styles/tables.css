@@ -23,7 +23,7 @@ table.simple thead tr th {
 	white-space: nowrap;
 }
 
-table.simple thead tr th:first-child {
+table.simple thead tr th:first-of-type {
 	padding-left: 24px;
 }
 
@@ -36,7 +36,7 @@ table.simple tbody tr td {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
-table.simple tbody tr td:first-child {
+table.simple tbody tr td:first-of-type {
 	padding-left: 24px;
 }
 
@@ -83,7 +83,7 @@ table.dense thead tr th {
 	white-space: nowrap;
 }
 
-table.dense thead tr th:first-child {
+table.dense thead tr th:first-of-type {
 	padding-left: 12px;
 }
 
@@ -96,7 +96,7 @@ table.dense tbody tr td {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
-table.dense tbody tr td:first-child {
+table.dense tbody tr td:first-of-type {
 	padding-left: 12px;
 }
 

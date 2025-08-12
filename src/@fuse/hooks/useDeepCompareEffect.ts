@@ -55,7 +55,7 @@ export function useDeepCompareMemoize<T>(value: T) {
  * It returns true if the value is null, undefined, a string, a boolean, or a number.
  */
 function useDeepCompareEffect(callback: EffectCallbackType, dependencies: DependencyListType): UseEffectReturn {
-	if (process.env.NODE_ENV !== 'production') {
+	if (import.meta.env.DEV) {
 		checkDeps(dependencies);
 	}
 

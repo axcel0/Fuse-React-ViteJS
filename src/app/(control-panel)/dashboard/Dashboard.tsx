@@ -42,11 +42,13 @@ import {
 } from '@mui/icons-material';
 import useUser from '@auth/useUser';
 import { useState, useEffect, useCallback } from 'react';
-import apiFetch from 'src/utils/apiFetch';
 import { format } from 'date-fns';
 import { id as localeId } from 'date-fns/locale';
 import { useNavigate } from 'react-router-dom';
 import { usePageTitle } from 'src/contexts/PageTitleContext';
+
+// Import TanStack Query hooks - back to real API
+import { useDashboardData, useRefreshDashboardData } from 'src/hooks/useApi';
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
 	'& .FusePageSimple-header': {
@@ -116,170 +118,66 @@ function Dashboard() {
 		setPageTitle('DASHBOARD');
 	}, [setPageTitle]);
 	
-	// State management
-	const [loading, setLoading] = useState(true);
-	const [containerStats, setContainerStats] = useState<ContainerStats>({
-		total: 0,
-		healthy: 0,
-		failed: 0,
-		connected: 0,
-		lastUpdate: new Date().toISOString()
-	});
-	const [recentActivities, setRecentActivities] = useState<ActivityLog[]>([]);
+	// TanStack Query hooks - back to real API
+	const { 
+		data: dashboardData, 
+		isLoading, 
+		error: queryError,
+		refetch 
+	} = useDashboardData();
+	
+	const refreshMutation = useRefreshDashboardData();
+	
+	// State management for UI components
 	const [systemMetrics, setSystemMetrics] = useState<SystemMetrics>({
 		cpuUsage: 0,
 		memoryUsage: 0,
 		diskUsage: 0,
 		networkLatency: 0
 	});
-	const [error, setError] = useState<string | null>(null);
 
-	// Fetch dashboard data
-	const fetchDashboardData = useCallback(async () => {
-		setLoading(true);
-		setError(null);
-		
+	// Manual refresh function
+	const handleRefresh = useCallback(async () => {
 		try {
-			// Fetch data from webhook notification APIs
-			const [activityResponse, webhookUrlResponse, consumersResponse] = await Promise.allSettled([
-				apiFetch('/webhook-notification/api/activity'),
-				apiFetch('/webhook-notification/api/webhookurl'),
-				apiFetch('/webhook-notification/api/consumers')
-			]);
-
-			let activityLogs: any[] = [];
-			let webhookUrls: any[] = [];
-			let runningConsumers: string[] = [];
-
-			// Process responses
-			if (activityResponse.status === 'fulfilled') {
-				try {
-					const activityData = await activityResponse.value.json();
-					if (activityData.success && Array.isArray(activityData.data)) {
-						activityLogs = activityData.data;
-					}
-				} catch (e) {
-					console.warn('Failed to parse activity logs:', e);
-				}
-			}
-
-			if (webhookUrlResponse.status === 'fulfilled') {
-				try {
-					const webhookData = await webhookUrlResponse.value.json();
-					if (webhookData.success && Array.isArray(webhookData.data)) {
-						webhookUrls = webhookData.data;
-					}
-				} catch (e) {
-					console.warn('Failed to parse webhook URLs:', e);
-				}
-			}
-
-			if (consumersResponse.status === 'fulfilled') {
-				try {
-					const consumersData = await consumersResponse.value.json();
-					if (consumersData.success && Array.isArray(consumersData.data)) {
-						runningConsumers = consumersData.data;
-					}
-				} catch (e) {
-					console.warn('Failed to parse running consumers:', e);
-				}
-			}
-
-			// Calculate container statistics
-			const CONTAINER_NAMES = [
-				'ev-lock', 'consumer', 'ev-vehicle-report', 'nearme', 'ev-sse-app',
-				'ev-statistic', 'ev-rest-gateway', 'base-app-interface', 'display-ev',
-				'cqrs-gateway', 'producer', 'api-query', 'search-app', 'system-app',
-				'terminal-gateway', 'ev-backup', 'ev-restore', 'ev-rest-gateway-aes'
-			];
-
-			const totalContainers = CONTAINER_NAMES.length;
-			const connectedContainers = runningConsumers.length;
-			const failedContainers = CONTAINER_NAMES.filter(name => 
-				name === 'ev-statistic' || name === 'ev-backup'
-			).length;
-			const healthyContainers = totalContainers - failedContainers;
-
-			setContainerStats({
-				total: totalContainers,
-				healthy: healthyContainers,
-				failed: failedContainers,
-				connected: connectedContainers,
-				lastUpdate: new Date().toISOString()
-			});
-
-			// Process recent activities
-			const processedActivities: ActivityLog[] = activityLogs.slice(0, 8).map(log => ({
-				id: log.id || Math.random().toString(),
-				source: log.source || 'Unknown',
-				description: log.description || 'Activity logged',
-				createdAt: log.createdAt || new Date().toISOString(),
-				severity: log.source?.includes('error') || log.description?.includes('failed') ? 'error' :
-						 log.source?.includes('warning') || log.description?.includes('timeout') ? 'warning' :
-						 log.source?.includes('success') || log.description?.includes('connected') ? 'success' : 'info'
-			}));
-
-			setRecentActivities(processedActivities);
-
-			// Generate realistic system metrics
-			setSystemMetrics({
-				cpuUsage: Math.floor(Math.random() * 40) + 30, // 30-70%
-				memoryUsage: Math.floor(Math.random() * 30) + 40, // 40-70%
-				diskUsage: Math.floor(Math.random() * 20) + 60, // 60-80%
-				networkLatency: Math.floor(Math.random() * 50) + 10 // 10-60ms
-			});
-
-		} catch (err) {
-			console.error('Failed to fetch dashboard data:', err);
-			setError('Gagal mengambil data dashboard. Periksa koneksi API.');
-			
-			// Fallback data
-			setContainerStats({
-				total: 18,
-				healthy: 15,
-				failed: 2,
-				connected: 12,
-				lastUpdate: new Date().toISOString()
-			});
-			
-			setRecentActivities([
-				{
-					id: '1',
-					source: 'ev-rest-gateway',
-					description: 'Container started successfully',
-					createdAt: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
-					severity: 'success'
-				},
-				{
-					id: '2',
-					source: 'ev-statistic',
-					description: 'OpenSearch connection failed',
-					createdAt: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
-					severity: 'error'
-				}
-			]);
-			
-			setSystemMetrics({
-				cpuUsage: 45,
-				memoryUsage: 62,
-				diskUsage: 73,
-				networkLatency: 28
-			});
-		} finally {
-			setLoading(false);
+			await refreshMutation.mutateAsync();
+		} catch (error) {
+			console.error('Manual refresh failed:', error);
 		}
+	}, [refreshMutation]);
+
+	// Process dashboard data for display
+	const containerStats: ContainerStats = {
+		total: dashboardData?.totalContainers || 0,
+		healthy: dashboardData?.connectedContainers || 0,
+		failed: dashboardData?.failedContainers || 0,
+		connected: dashboardData?.connectedContainers || 0,
+		lastUpdate: new Date().toISOString()
+	};
+
+	const recentActivities: ActivityLog[] = (dashboardData?.activityLogs || [])
+		.slice(0, 10)
+		.map(log => ({
+			id: log.id || `${log.source}-${Date.now()}`,
+			source: log.source || 'Unknown',
+			description: log.description || log.action || 'No description',
+			createdAt: log.timestamp || log.createdAt || new Date().toISOString(),
+			severity: 'info' as const
+		}));
+
+	// Error message from TanStack Query
+	const errorMessage = queryError 
+		? `Failed to fetch dashboard data: ${queryError instanceof Error ? queryError.message : 'Unknown error'}`
+		: null;
+
+	// Generate realistic system metrics for demo
+	useEffect(() => {
+		setSystemMetrics({
+			cpuUsage: Math.floor(Math.random() * 40) + 30, // 30-70%
+			memoryUsage: Math.floor(Math.random() * 30) + 40, // 40-70%
+			diskUsage: Math.floor(Math.random() * 20) + 60, // 60-80%
+			networkLatency: Math.floor(Math.random() * 50) + 10 // 10-60ms
+		});
 	}, []);
-
-	// Initial load
-	useEffect(() => {
-		fetchDashboardData();
-	}, [fetchDashboardData]);
-
-	// Auto refresh every 30 seconds
-	useEffect(() => {
-		const interval = setInterval(fetchDashboardData, 30000);
-		return () => clearInterval(interval);
-	}, [fetchDashboardData]);
 
 	// Get severity icon and color
 	const getSeverityIcon = (severity: string) => {
@@ -324,8 +222,8 @@ function Dashboard() {
 							}}
 						/>
 						<IconButton
-							onClick={fetchDashboardData}
-							disabled={loading}
+							onClick={handleRefresh}
+							disabled={isLoading || refreshMutation.isPending}
 							sx={{
 								color: (theme) => theme.palette.mode === 'dark' ? '#60a5fa' : '#3b82f6',
 								bgcolor: (theme) => theme.palette.mode === 'dark' 
@@ -338,17 +236,17 @@ function Dashboard() {
 								}
 							}}
 						>
-							{loading ? <CircularProgress size={20} color="inherit" /> : <RefreshIcon />}
+							{(isLoading || refreshMutation.isPending) ? <CircularProgress size={20} color="inherit" /> : <RefreshIcon />}
 						</IconButton>
 					</Box>
 					
-					{error && (
+					{errorMessage && (
 						<Alert 
 							severity="error" 
 							sx={{ mb: 2 }} 
-							onClose={() => setError(null)}
+							onClose={() => {/* TanStack Query will handle retry */}}
 						>
-							{error}
+							{errorMessage}
 						</Alert>
 					)}
 					{/* Container Status Overview */}

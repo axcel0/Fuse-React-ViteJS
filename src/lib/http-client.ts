@@ -5,7 +5,7 @@ import ky from 'ky';
  */
 export const httpClient = ky.create({
 	// Base URL for API requests
-	prefixUrl: process.env.VITE_API_BASE_URL || '/api',
+	prefixUrl: import.meta.env.VITE_API_BASE_URL || '/api',
 
 	// Default timeout for requests (30 seconds)
 	timeout: 30000,

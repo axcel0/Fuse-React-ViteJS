@@ -82,3 +82,16 @@
 		transition-duration: 0ms;
 	}
 }
+
+/* Material-UI CSS Fixes - Override :first-child selectors that cause warnings */
+.MuiTableBody-root tr:first-of-type td,
+.MuiTableHead-root tr:first-of-type th,
+.MuiDataGrid-root .MuiDataGrid-row:first-of-type .MuiDataGrid-cell,
+.MuiTab-root:first-of-type,
+.MuiBreadcrumbs-ol li:first-of-type,
+.MuiChip-root:first-of-type,
+.MuiAccordion-root:first-of-type,
+.MuiCard-root:first-of-type,
+.MuiListItem-root:first-of-type {
+	/* Override any problematic :first-child styling */
+}

@@ -167,7 +167,53 @@ export default defineConfig({
 		host: '0.0.0.0',
 		open: true,
 		strictPort: false,
-		port: 3000
+		port: 3000,
+		proxy: {
+			'/gps/api': {
+				target: 'https://dev-be-udms-pmcp-evsoft.polytron.local',
+				changeOrigin: true,
+				secure: false,
+				configure: (proxy, _options) => {
+					proxy.on('error', (err, _req, _res) => {
+						console.log('GPS API proxy error', err);
+					});
+					proxy.on('proxyReq', (proxyReq, req, _res) => {
+						console.log('Sending GPS API Request:', req.method, req.url);
+						// Add auth headers if available
+						const token = process.env.VITE_API_TOKEN;
+						if (token) {
+							proxyReq.setHeader('Authorization', `Bearer ${token}`);
+						}
+					});
+					proxy.on('proxyRes', (proxyRes, req, _res) => {
+						console.log('Received GPS API Response:', proxyRes.statusCode, req.url);
+					});
+				}
+			},
+			'/api/webhook-notification': {
+				target: 'https://dev-be-udms-pmcp-evsoft.polytron.local',
+				changeOrigin: true,
+				secure: false,
+				rewrite: (path) => path.replace(/^\/api/, ''),
+				configure: (proxy, _options) => {
+					proxy.on('error', (err, _req, _res) => {
+						console.log('webhook proxy error', err);
+					});
+					proxy.on('proxyReq', (proxyReq, req, _res) => {
+						console.log('Sending Webhook Request:', req.method, req.url);
+					});
+					proxy.on('proxyRes', (proxyRes, req, _res) => {
+						console.log('Received Webhook Response:', proxyRes.statusCode, req.url);
+					});
+				}
+			},
+			'/api': {
+				target: 'https://dev-be-udms-pmcp-evsoft.polytron.local',
+				changeOrigin: true,
+				secure: false,
+				rewrite: (path) => path.replace(/^\/api/, '')
+			}
+		}
 	},
 	define: {
 		'import.meta.env.VITE_PORT': JSON.stringify(process.env.PORT || 3000),
