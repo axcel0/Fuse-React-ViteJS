@@ -5,7 +5,6 @@ import {
 	Card,
 	CardContent,
 	Typography,
-	Grid,
 	Box,
 	Avatar,
 	Chip,
@@ -19,7 +18,8 @@ import {
 	IconButton,
 	Alert,
 	CircularProgress,
-	Paper
+	Paper,
+	Fab
 } from '@mui/material';
 import {
 	TrendingUp,
@@ -38,7 +38,8 @@ import {
 	Launch as LaunchIcon,
 	Speed as SpeedIcon,
 	Memory as MemoryIcon,
-	NetworkCheck as NetworkIcon
+	NetworkCheck as NetworkIcon,
+	ExpandLess as ExpandLessIcon
 } from '@mui/icons-material';
 import useUser from '@auth/useUser';
 import { useState, useEffect, useCallback } from 'react';
@@ -47,19 +48,14 @@ import { id as localeId } from 'date-fns/locale';
 import { useNavigate } from 'react-router-dom';
 import { usePageTitle } from 'src/contexts/PageTitleContext';
 
-// Import TanStack Query hooks - back to real API
-import { useDashboardData, useRefreshDashboardData } from 'src/hooks/useApi';
+// Import hooks dari useApi - menggunakan token dari Keycloak authentication
+import { ContainerStatus } from '../container/types';
+import { useDashboardData } from 'src/hooks/useApi';
+import ContainerCard from 'src/components/common/ContainerCard';
+import ServiceStatus from 'src/components/common/ServiceStatus';
+import PerformanceDashboard from 'src/components/dashboard/PerformanceDashboard';
 
-const Root = styled(FusePageSimple)(({ theme }) => ({
-	'& .FusePageSimple-header': {
-		background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-		color: '#ffffff'
-	},
-	'& .FusePageSimple-content': {
-		padding: 0,
-		backgroundColor: theme.palette.background.default
-	}
-}));
+// Styled components
 
 const StatsCard = styled(Card)(({ theme }) => ({
 	height: '100%',
@@ -112,23 +108,23 @@ function Dashboard() {
 	const { setPageTitle } = usePageTitle();
 	const user = useUser();
 	const navigate = useNavigate();
-	
+
 	// Set page title when component mounts
 	useEffect(() => {
-		setPageTitle('DASHBOARD');
+		setPageTitle('Dashboard');
 	}, [setPageTitle]);
 	
-	// TanStack Query hooks - back to real API
+	// Native hooks - menggunakan token dari Keycloak
 	const { 
 		data: dashboardData, 
-		isLoading, 
+		loading: isLoading, 
 		error: queryError,
-		refetch 
+		refetch,
+		containerStatuses
 	} = useDashboardData();
 	
-	const refreshMutation = useRefreshDashboardData();
-	
 	// State management for UI components
+	const [searchTerm, setSearchTerm] = useState('');
 	const [systemMetrics, setSystemMetrics] = useState<SystemMetrics>({
 		cpuUsage: 0,
 		memoryUsage: 0,
@@ -136,22 +132,57 @@ function Dashboard() {
 		networkLatency: 0
 	});
 
+	// Response times untuk monitoring performa - simplified
+	const responseTimes: Record<string, number> = {};
+	
+	// Container data dari dashboard API
+	const allContainers = dashboardData?.containers || [];
+
+	// Filter containers berdasarkan search term
+	const filteredContainers = allContainers.filter((container: any) => 
+		container.name?.toLowerCase().includes(searchTerm.toLowerCase())
+	);
+
+	// Scroll functionality
+	const [showScrollTop, setShowScrollTop] = useState(false);
+
+	const scrollToTop = useCallback(() => {
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	}, []);
+
+	useEffect(() => {
+		const handleScroll = () => {
+			setShowScrollTop(window.scrollY > 300);
+		};
+
+		window.addEventListener('scroll', handleScroll);
+		return () => window.removeEventListener('scroll', handleScroll);
+	}, []);
+
 	// Manual refresh function
 	const handleRefresh = useCallback(async () => {
 		try {
-			await refreshMutation.mutateAsync();
+			await refetch();
 		} catch (error) {
 			console.error('Manual refresh failed:', error);
 		}
-	}, [refreshMutation]);
+	}, [refetch]);
 
 	// Process dashboard data for display
 	const containerStats: ContainerStats = {
 		total: dashboardData?.totalContainers || 0,
 		healthy: dashboardData?.connectedContainers || 0,
-		failed: dashboardData?.failedContainers || 0,
+		failed: (dashboardData?.failedContainers || 0) + (dashboardData?.timeoutContainers || 0),
 		connected: dashboardData?.connectedContainers || 0,
 		lastUpdate: new Date().toISOString()
+	};
+
+	// Enhanced container summary for display
+	const enhancedContainerStats = {
+		...containerStats,
+		maintenance: dashboardData?.maintenanceContainers || 0,
+		timeout: dashboardData?.timeoutContainers || 0,
+		offline: dashboardData?.failedContainers || 0
 	};
 
 	const recentActivities: ActivityLog[] = (dashboardData?.activityLogs || [])
@@ -164,9 +195,9 @@ function Dashboard() {
 			severity: 'info' as const
 		}));
 
-	// Error message from TanStack Query
+	// Error message dari native hooks
 	const errorMessage = queryError 
-		? `Failed to fetch dashboard data: ${queryError instanceof Error ? queryError.message : 'Unknown error'}`
+		? `Failed to fetch dashboard data: ${typeof queryError === 'string' ? queryError : 'Unknown error'}`
 		: null;
 
 	// Generate realistic system metrics for demo
@@ -197,15 +228,16 @@ function Dashboard() {
 	};
 
 	return (
-		<Root
-			content={
-				<Box sx={{ 
-					px: { xs: 1, sm: 2 }, 
-					py: 1, 
-					width: '100%', 
-					maxWidth: '100%',
-					margin: 0
-				}}>
+		<div>
+			<FusePageSimple
+				content={
+					<Box sx={{ 
+						px: { xs: 1, sm: 2 }, 
+						py: 1, 
+						width: '100%', 
+						maxWidth: '100%',
+						margin: 0
+					}}>
 					{/* Welcome Section - Compact */}
 					<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
 						<Chip 
@@ -223,7 +255,7 @@ function Dashboard() {
 						/>
 						<IconButton
 							onClick={handleRefresh}
-							disabled={isLoading || refreshMutation.isPending}
+							disabled={isLoading}
 							sx={{
 								color: (theme) => theme.palette.mode === 'dark' ? '#60a5fa' : '#3b82f6',
 								bgcolor: (theme) => theme.palette.mode === 'dark' 
@@ -236,7 +268,7 @@ function Dashboard() {
 								}
 							}}
 						>
-							{(isLoading || refreshMutation.isPending) ? <CircularProgress size={20} color="inherit" /> : <RefreshIcon />}
+							{isLoading ? <CircularProgress size={20} color="inherit" /> : <RefreshIcon />}
 						</IconButton>
 					</Box>
 					
@@ -249,166 +281,216 @@ function Dashboard() {
 							{errorMessage}
 						</Alert>
 					)}
+					
+					{/* Performance Dashboard - Development Only */}
+					{import.meta.env.DEV && <PerformanceDashboard />}
+					
 					{/* Container Status Overview */}
-					<Grid container spacing={3} sx={{ mb: 4 }}>
-						<Grid size={{ xs: 12, sm: 6, md: 3 }}>
-							<StatsCard>
-								<CardContent>
-									<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-										<Box>
-											<Typography color="rgba(255, 255, 255, 0.7)" variant="body2">
-												Total Containers
-											</Typography>
-											<Typography variant="h3" sx={{ fontWeight: 600, color: '#ffffff', mb: 1 }}>
-												{containerStats.total}
-											</Typography>
-											<Chip 
-												label="Active" 
-												size="small" 
-												sx={{ 
-													bgcolor: 'rgba(76, 175, 80, 0.2)',
-													color: '#4caf50',
-													border: '1px solid rgba(76, 175, 80, 0.3)'
-												}}
-											/>
-										</Box>
-										<Avatar 
-											sx={{ 
-												bgcolor: 'rgba(33, 150, 243, 0.2)',
-												width: 64,
-												height: 64,
-												border: '2px solid rgba(33, 150, 243, 0.3)'
-											}}
-										>
-											<ContainerIcon sx={{ fontSize: 32, color: '#2196f3' }} />
-										</Avatar>
-									</Box>
-								</CardContent>
-							</StatsCard>
-						</Grid>
-						
-						<Grid size={{ xs: 12, sm: 6, md: 3 }}>
-							<StatsCard>
-								<CardContent>
-									<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-										<Box>
-											<Typography color="rgba(255, 255, 255, 0.7)" variant="body2">
-												Healthy Containers
-											</Typography>
-											<Typography variant="h3" sx={{ fontWeight: 600, color: '#ffffff', mb: 1 }}>
-												{containerStats.healthy}
-											</Typography>
-											<Chip 
-												label={`${Math.round((containerStats.healthy / containerStats.total) * 100)}%`}
-												size="small" 
-												sx={{ 
-													bgcolor: 'rgba(76, 175, 80, 0.2)',
-													color: '#4caf50',
-													border: '1px solid rgba(76, 175, 80, 0.3)'
-												}}
-											/>
-										</Box>
-										<Avatar 
+					<Box sx={{ 
+						display: 'grid', 
+						gridTemplateColumns: { 
+							xs: '1fr', 
+							sm: 'repeat(2, 1fr)', 
+							md: 'repeat(3, 1fr)',
+							lg: 'repeat(5, 1fr)'
+						}, 
+						gap: 3, 
+						mb: 4 
+					}}>
+						<StatsCard>
+							<CardContent>
+								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+									<Box>
+										<Typography color="rgba(255, 255, 255, 0.7)" variant="body2">
+											Total Containers
+										</Typography>
+										<Typography variant="h3" sx={{ fontWeight: 600, color: '#ffffff', mb: 1 }}>
+											{containerStats.total}
+										</Typography>
+										<Chip 
+											label="Active" 
+											size="small" 
 											sx={{ 
 												bgcolor: 'rgba(76, 175, 80, 0.2)',
-												width: 64,
-												height: 64,
-												border: '2px solid rgba(76, 175, 80, 0.3)'
+												color: '#4caf50',
+												border: '1px solid rgba(76, 175, 80, 0.3)'
 											}}
-										>
-											<SuccessIcon sx={{ fontSize: 32, color: '#4caf50' }} />
-										</Avatar>
+										/>
 									</Box>
-								</CardContent>
-							</StatsCard>
-						</Grid>
+									<Avatar 
+										sx={{ 
+											bgcolor: 'rgba(33, 150, 243, 0.2)',
+											width: 64,
+											height: 64,
+											border: '2px solid rgba(33, 150, 243, 0.3)'
+										}}
+									>
+										<ContainerIcon sx={{ fontSize: 32, color: '#2196f3' }} />
+									</Avatar>
+								</Box>
+							</CardContent>
+						</StatsCard>
 						
-						<Grid size={{ xs: 12, sm: 6, md: 3 }}>
-							<StatsCard>
-								<CardContent>
-									<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-										<Box>
-											<Typography color="rgba(255, 255, 255, 0.7)" variant="body2">
-												Kafka Connected
-											</Typography>
-											<Typography variant="h3" sx={{ fontWeight: 600, color: '#ffffff', mb: 1 }}>
-												{containerStats.connected}
-											</Typography>
-											<Chip 
-												label="Connected" 
-												size="small" 
-												sx={{ 
-													bgcolor: 'rgba(76, 175, 80, 0.2)',
-													color: '#4caf50',
-													border: '1px solid rgba(76, 175, 80, 0.3)'
-												}}
-											/>
-										</Box>
-										<Avatar 
+						<StatsCard>
+							<CardContent>
+								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+									<Box>
+										<Typography color="rgba(255, 255, 255, 0.7)" variant="body2">
+											Healthy Containers
+										</Typography>
+										<Typography variant="h3" sx={{ fontWeight: 600, color: '#ffffff', mb: 1 }}>
+											{containerStats.healthy}
+										</Typography>
+										<Chip 
+											label={`${Math.round((containerStats.healthy / containerStats.total) * 100)}%`}
+											size="small" 
 											sx={{ 
 												bgcolor: 'rgba(76, 175, 80, 0.2)',
-												width: 64,
-												height: 64,
-												border: '2px solid rgba(76, 175, 80, 0.3)'
+												color: '#4caf50',
+												border: '1px solid rgba(76, 175, 80, 0.3)'
 											}}
-										>
-											<CloudIcon sx={{ fontSize: 32, color: '#4caf50' }} />
-										</Avatar>
+										/>
 									</Box>
-								</CardContent>
-							</StatsCard>
-						</Grid>
+									<Avatar 
+										sx={{ 
+											bgcolor: 'rgba(76, 175, 80, 0.2)',
+											width: 64,
+											height: 64,
+											border: '2px solid rgba(76, 175, 80, 0.3)'
+										}}
+									>
+										<SuccessIcon sx={{ fontSize: 32, color: '#4caf50' }} />
+									</Avatar>
+								</Box>
+							</CardContent>
+						</StatsCard>
 						
-						<Grid size={{ xs: 12, sm: 6, md: 3 }}>
-							<StatsCard>
-								<CardContent>
-									<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-										<Box>
-											<Typography color="rgba(255, 255, 255, 0.7)" variant="body2">
-												Failed/Issues
-											</Typography>
-											<Typography variant="h3" sx={{ fontWeight: 600, color: '#ffffff', mb: 1 }}>
-												{containerStats.failed}
-											</Typography>
-											<Chip 
-												label={containerStats.failed > 0 ? "Needs Attention" : "All Good"} 
-												size="small" 
-												sx={{ 
-													bgcolor: containerStats.failed > 0 ? 'rgba(244, 67, 54, 0.2)' : 'rgba(76, 175, 80, 0.2)',
-													color: containerStats.failed > 0 ? '#f44336' : '#4caf50',
-													border: `1px solid ${containerStats.failed > 0 ? 'rgba(244, 67, 54, 0.3)' : 'rgba(76, 175, 80, 0.3)'}`
-												}}
-											/>
-										</Box>
-										<Avatar 
+						<StatsCard>
+							<CardContent>
+								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+									<Box>
+										<Typography color="rgba(255, 255, 255, 0.7)" variant="body2">
+											Kafka Connected
+										</Typography>
+										<Typography variant="h3" sx={{ fontWeight: 600, color: '#ffffff', mb: 1 }}>
+											{containerStats.connected}
+										</Typography>
+										<Chip 
+											label="Connected" 
+											size="small" 
+											sx={{ 
+												bgcolor: 'rgba(76, 175, 80, 0.2)',
+												color: '#4caf50',
+												border: '1px solid rgba(76, 175, 80, 0.3)'
+											}}
+										/>
+									</Box>
+									<Avatar 
+										sx={{ 
+											bgcolor: 'rgba(76, 175, 80, 0.2)',
+											width: 64,
+											height: 64,
+											border: '2px solid rgba(76, 175, 80, 0.3)'
+										}}
+									>
+										<CloudIcon sx={{ fontSize: 32, color: '#4caf50' }} />
+									</Avatar>
+								</Box>
+							</CardContent>
+						</StatsCard>
+						
+						<StatsCard>
+							<CardContent>
+								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+									<Box>
+										<Typography color="rgba(255, 255, 255, 0.7)" variant="body2">
+											Failed/Issues
+										</Typography>
+										<Typography variant="h3" sx={{ fontWeight: 600, color: '#ffffff', mb: 1 }}>
+											{containerStats.failed}
+										</Typography>
+										<Chip 
+											label={containerStats.failed > 0 ? "Needs Attention" : "All Good"} 
+											size="small" 
 											sx={{ 
 												bgcolor: containerStats.failed > 0 ? 'rgba(244, 67, 54, 0.2)' : 'rgba(76, 175, 80, 0.2)',
-												width: 64,
-												height: 64,
-												border: `2px solid ${containerStats.failed > 0 ? 'rgba(244, 67, 54, 0.3)' : 'rgba(76, 175, 80, 0.3)'}`
+												color: containerStats.failed > 0 ? '#f44336' : '#4caf50',
+												border: `1px solid ${containerStats.failed > 0 ? 'rgba(244, 67, 54, 0.3)' : 'rgba(76, 175, 80, 0.3)'}`
 											}}
-										>
-											{containerStats.failed > 0 ? 
-												<ErrorIcon sx={{ fontSize: 32, color: '#f44336' }} /> : 
-												<SuccessIcon sx={{ fontSize: 32, color: '#4caf50' }} />
-											}
-										</Avatar>
+										/>
 									</Box>
-								</CardContent>
-							</StatsCard>
-						</Grid>
-					</Grid>
+									<Avatar 
+										sx={{ 
+											bgcolor: containerStats.failed > 0 ? 'rgba(244, 67, 54, 0.2)' : 'rgba(76, 175, 80, 0.2)',
+											width: 64,
+											height: 64,
+											border: `2px solid ${containerStats.failed > 0 ? 'rgba(244, 67, 54, 0.3)' : 'rgba(76, 175, 80, 0.3)'}`
+										}}
+									>
+										{containerStats.failed > 0 ? 
+											<ErrorIcon sx={{ fontSize: 32, color: '#f44336' }} /> : 
+											<SuccessIcon sx={{ fontSize: 32, color: '#4caf50' }} />
+										}
+									</Avatar>
+								</Box>
+							</CardContent>
+						</StatsCard>
+						
+						{/* Maintenance containers card */}
+						<StatsCard>
+							<CardContent>
+								<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+									<Box>
+										<Typography color="rgba(255, 255, 255, 0.7)" variant="body2">
+											Maintenance
+										</Typography>
+										<Typography variant="h3" sx={{ fontWeight: 600, color: '#ffffff', mb: 1 }}>
+											{enhancedContainerStats.maintenance}
+										</Typography>
+										<Chip 
+											label={enhancedContainerStats.maintenance > 0 ? "Under Maintenance" : "None"} 
+											size="small" 
+											sx={{ 
+												bgcolor: enhancedContainerStats.maintenance > 0 ? 'rgba(255, 193, 7, 0.2)' : 'rgba(76, 175, 80, 0.2)',
+												color: enhancedContainerStats.maintenance > 0 ? '#ffc107' : '#4caf50',
+												border: `1px solid ${enhancedContainerStats.maintenance > 0 ? 'rgba(255, 193, 7, 0.3)' : 'rgba(76, 175, 80, 0.3)'}`
+											}}
+										/>
+									</Box>
+									<Avatar 
+										sx={{ 
+											bgcolor: enhancedContainerStats.maintenance > 0 ? 'rgba(255, 193, 7, 0.2)' : 'rgba(76, 175, 80, 0.2)',
+											width: 64,
+											height: 64,
+											border: `2px solid ${enhancedContainerStats.maintenance > 0 ? 'rgba(255, 193, 7, 0.3)' : 'rgba(76, 175, 80, 0.3)'}`
+										}}
+									>
+										{enhancedContainerStats.maintenance > 0 ? 
+											<WarningIcon sx={{ fontSize: 32, color: '#ffc107' }} /> : 
+											<SuccessIcon sx={{ fontSize: 32, color: '#4caf50' }} />
+										}
+									</Avatar>
+								</Box>
+							</CardContent>
+						</StatsCard>
+					</Box>
 
 					{/* Main Content Grid */}
-					<Grid container spacing={3}>
+					<Box sx={{ 
+						display: 'grid', 
+						gridTemplateColumns: { 
+							xs: '1fr', 
+							lg: '1fr 1.5fr 1fr'
+						}, 
+						gap: 3 
+					}}>
 						{/* System Metrics */}
-						<Grid size={{ xs: 12, lg: 4 }}>
-							<ActionCard>
-								<CardContent>
-									<Typography variant="h6" sx={{ mb: 3, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
-										<SpeedIcon color="primary" />
-										System Performance
-									</Typography>
+						<ActionCard>
+							<CardContent>
+								<Typography variant="h6" sx={{ mb: 3, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
+									<SpeedIcon color="primary" />
+									System Performance
+								</Typography>
 									<Box sx={{ mb: 3 }}>
 										<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
 											<Typography variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -482,136 +564,170 @@ function Dashboard() {
 									</Box>
 								</CardContent>
 							</ActionCard>
-						</Grid>
-
+						
 						{/* Recent Activities */}
-						<Grid size={{ xs: 12, lg: 5 }}>
-							<ActionCard>
-								<CardContent>
-									<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-										<Typography variant="h6" sx={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
-											<ActivityIcon color="primary" />
-											Recent Activities ({recentActivities.length})
-										</Typography>
-										<Typography variant="caption" color="text.secondary">
-											Last updated: {format(new Date(containerStats.lastUpdate), 'HH:mm:ss', { locale: localeId })}
+						<ActionCard>
+							<CardContent>
+								<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+									<Typography variant="h6" sx={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
+										<ActivityIcon color="primary" />
+										Recent Activities ({recentActivities.length})
+									</Typography>
+									<Typography variant="caption" color="text.secondary">
+										Last updated: {format(new Date(containerStats.lastUpdate), 'HH:mm:ss', { locale: localeId })}
+									</Typography>
+								</Box>
+								
+								{recentActivities.length > 0 ? (
+									<List sx={{ maxHeight: 400, overflow: 'auto' }}>
+										{recentActivities.map((activity, index) => (
+											<Box key={activity.id}>
+												<ListItem sx={{ px: 0, py: 1 }}>
+													<ListItemIcon sx={{ minWidth: 36 }}>
+														{getSeverityIcon(activity.severity)}
+													</ListItemIcon>
+													<ListItemText
+														primary={
+															<Typography variant="body2" sx={{ fontWeight: 500, lineHeight: 1.3 }}>
+																{activity.description}
+															</Typography>
+														}
+														secondary={
+															<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 0.5 }}>
+																<Typography variant="caption" color="text.secondary">
+																	{activity.source}
+																</Typography>
+																<Typography variant="caption" color="text.secondary">
+																	{format(new Date(activity.createdAt), 'HH:mm:ss', { locale: localeId })}
+																</Typography>
+															</Box>
+														}
+													/>
+												</ListItem>
+												{index < recentActivities.length - 1 && <Divider />}
+											</Box>
+										))}
+									</List>
+								) : (
+									<Box sx={{ textAlign: 'center', py: 4 }}>
+										<ActivityIcon sx={{ fontSize: 48, color: 'text.disabled', mb: 2 }} />
+										<Typography variant="body2" color="text.secondary">
+											No recent activities
 										</Typography>
 									</Box>
-									
-									{recentActivities.length > 0 ? (
-										<List sx={{ maxHeight: 400, overflow: 'auto' }}>
-											{recentActivities.map((activity, index) => (
-												<Box key={activity.id}>
-													<ListItem sx={{ px: 0, py: 1 }}>
-														<ListItemIcon sx={{ minWidth: 36 }}>
-															{getSeverityIcon(activity.severity)}
-														</ListItemIcon>
-														<ListItemText
-															primary={
-																<Typography variant="body2" sx={{ fontWeight: 500, lineHeight: 1.3 }}>
-																	{activity.description}
-																</Typography>
-															}
-															secondary={
-																<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 0.5 }}>
-																	<Typography variant="caption" color="text.secondary">
-																		{activity.source}
-																	</Typography>
-																	<Typography variant="caption" color="text.secondary">
-																		{format(new Date(activity.createdAt), 'HH:mm:ss', { locale: localeId })}
-																	</Typography>
-																</Box>
-															}
-														/>
-													</ListItem>
-													{index < recentActivities.length - 1 && <Divider />}
-												</Box>
-											))}
-										</List>
-									) : (
-										<Box sx={{ textAlign: 'center', py: 4 }}>
-											<ActivityIcon sx={{ fontSize: 48, color: 'text.disabled', mb: 2 }} />
-											<Typography variant="body2" color="text.secondary">
-												No recent activities
-											</Typography>
-										</Box>
-									)}
-								</CardContent>
-							</ActionCard>
-						</Grid>
+								)}
+							</CardContent>
+						</ActionCard>
 
 						{/* Quick Actions */}
-						<Grid size={{ xs: 12, lg: 3 }}>
-							<ActionCard>
-								<CardContent>
-									<Typography variant="h6" sx={{ mb: 3, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
-										<LaunchIcon color="primary" />
-										Quick Actions
-									</Typography>
+						<ActionCard>
+							<CardContent>
+								<Typography variant="h6" sx={{ mb: 3, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
+									<LaunchIcon color="primary" />
+									Quick Actions
+								</Typography>
+								
+								<Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+									<Button
+										variant="outlined"
+										fullWidth
+										startIcon={<ContainerIcon />}
+										onClick={() => navigate('/container')}
+										sx={{ 
+											justifyContent: 'flex-start',
+											textTransform: 'none',
+											py: 1.5
+										}}
+									>
+										View Container Status
+									</Button>
 									
-									<Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-										<Button
-											variant="outlined"
-											fullWidth
-											startIcon={<ContainerIcon />}
-											onClick={() => navigate('/container')}
-											sx={{ 
-												justifyContent: 'flex-start',
-												textTransform: 'none',
-												py: 1.5
-											}}
-										>
-											View Container Status
-										</Button>
-										
-										<Button
-											variant="outlined"
-											fullWidth
-											startIcon={<Assessment />}
-											onClick={() => navigate('/reports')}
-											sx={{ 
-												justifyContent: 'flex-start',
-												textTransform: 'none',
-												py: 1.5
-											}}
-										>
-											Generate Reports
-										</Button>
-										
-										<Button
-											variant="outlined"
-											fullWidth
-											startIcon={<CloudIcon />}
-											onClick={() => navigate('/monitoring')}
-											sx={{ 
-												justifyContent: 'flex-start',
-												textTransform: 'none',
-												py: 1.5
-											}}
-										>
-											System Monitoring
-										</Button>
-										
-										<Divider sx={{ my: 1 }} />
-										
-										<Paper sx={{ p: 2, bgcolor: (theme) => alpha(theme.palette.primary.main, 0.1) }}>
-											<Typography variant="body2" color="primary" sx={{ fontWeight: 600, mb: 1 }}>
-												System Status
-											</Typography>
-											<Typography variant="caption" color="text.secondary">
-												{containerStats.failed === 0 ? 
-													'All systems operational' : 
-													`${containerStats.failed} containers need attention`
-												}
-											</Typography>
-										</Paper>
-									</Box>
-								</CardContent>
-							</ActionCard>
-						</Grid>
-					</Grid>
+									<Button
+										variant="outlined"
+										fullWidth
+										startIcon={<Assessment />}
+										onClick={() => navigate('/reports')}
+										sx={{ 
+											justifyContent: 'flex-start',
+											textTransform: 'none',
+											py: 1.5
+										}}
+									>
+										Generate Reports
+									</Button>
+									
+									<Button
+										variant="outlined"
+										fullWidth
+										startIcon={<CloudIcon />}
+										onClick={() => navigate('/monitoring')}
+										sx={{ 
+											justifyContent: 'flex-start',
+											textTransform: 'none',
+											py: 1.5
+										}}
+									>
+										System Monitoring
+									</Button>
+									
+									<Divider sx={{ my: 1 }} />
+									
+									<Paper sx={{ p: 2, bgcolor: (theme) => alpha(theme.palette.primary.main, 0.1) }}>
+										<Typography variant="body2" color="primary" sx={{ fontWeight: 600, mb: 1 }}>
+											System Status
+										</Typography>
+										<Typography variant="caption" color="text.secondary">
+											{containerStats.failed === 0 ? 
+												'All systems operational' : 
+												`${containerStats.failed} containers need attention`
+											}
+										</Typography>
+									</Paper>
+								</Box>
+							</CardContent>
+						</ActionCard>
+					</Box>
 
-					{/* User Info Footer */}
+					{/* Container Status Detail */}
+					<Typography variant="h5" component="h2" sx={{ mb: 3, mt: 4, fontWeight: 600 }}>
+						Container Health Details
+					</Typography>
+					<Box sx={{ 
+						display: 'grid', 
+						gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+						gap: 3,
+						mb: 4 
+					}}>
+						{filteredContainers.length > 0 ? (
+							filteredContainers.map((container) => (
+								<Box key={container.name}>
+									<ContainerCard 
+										name={container.name}
+										status={container.status || 'loading'}
+										responseTime={responseTimes[container.name] || container.responseTime}
+										errorMessage={container.errorMessage}
+										lastUpdated={container.lastUpdated ? new Date(container.lastUpdated) : undefined}
+										cpuUsage={container.cpuUsage}
+										memoryUsage={container.memoryUsage}
+									/>
+								</Box>
+							))
+						) : (
+							<Box sx={{ gridColumn: '1 / -1' }}>
+								<Paper sx={{ p: 4, textAlign: 'center', bgcolor: (theme) => alpha(theme.palette.warning.main, 0.1) }}>
+									<Typography variant="h6" sx={{ mb: 2, color: 'warning.main' }}>
+										No containers found
+									</Typography>
+									<Typography variant="body2" color="text.secondary">
+										{searchTerm ? 
+											`No containers match the search "${searchTerm}"` : 
+											'No containers are currently running'
+										}
+									</Typography>
+								</Paper>
+							</Box>
+						)}
+					</Box>					{/* User Info Footer */}
 					<Card sx={{ mt: 4, bgcolor: (theme) => alpha(theme.palette.primary.main, 0.05) }}>
 						<CardContent>
 							<Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
@@ -650,9 +766,30 @@ function Dashboard() {
 							</Box>
 						</CardContent>
 					</Card>
-				</Box>
-			}
-		/>
+
+					{/* Using Keycloak token automatically - no auth setup needed */}
+					</Box>
+				}
+			/>
+			
+			{/* Scroll to top button */}
+			<Fab
+				color="primary"
+				size="small"
+				onClick={scrollToTop}
+				sx={{
+					position: 'fixed',
+					bottom: 16,
+					right: 16,
+					transition: 'opacity 0.3s ease-in-out',
+					opacity: showScrollTop ? 1 : 0,
+					pointerEvents: showScrollTop ? 'auto' : 'none',
+					zIndex: 1000
+				}}
+			>
+				<ExpandLessIcon />
+			</Fab>
+		</div>
 	);
 }
 

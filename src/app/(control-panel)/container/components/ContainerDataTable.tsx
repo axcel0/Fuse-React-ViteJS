@@ -5,7 +5,9 @@ import {
 	Button, 
 	Box, 
 	Card, 
-	CardContent 
+	CardContent,
+	LinearProgress,
+	Fade
 } from '@mui/material';
 import { VisibilityRounded } from '@mui/icons-material';
 import { ContainerStatus } from '../types';
@@ -408,6 +410,38 @@ export default function ContainerDataTable({
 			}
 		}}>
 			<CardContent sx={{ p: 0, '&:last-child': { pb: 0 }, position: 'relative', zIndex: 2 }}>
+				{/* Refresh Overlay */}
+				<Fade in={isLoading}>
+					<Box
+						sx={{
+							position: 'absolute',
+							top: 0,
+							left: 0,
+							right: 0,
+							zIndex: 10,
+							pointerEvents: 'none'
+						}}
+					>
+						<LinearProgress 
+							sx={{
+								height: 3,
+								bgcolor: 'transparent',
+								'& .MuiLinearProgress-bar': {
+									bgcolor: (theme) => theme.palette.mode === 'dark' 
+										? 'rgba(56, 189, 248, 0.8)' 
+										: 'rgba(59, 130, 246, 0.8)',
+									backgroundImage: 'linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%)',
+									animation: 'progress-shimmer 1.5s infinite'
+								},
+								'@keyframes progress-shimmer': {
+									'0%': { backgroundPosition: '-200px 0' },
+									'100%': { backgroundPosition: '200px 0' }
+								}
+							}}
+						/>
+					</Box>
+				</Fade>
+
 				<Box sx={{ width: '100%' }}>
 					<DataGrid
 						rows={memoizedRows}

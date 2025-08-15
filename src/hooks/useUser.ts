@@ -1,8 +1,8 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useState, useEffect, useCallback } from 'react';
 import httpClient from '@/lib/http-client';
 
 /**
- * Example User Query Hooks - Replace Redux user state management
+ * Simple User Hooks - No React Query dependency
  */
 
 // Types
@@ -21,101 +21,187 @@ export interface UserUpdateData {
 	settings?: Record<string, unknown>;
 }
 
-// Query Keys
-export const userKeys = {
-	all: ['users'] as const,
-	lists: () => [...userKeys.all, 'list'] as const,
-	list: (filters: Record<string, unknown>) => [...userKeys.lists(), { filters }] as const,
-	details: () => [...userKeys.all, 'detail'] as const,
-	detail: (id: string) => [...userKeys.details(), id] as const,
-	me: () => [...userKeys.all, 'me'] as const
-};
-
 // Get current user (replaces user reducer state)
 export function useUser() {
-	return useQuery({
-		queryKey: userKeys.me(),
-		queryFn: async (): Promise<User> => {
+	const [data, setData] = useState<User | null>(null);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+
+	const fetchUser = useCallback(async () => {
+		try {
+			setLoading(true);
+			setError(null);
+			
 			const response = await httpClient.get('auth/me');
-			return response.json();
-		},
-		staleTime: 5 * 60 * 1000, // 5 minutes
-		retry: (failureCount, error: unknown) => {
-			// Don't retry if unauthorized
-
-			if (error && typeof error === 'object' && 'response' in error) {
-				const errorWithResponse = error as { response: { status: number } };
-
-				if (errorWithResponse.response?.status === 401) {
-					return false;
-				}
-			}
-
-			return failureCount < 3;
+			const userData = await response.json() as User;
+			setData(userData);
+			
+		} catch (error) {
+			console.error('Failed to fetch user:', error);
+			setError(error instanceof Error ? error.message : 'Unknown error');
+			setData(null);
+		} finally {
+			setLoading(false);
 		}
-	});
+	}, []);
+
+	useEffect(() => {
+		fetchUser();
+	}, [fetchUser]);
+
+	return {
+		data,
+		loading,
+		error,
+		refetch: fetchUser
+	};
 }
 
 // Update user profile
 export function useUpdateUser() {
-	const queryClient = useQueryClient();
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<string | null>(null);
 
-	return useMutation({
-		mutationFn: async (userData: UserUpdateData): Promise<User> => {
+	const updateUser = useCallback(async (userData: UserUpdateData): Promise<User | null> => {
+		try {
+			setLoading(true);
+			setError(null);
+			
 			const response = await httpClient.put('auth/me', { json: userData });
-			return response.json();
-		},
-		onSuccess: (updatedUser) => {
-			// Update the user cache
-			queryClient.setQueryData(userKeys.me(), updatedUser);
-
-			// Optionally invalidate related queries
-			queryClient.invalidateQueries({ queryKey: userKeys.details() });
-		},
-		onError: (error) => {
+			const updatedUser = await response.json() as User;
+			
+			// Trigger custom event to refresh user data
+			window.dispatchEvent(new CustomEvent('userUpdated', { detail: updatedUser }));
+			
+			return updatedUser;
+			
+		} catch (error) {
 			console.error('Failed to update user:', error);
+			setError(error instanceof Error ? error.message : 'Unknown error');
+			return null;
+		} finally {
+			setLoading(false);
 		}
-	});
+	}, []);
+
+	return {
+		updateUser,
+		loading,
+		error
+	};
 }
 
 // Update user settings
 export function useUpdateUserSettings() {
-	const queryClient = useQueryClient();
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<string | null>(null);
 
-	return useMutation({
-		mutationFn: async (settings: Record<string, unknown>): Promise<User> => {
+	const updateSettings = useCallback(async (settings: Record<string, unknown>): Promise<User | null> => {
+		try {
+			setLoading(true);
+			setError(null);
+			
 			const response = await httpClient.put('auth/me/settings', {
 				json: { settings }
 			});
-			return response.json();
-		},
-		onSuccess: (updatedUser) => {
-			queryClient.setQueryData(userKeys.me(), updatedUser);
+			const updatedUser = await response.json() as User;
+			
+			// Trigger custom event to refresh user data
+			window.dispatchEvent(new CustomEvent('userUpdated', { detail: updatedUser }));
+			
+			return updatedUser;
+			
+		} catch (error) {
+			console.error('Failed to update user settings:', error);
+			setError(error instanceof Error ? error.message : 'Unknown error');
+			return null;
+		} finally {
+			setLoading(false);
 		}
-	});
+	}, []);
+
+	return {
+		updateSettings,
+		loading,
+		error
+	};
 }
 
 // Example: Get users list (for admin functionality)
 export function useUsers(filters: Record<string, string> = {}) {
-	return useQuery({
-		queryKey: userKeys.list(filters),
-		queryFn: async (): Promise<User[]> => {
+	const [data, setData] = useState<User[]>([]);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<string | null>(null);
+
+	const fetchUsers = useCallback(async () => {
+		if (Object.keys(filters).length === 0) {
+			return; // Only run if filters are provided
+		}
+
+		try {
+			setLoading(true);
+			setError(null);
+			
 			const searchParams = new URLSearchParams(filters);
 			const response = await httpClient.get(`users?${searchParams.toString()}`);
-			return response.json();
-		},
-		enabled: Object.keys(filters).length > 0 // Only run if filters are provided
-	});
+			const users = await response.json() as User[];
+			setData(users);
+			
+		} catch (error) {
+			console.error('Failed to fetch users:', error);
+			setError(error instanceof Error ? error.message : 'Unknown error');
+			setData([]);
+		} finally {
+			setLoading(false);
+		}
+	}, [filters]);
+
+	useEffect(() => {
+		fetchUsers();
+	}, [fetchUsers]);
+
+	return {
+		data,
+		loading,
+		error,
+		refetch: fetchUsers
+	};
 }
 
 // Get specific user by ID
 export function useUserById(userId: string) {
-	return useQuery({
-		queryKey: userKeys.detail(userId),
-		queryFn: async (): Promise<User> => {
+	const [data, setData] = useState<User | null>(null);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<string | null>(null);
+
+	const fetchUserById = useCallback(async () => {
+		if (!userId) return;
+
+		try {
+			setLoading(true);
+			setError(null);
+			
 			const response = await httpClient.get(`users/${userId}`);
-			return response.json();
-		},
-		enabled: !!userId
-	});
+			const user = await response.json() as User;
+			setData(user);
+			
+		} catch (error) {
+			console.error('Failed to fetch user by ID:', error);
+			setError(error instanceof Error ? error.message : 'Unknown error');
+			setData(null);
+		} finally {
+			setLoading(false);
+		}
+	}, [userId]);
+
+	useEffect(() => {
+		fetchUserById();
+	}, [fetchUserById]);
+
+	return {
+		data,
+		loading,
+		error,
+		refetch: fetchUserById
+	};
 }

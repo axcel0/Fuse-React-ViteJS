@@ -23,6 +23,8 @@ export interface ContainerStatus {
 	imageName: string;
 	containerName: string;
 	status: 'ok' | 'failed' | 'request timeout' | 'unknown' | 'connected';
+	// Kafka connection status extracted from kafkaStatus or details.kafka.status fields
+	// Only specific containers can have 'connected' status: ev lock, consumer, ev vehicle report, nearme, ev sse app
 	kafkaConnection: 'connected' | 'unconnected' | 'disconnected' | 'error' | '';
 	version: string;
 	containerStatus: string;
@@ -32,12 +34,19 @@ export interface ContainerStatus {
 	totalLogs: number;
 	port?: string;
 	responseBody?: {
+		// Primary kafka status field from API response
 		kafkaStatus?: string;
+		// Fallback kafka status field from API response
 		details?: {
 			kafka?: {
 				status?: string;
 			};
 		};
+		// Legacy kafka connection array (for backward compatibility)
+		kafkaConnection?: Array<{
+			status?: string;
+			state?: string;
+		}>;
 		[key: string]: any;
 	};
 }

@@ -14,8 +14,6 @@ import _ from 'lodash';
 import { lighten, alpha } from '@mui/material/styles';
 import { useTheme as useTailwindTheme } from 'src/hooks/useTheme';
 import JwtSignInTab from './tabs/JwtSignInTab';
-import FirebaseSignInTab from './tabs/FirebaseSignInTab';
-import AwsSignInTab from './tabs/AwsSignInTab';
 import KeycloakSignInTab from './tabs/KeycloakSignInTab';
 
 const tabs = [
@@ -30,18 +28,6 @@ const tabs = [
 		title: 'JWT',
 		logo: '/assets/images/logo/jwt.svg',
 		logoClass: 'h-9 p-1 bg-black rounded-lg'
-	},
-	{
-		id: 'firebase',
-		title: 'Firebase',
-		logo: '/assets/images/logo/firebase.svg',
-		logoClass: 'h-9'
-	},
-	{
-		id: 'aws',
-		title: 'AWS',
-		logo: '/assets/images/logo/aws-amplify.svg',
-		logoClass: 'h-9'
 	}
 ];
 
@@ -196,8 +182,6 @@ function SignInPage() {
 									<div className="relative">
 										{selectedTabId === 'keycloak' && <KeycloakSignInTab />}
 										{selectedTabId === 'jwt' && <JwtSignInTab />}
-										{selectedTabId === 'firebase' && <FirebaseSignInTab />}
-										{selectedTabId === 'aws' && <AwsSignInTab />}
 									</div>
 								</div>
 							</div>

@@ -10,8 +10,6 @@ import { useState } from 'react';
 import _ from 'lodash';
 import { useTheme } from '../../../hooks/useTheme';
 import JwtSignUpTab from './tabs/JwSignUpTab';
-import FirebaseSignUpTab from './tabs/FirebaseSignUpTab';
-import AwsSignUpTab from './tabs/AwsSignUpTab';
 
 const tabs = [
 	{
@@ -19,18 +17,6 @@ const tabs = [
 		title: 'JWT',
 		logo: '/assets/images/logo/jwt.svg',
 		logoClass: 'h-9 p-1 bg-black rounded-lg'
-	},
-	{
-		id: 'firebase',
-		title: 'Firebase',
-		logo: '/assets/images/logo/firebase.svg',
-		logoClass: 'h-9'
-	},
-	{
-		id: 'aws',
-		title: 'AWS',
-		logo: '/assets/images/logo/aws-amplify.svg',
-		logoClass: 'h-9'
 	}
 ];
 
@@ -138,8 +124,6 @@ function SignUpPage() {
 							{/* Tab Content */}
 							<div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6 transition-colors duration-300">
 								{selectedTabId === 'jwt' && <JwtSignUpTab />}
-								{selectedTabId === 'firebase' && <FirebaseSignUpTab />}
-								{selectedTabId === 'aws' && <AwsSignUpTab />}
 							</div>
 						</div>
 					</div>

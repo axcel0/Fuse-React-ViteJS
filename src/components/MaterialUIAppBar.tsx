@@ -308,12 +308,7 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 			breadcrumbs.push({
 				label,
 				path,
-				icon: (
-					<ChevronRight
-						sx={{ mr: 0.5 }}
-						fontSize="inherit"
-					/>
-				)
+				icon: null // Remove redundant chevron icons - separator handles this
 			});
 		});
 
@@ -677,16 +672,20 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 								<ChevronRight 
 									fontSize="small" 
 									sx={{ 
-										color: 'rgba(255, 255, 255, 0.6)',
-										transition: 'color 0.2s ease'
+										color: 'rgba(255, 255, 255, 0.5)',
+										transition: 'color 0.2s ease',
+										mx: 0.5
 									}} 
 								/>
 							}
 							sx={{ 
 								fontSize: '0.9rem',
 								'& .MuiBreadcrumbs-separator': {
-									color: 'rgba(255, 255, 255, 0.6)',
-									mx: 1
+									color: 'rgba(255, 255, 255, 0.5)',
+									mx: 1.5
+								},
+								'& .MuiBreadcrumbs-ol': {
+									alignItems: 'center'
 								}
 							}}
 						>
@@ -701,6 +700,7 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 										textDecoration: 'none',
 										color: 'rgba(255, 255, 255, 0.8)',
 										fontWeight: 400,
+										fontSize: '0.875rem',
 										padding: _theme.spacing(0.5, 1),
 										borderRadius: _theme.spacing(1),
 										transition: _theme.transitions.create(['color', 'background-color', 'transform'], {
@@ -714,7 +714,8 @@ function MaterialUIAppBar(props: MaterialUIAppBarProps) {
 										},
 										'&:last-child': {
 											color: 'white',
-											fontWeight: 500
+											fontWeight: 500,
+											pointerEvents: 'none' // Current page shouldn't be clickable
 										}
 									}}
 								>

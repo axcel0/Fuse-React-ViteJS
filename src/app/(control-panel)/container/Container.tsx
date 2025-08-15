@@ -15,16 +15,18 @@ import {
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { usePageTitle } from 'src/contexts/PageTitleContext';
 
-// Import TanStack Query hooks - back to real API
-import { useContainerStatus, useRefreshContainerData } from 'src/hooks/useApi';
+// Import hooks dari useApi - menggunakan token dari Keycloak authentication
+import { useContainerStatus } from 'src/hooks/useApi';
 
 // Import components and types
 import { ContainerStatus, ActivityLog, ContainerStats } from './types';
 import { useExportCSV } from './hooks/useExportCSV';
 import { useAutoRefresh } from './hooks/useAutoRefresh';
 import ContainerStatsCard from './components/ContainerStatsCard';
+import ContainerStatsSkeleton from './components/ContainerStatsSkeleton';
 import ContainerFilters from './components/ContainerFilters';
 import ContainerDataTable from './components/ContainerDataTable';
+import ContainerTableSkeleton from './components/ContainerTableSkeleton';
 import ContainerDetailDialog from './components/ContainerDetailDialog';
 
 // Simple Material-UI styling with full-width layout
@@ -47,30 +49,28 @@ function Container() {
 	const [detailDialogOpen, setDetailDialogOpen] = useState(false);
 	const [statusFilter, setStatusFilter] = useState<string>('all');
 
-	// TanStack Query hooks - back to real API
+	// Native hooks - menggunakan token dari Keycloak authentication
 	const {
 		data: containerData = [],
-		isLoading,
+		loading: isLoading,
 		error: queryError,
 		refetch
-	} = useContainerStatus();
-	
-	const refreshMutation = useRefreshContainerData();	// Set page title when component mounts
+	} = useContainerStatus();	// Set page title when component mounts
 	useEffect(() => {
-		setPageTitle('CONTAINER STATUS');
+		setPageTitle('Container Status');
 	}, [setPageTitle]);
 
 	// Use custom hook for CSV export
 	const { downloadCSV } = useExportCSV();
 
-	// Manual refresh function that uses TanStack Query
+	// Manual refresh function menggunakan native hooks
 	const handleManualRefresh = useCallback(async () => {
 		try {
-			await refreshMutation.mutateAsync();
+			await refetch();
 		} catch (error) {
 			console.error('Manual refresh failed:', error);
 		}
-	}, [refreshMutation]);
+	}, [refetch]);
 
 	// Use auto refresh hook with TanStack Query refetch
 	const {
@@ -133,9 +133,9 @@ function Container() {
 		downloadCSV(filteredData, 'container-status');
 	}, [downloadCSV, filteredData]);
 
-	// Error message from TanStack Query
+	// Error message dari native hooks
 	const errorMessage = queryError 
-		? `Failed to fetch container data: ${queryError instanceof Error ? queryError.message : 'Unknown error'}`
+		? `Failed to fetch container data: ${typeof queryError === 'string' ? queryError : 'Unknown error'}`
 		: null;
 
 	return (
@@ -158,50 +158,55 @@ function Container() {
 						</Alert>
 					)}
 
-					{isLoading ? (
-						<Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
-							<CircularProgress size={40} />
-						</Box>
-					) : (
-						<Box sx={{ px: 0 }}>
-							{/* Statistics Cards */}
-							<ContainerStatsCard containerData={containerData} />
-
-							{/* Export CSV button moved to filter bar via ContainerFilters props */}
-
-							{/* Filters - Now with TanStack Query integration */}
-							<ContainerFilters
-								searchTerm={searchTerm}
-								setSearchTerm={setSearchTerm}
-								statusFilter={statusFilter}
-								setStatusFilter={setStatusFilter}
-								filteredDataLength={filteredData.length}
-								totalDataLength={containerData.length}
-								isAutoRefreshEnabled={isAutoRefreshEnabled}
-								setIsAutoRefreshEnabled={setIsAutoRefreshEnabled}
-								refreshInterval={refreshInterval}
-								setRefreshInterval={setRefreshInterval}
-								onManualRefresh={triggerManualRefresh}
-								isRefreshing={isLoading || isRefreshing || refreshMutation.isPending}
-								lastRefreshTime={lastRefreshTime}
-								onExportCSV={handleDownloadCSV}
+					<Box sx={{ px: 0 }}>
+						{/* Statistics Cards with Skeleton Loading */}
+						{isLoading && containerData.length === 0 ? (
+							<ContainerStatsSkeleton />
+						) : (
+							<ContainerStatsCard 
+								containerData={containerData} 
+								isRefreshing={isRefreshing}
 							/>
+						)}
 
-							{/* Data Table */}
+						{/* Filters - Always show filters */}
+						<ContainerFilters
+							searchTerm={searchTerm}
+							setSearchTerm={setSearchTerm}
+							statusFilter={statusFilter}
+							setStatusFilter={setStatusFilter}
+							filteredDataLength={filteredData.length}
+							totalDataLength={containerData.length}
+							isAutoRefreshEnabled={isAutoRefreshEnabled}
+							setIsAutoRefreshEnabled={setIsAutoRefreshEnabled}
+							refreshInterval={refreshInterval}
+							setRefreshInterval={setRefreshInterval}
+							onManualRefresh={triggerManualRefresh}
+							isRefreshing={isLoading || isRefreshing}
+							lastRefreshTime={lastRefreshTime}
+							onExportCSV={handleDownloadCSV}
+						/>
+
+						{/* Data Table with Skeleton Loading */}
+						{isLoading && containerData.length === 0 ? (
+							<ContainerTableSkeleton />
+						) : (
 							<ContainerDataTable
 								filteredData={filteredData}
 								onViewLogs={handleViewLogs}
-								isLoading={isLoading}
+								isLoading={isRefreshing} // Show mini loading state during refresh
 							/>
+						)}
 
-							{/* Detail Dialog */}
-							<ContainerDetailDialog
-								open={detailDialogOpen}
-								onClose={() => setDetailDialogOpen(false)}
-								container={selectedContainer}
-							/>
-						</Box>
-					)}
+						{/* Detail Dialog */}
+						<ContainerDetailDialog
+							open={detailDialogOpen}
+							onClose={() => setDetailDialogOpen(false)}
+							container={selectedContainer}
+						/>
+
+						{/* Using Keycloak token automatically - no auth setup needed */}
+					</Box>
 				</Box>
 			}
 		/>

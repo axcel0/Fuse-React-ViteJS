@@ -1,7 +1,5 @@
 import React from 'react';
 
-import AWSAuthProvider from '@auth/services/aws/AWSAuthProvider';
-import FirebaseAuthProvider from '@auth/services/firebase/FirebaseAuthProvider';
 import JwtAuthProvider from '@auth/services/jwt/JwtAuthProvider';
 import KeycloakAuthProvider from '@auth/services/keycloak/keycloakAuthProvider';
 import { FuseAuthProviderType } from '@fuse/core/FuseAuthProvider/types/FuseAuthTypes';
@@ -15,14 +13,6 @@ const authProviders: FuseAuthProviderType[] = [
 	{
 		name: 'jwt',
 		Provider: JwtAuthProvider
-	},
-	{
-		name: 'aws',
-		Provider: AWSAuthProvider
-	},
-	{
-		name: 'firebase',
-		Provider: FirebaseAuthProvider
 	},
 	{
 		name: 'keycloak',

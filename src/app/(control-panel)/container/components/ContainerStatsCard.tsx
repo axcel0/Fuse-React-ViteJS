@@ -5,7 +5,9 @@ import {
 	Typography,
 	Box,
 	Avatar,
-	Stack
+	Stack,
+	Fade,
+	LinearProgress
 } from '@mui/material';
 import {
 	Assessment as ContainerIcon,
@@ -17,9 +19,10 @@ import { ContainerStatus, ContainerStats } from '../types';
 
 interface ContainerStatsCardProps {
 	containerData: ContainerStatus[];
+	isRefreshing?: boolean;
 }
 
-export default function ContainerStatsCard({ containerData }: ContainerStatsCardProps) {
+export default function ContainerStatsCard({ containerData, isRefreshing = false }: ContainerStatsCardProps) {
 	// Container stats for dashboard overview - memoized
 	const containerStats: ContainerStats = useMemo(() => ({
 		total: containerData.length,
@@ -79,6 +82,8 @@ export default function ContainerStatsCard({ containerData }: ContainerStatsCard
 							? '0 10px 25px rgba(0, 0, 0, 0.3)'
 							: '0 4px 12px rgba(0, 0, 0, 0.08)',
 						transition: 'all 0.3s ease',
+						position: 'relative',
+						overflow: 'hidden',
 						'&:hover': {
 							transform: 'translateY(-2px)',
 							boxShadow: (theme) => theme.palette.mode === 'dark'
@@ -86,7 +91,31 @@ export default function ContainerStatsCard({ containerData }: ContainerStatsCard
 								: '0 8px 24px rgba(0, 0, 0, 0.12)'
 						}
 					}}>
-						<CardContent sx={{ p: 3 }}>
+						{/* Refresh Indicator */}
+						<Fade in={isRefreshing}>
+							<Box
+								sx={{
+									position: 'absolute',
+									top: 0,
+									left: 0,
+									right: 0,
+									zIndex: 1
+								}}
+							>
+								<LinearProgress 
+									sx={{
+										height: 2,
+										bgcolor: 'transparent',
+										'& .MuiLinearProgress-bar': {
+											bgcolor: stat.color,
+											opacity: 0.7
+										}
+									}}
+								/>
+							</Box>
+						</Fade>
+
+						<CardContent sx={{ p: 3, position: 'relative', zIndex: 2 }}>
 							<Stack direction="row" alignItems="center" spacing={2}>
 								<Avatar sx={{
 									bgcolor: stat.bgColor,
