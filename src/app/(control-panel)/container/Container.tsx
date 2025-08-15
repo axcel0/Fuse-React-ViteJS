@@ -2,16 +2,8 @@ import FusePageSimple from '@fuse/core/FusePageSimple';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@mui/material/styles';
 import {
-	Typography,
 	Box,
-	Button,
-	Alert,
-	CircularProgress
-} from '@mui/material';
-import {
-	Refresh as RefreshIcon,
-	GetApp as ExportIcon
-} from '@mui/icons-material';
+	Alert} from '@mui/material';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { usePageTitle } from 'src/contexts/PageTitleContext';
 
@@ -19,7 +11,7 @@ import { usePageTitle } from 'src/contexts/PageTitleContext';
 import { useContainerStatus } from 'src/hooks/useApi';
 
 // Import components and types
-import { ContainerStatus, ActivityLog, ContainerStats } from './types';
+import { ContainerStatus } from './types';
 import { useExportCSV } from './hooks/useExportCSV';
 import { useAutoRefresh } from './hooks/useAutoRefresh';
 import ContainerStatsCard from './components/ContainerStatsCard';

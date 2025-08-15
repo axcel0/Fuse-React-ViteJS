@@ -496,48 +496,50 @@ export default function ContainerFilters({
 
 								  {/* Manual Refresh Button */}
 								  <Tooltip title="Manual refresh" arrow>
-									  <IconButton
-										  onClick={onManualRefresh}
-										  disabled={isRefreshing}
-										  sx={{
-											  color: (theme) => theme.palette.mode === 'dark' 
-												  ? 'rgba(255, 255, 255, 0.8)'
-												  : 'rgba(30, 41, 59, 0.8)',
-											  backgroundColor: (theme) => theme.palette.mode === 'dark'
-												  ? 'rgba(255, 255, 255, 0.05)'
-												  : 'rgba(30, 41, 59, 0.05)',
-											  border: '1px solid',
-											  borderColor: (theme) => theme.palette.mode === 'dark' 
-												  ? 'rgba(255, 255, 255, 0.2)'
-												  : 'rgba(30, 41, 59, 0.2)',
-											  '&:hover': {
+									  <span>
+										  <IconButton
+											  onClick={onManualRefresh}
+											  disabled={isRefreshing}
+											  sx={{
+												  color: (theme) => theme.palette.mode === 'dark' 
+													  ? 'rgba(255, 255, 255, 0.8)'
+													  : 'rgba(30, 41, 59, 0.8)',
 												  backgroundColor: (theme) => theme.palette.mode === 'dark'
-													  ? 'rgba(255, 255, 255, 0.1)'
-													  : 'rgba(30, 41, 59, 0.1)',
+													  ? 'rgba(255, 255, 255, 0.05)'
+													  : 'rgba(30, 41, 59, 0.05)',
+												  border: '1px solid',
 												  borderColor: (theme) => theme.palette.mode === 'dark' 
-													  ? 'rgba(255, 255, 255, 0.4)'
-													  : 'rgba(30, 41, 59, 0.4)',
-												  color: (theme) => theme.palette.mode === 'dark' 
-													  ? 'white'
-													  : '#1e293b'
-											  },
-											  '&.Mui-disabled': {
-												  color: (theme) => theme.palette.mode === 'dark' 
-													  ? 'rgba(255, 255, 255, 0.3)'
-													  : 'rgba(30, 41, 59, 0.3)',
-												  borderColor: (theme) => theme.palette.mode === 'dark' 
-													  ? 'rgba(255, 255, 255, 0.1)'
-													  : 'rgba(30, 41, 59, 0.1)'
-											  }
-										  }}
-									  >
-										  <RefreshIcon 
-											  sx={{ 
-												  fontSize: '1.2rem',
-												  animation: isRefreshing ? 'spin 1s linear infinite' : 'none'
-											  }} 
-										  />
-									  </IconButton>
+													  ? 'rgba(255, 255, 255, 0.2)'
+													  : 'rgba(30, 41, 59, 0.2)',
+												  '&:hover': {
+													  backgroundColor: (theme) => theme.palette.mode === 'dark'
+														  ? 'rgba(255, 255, 255, 0.1)'
+														  : 'rgba(30, 41, 59, 0.1)',
+													  borderColor: (theme) => theme.palette.mode === 'dark' 
+														  ? 'rgba(255, 255, 255, 0.4)'
+														  : 'rgba(30, 41, 59, 0.4)',
+													  color: (theme) => theme.palette.mode === 'dark' 
+														  ? 'white'
+														  : '#1e293b'
+												  },
+												  '&.Mui-disabled': {
+													  color: (theme) => theme.palette.mode === 'dark' 
+														  ? 'rgba(255, 255, 255, 0.3)'
+														  : 'rgba(30, 41, 59, 0.3)',
+													  borderColor: (theme) => theme.palette.mode === 'dark' 
+														  ? 'rgba(255, 255, 255, 0.1)'
+														  : 'rgba(30, 41, 59, 0.1)'
+												  }
+											  }}
+										  >
+											  <RefreshIcon 
+												  sx={{ 
+													  fontSize: '1.2rem',
+													  animation: isRefreshing ? 'spin 1s linear infinite' : 'none'
+												  }} 
+											  />
+										  </IconButton>
+									  </span>
 								  </Tooltip>
 							  </Box>
 						</Stack>
