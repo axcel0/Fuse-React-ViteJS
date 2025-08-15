@@ -97,7 +97,16 @@ function Container() {
 		// Apply status filter
 		if (statusFilter !== 'all') {
 			if (statusFilter === 'connected') {
-				filtered = filtered.filter(container => container.kafkaConnection === 'connected');
+				// Only show specific containers that can have "connected" status
+				const connectedContainers = ['ev lock', 'consumer', 'ev vehicle report', 'nearme', 'ev sse app'];
+				filtered = filtered.filter(container => {
+					// Check if container name matches any of the allowed connected containers
+					const isAllowedContainer = connectedContainers.some(name => 
+						container.containerName.toLowerCase().includes(name.toLowerCase())
+					);
+					// Only show if it's an allowed container AND has connected kafka status
+					return isAllowedContainer && container.kafkaConnection === 'connected';
+				});
 			} else if (statusFilter === 'ok') {
 				filtered = filtered.filter(container => container.status === 'ok');
 			} else if (statusFilter === 'failed') {
